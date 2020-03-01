@@ -56,4 +56,4 @@ jobs:
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       run: |
         bin/setup
-        bin/rake qa
+        bundle exec rake qa

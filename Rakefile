@@ -6,8 +6,11 @@ require_relative "config/application"
 Rails.application.load_tasks
 
 task qa: [:environment] do
-  sh "rubocop"
-  sh "reek"
-  sh "rails test -p"
-  sh "rails test:system"
+  puts "== Running linters =="
+  sh "bundle exec rubocop"
+  sh "bundle exec reek"
+
+  puts "== Running test suites =="
+  sh "bin/rails test -p"
+  sh "bin/rails test:system"
 end
