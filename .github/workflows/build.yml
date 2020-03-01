@@ -48,7 +48,7 @@ jobs:
       run: |
         sudo apt-get -yqq install libpq-dev
 
-    - name: Build and test with Rake
+    - name: Run Linters and Test Suites
       env:
         BUNDLE_JOBS: 4
         BUNDLE_RETRY: 3
@@ -56,4 +56,4 @@ jobs:
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       run: |
         bin/setup
-        bundle exec rake qa
+        bin/rake qa
