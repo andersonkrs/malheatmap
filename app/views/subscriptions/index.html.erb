@@ -1,0 +1,59 @@
+<div data-controller="subscription">
+  <div class="columns is-centered">
+    <div class="column has-text-centered has-text-primary">
+      <span class="icon is-large">
+        <i class="fas fa-4x fa-fire"></i>
+      </span>
+    </div>
+  </div>
+  <div class="columns is-centered">
+    <div class="columm">
+      <h1 class="title has-text-centered">MAL Heatmap</h1>
+    </div>
+  </div>
+
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <%= form_with model: @subscription, method: "post",
+                    html: {
+                      "data-target" => "subscription.form",
+                      "data-action" => [
+                        "ajax:before->subscription#beforeSend",
+                        "ajax:success->subscription#onSuccess",
+                        "ajax:error->subscription#onError",
+                        "ajax:complete->subscription#onComplete"
+                      ].join(" ")
+                    } do |form| %>
+        <div class="field">
+          <p class="has-text-centered">
+            Enter your <a target="_blank" rel="noopener noreferrer" href="https://myanimelist.net">MyAnimeList</a> profile:
+          </p>
+        </div>
+
+        <div class="field">
+          <div data-target="subscription.notificationsContainer"></div>
+        </div>
+
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <%= form.text_field :username,
+                                id: "username",
+                                class: "input",
+                                placeholder: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs",
+                                value: nil
+            %>
+          </div>
+
+          <div class="control">
+            <%= form.button "Subscribe",
+                            class: "button is-primary",
+                            data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" }
+            %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div data-target="subscription.loaderContainer"></div>
+</div>

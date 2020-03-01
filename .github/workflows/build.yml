@@ -1,0 +1,59 @@
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: circleci/postgres:12.1-alpine-ram
+        ports: ["5432:5432"]
+      redis:
+        image: redis:latest-alpine
+        ports: ["6379:6379"]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+
+    - name: Setup Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.x
+
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+
+    - name: Cache Ruby Dependencies
+      uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gem-
+
+    - name: Cache Node Dependencies
+      uses: actions/cache@v1
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-gem-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gem-
+
+    - name: Install PostgreSQL Client
+      run: |
+        sudo apt-get -yqq install libpq-dev
+
+    - name: Build and test with Rake
+      env:
+        BUNDLE_JOBS: 4
+        BUNDLE_RETRY: 3
+        BUNDLE_PATH: vendor/bundle
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      run: |
+        bin/setup
+        bundle exec rake qa

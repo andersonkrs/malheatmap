@@ -1,0 +1,23 @@
+current directory: /home/vagrant/workspace/mal-heatmap/vendor/bundle/ruby/2.6.0/gems/unf_ext-0.0.7.6/ext/unf_ext
+/home/vagrant/.rbenv/versions/2.6.5/bin/ruby -I /home/vagrant/.rbenv/versions/2.6.5/lib/ruby/2.6.0 -r ./siteconf20200301-6307-1vhzuiq.rb extconf.rb
+checking for -lstdc++... yes
+creating Makefile
+
+current directory: /home/vagrant/workspace/mal-heatmap/vendor/bundle/ruby/2.6.0/gems/unf_ext-0.0.7.6/ext/unf_ext
+make "DESTDIR=" clean
+
+current directory: /home/vagrant/workspace/mal-heatmap/vendor/bundle/ruby/2.6.0/gems/unf_ext-0.0.7.6/ext/unf_ext
+make "DESTDIR="
+compiling unf.cc
+cc1plus: warning: command line option ‘-Wdeclaration-after-statement’ is valid for C/ObjC but not for C++
+cc1plus: warning: command line option ‘-Wimplicit-function-declaration’ is valid for C/ObjC but not for C++
+cc1plus: warning: command line option ‘-Wimplicit-int’ is valid for C/ObjC but not for C++
+cc1plus: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1plus: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1plus: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1plus: warning: unrecognized command line option ‘-Wno-cast-function-type’
+linking shared-object unf_ext.so
+
+current directory: /home/vagrant/workspace/mal-heatmap/vendor/bundle/ruby/2.6.0/gems/unf_ext-0.0.7.6/ext/unf_ext
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 unf_ext.so ./.gem.20200301-6307-oqno47

@@ -1,0 +1,40 @@
+exclude_paths:
+  - vendor
+  - tmp
+  - spec/support
+  - bin
+  - node_modules
+  - db
+
+detectors:
+  IrresponsibleModule:
+    enabled: false
+  TooManyStatements:
+    enabled: true
+    exclude:
+      - initialize
+  UtilityFunction:
+    public_methods_only: true
+
+directories:
+  "app/controllers":
+    NestedIterators:
+      max_allowed_nesting: 2
+    UnusedPrivateMethod:
+      enabled: false
+    InstanceVariableAssumption:
+      enabled: false
+  "app/helpers":
+    UtilityFunction:
+      enabled: false
+  "app/mailers":
+    InstanceVariableAssumption:
+      enabled: false
+  "test":
+    InstanceVariableAssumption:
+      enabled: false
+  "app/models":
+    Attribute:
+      enabled: false
+    InstanceVariableAssumption:
+      enabled: false

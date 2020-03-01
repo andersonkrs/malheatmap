@@ -1,0 +1,6 @@
+:concurrency: 3
+:queues:
+  - low
+  - default
+:limits:
+  low: 1

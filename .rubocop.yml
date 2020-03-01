@@ -1,0 +1,43 @@
+require:
+  - rubocop-rails
+
+AllCops:
+  Exclude:
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - "bin/**/*"
+    - "node_modules/**/*"
+    - "db/**/*"
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  ExtraDetails: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 100
+
+Metrics/ClassLength:
+  Exclude:
+    - spec/**/*
+    - test/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - test/**/*
+
+Metrics/MethodLength:
+  Exclude:
+    - spec/**/*
+    - test/**/*
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: error

@@ -1,0 +1,11 @@
+*.swo
+*.swp
+.bundle
+.svn/
+Gemfile.lock
+coverage
+doc
+pkg
+tags
+test/*/log/*.log
+tmp
