@@ -1,8 +1,0 @@
-AllCops:
-  Exclude:
-    - 'Gemfile'
-    - 'Gemfile.devtools'
-    - 'benchmarks/**/*'
-    - 'ice_nine.gemspec'
-    - 'vendor/**/*'
-    - 'Guardfile'
