@@ -21,4 +21,20 @@ class SubscriptionChannelTest < ActionCable::Channel::TestCase
 
     assert subscription.rejected?
   end
+
+  test "does not subscribe if process status is success" do
+    process = create(:subscription, status: :success)
+
+    subscribe process_id: process.id
+
+    assert subscription.rejected?
+  end
+
+  test "does not subscribe if process status is error" do
+    process = create(:subscription, status: :error)
+
+    subscribe process_id: process.id
+
+    assert subscription.rejected?
+  end
 end

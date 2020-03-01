@@ -1,10 +1,10 @@
 exclude_paths:
   - vendor
   - tmp
-  - spec/support
   - bin
   - node_modules
   - db
+  - test
 
 detectors:
   IrresponsibleModule:

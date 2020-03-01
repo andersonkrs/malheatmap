@@ -49,6 +49,21 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: activities; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.activities (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    user_id uuid NOT NULL,
+    item_id uuid NOT NULL,
+    date date NOT NULL,
+    amount integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -66,14 +81,26 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.entries (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
-    "timestamp" timestamp without time zone,
-    amount integer,
-    item_id integer,
-    item_name character varying,
-    user_id uuid,
+    "timestamp" timestamp without time zone NOT NULL,
+    amount integer NOT NULL,
+    user_id uuid NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    item_kind public.item_kind
+    item_id uuid NOT NULL
+);
+
+
+--
+-- Name: items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.items (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    mal_id integer NOT NULL,
+    name character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    kind public.item_kind NOT NULL
 );
 
 
@@ -96,7 +123,7 @@ CREATE TABLE public.subscriptions (
     reason character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    status public.subscription_status
+    status public.subscription_status DEFAULT 'pending'::public.subscription_status NOT NULL
 );
 
 
@@ -106,12 +133,20 @@ CREATE TABLE public.subscriptions (
 
 CREATE TABLE public.users (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
-    username character varying,
+    username character varying NOT NULL,
     avatar_url character varying,
     checksum character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
+
+
+--
+-- Name: activities activities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activities
+    ADD CONSTRAINT activities_pkey PRIMARY KEY (id);
 
 
 --
@@ -128,6 +163,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.entries
     ADD CONSTRAINT entries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: items items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT items_pkey PRIMARY KEY (id);
 
 
 --
@@ -155,6 +198,34 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_activities_on_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_activities_on_item_id ON public.activities USING btree (item_id);
+
+
+--
+-- Name: index_activities_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_activities_on_user_id ON public.activities USING btree (user_id);
+
+
+--
+-- Name: index_activities_on_user_id_and_item_id_and_date; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_activities_on_user_id_and_item_id_and_date ON public.activities USING btree (user_id, item_id, date);
+
+
+--
+-- Name: index_entries_on_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entries_on_item_id ON public.entries USING btree (item_id);
+
+
+--
 -- Name: index_entries_on_timestamp; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -169,10 +240,33 @@ CREATE INDEX index_entries_on_user_id ON public.entries USING btree (user_id);
 
 
 --
+-- Name: index_items_on_mal_id_and_kind; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_items_on_mal_id_and_kind ON public.items USING btree (mal_id, kind);
+
+
+--
 -- Name: index_users_on_username; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (username);
+
+
+--
+-- Name: activities fk_rails_7e11bb717f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activities
+    ADD CONSTRAINT fk_rails_7e11bb717f FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: activities fk_rails_98c29480fc; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activities
+    ADD CONSTRAINT fk_rails_98c29480fc FOREIGN KEY (item_id) REFERENCES public.items(id);
 
 
 --
@@ -181,6 +275,14 @@ CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (usernam
 
 ALTER TABLE ONLY public.entries
     ADD CONSTRAINT fk_rails_99dc12d4fd FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: entries fk_rails_dfa0a673ee; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entries
+    ADD CONSTRAINT fk_rails_dfa0a673ee FOREIGN KEY (item_id) REFERENCES public.items(id);
 
 
 --
@@ -195,6 +297,15 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200201120036'),
 ('20200202023458'),
 ('20200229234332'),
-('20200301000733');
+('20200301000733'),
+('20200306152120'),
+('20200328040329'),
+('20200328041327'),
+('20200328162236'),
+('20200328164202'),
+('20200328164518'),
+('20200329040026'),
+('20200329145233'),
+('20200404024047');
 
 

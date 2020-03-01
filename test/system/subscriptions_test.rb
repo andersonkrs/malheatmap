@@ -37,7 +37,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
 
     click_on "Subscribe"
 
-    assert_current_path user_path(user.username), wait: 15
+    assert_current_path user_path(user.username)
   end
 
   test "redirects to user profile when username is valid but not subscribed yet" do
@@ -47,6 +47,6 @@ class SubscriptionsTest < ApplicationSystemTestCase
     assert_text "Please wait..."
 
     perform_enqueued_jobs
-    assert_current_path user_path("animeisgood8"), wait: 15
+    assert_current_path user_path("animeisgood8")
   end
 end

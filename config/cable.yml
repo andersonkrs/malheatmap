@@ -8,6 +8,7 @@ development:
 
 test:
   adapter: test
+  channel_prefix: mal_heatmap_test
 
 production:
   <<: *default

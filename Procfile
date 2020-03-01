@@ -1,2 +1,3 @@
-web: bin/rails server -p $PORT -b $HOST
-worker: bin/sidekiq
+release: bundle exec rails db:migrate
+web: bundle exec rails server
+worker: bundle exec sidekiq

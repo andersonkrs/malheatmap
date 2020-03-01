@@ -30,4 +30,25 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  mal:
+    crawler:
+      errors:
+        profile_not_found: "Profile not found for username %{username}. Please check if you typed it correctly."
+  users:
+    show:
+      activities_on:
+        zero: "No activities on %{date}"
+        one: "One activity on %{date}"
+        other: "%{count} activities on %{date}"
+      captions:
+        counting_text: "How is it counted?"
+        counting_help: "A summary of watched episodes and read chapters by day."
+        less: "Less"
+        more: "More"
+        level_0: "None episodes/chapters watched/read on date"
+        level_1: "From 1 to 4 episodes/chapters watched/read on date"
+        level_2: "From 5 to 8 episodes/chapters watched/read on date"
+        level_3: "From 9 to 12 episodes/chapters watched/read on date"
+        level_4: "12+ episodes/chapters watched/read on date"
+
+

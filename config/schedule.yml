@@ -1,4 +1,0 @@
-user_update_scheduler:
-  cron: "0 */12 * * *" # Every eight hours
-  class: "UsersUpdateSchedulerJob"
-  queue: low

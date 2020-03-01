@@ -4,10 +4,3 @@
 require_relative "config/application"
 
 Rails.application.load_tasks
-
-task qa: [:environment] do
-  sh "rubocop"
-  sh "reek"
-  sh "rails test -p"
-  sh "rails test:system"
-end

@@ -1,7 +1,7 @@
-import { Controller } from "stimulus"
+import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  onDismiss(event) {
+  onDismiss (event) {
     const notification = event.target.parentNode
     notification.parentNode.removeChild(notification)
   }

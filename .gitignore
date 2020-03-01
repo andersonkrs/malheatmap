@@ -32,3 +32,5 @@ spec/examples.txt
 /coverage
 
 *.key
+
+/vendor

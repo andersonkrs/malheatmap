@@ -1,6 +1,7 @@
-:concurrency: 3
+:concurrency: 5
 :queues:
   - low
   - default
 :limits:
   low: 1
+:timeout: 8

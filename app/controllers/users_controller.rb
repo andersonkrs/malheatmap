@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
+  helper MAL::URLS
+
   def show
-    render json: {}
+    @user = User.includes(:entries).find_by!(username: params[:id])
   end
 end

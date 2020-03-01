@@ -10,7 +10,7 @@ class SubscriptionJob < ApplicationJob
   def perform(subscription)
     @subscription = subscription
 
-    response = UpdateService.call(username)
+    response = SyncronizationService.syncronize_user_data(username)
     subscription.update!(status: response[:status], reason: response[:message])
   end
 
