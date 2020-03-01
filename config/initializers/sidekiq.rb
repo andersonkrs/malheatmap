@@ -7,9 +7,11 @@ Sidekiq.configure_client do |config|
   config.redis = { url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } }
 end
 
-if Sidekiq.server?
+ActiveSupport.on_load(:active_job) do
   Sidekiq::Cron::Job.load_from_hash YAML.load_file("config/schedule.yml")
-else
+end
+
+unless Sidekiq.server?
   require "sidekiq/web"
   require "sidekiq/cron/web"
 
