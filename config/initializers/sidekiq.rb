@@ -8,7 +8,7 @@ Sidekiq.configure_client do |config|
 end
 
 ActiveSupport.on_load(:active_job) do
-  Sidekiq::Cron::Job.load_from_hash YAML.load_file("config/schedule.yml")
+  Sidekiq::Cron::Job.load_from_hash YAML.load_file("config/schedule.yml") if Sidekiq.server?
 end
 
 unless Sidekiq.server?
