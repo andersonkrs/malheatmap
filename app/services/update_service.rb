@@ -29,6 +29,7 @@ class UpdateService
 
   def process_data(profile, entries)
     generate_checksum(entries)
+
     unless checksum_changed?
       @result = { status: :not_processed, message: "User #{user.username} hasn't new entries" }
       return
@@ -51,10 +52,7 @@ class UpdateService
     ActiveRecord::Base.transaction do
       user.update!(checksum: new_checksum, **profile_data)
 
-      Entry
-        .where(user: user)
-        .last_three_weeks
-        .delete_all
+      Entry.where(user: user).last_three_weeks.delete_all
 
       entries.each do |entry|
         Entry.create!(user: user, **entry)

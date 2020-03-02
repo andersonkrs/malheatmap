@@ -56,6 +56,7 @@ class CrawlerService < Mechanize
 
   def parse_entries(kind)
     page.link_with(text: "#{kind.capitalize} History").click
+
     page.xpath("//tr[td[@class='borderClass']]").each do |row|
       result[:entries] << Parsers::Entry.call(kind, row)
     end
