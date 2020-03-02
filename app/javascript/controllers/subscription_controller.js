@@ -5,16 +5,16 @@ import consumer from "../channels/consumer"
 export default class extends Controller {
   static targets = ["notificationsContainer", "loaderContainer", "form"]
 
-  beforeSend() {
+  beforeSend () {
     this.clearNotifications()
   }
 
-  onError(event) {
+  onError (event) {
     const xhr = event.detail[2]
     this.showNotification(xhr.response)
   }
 
-  onSuccess(event) {
+  onSuccess (event) {
     const xhr = event.detail[2]
     const processId = xhr.getResponseHeader("ProcessID")
 
@@ -26,36 +26,36 @@ export default class extends Controller {
     this.waitForProcessUpdates(processId)
   }
 
-  onComplete(_event) {
+  onComplete (_event) {
     this.formTarget.reset()
   }
 
-  showNotification(content) {
+  showNotification (content) {
     this.notificationsContainerTarget.innerHTML = content
   }
 
-  clearNotifications() {
+  clearNotifications () {
     this.notificationsContainerTarget.innerHTML = ""
   }
 
-  showLoader(content) {
+  showLoader (content) {
     this.formTarget.style.display = "none"
     this.loaderContainerTarget.innerHTML = content
   }
 
-  hideLoader() {
+  hideLoader () {
     this.formTarget.style.display = ""
     this.loaderContainerTarget.innerHTML = ""
   }
 
-  waitForProcessUpdates(processId) {
-    let controller = this
+  waitForProcessUpdates (processId) {
+    const controller = this
 
     consumer.subscriptions.create({ channel: "SubscriptionChannel", process_id: processId }, {
-      received(data) {
+      received (data) {
         this.unsubscribe()
 
-        if (data.status == "success") {
+        if (data.status === "success") {
           window.location.href = data.user_url
         } else {
           controller.hideLoader()

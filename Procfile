@@ -1,2 +1,2 @@
-web: bin/rails server -p $PORT -b $HOST
+web: bin/rails server
 worker: bin/sidekiq
