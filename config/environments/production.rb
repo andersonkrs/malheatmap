@@ -12,6 +12,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
+  config.assets.compile = false
   config.public_file_server.enabled = true
 
   # Specifies the header that your server uses for sending files.
