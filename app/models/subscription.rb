@@ -11,6 +11,7 @@ class Subscription < ApplicationRecord
 
   validates :username, presence: true
   validates :username, format: { with: VALID_USERNAME_REGEX }
+  validates :status, presence: true
 
   after_validation :extract_username
 
