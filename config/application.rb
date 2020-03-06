@@ -18,6 +18,7 @@ Bundler.require(*Rails.groups)
 module MalHeatmap
   class Application < Rails::Application
     config.load_defaults 6.0
+    config.generators.orm :active_record, primary_key_type: :uuid
     config.generators.test_framework :test_unit, fixture: false
     config.generators.factory_bot true
     config.active_record.schema_format = :sql
