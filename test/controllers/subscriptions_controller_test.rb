@@ -21,7 +21,6 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :accepted
     assert_equal response.headers["ProcessID"], subscription.id
-    assert_enqueued_jobs 1, only: SubscriptionJob
   end
 
   test "redirects to user profile when it is already subscribed" do

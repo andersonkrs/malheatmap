@@ -11,7 +11,7 @@ class SubscriptionsController < ApplicationController
     if already_subscribed?
       redirect_to user_path(subscription.username)
     else
-      save_and_enqueue_process
+      subscription.save
       render_loader
     end
   end
@@ -22,13 +22,6 @@ class SubscriptionsController < ApplicationController
 
   def subscription_params
     params.require(:subscription).permit(:username)
-  end
-
-  def save_and_enqueue_process
-    subscription.status = :pending
-    subscription.save
-
-    SubscriptionJob.set(wait: 2.seconds).perform_later(subscription)
   end
 
   def already_subscribed?

@@ -1,8 +1,9 @@
 class SubscriptionChannel < ApplicationCable::Channel
   def subscribed
-    subscription_process = Subscription.find_by(id: params[:process_id])
-    return reject if subscription_process.blank?
+    subscription = Subscription.find_by(id: params[:process_id])
+    return reject if subscription.blank? || !subscription.pending?
 
-    stream_for subscription_process
+    stream_for(subscription)
+    SubscriptionJob.perform_later(subscription)
   end
 end

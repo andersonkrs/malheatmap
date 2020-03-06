@@ -8,6 +8,7 @@ class SubscriptionChannelTest < ActionCable::Channel::TestCase
 
     assert subscription.confirmed?
     assert_has_stream_for process
+    assert_enqueued_with job: SubscriptionJob, args: [process]
   end
 
   test "does not stream with incorret process id" do
@@ -18,6 +19,22 @@ class SubscriptionChannelTest < ActionCable::Channel::TestCase
 
   test "does not subscribe without process id" do
     subscribe
+
+    assert subscription.rejected?
+  end
+
+  test "does not subscribe if process status is success" do
+    process = create(:subscription, status: :success)
+
+    subscribe process_id: process.id
+
+    assert subscription.rejected?
+  end
+
+  test "does not subscribe if process status is error" do
+    process = create(:subscription, status: :error)
+
+    subscribe process_id: process.id
 
     assert subscription.rejected?
   end
