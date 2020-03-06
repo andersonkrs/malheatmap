@@ -28,7 +28,7 @@ class SubscriptionsController < ApplicationController
     subscription.status = :pending
     subscription.save
 
-    SubscriptionJob.perform_later(subscription)
+    SubscriptionJob.set(wait: 2.seconds).perform_later(subscription)
   end
 
   def already_subscribed?
