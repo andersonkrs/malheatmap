@@ -8,6 +8,7 @@
     "@rails/webpacker": "4.2.2",
     "bulma": "^0.8.0",
     "bulma-helpers": "^0.3.8",
+    "bulma-timeline": "^3.0.4",
     "stimulus": "^1.1.1",
     "turbolinks": "^5.2.0"
   },
