@@ -96,7 +96,7 @@ CREATE TABLE public.subscriptions (
     reason character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    status public.subscription_status
+    status public.subscription_status DEFAULT 'pending'::public.subscription_status NOT NULL
 );
 
 
@@ -195,6 +195,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200201120036'),
 ('20200202023458'),
 ('20200229234332'),
-('20200301000733');
+('20200301000733'),
+('20200306152120');
 
 
