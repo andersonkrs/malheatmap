@@ -208,6 +208,7 @@ GEM
       psych (~> 3.1.0)
       rainbow (>= 2.0, < 4.0)
     regexp_parser (1.6.0)
+    rollbar (2.24.0)
     rubocop (0.79.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -327,6 +328,7 @@ DEPENDENCIES
   puma
   rails
   reek
+  rollbar
   rubocop
   rubocop-rails
   sass-rails
