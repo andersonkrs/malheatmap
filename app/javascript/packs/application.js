@@ -2,7 +2,7 @@ import "@fortawesome/fontawesome-free/js/all"
 
 import "controllers"
 
-import '../stylesheets/application'
+import "../stylesheets/application"
 
 require("@rails/ujs").start()
 require("turbolinks").start()
