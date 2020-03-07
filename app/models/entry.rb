@@ -17,7 +17,4 @@ class Entry < ApplicationRecord
     where("timestamp >= ?", 3.weeks.ago.at_beginning_of_day.in_time_zone)
   }
 
-  def item_url
-    URI::HTTPS.build(host: MAL_HOST, path: "/#{item_kind}/#{item_id}").to_s
-  end
 end

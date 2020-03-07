@@ -2,6 +2,7 @@ require "mechanize"
 
 class CrawlerService < Mechanize
   include CallableService
+  include ApplicationHelper
 
   def initialize(username)
     super()
@@ -34,12 +35,8 @@ class CrawlerService < Mechanize
   end
 
   def fetch_profile
-    get(profile_url)
+    get mal_profile_url(username)
     parse_profile
-  end
-
-  def profile_url
-    URI::HTTPS.build(host: MAL_HOST, path: "/profile/#{username}").to_s
   end
 
   def parse_profile
