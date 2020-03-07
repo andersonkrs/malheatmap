@@ -8,7 +8,7 @@ jobs:
 
     services:
       postgres:
-        image: circleci/postgres:12.1-alpine-ram
+        image: postgres:12.1-alpine
         ports: ["5432:5432"]
       redis:
         image: redis:alpine
