@@ -16,5 +16,4 @@ class Entry < ApplicationRecord
   scope :last_three_weeks, lambda {
     where("timestamp >= ?", 3.weeks.ago.at_beginning_of_day.in_time_zone)
   }
-
 end
