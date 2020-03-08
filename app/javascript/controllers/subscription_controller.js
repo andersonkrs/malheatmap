@@ -1,9 +1,11 @@
 import { Controller } from "stimulus"
+import Rails from "@rails/ujs"
+import Turbolinks from "turbolinks"
 
 import consumer from "../channels/consumer"
 
 export default class extends Controller {
-  static targets = ["notificationsContainer", "loaderContainer", "form"]
+  static targets = ["notificationsContainer", "loaderContainer", "form", "subimitButton"]
 
   beforeSend () {
     this.clearNotifications()
@@ -23,11 +25,15 @@ export default class extends Controller {
     }
 
     this.showLoader(xhr.response)
-    this.waitForProcessUpdates(processId)
+    this.waitForProcessing(processId)
   }
 
-  onComplete (_event) {
+  onComplete () {
     this.formTarget.reset()
+  }
+
+  beforeCache () {
+    Rails.enableElement(this.formTarget)
   }
 
   showNotification (content) {
@@ -48,7 +54,7 @@ export default class extends Controller {
     this.loaderContainerTarget.innerHTML = ""
   }
 
-  waitForProcessUpdates (processId) {
+  waitForProcessing (processId) {
     const controller = this
 
     consumer.subscriptions.create({ channel: "SubscriptionChannel", process_id: processId }, {
@@ -56,7 +62,7 @@ export default class extends Controller {
         this.unsubscribe()
 
         if (data.status === "success") {
-          window.location.href = data.user_url
+          Turbolinks.visit(data.user_url, { action: "advance" })
         } else {
           controller.hideLoader()
           controller.showNotification(data.template)

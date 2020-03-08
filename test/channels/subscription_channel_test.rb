@@ -8,7 +8,6 @@ class SubscriptionChannelTest < ActionCable::Channel::TestCase
 
     assert subscription.confirmed?
     assert_has_stream_for process
-    assert_enqueued_with job: SubscriptionJob, args: [process]
   end
 
   test "does not stream with incorret process id" do

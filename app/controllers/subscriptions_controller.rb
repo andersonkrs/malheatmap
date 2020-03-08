@@ -9,9 +9,9 @@ class SubscriptionsController < ApplicationController
     return render_error_notification if subscription.invalid?
 
     if already_subscribed?
-      redirect_to user_path(subscription.username)
+      redirect_to_user_page
     else
-      subscription.save
+      enqueue_process
       render_loader
     end
   end
@@ -26,6 +26,15 @@ class SubscriptionsController < ApplicationController
 
   def already_subscribed?
     User.exists?(username: subscription.username)
+  end
+
+  def enqueue_process
+    subscription.save!
+    SubscriptionJob.set(wait: 1.second).perform_later(subscription)
+  end
+
+  def redirect_to_user_page
+    redirect_to user_path(subscription.username), status: :see_other, turbolinks: :advance
   end
 
   def render_error_notification
