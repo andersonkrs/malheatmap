@@ -27,5 +27,7 @@ module MalHeatmap
     config.assets.precompile = []
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
+    config.time_zone = "UTC"
+    config.active_record.default_timezone = :utc
   end
 end
