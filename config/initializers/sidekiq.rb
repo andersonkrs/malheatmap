@@ -1,10 +1,15 @@
 Sidekiq.configure_server do |config|
+  config.options[:concurrency] = Integer(ENV["SIDEKIQ_THREADS"] || 5)
   config.redis = { url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } }
   Rails.logger = Sidekiq.logger
+  ActiveRecord::Base.logger = Sidekiq.logger
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } }
+  config.redis = {
+    size: Integer(ENV["RAILS_MAX_THREADS"] || 5),
+    url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" }
+  }
 end
 
 ActiveSupport.on_load(:active_job) do

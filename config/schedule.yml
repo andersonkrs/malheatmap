@@ -1,6 +1,6 @@
 # Schedules data syncronization for all users every 8 hours
 user_update_scheduler:
-  cron: "0 */12 * * *"
+  cron: "*/2 * * * *"
   class: "UsersUpdateSchedulerJob"
   queue: low
   active_job: true
