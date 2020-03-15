@@ -30,4 +30,21 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  users:
+    show:
+      activities_on:
+        zero: "No activities on %{date}"
+        one: "One activity on %{date}"
+        other: "%{count} activities on %{date}"
+      captions:
+        how_we_count_activities: "How we count activities?"
+        how_we_count_activities_help: "A summary of watched episodes and read chapters."
+        less: "Less"
+        more: "More"
+        level_0: "None episodes/chapters watched/read on date"
+        level_1: "From 1 to 4 episodes/chapters watched/read on date"
+        level_2: "From 5 to 8 episodes/chapters watched/read on date"
+        level_3: "From 9 to 12 episodes/chapters watched/read on date"
+        level_4: "12+ episodes/chapters watched/read on date"
+
+

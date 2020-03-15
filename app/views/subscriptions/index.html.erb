@@ -1,4 +1,6 @@
-<div data-controller="subscription">
+<% @section_class = "is-medium" %>
+
+<div data-controller="subscription" data-action="turbolinks:before-cache@window->subscription#beforeCache">
   <div class="columns is-centered">
     <div class="column has-text-centered has-text-primary">
       <span class="icon is-large">
@@ -39,8 +41,8 @@
             <%= form.text_field :username,
                                 id: "username",
                                 class: "input",
-                                placeholder: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs",
-                                value: nil
+                                "data-target" => "subscription.subimitButton",
+                                placeholder: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs"
             %>
           </div>
 
