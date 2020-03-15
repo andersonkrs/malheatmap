@@ -1,10 +1,10 @@
-import "@fortawesome/fontawesome-free/js/all"
+import '@fortawesome/fontawesome-free/js/all'
 
-import "controllers"
+import 'controllers'
 
-import "../stylesheets/application"
+import '../stylesheets/application'
 
-require("@rails/ujs").start()
-require("turbolinks").start()
-require("channels")
-require.context("../images", true)
+require('@rails/ujs').start()
+require('turbolinks').start()
+require('channels')
+require.context('../images', true)
