@@ -1,6 +1,5 @@
 class UsersUpdateSchedulerJob < ApplicationJob
-  queue_as :low
-
+  queue_as :default
   private
 
   def perform
