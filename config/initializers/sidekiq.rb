@@ -3,6 +3,10 @@ Sidekiq.configure_server do |config|
   config.redis = { url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } }
   Rails.logger = Sidekiq.logger
   ActiveRecord::Base.logger = Sidekiq.logger
+
+  config.on(:startup) do
+    Sidekiq::Cron::Job.load_from_hash! YAML.load_file("config/schedule.yml")
+  end
 end
 
 Sidekiq.configure_client do |config|
@@ -10,10 +14,6 @@ Sidekiq.configure_client do |config|
     size: Integer(ENV["RAILS_MAX_THREADS"] || 5),
     url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" }
   }
-end
-
-ActiveSupport.on_load(:active_job) do
-  Sidekiq::Cron::Job.load_from_hash! YAML.load_file("config/schedule.yml") if Sidekiq.server?
 end
 
 unless Sidekiq.server?
