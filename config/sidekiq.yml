@@ -1,6 +1,10 @@
-:concurrency: 3
+:concurrency: 5
 :queues:
   - low
   - default
 :limits:
   low: 1
+:schedule:
+  UsersUpdateSchedulerJob:
+    every: "8h"
+    description: "Schedules data syncronization for all users"
