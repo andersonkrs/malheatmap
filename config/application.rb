@@ -18,6 +18,10 @@ Bundler.require(*Rails.groups)
 module MalHeatmap
   class Application < Rails::Application
     config.load_defaults 6.0
+    config.time_zone = "UTC"
+    config.active_record.default_timezone = :utc
+    config.autoload_paths << Rails.root.join("lib")
+    config.autoload_paths << Rails.root.join("services")
     config.generators.orm :active_record, primary_key_type: :uuid
     config.generators.test_framework :test_unit, fixture: false
     config.generators.factory_bot true
@@ -27,7 +31,5 @@ module MalHeatmap
     config.assets.precompile = []
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
-    config.time_zone = "UTC"
-    config.active_record.default_timezone = :utc
   end
 end

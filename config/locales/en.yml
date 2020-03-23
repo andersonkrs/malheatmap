@@ -30,6 +30,10 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  mal:
+    crawler:
+      errors:
+        profile_not_found: "Profile not found for username %{username}. Please check if you typed it correctly."
   users:
     show:
       activities_on:
@@ -37,8 +41,8 @@ en:
         one: "One activity on %{date}"
         other: "%{count} activities on %{date}"
       captions:
-        how_we_count_activities: "How we count activities?"
-        how_we_count_activities_help: "A summary of watched episodes and read chapters."
+        counting_text: "How is it counted?"
+        counting_help: "A summary of watched episodes and read chapters by day."
         less: "Less"
         more: "More"
         level_0: "None episodes/chapters watched/read on date"

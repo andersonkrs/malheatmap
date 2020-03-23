@@ -7,7 +7,7 @@ class SubscriptionJobTest < ActiveSupport::TestCase
   end
 
   test "updates subscription status to success when update service returns success" do
-    UpdateService.stub(:call, status: :success) do
+    UpdateService.stub(:perform, status: :success) do
       SubscriptionJob.perform_now(@subscription)
     end
 
@@ -16,7 +16,7 @@ class SubscriptionJobTest < ActiveSupport::TestCase
   end
 
   test "broadcasts status success with user url when update service returns success" do
-    UpdateService.stub(:call, status: :success) do
+    UpdateService.stub(:perform, status: :success) do
       SubscriptionJob.perform_now(@subscription)
     end
 
@@ -26,7 +26,7 @@ class SubscriptionJobTest < ActiveSupport::TestCase
   test "updates subscription status to error when update service returns error" do
     error_message = "Somenting went wrong"
 
-    UpdateService.stub(:call, status: :error, message: error_message) do
+    UpdateService.stub(:perform, status: :error, message: error_message) do
       SubscriptionJob.perform_now(@subscription)
     end
 
@@ -37,7 +37,7 @@ class SubscriptionJobTest < ActiveSupport::TestCase
   test "broadcasts status error with error template when update service returns an error" do
     template_error = "<error>ops!</error>"
 
-    UpdateService.stub(:call, status: :error, message: "ops!") do
+    UpdateService.stub(:perform, status: :error, message: "ops!") do
       ApplicationController.stub(:render, template_error) do
         SubscriptionJob.perform_now(@subscription)
       end

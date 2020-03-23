@@ -3,11 +3,12 @@ require "test_helper"
 class UpdateServiceTest < ActiveSupport::TestCase
   setup do
     @username = "myusername"
-    @crawler_service_mock = MiniTest::Mock.new
+    @crawler_mock = MiniTest::Mock.new
+    @crawler_mock.expect :requests_interval=, nil, [Integer]
   end
 
   def call
-    UpdateService.call(@username, @crawler_service_mock)
+    UpdateService.perform(@username, @crawler_mock)
   end
 
   def setup_success_response
@@ -17,7 +18,7 @@ class UpdateServiceTest < ActiveSupport::TestCase
       profile: {
         avatar_url: "http://dummy/avatar"
       },
-      entries: [
+      history: [
         {
           timestamp: "2019-12-06T15:00:00",
           amount: 1,
@@ -35,16 +36,13 @@ class UpdateServiceTest < ActiveSupport::TestCase
       ]
     }
 
-    @crawler_service_mock.expect :call, response, [@username]
+    @crawler_mock.expect :crawl, response, [@username]
   end
 
   def setup_error_response
-    response = {
-      status: :error,
-      message: "Something went wrong"
-    }
-
-    @crawler_service_mock.expect :call, response, [@username]
+    @crawler_mock.expect :crawl, [@username] do
+      raise MAL::Errors::CrawlError, "Something went wrong"
+    end
   end
 
   test "returns status success when crawler performs without errros" do
@@ -110,12 +108,12 @@ class UpdateServiceTest < ActiveSupport::TestCase
 
   test "does not update user's checksum when it does not have new entries" do
     setup_success_response
-    user = create(:user, username: @username, checksum: "e7190cb4643a29cb58fb5bc175627152")
+    user = create(:user, username: @username, checksum: "aa1088d563b223d57b1ba2c77745688d")
 
     result = call
 
     assert_equal(
-      { status: :not_processed, message: "User #{@username} hasn't new entries" },
+      { status: :not_processed, message: "User #{@username} hasn't new data" },
       result
     )
 

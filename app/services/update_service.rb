@@ -1,62 +1,58 @@
 class UpdateService
-  include CallableService
-
-  def initialize(username, crawler_service = CrawlerService)
+  def initialize(username, crawler)
     @user = User.find_or_initialize_by(username: username)
-    @crawler_service = crawler_service
+    @crawler = crawler
+    @crawler.requests_interval = Rails.application.config.crawler_requests_interval
   end
 
-  def call
-    update_data
-    result
+  def self.perform(username, crawler = MAL::UserCrawler)
+    self.new(username, crawler).perform
+  end
+
+  def perform
+    data = @crawler.crawl(@user.username)
+
+    process_data(data)
+  rescue MAL::Errors::CrawlError => error
+    { status: :error, message: pretty_crawler_error(error.reference, error.message) }
   end
 
   private
 
-  attr_reader :user, :new_checksum, :result, :crawler_service
-
-  def update_data
-    response = crawler_service.call(user.username)
-    status, message, profile, entries = response.values_at(:status, :message, :profile, :entries)
-
-    case status
-    when :success
-      process_data(profile, entries)
-    when :error
-      @result = { status: :error, message: message }
-    end
-  end
-
-  def process_data(profile, entries)
-    generate_checksum(entries)
-
-    unless checksum_changed?
-      @result = { status: :not_processed, message: "User #{user.username} hasn't new entries" }
-      return
+  def process_data(data)
+    @user.checksum = generate_checksum(data)
+    unless @user.checksum_changed?
+      return { status: :not_processed, message: "User #{@user.username} hasn't new data" }
     end
 
-    save(profile, entries)
-    @result = { status: :success, message: "" }
+    profile, history = data.values_at(:profile, :history)
+    save(profile, history)
+
+    { status: :success, message: "" }
   end
 
-  def generate_checksum(entries)
-    json = Marshal.dump(entries)
-    @new_checksum = Digest::MD5.hexdigest(json)
+  def generate_checksum(data)
+    json = Marshal.dump(data)
+    Digest::MD5.hexdigest(json)
   end
 
-  def checksum_changed?
-    user.checksum != new_checksum
-  end
-
-  def save(profile_data, entries)
+  def save(profile_data, history)
     ActiveRecord::Base.transaction do
-      user.update!(checksum: new_checksum, **profile_data)
+      @user.update!(**profile_data)
 
-      Entry.where(user: user).last_three_weeks.delete_all
+      Entry.where(user: @user).last_three_weeks.delete_all
 
-      entries.each do |entry|
-        Entry.create!(user: user, **entry)
+      history.each do |entry|
+        Entry.create!(user: @user, **entry)
       end
     end
+  end
+
+  def pretty_crawler_error(reference, default_message)
+  I18n.t(
+      "mal.crawler.errors.#{reference}",
+      username: @user.username,
+      default: default_message
+    )
   end
 end

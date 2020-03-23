@@ -22,7 +22,7 @@
           </figure>
           <div class="media-content">
             <p>
-              <a class="is-size-4" target="_blank" rel="noopener noreferrer" href="<%= mal_profile_url(@user.username) %>"><%= @user.username %></a>
+              <a class="is-size-4" target="_blank" rel="noopener noreferrer" href="<%= profile_url(@user.username) %>"><%= @user.username %></a>
               <span class="icon is-small"><i class="fa fa-external-link-alt"></i></span>
             </p>
           </div>
@@ -68,8 +68,8 @@
 
           <div class="column is-full legend-container">
             <div class="columns is-mobile">
-              <div class="column has-text-left" title="<%= t :how_we_count_activities_help, scope: [:users, :show, :captions] %>">
-                <%= t :how_we_count_activities, scope: [:users, :show, :captions] %>
+              <div class="column has-text-left" title="<%= t :counting_help, scope: [:users, :show, :captions] %>">
+                <%= t :counting_text, scope: [:users, :show, :captions] %>
               </div>
               <div class="column has-text-right">
                 <span><%= t :less, scope: [:users, :show, :captions] %></span>
@@ -102,9 +102,9 @@
                 <% entries.each do |entry| %>
 
                   <% if entry.anime? %>
-                    <p><i class="fas fa-tv has-margin-right-5"></i>Watched  <a target="_blank" rel="noopener noreferrer" href="<%= mal_item_url(entry.item_kind, entry.item_id) %>"><%= entry.item_name %></a> ep. <%= entry.amount %> </p>
+                    <p><i class="fas fa-tv has-margin-right-5"></i><a target="_blank" rel="noopener noreferrer" href="<%= anime_url(entry.item_id) %>"><%= entry.item_name %></a> ep. <%= entry.amount %> </p>
                   <% else %>
-                    <p><i class="fas fa-book-reader has-margin-right-5"></i>Read  <a target="_blank" rel="noopener noreferrer" href="<%= mal_item_url(entry.item_kind, entry.item_id) %>"><%= entry.item_name %></a> chap. <%= entry.amount %> </p>
+                    <p><i class="fas fa-book-reader has-margin-right-5"></i><a target="_blank" rel="noopener noreferrer" href="<%= manga_url(entry.item_id) %>"><%= entry.item_name %></a> chap. <%= entry.amount %> </p>
                   <% end %>
 
                 <% end %>

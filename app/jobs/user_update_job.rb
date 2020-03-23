@@ -4,7 +4,7 @@ class UserUpdateJob < ApplicationJob
   def perform(username)
     logger.info "Updating data for user: #{username}"
 
-    response = UpdateService.call(username)
+    response = UpdateService.perform(username)
 
     logger.info "Response: #{response}"
   end

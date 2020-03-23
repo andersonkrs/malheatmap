@@ -12,7 +12,7 @@ class UserUpdateJobTest < ActiveSupport::TestCase
       { status: :ok }
     }
 
-    UpdateService.stub(:call, stubbed_method) do
+    UpdateService.stub(:perform, stubbed_method) do
       UserUpdateJob.perform_now(@username)
     end
   end
