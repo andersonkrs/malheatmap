@@ -17,7 +17,7 @@ module MAL
     end
 
     def self.crawl(username)
-      self.new(username).crawl_data
+      new(username).crawl_data
     end
 
     def crawl_data

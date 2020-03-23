@@ -2,7 +2,7 @@ require "test_helper"
 
 class UserCrawlerTest < ActiveSupport::TestCase
   setup do
-    travel_to Time.zone.local(2020, 03, 21, 12, 30)
+    travel_to Time.zone.local(2020, 3, 21, 12, 30)
   end
 
   test "returns user profile info" do

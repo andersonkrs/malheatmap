@@ -6,7 +6,7 @@ class UpdateService
   end
 
   def self.perform(username, crawler = MAL::UserCrawler)
-    self.new(username, crawler).perform
+    new(username, crawler).perform
   end
 
   def perform
@@ -49,7 +49,7 @@ class UpdateService
   end
 
   def pretty_crawler_error(reference, default_message)
-  I18n.t(
+    I18n.t(
       "mal.crawler.errors.#{reference}",
       username: @user.username,
       default: default_message

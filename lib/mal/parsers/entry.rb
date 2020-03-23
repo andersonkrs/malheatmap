@@ -12,7 +12,7 @@ module MAL
           timestamp: extract_timestamp,
           amount: page.at_xpath(".//td[1]/strong").text.to_i,
           item_id: extract_item_id,
-          item_name: page.at_xpath(".//td[1]/a/text()").text,
+          item_name: page.at_xpath(".//td[1]/a/text()").text
         }
       end
 
