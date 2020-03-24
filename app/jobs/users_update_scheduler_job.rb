@@ -4,7 +4,7 @@ class UsersUpdateSchedulerJob < ApplicationJob
   private
 
   def perform
-    users = User.select(:username).order(:updated_at).all
+    users = User.select(:username).where("updated_at > ?", 12.hours.ago).all
 
     users.each do |user|
       UserUpdateJob.perform_later(user.username)
