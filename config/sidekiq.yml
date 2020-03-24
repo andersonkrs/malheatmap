@@ -4,7 +4,4 @@
   - default
 :limits:
   low: 1
-:schedule:
-  UsersUpdateSchedulerJob:
-    every: "1h"
-    description: "Schedules data syncronization for all users"
+:timeout: 8

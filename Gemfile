@@ -13,7 +13,6 @@ gem "rollbar"
 gem "sass-rails"
 gem "sidekiq"
 gem "sidekiq-limit_fetch"
-gem "sidekiq-scheduler"
 gem "turbolinks"
 gem "webpacker"
 

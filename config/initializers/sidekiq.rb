@@ -16,7 +16,6 @@ end
 
 unless Sidekiq.server?
   require "sidekiq/web"
-  require "sidekiq-scheduler/web"
 
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
     ActiveSupport::SecurityUtils.secure_compare(
