@@ -6,5 +6,5 @@
   low: 1
 :schedule:
   UsersUpdateSchedulerJob:
-    every: "8h"
+    every: "1h"
     description: "Schedules data syncronization for all users"
