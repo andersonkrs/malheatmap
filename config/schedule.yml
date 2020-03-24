@@ -1,0 +1,4 @@
+syncronize_users_data:
+  cron: "*/25 * * * *"
+  class: "UsersUpdateSchedulerJob"
+  active_job: true

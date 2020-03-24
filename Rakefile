@@ -15,10 +15,3 @@ task qa: [:environment] do
   sh "bin/rails test -p"
   sh "bin/rails test:system"
 end
-
-task syncronize_users_data: [:environment] do
-  puts "\n== Scheduling users data syncronization ==\n"
-  
-  UsersUpdateSchedulerJob.perform_now
-end
-
