@@ -1,6 +1,6 @@
 require "test_helper"
 
-class UpdateServiceTest < ActiveSupport::TestCase
+class SyncronizationServiceTest < ActiveSupport::TestCase
   setup do
     @username = "myusername"
     @crawler_mock = MiniTest::Mock.new
@@ -8,7 +8,7 @@ class UpdateServiceTest < ActiveSupport::TestCase
   end
 
   def call
-    UpdateService.perform(@username, @crawler_mock)
+    SyncronizationService.syncronize_user_data(@username, @crawler_mock)
   end
 
   def setup_success_response

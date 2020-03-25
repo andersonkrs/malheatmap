@@ -1,6 +1,5 @@
 class SubscriptionJob < ApplicationJob
   attr_reader :subscription
-
   delegate :username, :reason, :status, to: :subscription
 
   after_perform :broadcast_result
@@ -10,7 +9,7 @@ class SubscriptionJob < ApplicationJob
   def perform(subscription)
     @subscription = subscription
 
-    response = UpdateService.perform(username)
+    response = SyncronizationService.syncronize_user_data(username)
     subscription.update!(status: response[:status], reason: response[:message])
   end
 

@@ -4,7 +4,7 @@ module MAL
   class UserCrawler < Mechanize
     include URLS
 
-    class_attribute :requests_interval, default: 0
+    class_attribute :requests_interval, default: 1
 
     def initialize(username)
       super()

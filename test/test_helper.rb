@@ -6,6 +6,8 @@ require "rails/test_help"
 require "minitest/mock"
 require "factory_bot_rails"
 
+Rails.application.load_tasks
+
 module ActiveSupport
   class TestCase
     include ActiveJob::TestHelper

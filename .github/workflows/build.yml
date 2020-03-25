@@ -56,7 +56,7 @@ jobs:
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       run: |
         bin/setup
-        bundle exec rake qa
+        bin/qa
 
     - name: Upload failed tests screenshots
       uses: actions/upload-artifact@v1

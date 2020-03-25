@@ -1,15 +1,15 @@
-class UpdateService
+class SyncronizationService
   def initialize(username, crawler)
     @user = User.find_or_initialize_by(username: username)
     @crawler = crawler
     @crawler.requests_interval = Rails.application.config.crawler_requests_interval
   end
 
-  def self.perform(username, crawler = MAL::UserCrawler)
-    new(username, crawler).perform
+  def self.syncronize_user_data(username, crawler = MAL::UserCrawler)
+    new(username, crawler).syncronize_user_data
   end
 
-  def perform
+  def syncronize_user_data
     data = @crawler.crawl(@user.username)
 
     process_data(data)
