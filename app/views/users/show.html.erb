@@ -101,10 +101,10 @@
 
                 <% entries.each do |entry| %>
 
-                  <% if entry.anime? %>
-                    <p><i class="fas fa-tv has-margin-right-5"></i><a target="_blank" rel="noopener noreferrer" href="<%= anime_url(entry.item_id) %>"><%= entry.item_name %></a> ep. <%= entry.amount %> </p>
+                  <% if entry.item.anime? %>
+                    <p><i class="fas fa-tv has-margin-right-5"></i><a target="_blank" rel="noopener noreferrer" href="<%= anime_url(entry.mal_id) %>"><%= entry.name %></a> ep. <%= entry.amount %> </p>
                   <% else %>
-                    <p><i class="fas fa-book-reader has-margin-right-5"></i><a target="_blank" rel="noopener noreferrer" href="<%= manga_url(entry.item_id) %>"><%= entry.item_name %></a> chap. <%= entry.amount %> </p>
+                    <p><i class="fas fa-book-reader has-margin-right-5"></i><a target="_blank" rel="noopener noreferrer" href="<%= manga_url(entry.mal_id) %>"><%= entry.name %></a> chap. <%= entry.amount %> </p>
                   <% end %>
 
                 <% end %>

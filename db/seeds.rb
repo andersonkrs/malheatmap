@@ -3,21 +3,23 @@ user = User.create(
   avatar_url: "https://cdn.myanimelist.net/images/userimages/7868083.jpg?t=1579970400"
 )
 
+item = Item.create!(
+  mal_id: 38_992,
+  name: "Rikei ga Koi ni Ochita no de Shoumei shitemita.",
+  kind: :anime
+)
+
 Entry.create([
   {
     user: user,
     timestamp: Time.zone.local(2019, 12, 25, 12, 15, 43),
     amount: 2,
-    item_id: 38_992,
-    item_name: "Rikei ga Koi ni Ochita no de Shoumei shitemita.",
-    item_kind: Entry.item_kinds[:anime]
+    item: item
   },
   {
     user: user,
     timestamp: Time.zone.local(2019, 12, 25, 18, 10, 15),
     amount: 1,
-    item_id: 38_992,
-    item_name: "Rikei ga Koi ni Ochita no de Shoumei shitemita.",
-    item_kind: Entry.item_kinds[:anime]
+    item: item
   }
 ])

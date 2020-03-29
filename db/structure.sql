@@ -66,14 +66,26 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.entries (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
-    "timestamp" timestamp without time zone,
-    amount integer,
-    item_id integer,
-    item_name character varying,
+    "timestamp" timestamp without time zone NOT NULL,
+    amount integer NOT NULL,
     user_id uuid,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    item_kind public.item_kind
+    item_id uuid NOT NULL
+);
+
+
+--
+-- Name: items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.items (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    mal_id integer NOT NULL,
+    name character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    kind public.item_kind NOT NULL
 );
 
 
@@ -106,7 +118,7 @@ CREATE TABLE public.subscriptions (
 
 CREATE TABLE public.users (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
-    username character varying,
+    username character varying NOT NULL,
     avatar_url character varying,
     checksum character varying,
     created_at timestamp(6) without time zone NOT NULL,
@@ -128,6 +140,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.entries
     ADD CONSTRAINT entries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: items items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT items_pkey PRIMARY KEY (id);
 
 
 --
@@ -155,6 +175,13 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_entries_on_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entries_on_item_id ON public.entries USING btree (item_id);
+
+
+--
 -- Name: index_entries_on_timestamp; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -166,6 +193,13 @@ CREATE INDEX index_entries_on_timestamp ON public.entries USING btree ("timestam
 --
 
 CREATE INDEX index_entries_on_user_id ON public.entries USING btree (user_id);
+
+
+--
+-- Name: index_items_on_mal_id_and_kind; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_items_on_mal_id_and_kind ON public.items USING btree (mal_id, kind);
 
 
 --
@@ -184,6 +218,14 @@ ALTER TABLE ONLY public.entries
 
 
 --
+-- Name: entries fk_rails_dfa0a673ee; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entries
+    ADD CONSTRAINT fk_rails_dfa0a673ee FOREIGN KEY (item_id) REFERENCES public.items(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -196,6 +238,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200202023458'),
 ('20200229234332'),
 ('20200301000733'),
-('20200306152120');
+('20200306152120'),
+('20200328040329'),
+('20200328041327'),
+('20200328162236'),
+('20200328164202'),
+('20200328164518');
 
 

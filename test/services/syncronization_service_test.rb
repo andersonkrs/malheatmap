@@ -7,7 +7,7 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
     @crawler_mock.expect :requests_interval=, nil, [Integer]
   end
 
-  def call
+  def syncronize
     SyncronizationService.syncronize_user_data(@username, @crawler_mock)
   end
 
@@ -48,7 +48,7 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
   test "returns status success when crawler performs without errros" do
     setup_success_response
 
-    result = call
+    result = syncronize
 
     assert_equal result, status: :success, message: ""
   end
@@ -56,7 +56,7 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
   test "creates user record and inserts all entries when it does not exist" do
     setup_success_response
 
-    call
+    syncronize
 
     user = User.includes(:entries).find_by(username: @username)
     assert user.checksum.present?
@@ -66,21 +66,23 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
     entry = user.entries.first
     assert_equal DateTime.new(2019, 12, 6, 16, 11, 3), entry.timestamp
     assert_equal 6, entry.amount
-    assert_equal "One Punch Man", entry.item_name
-    assert entry.anime?
+    assert_equal 5, entry.mal_id
+    assert_equal "One Punch Man", entry.name
+    assert_equal "anime", entry.kind
 
     entry = user.entries.last
     assert_equal DateTime.new(2019, 12, 6, 15, 0, 0), entry.timestamp
     assert_equal 1, entry.amount
-    assert_equal "Death Note", entry.item_name
-    assert entry.manga?
+    assert_equal 121, entry.mal_id
+    assert_equal "Death Note", entry.name
+    assert_equal "manga", entry.kind
   end
 
   test "generates new checksum when user already exists" do
     user = create(:user, username: @username)
     setup_success_response
 
-    call
+    syncronize
 
     assert_changes -> { user.checksum } do
       user.reload
@@ -92,7 +94,7 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
     setup_success_response
 
     assert_changes -> { user.entries.count }, from: 0, to: 2 do
-      call
+      syncronize
     end
   end
 
@@ -102,7 +104,7 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
     setup_success_response
 
     assert_changes -> { user.entries.count }, from: 1, to: 3 do
-      call
+      syncronize
     end
   end
 
@@ -110,7 +112,7 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
     setup_success_response
     user = create(:user, username: @username, checksum: "aa1088d563b223d57b1ba2c77745688d")
 
-    result = call
+    result = syncronize
 
     assert_equal(
       { status: :not_processed, message: "User #{@username} hasn't new data" },
@@ -125,7 +127,7 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
   test "returns error status when someting goes wrong with crawler service" do
     setup_error_response
 
-    result = call
+    result = syncronize
 
     assert_equal({ status: :error, message: "Something went wrong" }, result)
   end
@@ -133,7 +135,7 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
   test "does not create user's record when crawler returns an error" do
     setup_error_response
 
-    call
+    syncronize
 
     assert_not User.exists?(username: @username)
   end

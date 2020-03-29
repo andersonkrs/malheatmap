@@ -21,12 +21,13 @@ class SyncronizationService
 
   def process_data(data)
     @user.checksum = generate_checksum(data)
+
     unless @user.checksum_changed?
       return { status: :not_processed, message: "User #{@user.username} hasn't new data" }
     end
 
-    profile, history = data.values_at(:profile, :history)
-    save(profile, history)
+    import(data)
+    generate_activities_from_history
 
     { status: :success, message: "" }
   end
@@ -36,17 +37,41 @@ class SyncronizationService
     Digest::MD5.hexdigest(json)
   end
 
-  def save(profile_data, history)
+  def import(data)
+    profile_data, history = data.values_at(:profile, :history)
+
     ActiveRecord::Base.transaction do
-      @user.update!(**profile_data)
-
-      Entry.where(user: @user).last_three_weeks.delete_all
-
-      history.each do |entry|
-        Entry.create!(user: @user, **entry)
-      end
+      import_profile_data(profile_data)
+      import_entries(history)
     end
   end
+
+  def import_profile_data(data)
+    @user.assign_attributes(**data)
+    @user.save!
+  end
+
+  def import_entries(history)
+    Entry.where(user: @user).last_three_weeks.delete_all
+
+    history.each do |entry|
+      item = find_or_create_item(entry)
+
+      Entry.create!(user: @user, item: item, **entry.slice(:amount, :timestamp))
+    end
+  end
+
+  def find_or_create_item(entry)
+    id, kind, name = entry.values_at(:item_id, :item_kind, :item_name)
+
+    Item.find_or_create_by!(mal_id: id, kind: kind, name: name)
+  end
+
+  def generate_activities_from_history
+    ActivitiesGeneratorService.generate_from_user_history(@user)
+  end
+
+  def generate_signature; end
 
   def pretty_crawler_error(reference, default_message)
     I18n.t(

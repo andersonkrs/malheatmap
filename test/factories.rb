@@ -14,10 +14,23 @@ FactoryBot.define do
 
   factory :entry do
     association :user
+    association :item
+
     timestamp { Time.zone.now }
     amount { Faker::Number.positive.to_i }
-    item_id { Faker::Number.positive.to_i }
-    item_name { Faker::Book.title }
-    item_kind { Entry.item_kinds.keys.sample }
+
+    trait :anime do
+      association :item, kind: :anime
+    end
+
+    trait :manga do
+      association :item, kind: :manga
+    end
+  end
+
+  factory :item do
+    mal_id { Faker::Number.positive.to_i }
+    name { Faker::Book.title }
+    kind { Item.kinds.keys.sample }
   end
 end
