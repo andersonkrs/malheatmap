@@ -27,7 +27,6 @@ class SyncronizationService
     end
 
     import(data)
-    generate_activities_from_history
 
     { status: :success, message: "" }
   end
@@ -66,12 +65,6 @@ class SyncronizationService
 
     Item.find_or_create_by!(mal_id: id, kind: kind, name: name)
   end
-
-  def generate_activities_from_history
-    ActivitiesGeneratorService.generate_from_user_history(@user)
-  end
-
-  def generate_signature; end
 
   def pretty_crawler_error(reference, default_message)
     I18n.t(

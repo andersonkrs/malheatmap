@@ -28,6 +28,14 @@ FactoryBot.define do
     end
   end
 
+  factory :activity do
+    association :user
+    association :item
+
+    date { Faker::Date.in_date_period }
+    amount { Faker::Number.positive.to_i }
+  end
+
   factory :item do
     mal_id { Faker::Number.positive.to_i }
     name { Faker::Book.title }

@@ -49,6 +49,21 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: activities; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.activities (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    user_id uuid NOT NULL,
+    item_id uuid NOT NULL,
+    date date NOT NULL,
+    amount integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -127,6 +142,14 @@ CREATE TABLE public.users (
 
 
 --
+-- Name: activities activities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activities
+    ADD CONSTRAINT activities_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -175,6 +198,20 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_activities_on_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_activities_on_item_id ON public.activities USING btree (item_id);
+
+
+--
+-- Name: index_activities_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_activities_on_user_id ON public.activities USING btree (user_id);
+
+
+--
 -- Name: index_entries_on_item_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -207,6 +244,22 @@ CREATE UNIQUE INDEX index_items_on_mal_id_and_kind ON public.items USING btree (
 --
 
 CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (username);
+
+
+--
+-- Name: activities fk_rails_7e11bb717f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activities
+    ADD CONSTRAINT fk_rails_7e11bb717f FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: activities fk_rails_98c29480fc; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activities
+    ADD CONSTRAINT fk_rails_98c29480fc FOREIGN KEY (item_id) REFERENCES public.items(id);
 
 
 --
@@ -243,6 +296,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200328041327'),
 ('20200328162236'),
 ('20200328164202'),
-('20200328164518');
+('20200328164518'),
+('20200329040026');
 
 
