@@ -83,7 +83,7 @@ CREATE TABLE public.entries (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     "timestamp" timestamp without time zone NOT NULL,
     amount integer NOT NULL,
-    user_id uuid,
+    user_id uuid NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     item_id uuid NOT NULL
@@ -297,6 +297,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200328162236'),
 ('20200328164202'),
 ('20200328164518'),
-('20200329040026');
+('20200329040026'),
+('20200329145233');
 
 
