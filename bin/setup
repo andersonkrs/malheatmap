@@ -20,6 +20,7 @@ FileUtils.chdir APP_ROOT do
 
   puts '== Installing ruby dependencies =='
   system! "gem install bundler --conservative"
+  system! "bundle update --bundler"
   system("bundle check") || system!("bundle install")
 
   puts "== Installing javascript dependencies =="
