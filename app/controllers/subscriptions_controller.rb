@@ -6,7 +6,7 @@ class SubscriptionsController < ApplicationController
   def create
     @subscription = Subscription.new(subscription_params)
 
-    return render_error_notification if subscription.invalid?
+    return render_error_notification if @subscription.invalid?
 
     if already_subscribed?
       redirect_to_user_page
@@ -27,7 +27,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def enqueue_process
-    subscription.save!
+    @subscription.save!
     SubscriptionJob.set(wait: 1.second).perform_later(@subscription)
   end
 
