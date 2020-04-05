@@ -212,6 +212,13 @@ CREATE INDEX index_activities_on_user_id ON public.activities USING btree (user_
 
 
 --
+-- Name: index_activities_on_user_id_and_item_id_and_date; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_activities_on_user_id_and_item_id_and_date ON public.activities USING btree (user_id, item_id, date);
+
+
+--
 -- Name: index_entries_on_item_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -298,6 +305,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200328164202'),
 ('20200328164518'),
 ('20200329040026'),
-('20200329145233');
+('20200329145233'),
+('20200404024047');
 
 

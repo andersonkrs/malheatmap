@@ -4,6 +4,6 @@ class Activity < ApplicationRecord
 
   delegate :name, :kind, :mal_id, to: :item
 
-  validates :amount, numericality: { greater_than_or_equal_to: 0 }
+  validates :amount, presence: true, numericality: { only_integer: true }
   validates :date, presence: true
 end
