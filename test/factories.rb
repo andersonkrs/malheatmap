@@ -1,5 +1,3 @@
-require "faker"
-
 FactoryBot.define do
   factory :subscription do
     username { Faker::Internet.unique.username(separators: %w[_-]) }
