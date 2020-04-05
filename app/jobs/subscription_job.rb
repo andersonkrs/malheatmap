@@ -1,5 +1,6 @@
 class SubscriptionJob < ApplicationJob
   attr_reader :subscription
+
   delegate :username, :reason, :status, to: :subscription
 
   after_perform :broadcast_result
