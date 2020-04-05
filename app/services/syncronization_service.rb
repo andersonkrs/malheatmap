@@ -27,6 +27,7 @@ class SyncronizationService
     end
 
     import(data)
+    generate_activities
 
     { status: :success, message: "" }
   end
@@ -64,6 +65,11 @@ class SyncronizationService
     id, kind, name = entry.values_at(:item_id, :item_kind, :item_name)
 
     Item.find_or_create_by!(mal_id: id, kind: kind, name: name)
+  end
+
+  def generate_activities
+    generator = ActivitiesGeneratorService.new(@user)
+    generator.generate
   end
 
   def pretty_crawler_error(reference, default_message)
