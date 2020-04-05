@@ -64,18 +64,27 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
     assert_equal 2, user.entries.size
 
     entry = user.entries.first
-    assert_equal DateTime.new(2019, 12, 6, 16, 11, 3), entry.timestamp
-    assert_equal 6, entry.amount
-    assert_equal 5, entry.mal_id
-    assert_equal "One Punch Man", entry.name
-    assert_equal "anime", entry.kind
-
-    entry = user.entries.last
     assert_equal DateTime.new(2019, 12, 6, 15, 0, 0), entry.timestamp
     assert_equal 1, entry.amount
     assert_equal 121, entry.mal_id
     assert_equal "Death Note", entry.name
     assert_equal "manga", entry.kind
+
+    entry = user.entries.last
+    assert_equal DateTime.new(2019, 12, 6, 16, 11, 3), entry.timestamp
+    assert_equal 6, entry.amount
+    assert_equal 5, entry.mal_id
+    assert_equal "One Punch Man", entry.name
+    assert_equal "anime", entry.kind
+  end
+
+  test "generates user's activities" do
+    setup_success_response
+
+    syncronize
+
+    user = User.find_by(username: @username)
+    assert_equal 2, user.activities.size
   end
 
   test "generates new checksum when user already exists" do

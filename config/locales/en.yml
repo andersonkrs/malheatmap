@@ -36,6 +36,8 @@ en:
         profile_not_found: "Profile not found for username %{username}. Please check if you typed it correctly."
   users:
     show:
+      now: "Now"
+      beggining: "Beggining"
       activities_on:
         zero: "No activities on %{date}"
         one: "One activity on %{date}"
@@ -50,5 +52,12 @@ en:
         level_2: "From 5 to 8 episodes/chapters watched/read on date"
         level_3: "From 9 to 12 episodes/chapters watched/read on date"
         level_4: "12+ episodes/chapters watched/read on date"
+    activity:
+      episodes:
+        one: "1 episode"
+        other: "%{count} episodes"
+      chapters:
+        one: "1 chapter"
+        other: "%{count} chapters"
 
 

@@ -7,8 +7,6 @@ class Entry < ApplicationRecord
   validates :timestamp, presence: true
   validates :amount, numericality: { greater_than_or_equal_to: 0 }
 
-  default_scope { order(timestamp: :desc) }
-
   scope :last_three_weeks, lambda {
     where("timestamp >= ?", 3.weeks.ago.at_beginning_of_day.in_time_zone)
   }

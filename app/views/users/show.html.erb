@@ -13,7 +13,7 @@
 <div class="columns">
   <div class="column is-6-fullhd is-offset-3-fullhd is-8-widescreen is-offset-2-widescreen is-8-desktop is-offset-2-desktop is-10-tablet is-offset-1-tablet is-full-mobile">
 
-    <div class="columns is-multiline  ">
+    <div class="columns is-multiline">
 
       <div class="column is-full">
         <article class="media">
@@ -33,7 +33,7 @@
         <div class="columns is-multiline bordered">
 
           <div class="column is-full">
-            <% grouped_entries = @user.entries.group_by { |entry| entry.timestamp.to_date } %>
+            <% grouped_activities = @user.activities.group_by { |activity| activity.date } %>
 
             <div class="graph-container has-text-centered">
               <div class="graph">
@@ -51,14 +51,14 @@
 
                 <ul class="squares">
                   <% (Date.today.beginning_of_year..Date.today.end_of_year).each do |date| %>
-                    <% entry_count = (grouped_entries[date] || []).size %>
-                    <% level = entry_count.clamp(0, 4) %>
+                    <% activity_count = (grouped_activities[date] || []).size %>
+                    <% level = activity_count.clamp(0, 4) %>
                     <% formated_date = l date, format: :long %>
 
                     <li class="square"
                         data-level="<%= level %>"
                         data-date="<%= date.to_s %>"
-                        title="<%= t :activities_on, scope: [:users, :show], count: entry_count, date: formated_date %>"
+                        title="<%= t ".activities_on", count: activity_count, date: formated_date %>"
                     ></li>
                   <% end %>
                 </ul>
@@ -68,19 +68,19 @@
 
           <div class="column is-full legend-container">
             <div class="columns is-mobile">
-              <div class="column has-text-left" title="<%= t :counting_help, scope: [:users, :show, :captions] %>">
-                <%= t :counting_text, scope: [:users, :show, :captions] %>
+              <div class="column has-text-left" title="<%= t ".captions.counting_help" %>">
+                <%= t ".captions.counting_text" %>
               </div>
               <div class="column has-text-right">
-                <span><%= t :less, scope: [:users, :show, :captions] %></span>
+                <span><%= t ".captions.less" %></span>
                 <ul class="legend">
 
                   <% (0..4).each do |level| %>
-                    <li class="square" data-level="<%= level %>" title="<%= t "level_#{level}", scope: [:users, :show, :captions] %>"></li>
+                    <li class="square" data-level="<%= level %>" title="<%= t ".captions.level_#{level}" %>"></li>
                   <% end %>
 
                 </ul>
-                <span><%= t :more, scope: [:users, :show, :captions] %></span>
+                <span><%= t ".captions.more" %></span>
               </div>
             </div>
           </div>
@@ -90,30 +90,22 @@
       <div class="column is-full">
         <div class="timeline">
           <header class="timeline-header">
-            <span class="tag is-medium is-primary">Now</span>
+            <span class="tag is-medium is-primary"><%= t ".now" %></span>
           </header>
 
-          <% grouped_entries.each do |date, entries| %>
+          <% grouped_activities.each do |date, activities| %>
             <div class="timeline-item">
               <div class="timeline-marker is-primary"></div>
               <div class="timeline-content">
                 <p class="heading"><%= date.strftime("%B %-d, %Y") %></p>
 
-                <% entries.each do |entry| %>
-
-                  <% if entry.item.anime? %>
-                    <p><i class="fas fa-tv has-margin-right-5"></i><a target="_blank" rel="noopener noreferrer" href="<%= anime_url(entry.mal_id) %>"><%= entry.name %></a> ep. <%= entry.amount %> </p>
-                  <% else %>
-                    <p><i class="fas fa-book-reader has-margin-right-5"></i><a target="_blank" rel="noopener noreferrer" href="<%= manga_url(entry.mal_id) %>"><%= entry.name %></a> chap. <%= entry.amount %> </p>
-                  <% end %>
-
-                <% end %>
+                <%= render partial: "activity", collection: activities %>
               </div>
             </div>
           <% end %>
 
           <header class="timeline-header">
-            <span class="tag is-medium is-primary">Beginning</span>
+            <span class="tag is-medium is-primary"><%= t ".beggining" %></span>
           </header>
         </div>
       </div>

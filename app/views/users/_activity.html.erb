@@ -1,0 +1,5 @@
+<% if activity.item.anime? %>
+  <p><i class="fas fa-tv has-margin-right-5"></i><a target="_blank" rel="noopener noreferrer" href="<%= anime_url(activity.mal_id) %>"><%= activity.name %></a> <%= t ".episodes", count: activity.amount %> </p>
+<% else %>
+  <p><i class="fas fa-book-reader has-margin-right-5"></i><a target="_blank" rel="noopener noreferrer" href="<%= manga_url(activity.mal_id) %>"><%= activity.name %></a> <%= t ".chapters", count: activity.amount %> </p>
+<% end %>
