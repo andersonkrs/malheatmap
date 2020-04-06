@@ -4,6 +4,7 @@ set -e
 echo "== Running linters =="
 bundle exec rubocop
 bundle exec reek
+bundle exec brakeman -A --no-pager
 yarn eslint app/javascript
 
 echo "== Running tests =="
