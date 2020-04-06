@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User
-      .includes(activities: :item)
-      .find_by!(username: params[:id])
+            .includes(activities: :item)
+            .find_by!(username: params[:id])
   end
 end
