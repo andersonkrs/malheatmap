@@ -8,6 +8,10 @@ $title-weight: 400;
 @import "bulma-helpers/css/bulma-helpers.min.css";
 @import "@fortawesome/fontawesome-free";
 
+html {
+  scroll-behavior: smooth;
+}
+
 .bordered {
   border: 1px #e1e4e8 solid;
 }
@@ -25,8 +29,17 @@ $title-weight: 400;
   top: 1.2rem;
 }
 
+a.root-link {
+  color: #363636
+}
+
+.user-avatar {
+  overflow-y: hidden;
+}
+
 .timeline .timeline-item {
-  padding-bottom: 1em;
+  padding-bottom: 0.5em;
+  position: relative;
 }
 
 :root {
@@ -61,32 +74,14 @@ $title-weight: 400;
   display: flex;
   flex-direction: column;
   padding-top: 5;
-  padding-right: 20px;
-  padding-right: 20px;
   padding-bottom: 0px;
   align-items: center !important;
 
   @include until($widescreen) {
-    margin-left: 0px;
-    margin-right: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
     align-items: flex-end !important;
   }
-}
-
-.months {
-  display: grid;
-  grid-template-columns: calc(var(--week-width) * 4) /* Jan */
-                         calc(var(--week-width) * 4) /* Feb */
-                         calc(var(--week-width) * 4) /* Mar */
-                         calc(var(--week-width) * 5) /* Apr */
-                         calc(var(--week-width) * 4) /* May */
-                         calc(var(--week-width) * 4) /* Jun */
-                         calc(var(--week-width) * 5) /* Jul */
-                         calc(var(--week-width) * 4) /* Aug */
-                         calc(var(--week-width) * 4) /* Sep */
-                         calc(var(--week-width) * 5) /* Oct */
-                         calc(var(--week-width) * 4) /* Nov */
-                         calc(var(--week-width) * 5) /* Dec */;
 }
 
 .legend-container {
@@ -129,6 +124,10 @@ $title-weight: 400;
   visibility: hidden;
 }
 
+li.square {
+  display: inline-block;
+}
+
 li.square[data-level="0"] {
   background-color: #ebedf0;
 }
@@ -147,4 +146,10 @@ li.square[data-level="3"] {
 
 li.square[data-level="4"] {
   background-color: #1100c9;
+}
+
+li.square > a {
+  display: block;
+  text-decoration: none;
+  height: 100%
 }

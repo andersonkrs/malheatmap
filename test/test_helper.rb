@@ -1,5 +1,3 @@
-Dir["./test/support/**/*.rb"].sort.each { |file| require file }
-
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
@@ -7,6 +5,8 @@ require "minitest/mock"
 require "factory_bot_rails"
 
 Rails.application.load_tasks
+
+Dir["./test/support/**/*.rb"].sort.each { |file| require file }
 
 module ActiveSupport
   class TestCase

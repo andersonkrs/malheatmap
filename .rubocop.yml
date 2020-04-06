@@ -39,5 +39,8 @@ Metrics/MethodLength:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
+
 Naming/RescuedExceptionsVariableName:
   PreferredName: error

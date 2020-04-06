@@ -1,0 +1,33 @@
+ <% presenter = Graph::Presenter.new(range, activities) %>
+
+ <div class="graph">
+  <ul class="months has-text-left"
+      style="display: grid; grid-template-columns: <%= presenter.css_grid %> ">
+
+    <% presenter.columns.each do |column| %>
+      <% if column.visible? %>
+        <li class="month"><%= column.label %></li>
+      <% else %>
+        <li></li>
+      <% end %>
+    <% end %>
+  </ul>
+
+  <ul class="days">
+    <% t("date.abbr_day_names").compact.each do |day_name| %>
+      <li><%= day_name %></li>
+    <% end %>
+  </ul>
+
+  <ul class="squares">
+    <% presenter.squares.each do |square| %>
+      <li class="square"
+          data-level="<%= square.level %>"
+          data-date="<%= square.date %>"
+          title="<%= square.label %>"
+      >
+        <a href="<%= "##{square.date}" %>"></a>
+      </li>
+    <% end %>
+  </ul>
+</div>

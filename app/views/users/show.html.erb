@@ -1,11 +1,15 @@
 <div class="columns is-multiline is-gapless">
 
   <div class="column is-full has-text-centered has-margin-top-5">
-    <span class="icon is-small"><i class="fas fa-2x fa-fire has-text-primary"></i></span>
+    <%= link_to root_path do %>
+      <span class="icon is-small">
+        <i class="fas fa-3x fa-fire has-text-primary"></i>
+      </span>
+    <% end %>
   </div>
 
   <div class="column is-full has-text-centered has-margin-top-5">
-    <h3 class="title is-3 has-text-centered">MAL Heatmap</h3>
+    <h3 class="title is-3 has-text-centered"><%= link_to t("app.title"), root_path, class: "root-link" %></h3>
   </div>
 
 </div>
@@ -15,99 +19,73 @@
 
     <div class="columns is-multiline">
 
-      <div class="column is-full">
-        <article class="media">
-          <figure class="media-left image is-96x96">
-            <img src="<%= @user.avatar_url %>">
-          </figure>
-          <div class="media-content">
-            <p>
-              <a class="is-size-4" target="_blank" rel="noopener noreferrer" href="<%= profile_url(@user.username) %>"><%= @user.username %></a>
-              <span class="icon is-small"><i class="fa fa-external-link-alt"></i></span>
-            </p>
-          </div>
-        </article>
-      </div>
+      <% cache @user do %>
+        <div class="column is-full">
+          <article class="media">
+            <figure class="user-avatar media-left">
+              <p class="image is-96x96">
+                <img src="<%= @user.avatar_url %>">
+              </p>
+            </figure>
+            <div class="media-content">
+              <p>
+                <a class="is-size-4" target="_blank" href="<%= profile_url(@user.username) %>"><%= @user.username %></a>
+                <span class="icon is-small"><i class="fa fa-external-link-alt"></i></span>
+              </p>
+            </div>
+          </article>
+        </div>
+      <% end %>
 
-      <div class="column is-full">
-        <div class="columns is-multiline bordered">
+      <% cache @activities do %>
+        <div class="column is-full">
+          <div class="columns is-multiline bordered">
 
-          <div class="column is-full">
-            <% grouped_activities = @user.activities.group_by { |activity| activity.date } %>
-
-            <div class="graph-container has-text-centered">
-              <div class="graph">
-                <ul class="months">
-                  <% t("date.abbr_month_names").compact.each do |month_name| %>
-                    <li><%= month_name %></li>
-                  <% end %>
-                </ul>
-
-                <ul class="days">
-                  <% t("date.abbr_day_names").compact.each do |day_name| %>
-                    <li><%= day_name %></li>
-                  <% end %>
-                </ul>
-
-                <ul class="squares">
-                  <% (Date.today.beginning_of_year..Date.today.end_of_year).each do |date| %>
-                    <% activity_count = (grouped_activities[date] || []).size %>
-                    <% level = activity_count.clamp(0, 4) %>
-                    <% formated_date = l date, format: :long %>
-
-                    <li class="square"
-                        data-level="<%= level %>"
-                        data-date="<%= date.to_s %>"
-                        title="<%= t ".activities_on", count: activity_count, date: formated_date %>"
-                    ></li>
-                  <% end %>
-                </ul>
+            <div class="column is-full">
+              <div class="graph-container has-text-centered">
+                <%= render partial: "graph", locals: { range: @range, activities: @activities } %>
               </div>
             </div>
-          </div>
 
-          <div class="column is-full legend-container">
-            <div class="columns is-mobile">
-              <div class="column has-text-left" title="<%= t ".captions.counting_help" %>">
-                <%= t ".captions.counting_text" %>
-              </div>
-              <div class="column has-text-right">
-                <span><%= t ".captions.less" %></span>
-                <ul class="legend">
+            <div class="column is-full">
+              <div class="legend-container columns is-mobile">
+                <div class="column has-text-left" title="<%= t ".counting_help" %>">
+                  <%= t ".counting_text" %>
+                </div>
 
-                  <% (0..4).each do |level| %>
-                    <li class="square" data-level="<%= level %>" title="<%= t ".captions.level_#{level}" %>"></li>
-                  <% end %>
+                <div class="column has-text-right">
+                  <span><%= t ".less" %></span>
+                  <ul class="legend">
 
-                </ul>
-                <span><%= t ".captions.more" %></span>
+                    <% (0..4).each do |level| %>
+                      <li class="square" data-level="<%= level %>" title="<%= t("users.show.levels.#{level}") %>"></li>
+                    <% end %>
+
+                  </ul>
+                  <span><%= t ".more" %></span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="column is-full">
-        <div class="timeline">
-          <header class="timeline-header">
-            <span class="tag is-medium is-primary"><%= t ".now" %></span>
-          </header>
-
-          <% grouped_activities.each do |date, activities| %>
-            <div class="timeline-item">
-              <div class="timeline-marker is-primary"></div>
-              <div class="timeline-content">
-                <p class="heading"><%= date.strftime("%B %-d, %Y") %></p>
-
-                <%= render partial: "activity", collection: activities %>
-              </div>
-            </div>
-          <% end %>
-
-          <header class="timeline-header">
-            <span class="tag is-medium is-primary"><%= t ".beggining" %></span>
-          </header>
+        <div class="timeline-container column is-10">
+          <%= render partial: "timeline", locals: { activities: @activities } %>
         </div>
+      <% end %>
+
+      <div class="active-years-container column is-2">
+        <aside class="menu">
+          <ul class="menu-list">
+            <% @user.active_years.each do |year| %>
+              <li class="has-text-centered">
+                <% link_class = year == @year ? "year-link is-active" : "year-link" %>
+
+                <%= link_to year, user_path(@user, year: year), class: link_class %>
+              </li>
+            <% end %>
+          </ul>
+        </aside>
       </div>
 
     </div>

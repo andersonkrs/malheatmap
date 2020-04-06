@@ -18,17 +18,17 @@ class SubscriptionJob < ApplicationJob
     data = if subscription.success?
              { user_url: user_path(username) }
            else
-             { template: render_error_notification }
+             { template: render_error_alert }
            end
 
     SubscriptionChannel.broadcast_to subscription, status: status, **data
   end
 
-  def render_error_notification
+  def render_error_alert
     ApplicationController.render(
-      partial: "shared/notifications",
+      partial: "subscriptions/alert",
       locals: {
-        flash: { error: reason }
+        message: reason
       }
     )
   end

@@ -1,9 +1,0 @@
-<% flash.each do |name, message| %>
-  <% key = "success" if name.to_s == "notice" %>
-	<% key = "danger" if name.to_s == "error" %>
-
-  <div class="notification is-<%= key %> is-light is-small" data-controller="notification">
-    <button class="delete" data-action="click->notification#onDismiss"></button>
-    <%= content_tag :p, sanitize(message) %>
-  </div>
-<% end %>

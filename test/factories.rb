@@ -32,10 +32,18 @@ FactoryBot.define do
 
     date { Faker::Date.in_date_period }
     amount { Faker::Number.positive.to_i }
+
+    trait :anime do
+      association :item, kind: :anime
+    end
+
+    trait :manga do
+      association :item, kind: :manga
+    end
   end
 
   factory :item do
-    mal_id { Faker::Number.positive.to_i }
+    mal_id { Faker::Number.unique.positive.to_i }
     name { Faker::Book.title }
     kind { Item.kinds.keys.sample }
   end
