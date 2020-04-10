@@ -1,6 +1,10 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+
 <% @section_class = "is-medium" %>
 
-<div data-controller="subscription" data-action="turbolinks:before-cache@window->subscription#beforeCache">
+<div>
   <div class="columns is-centered">
     <div class="column has-text-centered has-text-primary">
       <span class="icon is-large">
@@ -16,24 +20,14 @@
 
   <div class="columns is-centered">
     <div class="column is-half">
-      <%= form_with model: @subscription, method: "post",
-                    html: {
-                      "data-target" => "subscription.form",
-                      "data-action" => [
-                        "ajax:before->subscription#beforeSend",
-                        "ajax:success->subscription#onSuccess",
-                        "ajax:error->subscription#onError",
-                        "ajax:complete->subscription#onComplete"
-                      ].join(" ")
-                    } do |form| %>
+      <%= form_with model: @subscription, method: "post" do |form| %>
         <div class="field">
           <p class="has-text-centered">
             Enter your <a target="_blank" rel="noopener noreferrer" href="https://myanimelist.net">MyAnimeList</a> profile:
           </p>
         </div>
 
-        <div class="field">
-          <div data-target="subscription.notificationsContainer"></div>
+        <div class="field notifications-container">
         </div>
 
         <div class="field has-addons">
@@ -41,7 +35,6 @@
             <%= form.text_field :username,
                                 id: "username",
                                 class: "input",
-                                "data-target" => "subscription.subimitButton",
                                 placeholder: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs"
             %>
           </div>
@@ -57,5 +50,5 @@
     </div>
   </div>
 
-  <div data-target="subscription.loaderContainer"></div>
+  <div class="loader-container"></div>
 </div>

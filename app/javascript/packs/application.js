@@ -1,10 +1,15 @@
 import '@fortawesome/fontawesome-free/js/all'
-
-import 'controllers'
+import Rails from '@rails/ujs'
+import Turbolinks from 'turbolinks'
 
 import '../stylesheets/application'
+import 'channels'
+import consumer from 'channels/consumer'
 
-require('@rails/ujs').start()
-require('turbolinks').start()
-require('channels')
 require.context('../images', true)
+
+Rails.start()
+Turbolinks.start()
+
+window.App = {};
+App.consumer = consumer

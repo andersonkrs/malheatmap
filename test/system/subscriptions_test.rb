@@ -26,6 +26,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
     assert_text "Please wait..."
 
     perform_enqueued_jobs
+
     assert_text <<~MESSAGE.strip
       Profile not found for username asdkkiok1i2k3io1k. Please check if you typed it correctly.
     MESSAGE

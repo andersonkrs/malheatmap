@@ -7,21 +7,31 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "returns accepted status and enqueue the job when creating a new subscription" do
+  test "enqueues the job when creating a valid subscription" do
     username = "mysuperuser"
 
     post subscriptions_url, params: {
       subscription: {
         username: username
       }
-    }
+    }, xhr: true
 
     subscription = Subscription.find_by(username: username)
     assert subscription.pending?
 
-    assert_response :accepted
-    assert_equal response.headers["ProcessID"], subscription.id
+    assert_equal "text/javascript", @response.media_type
     assert_enqueued_with job: SubscriptionJob, args: [subscription]
+  end
+
+  test "does not enqueue anything when creating invalid subscription" do
+    post subscriptions_url, params: {
+      subscription: {
+        username: "12l,3l123./"
+      }
+    }, xhr: true
+
+    assert_equal "text/javascript", @response.media_type
+    assert_no_enqueued_jobs
   end
 
   test "redirects to user profile when it is already subscribed" do
@@ -34,16 +44,6 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_redirected_to user_path(user)
-  end
-
-  test "returns flash error when submiting invalid username" do
-    post subscriptions_url, params: {
-      subscription: {
-        username: "12l,3l123./"
-      }
-    }
-
-    assert_response :bad_request
-    assert_equal "Username is invalid", flash[:error]
+    assert_no_enqueued_jobs
   end
 end
