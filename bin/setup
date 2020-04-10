@@ -12,14 +12,8 @@ FileUtils.chdir APP_ROOT do
   # This script is a way to setup or update your development environment automatically.
   # This script is idempotent, so that you can run it at anytime and get an expectable outcome.
   # Add necessary setup steps to this file.
-  puts '== Configuring bundler =='
-  system("bundle config --local path vendor/bundle")
-  system("bundle config --local bin_path bin/")
-  system("bundle config --local jobs 4")
-  system("bundle config --local retry 3")
-
   puts '== Installing ruby dependencies =='
-  system! "gem install bundler --conservative"
+  system! "gem install bundler foreman --conservative"
   system! "bundle update --bundler"
   system("bundle check") || system!("bundle install")
 
