@@ -17,8 +17,8 @@ gem "turbolinks"
 gem "webpacker"
 
 group :development, :test do
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
@@ -27,6 +27,7 @@ group :development do
   gem "reek"
   gem "rubocop"
   gem "rubocop-rails", require: false
+  gem "solargraph", require: false
   gem "spring"
   gem "spring-watcher-listen"
   gem "web-console"
@@ -34,7 +35,6 @@ end
 
 group :test do
   gem "capybara"
-  gem "faker"
   gem "selenium-webdriver"
   gem "shoulda"
   gem "simplecov", require: false

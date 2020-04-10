@@ -63,7 +63,11 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    backport (1.1.2)
+    benchmark (0.1.0)
     bindex (0.8.1)
+    binding_of_caller (0.8.0)
+      debug_inspector (>= 0.0.1)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
     brakeman (4.8.0)
@@ -81,6 +85,7 @@ GEM
     chronic (0.10.2)
     codeclimate-engine-rb (0.4.1)
       virtus (~> 1.0)
+    coderay (1.1.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.1.5)
@@ -88,11 +93,13 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.6)
+    debug_inspector (0.0.3)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     docile (1.3.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    e2mmap (0.1.0)
     equalizer (0.0.11)
     erubi (1.9.0)
     factory_bot (5.1.1)
@@ -111,6 +118,7 @@ GEM
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
+    interception (0.5)
     jaro_winkler (1.5.4)
     kwalify (0.7.2)
     listen (3.1.5)
@@ -124,6 +132,7 @@ GEM
       mini_mime (>= 0.1.1)
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
+    maruku (0.7.3)
     mechanize (2.7.6)
       domain_name (~> 0.5, >= 0.5.1)
       http-cookie (~> 1.0)
@@ -153,6 +162,18 @@ GEM
     parser (2.7.0.2)
       ast (~> 2.4.0)
     pg (1.2.2)
+    pry (0.12.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-byebug (3.8.0)
+      byebug (~> 11.0)
+      pry (~> 0.10)
+    pry-rescue (1.5.0)
+      interception (>= 0.5)
+      pry (>= 0.12.0)
+    pry-stack_explorer (0.4.9.3)
+      binding_of_caller (>= 0.7)
+      pry (>= 0.9.11)
     psych (3.1.0)
     public_suffix (4.0.3)
     puma (4.3.1)
@@ -203,6 +224,8 @@ GEM
       psych (~> 3.1.0)
       rainbow (>= 2.0, < 4.0)
     regexp_parser (1.6.0)
+    reverse_markdown (1.4.0)
+      nokogiri
     rollbar (2.24.0)
     rubocop (0.79.0)
       jaro_winkler (~> 1.5.1)
@@ -250,6 +273,20 @@ GEM
     simplecov-cobertura (1.3.1)
       simplecov (~> 0.8)
     simplecov-html (0.11.0)
+    solargraph (0.38.6)
+      backport (~> 1.1)
+      benchmark
+      bundler (>= 1.17.2)
+      e2mmap
+      jaro_winkler (~> 1.5)
+      maruku (~> 0.7, >= 0.7.3)
+      nokogiri (~> 1.9, >= 1.9.1)
+      parser (~> 2.3)
+      reverse_markdown (~> 1.0, >= 1.0.5)
+      rubocop (~> 0.52)
+      thor (~> 1.0)
+      tilt (~> 2.0)
+      yard (~> 0.9)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -302,6 +339,7 @@ GEM
     websocket-extensions (0.1.4)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    yard (0.9.24)
     zeitwerk (2.2.2)
 
 PLATFORMS
@@ -310,7 +348,6 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   brakeman
-  byebug
   capybara
   chronic
   factory_bot_rails
@@ -318,6 +355,10 @@ DEPENDENCIES
   listen
   mechanize
   pg
+  pry
+  pry-byebug
+  pry-rescue
+  pry-stack_explorer
   puma
   rails
   reek
@@ -331,6 +372,7 @@ DEPENDENCIES
   sidekiq-limit_fetch
   simplecov
   simplecov-cobertura
+  solargraph
   spring
   spring-watcher-listen
   turbolinks
