@@ -11,5 +11,5 @@ require.context('../images', true)
 Rails.start()
 Turbolinks.start()
 
-window.App = {};
+window.App = {}
 App.consumer = consumer
