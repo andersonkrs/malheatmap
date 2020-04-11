@@ -5,7 +5,7 @@
   </div>
 
   <div class="column is-full has-text-centered has-margin-top-5">
-    <h3 class="title is-3 has-text-centered">MAL Heatmap</h3>
+    <h3 class="title is-3 has-text-centered"><%= t "app.title" %></h3>
   </div>
 
 </div>
@@ -29,86 +29,90 @@
         </article>
       </div>
 
-      <div class="column is-full">
-        <div class="columns is-multiline bordered">
+      <% cache @activities do %>
 
-          <div class="column is-full">
-            <% grouped_activities = @user.activities.group_by { |activity| activity.date } %>
+        <% grouped_activities = @activities.group_by { |activity| activity.date } %>
 
-            <div class="graph-container has-text-centered">
-              <div class="graph">
-                <ul class="months">
-                  <% t("date.abbr_month_names").compact.each do |month_name| %>
-                    <li><%= month_name %></li>
-                  <% end %>
-                </ul>
+        <div class="column is-full">
+          <div class="columns is-multiline bordered">
 
-                <ul class="days">
-                  <% t("date.abbr_day_names").compact.each do |day_name| %>
-                    <li><%= day_name %></li>
-                  <% end %>
-                </ul>
+            <div class="column is-full">
+              <div class="graph-container has-text-centered">
+                <div class="graph">
+                  <ul class="months">
+                    <% t("date.abbr_month_names").compact.each do |month_name| %>
+                      <li><%= month_name %></li>
+                    <% end %>
+                  </ul>
 
-                <ul class="squares">
-                  <% (Date.today.beginning_of_year..Date.today.end_of_year).each do |date| %>
-                    <% activity_count = (grouped_activities[date] || []).size %>
-                    <% level = activity_count.clamp(0, 4) %>
-                    <% formated_date = l date, format: :long %>
+                  <ul class="days">
+                    <% t("date.abbr_day_names").compact.each do |day_name| %>
+                      <li><%= day_name %></li>
+                    <% end %>
+                  </ul>
 
-                    <li class="square"
-                        data-level="<%= level %>"
-                        data-date="<%= date.to_s %>"
-                        title="<%= t ".activities_on", count: activity_count, date: formated_date %>"
-                    ></li>
-                  <% end %>
-                </ul>
+                  <ul class="squares">
+                    <% (Date.today.beginning_of_year..Date.today.end_of_year).each do |date| %>
+                      <% activity_count = (grouped_activities[date] || []).size %>
+                      <% level = activity_count.clamp(0, 4) %>
+                      <% formated_date = l date, format: :long %>
+
+                      <li class="square"
+                          data-level="<%= level %>"
+                          data-date="<%= date.to_s %>"
+                          title="<%= t ".activities_on", count: activity_count, date: formated_date %>"
+                      ></li>
+                    <% end %>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="column is-full legend-container">
-            <div class="columns is-mobile">
-              <div class="column has-text-left" title="<%= t ".captions.counting_help" %>">
-                <%= t ".captions.counting_text" %>
-              </div>
-              <div class="column has-text-right">
-                <span><%= t ".captions.less" %></span>
-                <ul class="legend">
+            <div class="column is-full legend-container">
+              <div class="columns is-mobile">
+                <div class="column has-text-left" title="<%= t ".captions.counting_help" %>">
+                  <%= t ".captions.counting_text" %>
+                </div>
+                <div class="column has-text-right">
+                  <span><%= t ".captions.less" %></span>
+                  <ul class="legend">
 
-                  <% (0..4).each do |level| %>
-                    <li class="square" data-level="<%= level %>" title="<%= t ".captions.level_#{level}" %>"></li>
-                  <% end %>
+                    <% (0..4).each do |level| %>
+                      <li class="square" data-level="<%= level %>" title="<%= t ".captions.level_#{level}" %>"></li>
+                    <% end %>
 
-                </ul>
-                <span><%= t ".captions.more" %></span>
+                  </ul>
+                  <span><%= t ".captions.more" %></span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="column is-full">
-        <div class="timeline">
-          <header class="timeline-header">
-            <span class="tag is-medium is-primary"><%= t ".now" %></span>
-          </header>
+        <div class="column is-full">
+          <div class="timeline">
+            <header class="timeline-header">
+              <span class="tag is-medium is-primary"><%= t ".now" %></span>
+            </header>
 
-          <% grouped_activities.each do |date, activities| %>
-            <div class="timeline-item">
-              <div class="timeline-marker is-primary"></div>
-              <div class="timeline-content">
-                <p class="heading"><%= date.strftime("%B %-d, %Y") %></p>
+            <% grouped_activities.each do |date, activities| %>
+              <div class="timeline-item">
+                <div class="timeline-marker is-primary"></div>
+                <div class="timeline-content">
+                  <p class="heading"><%= date.strftime("%B %-d, %Y") %></p>
 
-                <%= render partial: "activity", collection: activities %>
+                  <%= render partial: "activity", collection: activities, cached: true %>
+                </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
 
-          <header class="timeline-header">
-            <span class="tag is-medium is-primary"><%= t ".beggining" %></span>
-          </header>
+            <header class="timeline-header">
+              <span class="tag is-medium is-primary"><%= t ".beggining" %></span>
+            </header>
+          </div>
         </div>
-      </div>
+
+      <% end %>
 
     </div>
 
