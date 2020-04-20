@@ -34,3 +34,4 @@ spec/examples.txt
 *.key
 
 /vendor
+.vscode
