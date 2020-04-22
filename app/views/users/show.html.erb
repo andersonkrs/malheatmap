@@ -15,56 +15,30 @@
 
     <div class="columns is-multiline">
 
-      <div class="column is-full">
-        <article class="media">
-          <figure class="media-left image is-96x96">
-            <img src="<%= @user.avatar_url %>">
-          </figure>
-          <div class="media-content">
-            <p>
-              <a class="is-size-4" target="_blank" rel="noopener noreferrer" href="<%= profile_url(@user.username) %>"><%= @user.username %></a>
-              <span class="icon is-small"><i class="fa fa-external-link-alt"></i></span>
-            </p>
-          </div>
-        </article>
-      </div>
+      <% cache @user do %>
 
-      <% cache @activities do %>
-
-        <% grouped_activities = @activities.group_by { |activity| activity.date } %>
+        <div class="column is-full">
+          <article class="media">
+            <figure class="user-avatar media-left">
+              <p class="image is-96x96">
+                <img src="<%= @user.avatar_url %>">
+              </p>
+            </figure>
+            <div class="media-content">
+              <p>
+                <a class="is-size-4" target="_blank" rel="noopener noreferrer" href="<%= profile_url(@user.username) %>"><%= @user.username %></a>
+                <span class="icon is-small"><i class="fa fa-external-link-alt"></i></span>
+              </p>
+            </div>
+          </article>
+        </div>
 
         <div class="column is-full">
           <div class="columns is-multiline bordered">
 
             <div class="column is-full">
               <div class="graph-container has-text-centered">
-                <div class="graph">
-                  <ul class="months">
-                    <% t("date.abbr_month_names").compact.each do |month_name| %>
-                      <li><%= month_name %></li>
-                    <% end %>
-                  </ul>
-
-                  <ul class="days">
-                    <% t("date.abbr_day_names").compact.each do |day_name| %>
-                      <li><%= day_name %></li>
-                    <% end %>
-                  </ul>
-
-                  <ul class="squares">
-                    <% (Date.today.beginning_of_year..Date.today.end_of_year).each do |date| %>
-                      <% activity_count = (grouped_activities[date] || []).size %>
-                      <% level = activity_count.clamp(0, 4) %>
-                      <% formated_date = l date, format: :long %>
-
-                      <li class="square"
-                          data-level="<%= level %>"
-                          data-date="<%= date.to_s %>"
-                          title="<%= t ".activities_on", count: activity_count, date: formated_date %>"
-                      ></li>
-                    <% end %>
-                  </ul>
-                </div>
+                <%= render partial: "graph", locals: { range: @range, activities: @activities } %>
               </div>
             </div>
 
@@ -95,8 +69,8 @@
               <span class="tag is-medium is-primary"><%= t ".now" %></span>
             </header>
 
-            <% grouped_activities.each do |date, activities| %>
-              <div class="timeline-item">
+            <% @activities.group_by(&:date).each do |date, activities| %>
+              <div id="<%= date %>" class="timeline-item">
                 <div class="timeline-marker is-primary"></div>
                 <div class="timeline-content">
                   <p class="heading"><%= date.strftime("%B %-d, %Y") %></p>

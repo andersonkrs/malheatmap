@@ -40,10 +40,6 @@ en:
     show:
       now: "Now"
       beggining: "Beggining"
-      activities_on:
-        zero: "No activities on %{date}"
-        one: "One activity on %{date}"
-        other: "%{count} activities on %{date}"
       captions:
         counting_text: "How is it counted?"
         counting_help: "A summary of watched episodes and read chapters by day."
@@ -61,5 +57,10 @@ en:
       chapters:
         one: "1 chapter"
         other: "%{count} chapters"
+    graph:
+      activities_on:
+        zero: "No activities on %{date}"
+        one: "One activity on %{date}"
+        other: "%{count} activities on %{date}"
 
 

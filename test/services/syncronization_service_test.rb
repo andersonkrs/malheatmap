@@ -11,40 +11,6 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
     SyncronizationService.syncronize_user_data(@username, @crawler_mock)
   end
 
-  def setup_success_response
-    response = {
-      status: :success,
-      message: "",
-      profile: {
-        avatar_url: "http://dummy/avatar"
-      },
-      history: [
-        {
-          timestamp: "2019-12-06T15:00:00",
-          amount: 1,
-          item_id: 121,
-          item_name: "Death Note",
-          item_kind: "manga"
-        },
-        {
-          timestamp: "2019-12-06T16:11:03",
-          amount: 6,
-          item_id: 5,
-          item_name: "One Punch Man",
-          item_kind: "anime"
-        }
-      ]
-    }
-
-    @crawler_mock.expect :crawl, response, [@username]
-  end
-
-  def setup_error_response
-    @crawler_mock.expect :crawl, [@username] do
-      raise MAL::Errors::CrawlError, "Something went wrong"
-    end
-  end
-
   test "returns status success when crawler performs without errros" do
     setup_success_response
 
@@ -147,5 +113,41 @@ class SyncronizationServiceTest < ActiveSupport::TestCase
     syncronize
 
     assert_not User.exists?(username: @username)
+  end
+
+  private
+
+  def setup_success_response
+    response = {
+      status: :success,
+      message: "",
+      profile: {
+        avatar_url: "http://dummy/avatar"
+      },
+      history: [
+        {
+          timestamp: "2019-12-06T15:00:00",
+          amount: 1,
+          item_id: 121,
+          item_name: "Death Note",
+          item_kind: "manga"
+        },
+        {
+          timestamp: "2019-12-06T16:11:03",
+          amount: 6,
+          item_id: 5,
+          item_name: "One Punch Man",
+          item_kind: "anime"
+        }
+      ]
+    }
+
+    @crawler_mock.expect :crawl, response, [@username]
+  end
+
+  def setup_error_response
+    @crawler_mock.expect :crawl, [@username] do
+      raise MAL::Errors::CrawlError, "Something went wrong"
+    end
   end
 end

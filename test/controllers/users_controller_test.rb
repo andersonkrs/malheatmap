@@ -1,9 +1,9 @@
 require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-  test "returns success when get show" do
+  test "returns success when gets show" do
     user = create(:user)
-    create_list(:entry, 6, user: user)
+    create_list(:activity, 6, user: user)
 
     get user_url(user)
 
