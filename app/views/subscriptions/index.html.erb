@@ -14,7 +14,7 @@
   </div>
   <div class="columns is-centered">
     <div class="columm">
-      <h1 class="title has-text-centered">MAL Heatmap</h1>
+      <h1 class="title has-text-centered"><%= t "app.title" %></h1>
     </div>
   </div>
 
@@ -23,7 +23,7 @@
       <%= form_with model: @subscription, method: "post" do |form| %>
         <div class="field">
           <p class="has-text-centered">
-            Enter your <a target="_blank" rel="noopener noreferrer" href="https://myanimelist.net">MyAnimeList</a> profile:
+            <%= t ".enter_your_mal_profile_html" %>
           </p>
         </div>
 
@@ -35,7 +35,7 @@
             <%= form.text_field :username,
                                 id: "username",
                                 class: "input",
-                                placeholder: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs"
+                                placeholder: t(".username.placeholder")
             %>
           </div>
 

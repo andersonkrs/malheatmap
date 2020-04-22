@@ -1,11 +1,15 @@
 <div class="columns is-multiline is-gapless">
 
   <div class="column is-full has-text-centered has-margin-top-5">
-    <span class="icon is-small"><i class="fas fa-2x fa-fire has-text-primary"></i></span>
+    <%= link_to root_path  do %>
+      <span class="icon is-small">
+        <i class="fas fa-2x fa-fire has-text-primary"></i>
+      </span>
+    <% end %>
   </div>
 
   <div class="column is-full has-text-centered has-margin-top-5">
-    <h3 class="title is-3 has-text-centered"><%= t "app.title" %></h3>
+    <h3 class="title is-3 has-text-centered"><%= link_to t("app.title"), root_path, class: "root-link" %></h3>
   </div>
 
 </div>
