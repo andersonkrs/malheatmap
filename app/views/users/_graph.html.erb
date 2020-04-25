@@ -1,11 +1,15 @@
- <% graph = Graph::Presenter.new(range, activities) %>
+ <% presenter = Graph::Presenter.new(range, activities) %>
 
  <div class="graph">
   <ul class="months has-text-left"
-      style="display: grid; grid-template-columns: <%= graph.css_grid %> ">
+      style="display: grid; grid-template-columns: <%= presenter.css_grid %> ">
 
-    <% graph.columns.each do |column|  %>
-      <li><%= column.label %></li>
+    <% presenter.columns.each do |column| %>
+      <% if column.visible? %>
+        <li><%= column.label %></li>
+      <% else %>
+        <li></li>
+      <% end %>
     <% end %>
   </ul>
 
@@ -16,7 +20,7 @@
   </ul>
 
   <ul class="squares">
-    <% graph.squares.each do |square| %>
+    <% presenter.squares.each do |square| %>
       <li class="square"
           data-level="<%= square.level %>"
           data-date="<%= square.date %>"

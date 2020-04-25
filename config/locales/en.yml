@@ -46,16 +46,16 @@ en:
     show:
       now: "Now"
       beggining: "Beggining"
-      captions:
-        counting_text: "How is it counted?"
-        counting_help: "A summary of watched episodes and read chapters by day."
-        less: "Less"
-        more: "More"
-        level_0: "None episodes/chapters watched/read on date"
-        level_1: "From 1 to 4 episodes/chapters watched/read on date"
-        level_2: "From 5 to 8 episodes/chapters watched/read on date"
-        level_3: "From 9 to 12 episodes/chapters watched/read on date"
-        level_4: "12+ episodes/chapters watched/read on date"
+      counting_text: "How is it counted?"
+      counting_help: "A summary of watched episodes and read chapters by day."
+      less: "Less"
+      more: "More"
+      levels:
+        "0": "None episodes/chapters watched/read on date"
+        "1": "From 1 to 4 episodes/chapters watched/read on date"
+        "2": "From 5 to 8 episodes/chapters watched/read on date"
+        "3": "From 9 to 12 episodes/chapters watched/read on date"
+        "4": "12+ episodes/chapters watched/read on date"
     activity:
       episodes:
         one: "1 episode"

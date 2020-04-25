@@ -14,7 +14,7 @@ detectors:
     exclude:
       - initialize
   UtilityFunction:
-    public_methods_only: true
+    enabled: false
 
 directories:
   "app/controllers":
@@ -23,9 +23,6 @@ directories:
     UnusedPrivateMethod:
       enabled: false
     InstanceVariableAssumption:
-      enabled: false
-  "app/helpers":
-    UtilityFunction:
       enabled: false
   "app/mailers":
     InstanceVariableAssumption:

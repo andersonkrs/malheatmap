@@ -21,5 +21,31 @@ module Graph
         assert_equal "calc(var(--week-width) * 2)", result
       end
     end
+
+    class VisibleTest < ActiveSupport::TestCase
+      test "returns true if width is greater than one" do
+        column = Graph::Column.new(width: 2)
+
+        result = column.visible?
+
+        assert result
+      end
+
+      test "returns false if width is equal to one" do
+        column = Graph::Column.new(width: 1)
+
+        result = column.visible?
+
+        assert_not result
+      end
+
+      test "returns false if width is zero" do
+        column = Graph::Column.new(width: 0)
+
+        result = column.visible?
+
+        assert_not result
+      end
+    end
   end
 end

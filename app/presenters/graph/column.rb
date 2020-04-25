@@ -7,5 +7,9 @@ module Graph
     def css_width
       "calc(var(--week-width) * #{width})"
     end
+
+    def visible?
+      width > 1
+    end
   end
 end

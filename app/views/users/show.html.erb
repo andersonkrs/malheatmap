@@ -20,17 +20,18 @@
     <div class="columns is-multiline">
 
       <% cache @user do %>
+        <% presenter = UserPresenter.new(@user, @activities) %>
 
         <div class="column is-full">
           <article class="media">
             <figure class="user-avatar media-left">
               <p class="image is-96x96">
-                <img src="<%= @user.avatar_url %>">
+                <img src="<%= presenter.avatar_url %>">
               </p>
             </figure>
             <div class="media-content">
               <p>
-                <a class="is-size-4" target="_blank" rel="noopener noreferrer" href="<%= profile_url(@user.username) %>"><%= @user.username %></a>
+                <a class="is-size-4" target="_blank" rel="noopener noreferrer" href="<%= presenter.profile_url %>"><%= presenter.username %></a>
                 <span class="icon is-small"><i class="fa fa-external-link-alt"></i></span>
               </p>
             </div>
@@ -48,19 +49,19 @@
 
             <div class="column is-full legend-container">
               <div class="columns is-mobile">
-                <div class="column has-text-left" title="<%= t ".captions.counting_help" %>">
-                  <%= t ".captions.counting_text" %>
+                <div class="column has-text-left" title="<%= t ".counting_help" %>">
+                  <%= t ".counting_text" %>
                 </div>
                 <div class="column has-text-right">
-                  <span><%= t ".captions.less" %></span>
+                  <span><%= t ".less" %></span>
                   <ul class="legend">
 
-                    <% (0..4).each do |level| %>
-                      <li class="square" data-level="<%= level %>" title="<%= t ".captions.level_#{level}" %>"></li>
+                    <% presenter.levels.each do |level, help| %>
+                      <li class="square" data-level="<%= level %>" title="<%= help %>"></li>
                     <% end %>
 
                   </ul>
-                  <span><%= t ".captions.more" %></span>
+                  <span><%= t ".more" %></span>
                 </div>
               </div>
             </div>
@@ -73,7 +74,7 @@
               <span class="tag is-medium is-primary"><%= t ".now" %></span>
             </header>
 
-            <% @activities.group_by(&:date).each do |date, activities| %>
+            <% presenter.activities_per_date.each do |date, activities| %>
               <div id="<%= date %>" class="timeline-item">
                 <div class="timeline-marker is-primary"></div>
                 <div class="timeline-content">
