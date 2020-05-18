@@ -1,5 +1,5 @@
 module Graph
-  class Presenter
+  class Presenter < ApplicationPresenter
     attr_reader :columns, :squares
 
     def initialize(range, activities)
@@ -47,7 +47,12 @@ module Graph
     end
 
     def calculate_column_width(current_column, previous_column)
-      current_column.width = weeks_count_in_column(current_column) - 1
+      weeks_width = weeks_count_in_column(current_column)
+
+      weeks_width -= 1 unless current_column == @columns.last
+
+      current_column.width = weeks_width
+
       adjust_columns_sizes(current_column, previous_column)
     end
 

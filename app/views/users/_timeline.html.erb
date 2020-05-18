@@ -1,0 +1,32 @@
+<div class="timeline">
+  <% presenter = TimelinePresenter.new(activities) %>
+
+  <% presenter.activities_by_month_and_date.each do |month, dates| %>
+    <% formated_month = month.strftime("%B") %>
+
+    <header class="timeline-header">
+      <% if presenter.header?(month) %>
+        <span class="header-marker tag is-medium is-primary"><%= formated_month %></span>
+      <% else %>
+        <span class="separator-marker tag is-primary"><%= formated_month %></span>
+      <% end %>
+    </header>
+
+    <% dates.each do |date, activities| %>
+      <div id="<%= date %>" class="timeline-item">
+        <div class="timeline-marker is-primary"></div>
+        <div class="timeline-content">
+          <p class="heading"><%= date.strftime("%B %-d, %Y") %></p>
+
+          <%= render partial: "activity", collection: activities, cached: true %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if presenter.footer?(month) %>
+      <header class="timeline-header">
+        <span class="footer-marker tag is-medium is-primary"><%= formated_month %></span>
+      </header>
+    <% end %>
+  <% end %>
+</div>

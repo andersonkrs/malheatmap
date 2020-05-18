@@ -29,7 +29,7 @@ module GraphPresenterTest
       results = @graph.columns
 
       assert_equal 0, results.first.width
-      assert_equal 4, results.second.width
+      assert_equal 5, results.second.width
     end
 
     test "increases prior month width if the subsequent month starts first week in a sunday" do
@@ -39,7 +39,7 @@ module GraphPresenterTest
 
       assert_equal 0, results.first.width
       assert_equal 5, results.second.width
-      assert_equal 4, results.third.width
+      assert_equal 5, results.third.width
     end
   end
 
@@ -85,7 +85,7 @@ module GraphPresenterTest
 
       result = @graph.css_grid
 
-      assert_equal "calc(var(--week-width) * 4) calc(var(--week-width) * 3)", result
+      assert_equal "calc(var(--week-width) * 4) calc(var(--week-width) * 4)", result
     end
   end
 end

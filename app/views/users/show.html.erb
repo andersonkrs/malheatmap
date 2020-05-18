@@ -1,9 +1,9 @@
 <div class="columns is-multiline is-gapless">
 
   <div class="column is-full has-text-centered has-margin-top-5">
-    <%= link_to root_path  do %>
+    <%= link_to root_path do %>
       <span class="icon is-small">
-        <i class="fas fa-2x fa-fire has-text-primary"></i>
+        <i class="fas fa-3x fa-fire has-text-primary"></i>
       </span>
     <% end %>
   </div>
@@ -20,24 +20,24 @@
     <div class="columns is-multiline">
 
       <% cache @user do %>
-        <% presenter = UserPresenter.new(@user, @activities) %>
-
         <div class="column is-full">
           <article class="media">
             <figure class="user-avatar media-left">
               <p class="image is-96x96">
-                <img src="<%= presenter.avatar_url %>">
+                <img src="<%= @user.avatar_url %>">
               </p>
             </figure>
             <div class="media-content">
               <p>
-                <a class="is-size-4" target="_blank" rel="noopener noreferrer" href="<%= presenter.profile_url %>"><%= presenter.username %></a>
+                <a class="is-size-4" target="_blank" href="<%= profile_url(@user.username) %>"><%= @user.username %></a>
                 <span class="icon is-small"><i class="fa fa-external-link-alt"></i></span>
               </p>
             </div>
           </article>
         </div>
+      <% end %>
 
+      <% cache @activities do %>
         <div class="column is-full">
           <div class="columns is-multiline bordered">
 
@@ -47,17 +47,18 @@
               </div>
             </div>
 
-            <div class="column is-full legend-container">
-              <div class="columns is-mobile">
+            <div class="column is-full">
+              <div class="legend-container columns is-mobile">
                 <div class="column has-text-left" title="<%= t ".counting_help" %>">
                   <%= t ".counting_text" %>
                 </div>
+
                 <div class="column has-text-right">
                   <span><%= t ".less" %></span>
                   <ul class="legend">
 
-                    <% presenter.levels.each do |level, help| %>
-                      <li class="square" data-level="<%= level %>" title="<%= help %>"></li>
+                    <% (0..4).each do |level| %>
+                      <li class="square" data-level="<%= level %>" title="<%= t("users.show.levels.#{level}") %>"></li>
                     <% end %>
 
                   </ul>
@@ -68,30 +69,24 @@
           </div>
         </div>
 
-        <div class="column is-full">
-          <div class="timeline">
-            <header class="timeline-header">
-              <span class="tag is-medium is-primary"><%= t ".now" %></span>
-            </header>
-
-            <% presenter.activities_per_date.each do |date, activities| %>
-              <div id="<%= date %>" class="timeline-item">
-                <div class="timeline-marker is-primary"></div>
-                <div class="timeline-content">
-                  <p class="heading"><%= date.strftime("%B %-d, %Y") %></p>
-
-                  <%= render partial: "activity", collection: activities, cached: true %>
-                </div>
-              </div>
-            <% end %>
-
-            <header class="timeline-header">
-              <span class="tag is-medium is-primary"><%= t ".beggining" %></span>
-            </header>
-          </div>
+        <div class="timeline-container column is-10">
+          <%= render partial: "timeline", locals: { activities: @activities } %>
         </div>
-
       <% end %>
+
+      <div class="active-years-container column is-2">
+        <aside class="menu">
+          <ul class="menu-list">
+            <% @user.active_years.each do |year| %>
+              <li class="has-text-centered">
+                <% link_class = year == @year ? "year-link is-active" : "year-link" %>
+
+                <%= link_to year, user_path(@user, year: year), class: link_class %>
+              </li>
+            <% end %>
+          </ul>
+        </aside>
+      </div>
 
     </div>
 
