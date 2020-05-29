@@ -20,8 +20,9 @@ FileUtils.chdir APP_ROOT do
   puts "== Installing javascript dependencies =="
   system("bin/yarn check") || system("bin/yarn install")
 
-  puts "\n== Preparing database =="
+  puts "\n== Preparing databases =="
   system! "bin/rails db:prepare"
+  system! "bin/rails db:test:prepare"
 
   puts "\n== Removing old logs and tempfiles =="
   system! "bin/rails log:clear tmp:clear"
