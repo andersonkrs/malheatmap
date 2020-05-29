@@ -53,7 +53,6 @@ jobs:
         BUNDLE_JOBS: 4
         BUNDLE_RETRY: 3
         BUNDLE_PATH: vendor/bundle
-        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       run: |
         bin/setup
         bin/qa
