@@ -15,10 +15,10 @@ FileUtils.chdir APP_ROOT do
   puts '== Installing ruby dependencies =='
   system! "gem install bundler foreman --conservative"
   system! "bundle update --bundler"
-  system("bundle check") || system!("bundle install")
+  system!("bundle install")
 
   puts "== Installing javascript dependencies =="
-  system("bin/yarn check") || system("bin/yarn install")
+  system!("bin/yarn install")
 
   puts "\n== Preparing databases =="
   system! "bin/rails db:prepare"
