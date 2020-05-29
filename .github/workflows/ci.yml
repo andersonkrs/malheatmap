@@ -58,10 +58,10 @@ jobs:
         reviewdog -reporter=github-check -tee
 
     - name: Run unit tests
-      run: rails test
+      run: bin/rails test
 
     - name: Run E2E tests
-      run: rails test:system
+      run: bin/rails test:system
 
     - name: Upload failed tests screenshots
       uses: actions/upload-artifact@v1
