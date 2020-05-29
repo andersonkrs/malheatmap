@@ -4,6 +4,6 @@ runner:
   reek:
     cmd: bin/reek --single-line .
   brakeman:
-    cmd: rbin/brakeman --quiet --format tabs
+    cmd: bin/brakeman --quiet --format tabs
   standardjs:
     cmd: yarn standard
