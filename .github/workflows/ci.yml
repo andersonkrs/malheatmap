@@ -14,6 +14,11 @@ jobs:
         image: redis:alpine
         ports: ["6379:6379"]
 
+    env:
+      BUNDLE_JOBS: 4
+      BUNDLE_RETRY: 3
+      BUNDLE_PATH: vendor/bundle
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v1
@@ -43,10 +48,6 @@ jobs:
           ${{ runner.os }}-node_modules-
 
     - name: Setup
-      env:
-        BUNDLE_JOBS: 4
-        BUNDLE_RETRY: 3
-        BUNDLE_PATH: vendor/bundle
       run: bin/setup
 
     - name: Run linters
