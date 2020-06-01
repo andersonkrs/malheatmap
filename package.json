@@ -14,7 +14,7 @@
   "version": "0.1.0",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "standard": "^14.3.3",
+    "standard": "^14.3.4",
     "webpack-dev-server": "^3.10.2"
   },
   "browserslist": [
