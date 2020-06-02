@@ -70,3 +70,10 @@ jobs:
       with:
         name: system-tests-screenshots
         path: tmp/screenshots
+
+    - name: Upload Rails logs
+      uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: logs
+        path: log

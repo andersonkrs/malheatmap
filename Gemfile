@@ -28,7 +28,6 @@ group :development do
   gem "reek"
   gem "rubocop"
   gem "rubocop-rails", require: false
-  gem "solargraph", require: false
   gem "spring"
   gem "spring-watcher-listen"
   gem "web-console"
