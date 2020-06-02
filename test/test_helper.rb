@@ -1,4 +1,26 @@
 ENV["RAILS_ENV"] ||= "test"
+ENV["COVERAGE"] ||= "true"
+
+require "simplecov"
+require "simplecov-cobertura"
+
+if ENV["COVERAGE"] == "true"
+  SimpleCov.formatters = [
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::CoberturaFormatter
+  ]
+
+  SimpleCov.use_merging true
+  SimpleCov.minimum_coverage 95
+  SimpleCov.start do
+    add_filter "config"
+    add_filter "vendor"
+    add_filter "bin"
+    add_filter "db"
+    add_filter "test"
+  end
+end
+
 require_relative "../config/environment"
 require "rails/test_help"
 require "minitest/mock"
@@ -15,7 +37,7 @@ module ActiveSupport
     include FactoryBot::Syntax::Methods
     include MechanizeTestHelper
 
-    parallelize(workers: 1)
+    parallelize
 
     if ENV["COVERAGE"] == "true"
       parallelize_setup do |worker|
