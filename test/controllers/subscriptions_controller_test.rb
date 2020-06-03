@@ -17,7 +17,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     }, xhr: true
 
     subscription = Subscription.find_by(username: username)
-    assert subscription.pending?
+    assert_not subscription.processed?
 
     assert_equal "text/javascript", @response.media_type
     assert_enqueued_with job: SubscriptionJob, args: [subscription]

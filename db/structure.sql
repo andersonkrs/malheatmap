@@ -33,17 +33,6 @@ CREATE TYPE public.item_kind AS ENUM (
 );
 
 
---
--- Name: subscription_status; Type: TYPE; Schema: public; Owner: -
---
-
-CREATE TYPE public.subscription_status AS ENUM (
-    'pending',
-    'success',
-    'error'
-);
-
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -120,10 +109,9 @@ CREATE TABLE public.schema_migrations (
 CREATE TABLE public.subscriptions (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     username character varying,
-    reason character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    status public.subscription_status DEFAULT 'pending'::public.subscription_status NOT NULL
+    processed boolean DEFAULT false NOT NULL
 );
 
 
@@ -306,6 +294,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200328164518'),
 ('20200329040026'),
 ('20200329145233'),
-('20200404024047');
+('20200404024047'),
+('20200603022918');
 
 
