@@ -1796,10 +1796,10 @@ builtin-status-codes@^3.0.0:
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
 
-bulma-helpers@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/bulma-helpers/-/bulma-helpers-0.3.8.tgz#9383f9f4b1cc5604b9b540fc26996294345f95f2"
-  integrity sha512-SZBkcRCKogzYduo9GduLMtYg2SJ7RT0hRWypWXLs48lmqKxiPgj4gWlt4TzUq7fwzhbmVbtFyfWdwvWgIYCKMA==
+bulma-helpers@^0.3.12:
+  version "0.3.12"
+  resolved "https://registry.yarnpkg.com/bulma-helpers/-/bulma-helpers-0.3.12.tgz#ffdc68eb35aa926bd6e53c0a8b52124b84f5e980"
+  integrity sha512-FHF3rYdVwn7cUE/u6zscozc38+JFBdcKM0d+WQf3btNs47zKStc2mabV3ab3WZ+gYU4a992Or0cCwA/2vkLJ0A==
 
 bulma-timeline@^3.0.4:
   version "3.0.4"
