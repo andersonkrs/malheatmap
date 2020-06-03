@@ -1,0 +1,18 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: '08:00'
+  open-pull-requests-limit: 10
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: saturday
+    time: '08:00'
+  open-pull-requests-limit: 10
+  labels:
+  - dependency
+  - ruby
