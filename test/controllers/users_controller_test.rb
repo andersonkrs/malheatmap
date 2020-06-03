@@ -16,7 +16,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    test "renders graph squares correclty" do
+    test "renders graph squares correctly" do
       travel_to Time.zone.local(2020, 5, 9)
       create(:activity, item: @anime_item, user: @user, date: Date.new(2020, 1, 1), amount: 1)
       create(:activity, item: @anime_item, user: @user, date: Date.new(2020, 1, 2), amount: 5)
@@ -55,7 +55,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    test "renders graph months correclty" do
+    test "renders graph months correctly" do
       travel_to Time.zone.local(2020, 5, 9)
 
       get user_url(@user, year: 2020)

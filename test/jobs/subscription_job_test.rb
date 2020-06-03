@@ -1,48 +1,39 @@
 require "test_helper"
 
 class SubscriptionJobTest < ActiveSupport::TestCase
+  include Rails.application.routes.url_helpers
+
   setup do
-    @subscription = create(:subscription, status: :pending)
+    @subscription = create(:subscription)
     @stream_id = SubscriptionChannel.broadcasting_for(@subscription)
-  end
-
-  test "updates subscription status to success when update service returns success" do
-    SyncronizationService.stub(:syncronize_user_data, status: :success) do
-      SubscriptionJob.perform_now(@subscription)
-    end
-
-    assert @subscription.success?
-    assert @subscription.reason.blank?
+    @result_mock = Minitest::Mock.new
   end
 
   test "broadcasts status success with user url when update service returns success" do
-    SyncronizationService.stub(:syncronize_user_data, status: :success) do
+    user = create(:user)
+    @result_mock.expect(:success?, true)
+    @result_mock.expect(:user, user)
+
+    SubscribeUser.stub(:call, @result_mock) do
       SubscriptionJob.perform_now(@subscription)
     end
 
-    assert_broadcast_on @stream_id, status: :success, user_url: "/users/#{@subscription.username}"
-  end
-
-  test "updates subscription status to error when update service returns error" do
-    error_message = "Somenting went wrong"
-
-    SyncronizationService.stub(:syncronize_user_data, status: :error, message: error_message) do
-      SubscriptionJob.perform_now(@subscription)
-    end
-
-    assert @subscription.error?
-    assert_equal error_message, @subscription.reason
+    assert @subscription.processed?
+    assert_broadcast_on @stream_id, status: :success, user_url: user_path(user)
   end
 
   test "broadcasts status error with error template when update service returns an error" do
-    template_error = "<error>ops!</error>"
+    @result_mock.expect(:success?, false)
+    @result_mock.expect(:message, "something went wrong!")
 
-    SyncronizationService.stub(:syncronize_user_data, status: :error, message: "ops!") do
-      ApplicationController.stub(:render, template_error) do
-        SubscriptionJob.perform_now(@subscription)
-      end
+    SubscribeUser.stub(:call, @result_mock) do
+      SubscriptionJob.perform_now(@subscription)
     end
 
-    assert_broadcast_on @stream_id, status: :error, template: template_error
+    expected_template = ApplicationController.render(
+      partial: "subscriptions/alert",
+      locals: { message: "something went wrong!" }
+    )
+    assert_broadcast_on @stream_id, status: :failure, template: expected_template
   end
 end

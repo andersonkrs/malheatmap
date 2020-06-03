@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :subscription do
     username { Faker::Internet.unique.username(separators: %w[_-]) }
-    status { :pending }
+    processed { false }
   end
 
   factory :user do

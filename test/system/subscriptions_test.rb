@@ -5,13 +5,13 @@ class SubscriptionsTest < ApplicationSystemTestCase
     visit subscriptions_url
   end
 
-  test "shows required username notification when submiting without type username" do
+  test "shows required username notification when submitting without type username" do
     click_on "Subscribe"
 
     assert_text "Username can't be blank"
   end
 
-  test "shows invalid username notification when submiting invalid username format" do
+  test "shows invalid username notification when submitting invalid username format" do
     fill_in "username", with: "/ $ anns2!"
 
     click_on "Subscribe"
@@ -19,7 +19,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
     assert_text "Username is invalid"
   end
 
-  test "shows profile not found notification when submiting invalid username" do
+  test "shows profile not found notification when submitting invalid username" do
     fill_in "username", with: "asdkkiok1i2k3io1k"
 
     click_on "Subscribe"

@@ -6,7 +6,8 @@ class UserCrawlerTest < ActiveSupport::TestCase
   end
 
   test "returns user profile info" do
-    result = MAL::UserCrawler.crawl("andersonkrs")
+    crawler = MAL::UserCrawler.new("andersonkrs")
+    result = crawler.crawl
 
     assert_equal(
       { avatar_url: "https://cdn.myanimelist.net/images/userimages/7868083.jpg?t=1582993800" },
@@ -15,20 +16,24 @@ class UserCrawlerTest < ActiveSupport::TestCase
   end
 
   test "returns all entries when user has history" do
-    result = MAL::UserCrawler.crawl("andersonkrs")
+    crawler = MAL::UserCrawler.new("andersonkrs")
+    result = crawler.crawl
 
     assert_equal 5, result[:history].size
   end
 
   test "returns no entries when user does not have history" do
-    result = MAL::UserCrawler.crawl("Ismail_Hassan")
+    crawler = MAL::UserCrawler.new("Ismail_Hassan")
+    result = crawler.crawl
 
     assert_equal 0, result[:history].size
   end
 
   test "raises profile not found error when user does not exist" do
+    crawler = MAL::UserCrawler.new("fakeuser123")
+
     assert_raises MAL::Errors::ProfileNotFound do
-      MAL::UserCrawler.crawl("fakeuser123")
+      crawler.crawl
     end
   end
 end

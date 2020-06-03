@@ -10,7 +10,7 @@ class SubscriptionChannelTest < ActionCable::Channel::TestCase
     assert_has_stream_for process
   end
 
-  test "does not stream with incorret process id" do
+  test "does not stream with incorrect process id" do
     subscribe process_id: "1j2n3j1n24jn1j3nr"
 
     assert_no_streams
@@ -22,16 +22,8 @@ class SubscriptionChannelTest < ActionCable::Channel::TestCase
     assert subscription.rejected?
   end
 
-  test "does not subscribe if process status is success" do
-    process = create(:subscription, status: :success)
-
-    subscribe process_id: process.id
-
-    assert subscription.rejected?
-  end
-
-  test "does not subscribe if process status is error" do
-    process = create(:subscription, status: :error)
+  test "does not subscribe if it's already processed" do
+    process = create(:subscription, processed: true)
 
     subscribe process_id: process.id
 

@@ -5,10 +5,12 @@
     const message = '<%= j render(partial: "alert", locals: { message: @subscription.errors.full_messages.first }) %>'
     document.querySelector('.notifications-container').innerHTML = message
   <% else %>
-    document.querySelector('form').style.display = 'none'
-    document.querySelector('.loader-container').innerHTML = '<%= j render(partial: "loader") %>'
-
     App.consumer.subscriptions.create({ channel: 'SubscriptionChannel', process_id: '<%= @subscription.id %>' }, {
+      connected () {
+        document.querySelector('form').style.display = 'none'
+        document.querySelector('.loader-container').innerHTML = '<%= j render(partial: "loader") %>'
+      },
+
       received (data) {
         this.unsubscribe()
 
