@@ -1,0 +1,13 @@
+default: &default
+  requests_interval: <%= 2.seconds %>
+  max_timeout: <%= 25.seconds %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  requests_interval: <%= 0.seconds %>
+
+production:
+  <<: *default

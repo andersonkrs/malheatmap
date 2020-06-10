@@ -4,14 +4,12 @@ task syncronize_data: [:environment] do
   logger = Rails.logger
   logger.info "Starting data syncronization..."
 
-  usernames = User.select(:username).order(:updated_at).pluck(:username)
+  users = User.select(:username).order(:updated_at)
 
-  usernames.each do |username|
-    logger.info "Updating data for user: #{username}"
+  users.each do |user|
+    logger.info "Updating data for user: #{user.username}"
 
-    response = SyncronizationService.syncronize_user_data(username)
-
-    logger.info "Response: #{response}"
+    UserData::Fetch.call!(user: user)
   rescue StandardError => error
     logger.error error
   end

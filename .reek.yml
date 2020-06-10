@@ -15,6 +15,9 @@ detectors:
       - initialize
   UtilityFunction:
     enabled: false
+  InstanceVariableAssumption:
+    enabled: false
+
 
 directories:
   "app/controllers":
@@ -22,16 +25,9 @@ directories:
       max_allowed_nesting: 2
     UnusedPrivateMethod:
       enabled: false
-    InstanceVariableAssumption:
-      enabled: false
-  "app/mailers":
-    InstanceVariableAssumption:
-      enabled: false
-  "test":
-    InstanceVariableAssumption:
+  "app/forms":
+    Attribute:
       enabled: false
   "app/models":
     Attribute:
-      enabled: false
-    InstanceVariableAssumption:
       enabled: false

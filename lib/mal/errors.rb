@@ -1,8 +1,14 @@
 module MAL
   module Errors
     class CrawlError < StandardError
-      def reference
-        self.class.to_s.demodulize.underscore
+      def initialize(msg = nil, **params)
+        localized_message = I18n.t(
+          "mal.crawler.errors.#{self.class.to_s.demodulize.underscore}",
+          **params,
+          default: msg
+        )
+
+        super(localized_message)
       end
     end
 

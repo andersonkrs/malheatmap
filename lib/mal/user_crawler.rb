@@ -4,23 +4,15 @@ module MAL
   class UserCrawler < Mechanize
     include URLS
 
-    class_attribute :requests_interval, default: 0
-
     def initialize(username)
       super()
       @username = username
       @response = { profile: {}, history: [] }
 
-      self.history_added = proc { sleep self.class.requests_interval }
-      self.open_timeout = 25.seconds
-      self.read_timeout = open_timeout
+      setup_crawler_options
     end
 
-    def self.crawl(username)
-      new(username).crawl_data
-    end
-
-    def crawl_data
+    def crawl
       crawl_profile
       crawl_history
 
@@ -30,6 +22,14 @@ module MAL
     end
 
     private
+
+    def setup_crawler_options
+      config = Rails.configuration.crawler
+
+      self.history_added = proc { sleep config[:requests_interval] }
+      self.open_timeout = config[:timeout]
+      self.read_timeout = open_timeout
+    end
 
     def crawl_profile
       get profile_url(@username)
@@ -59,8 +59,9 @@ module MAL
       custom_exceptions = {
         "404" => Errors::ProfileNotFound
       }
+      exception = custom_exceptions[response_code] || Errors::CrawlError
 
-      raise custom_exceptions[response_code] || Errors::CrawlError, message
+      raise exception.new(message, username: @username)
     end
   end
 end

@@ -32,5 +32,7 @@ module MalHeatmap
     config.assets.precompile = []
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
+
+    config.crawler = config_for(:crawler)
   end
 end

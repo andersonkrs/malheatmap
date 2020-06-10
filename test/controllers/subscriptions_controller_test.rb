@@ -16,11 +16,9 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
       }
     }, xhr: true
 
-    subscription = Subscription.find_by(username: username)
-    assert_not subscription.processed?
-
     assert_equal "text/javascript", @response.media_type
-    assert_enqueued_with job: SubscriptionJob, args: [subscription]
+    assert 1, Subscription.count
+    assert_enqueued_jobs 1, only: SubscriptionJob, queue: :default
   end
 
   test "does not enqueue anything when creating invalid subscription" do
@@ -45,5 +43,6 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to user_path(user)
     assert_no_enqueued_jobs
+    assert 0, Subscription.count
   end
 end

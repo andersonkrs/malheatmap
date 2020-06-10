@@ -9,11 +9,11 @@ class SyncronizeDataTest < ActiveSupport::TestCase
     create_list(:user, 6)
 
     performed_count = 0
-    stubbed_method = proc { |_username|
+    stubbed_method = proc { |_user|
       performed_count += 1
     }
 
-    SyncronizationService.stub :syncronize_user_data, stubbed_method do
+    UserData::Fetch.stub :call!, stubbed_method do
       invoke
     end
 
@@ -31,7 +31,7 @@ class SyncronizeDataTest < ActiveSupport::TestCase
       performed_count += 1
     }
 
-    SyncronizationService.stub :syncronize_user_data, stubbed_method do
+    UserData::Fetch.stub :call!, stubbed_method do
       invoke
     end
 
