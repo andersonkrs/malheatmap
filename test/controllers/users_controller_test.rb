@@ -142,11 +142,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         assert_select "p.activity", 2
 
         assert_select "p.activity" do |elements|
-          assert_select elements[0], "i/@class", "fas fa-tv has-margin-right-5"
+          assert_select elements[0], "i/@class", "fas fa-tv"
           assert_select elements[0], "a/@href", "https://myanimelist.net/anime/1"
           assert_includes elements[0].text, "Death Note 1 episode"
 
-          assert_select elements[1], "i/@class", "fas fa-book-reader has-margin-right-5"
+          assert_select elements[1], "i/@class", "fas fa-book-reader"
           assert_select elements[1], "a/@href", "https://myanimelist.net/manga/2"
           assert_includes elements[1].text, "Naruto 2 chapters"
         end
@@ -156,7 +156,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         assert_select ".activity", 1
 
         assert_select ".activity" do |elements|
-          assert_select elements[0], "i/@class", "fas fa-book-reader has-margin-right-5"
+          assert_select elements[0], "i/@class", "fas fa-book-reader"
           assert_select elements[0], "a/@href", "https://myanimelist.net/manga/2"
           assert_includes elements[0].text, "Naruto 12 chapters"
         end

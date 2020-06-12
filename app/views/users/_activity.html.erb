@@ -1,6 +1,6 @@
 <% presenter = ActivityPresenter.new(activity) %>
 
 <p class="activity">
-  <i class="<%= presenter.icon_class %> has-margin-right-5"></i>
+  <span class="<%= presenter.kind %>" ><i class="<%= presenter.icon_class %>"></i></span>
   <a target="_blank" rel="noopener noreferrer" href="<%= presenter.link %>"><%= presenter.name %></a> <%= presenter.amount %>
 </p>
