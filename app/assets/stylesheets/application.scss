@@ -5,7 +5,6 @@ $title-weight: 400;
 
 @import "~bulma/bulma";
 @import "~bulma-timeline";
-@import "bulma-helpers/css/bulma-helpers.min.css";
 @import "@fortawesome/fontawesome-free";
 
 html {
@@ -42,6 +41,10 @@ a.root-link {
   position: relative;
 }
 
+.activity > .manga {
+  padding-right: 4px;
+}
+
 :root {
   --square-size: 12px;
   --square-gap: 2.5px;
@@ -73,8 +76,8 @@ a.root-link {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding-top: 5;
-  padding-bottom: 0px;
+  padding-top: 5px;
+  padding-bottom: 0;
   align-items: center !important;
 
   @include until($widescreen) {
@@ -86,7 +89,7 @@ a.root-link {
 
 .legend-container {
   font-size: 11px;
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 .legend-container .column {

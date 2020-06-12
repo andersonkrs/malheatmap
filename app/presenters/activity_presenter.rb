@@ -1,6 +1,6 @@
 class ActivityPresenter < ApplicationPresenter
   delegate :icon_class, :amount, :link, to: :item_presenter
-  delegate :name, to: :activity
+  delegate :name, :kind, to: :activity
 
   def initialize(activity)
     @activity = activity
