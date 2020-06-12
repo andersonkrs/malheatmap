@@ -9,7 +9,7 @@ task syncronize_data: [:environment] do
   users.each do |user|
     logger.info "Updating data for user: #{user.username}"
 
-    UserData::Fetch.call!(user: user)
+    UserData::Update.call!(user: user)
   rescue StandardError => error
     logger.error error
   end

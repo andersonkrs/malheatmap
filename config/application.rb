@@ -21,8 +21,6 @@ module MalHeatmap
     config.time_zone = "UTC"
     config.active_record.default_timezone = :utc
     config.autoload_paths << Rails.root.join("lib")
-    config.autoload_paths << Rails.root.join("services")
-    config.autoload_paths << Rails.root.join("presenters")
     config.generators.orm :active_record, primary_key_type: :uuid
     config.generators.test_framework :test_unit, fixture: false
     config.generators.factory_bot true

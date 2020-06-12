@@ -1,7 +1,7 @@
 require "test_helper"
 
 module UserData
-  class ImportTest < ActiveSupport::TestCase
+  class SaveTest < ActiveSupport::TestCase
     setup do
       @data = {
         profile: {
@@ -25,7 +25,7 @@ module UserData
         ]
       }
       @user = create(:user)
-      @service = Import.set(user: @user, crawled_data: @data)
+      @service = Save.set(user: @user, crawled_data: @data)
     end
 
     test "generates new checksum" do
@@ -49,14 +49,15 @@ module UserData
         @service.call
       end
 
-      entry = @user.entries.first
+      entries = @user.entries.order(:timestamp)
+      entry = entries.first
       assert_equal DateTime.new(2019, 12, 6, 15, 0, 0), entry.timestamp
       assert_equal 1, entry.amount
       assert_equal 121, entry.mal_id
       assert_equal "Death Note", entry.name
       assert_equal "manga", entry.kind
 
-      entry = @user.entries.last
+      entry = entries.last
       assert_equal DateTime.new(2019, 12, 6, 16, 11, 3), entry.timestamp
       assert_equal 6, entry.amount
       assert_equal 5, entry.mal_id

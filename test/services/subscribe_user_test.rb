@@ -7,7 +7,7 @@ class SubscribeUserTest < ActiveSupport::TestCase
   end
 
   test "returns created user for giving subscription" do
-    UserData::Fetch.stub(:call!, nil) do
+    UserData::Update.stub(:call!, nil) do
       result = @service.call
 
       assert result.success?
@@ -24,7 +24,7 @@ class SubscribeUserTest < ActiveSupport::TestCase
       raise Patterns::Service::Failure, context_mock
     }
 
-    UserData::Fetch.stub(:call!, fetch_mock) do
+    UserData::Update.stub(:call!, fetch_mock) do
       result = @service.call
 
       assert result.failure?

@@ -6,12 +6,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by!(username: params[:id])
-    @activities = @user
-                    .activities
-                    .includes(:item)
-                    .joins(:item)
-                    .where(date: @range)
-                    .order(date: :desc, name: :asc)
+    @activities = UserQueries::ActivitiesForDateRange.execute(user: @user, range: @range)
+    @active_years = UserQueries::ActiveYears.execute(user: @user)
   end
 
   private
@@ -21,6 +17,6 @@ class UsersController < ApplicationController
   end
 
   def set_range
-    @range = GraphRange.new(@year).calculate
+    @range = Graph::DateRange.calculate_for(year: @year)
   end
 end

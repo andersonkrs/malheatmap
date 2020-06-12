@@ -1,7 +1,7 @@
 module UserData
-  class Fetch < ApplicationPipelineService
+  class Update < ApplicationPipelineService
     step Crawl
-    step Import
+    step Save
     step GenerateActivitiesFromHistory, if: :new_data?
 
     private

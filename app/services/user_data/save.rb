@@ -1,5 +1,5 @@
 module UserData
-  class Import < ApplicationService
+  class Save < ApplicationService
     delegate :user, :crawled_data, to: :context
 
     before do
@@ -36,7 +36,7 @@ module UserData
     end
 
     def import_recent_history
-      Entry.where(user: user).last_three_weeks.delete_all
+      delete_last_entries
 
       crawled_data[:history].each do |entry|
         item = find_or_create_item(entry)
@@ -48,6 +48,11 @@ module UserData
           timestamp: entry[:timestamp]
         )
       end
+    end
+
+    def delete_last_entries
+      entries = UserQueries::EntriesFromLastThreeWeeks.execute(user: user)
+      entries.delete_all
     end
 
     def find_or_create_item(entry)

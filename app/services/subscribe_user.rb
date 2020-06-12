@@ -4,7 +4,7 @@ class SubscribeUser < ApplicationService
   def call
     context.user = User.create!(username: subscription.username)
 
-    UserData::Fetch.call!(user: context.user)
+    UserData::Update.call!(user: context.user)
   end
 
   def rollback

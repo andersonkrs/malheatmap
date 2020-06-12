@@ -41,18 +41,18 @@ module UserData
 
     def all_user_entries
       user
-          .entries
-          .order(:timestamp, :item_id, :created_at)
-          .all
+        .entries
+        .order(:timestamp, :item_id, :created_at)
+        .all
     end
 
     # :reek:DuplicateMethodCall
     # :reek:FeatureEnvy
     def find_last_processed_entry(date, item_id)
       @processed_entries
-          .sort_by { |entry| [entry.timestamp, entry.created_at] }
-          .find_all { |entry| entry.timestamp.to_date <= date && entry.item_id == item_id }
-          .last
+        .sort_by { |entry| [entry.timestamp, entry.created_at] }
+        .find_all { |entry| entry.timestamp.to_date <= date && entry.item_id == item_id }
+        .last
     end
 
     def find_or_initialize_activity(date, item_id)

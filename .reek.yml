@@ -25,6 +25,8 @@ directories:
       max_allowed_nesting: 2
     UnusedPrivateMethod:
       enabled: false
+    TooManyInstanceVariables:
+      enabled: false
   "app/forms":
     Attribute:
       enabled: false
