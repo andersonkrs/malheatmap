@@ -1,6 +1,6 @@
 require_relative "boot"
 
-require "rails/all"
+require "rails"
 # Pick the frameworks you want:
 require "active_model/railtie"
 require "active_job/railtie"
@@ -26,8 +26,7 @@ module MalHeatmap
     config.generators.factory_bot true
     config.active_record.schema_format = :sql
     config.action_cable.mount_path = "/cable"
-    config.assets.enabled = false
-    config.assets.precompile = []
+
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
 
