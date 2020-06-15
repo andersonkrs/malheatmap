@@ -1,0 +1,16 @@
+.graph
+  ul.months.has-text-left style="display: grid; grid-template-columns: #{css_grid}"
+    - @columns.each do |column|
+      - if column.visible?
+        li.month = column.label
+      - else
+        li
+
+  ul.days
+    - days_names.each do |day_name|
+      li.day = day_name
+
+  ul.squares
+    - @squares.each do |square|
+      li.square[data-level=square.level data-date=square.date title=square.hint]
+        a[href="##{square.date}"]
