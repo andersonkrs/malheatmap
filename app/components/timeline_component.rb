@@ -1,5 +1,5 @@
-class TimelinePresenter < ApplicationPresenter
-  def initialize(activities)
+class TimelineComponent < ViewComponent::Base
+  def initialize(activities:)
     @activities = activities
   end
 

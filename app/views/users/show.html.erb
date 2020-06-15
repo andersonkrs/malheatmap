@@ -43,7 +43,7 @@
 
             <div class="column is-full">
               <div class="graph-container has-text-centered">
-                <%= render partial: "graph", locals: { range: @range, activities: @activities } %>
+                <%= render GraphComponent.new(date_range: @date_range, activities: @activities) %>
               </div>
             </div>
 
@@ -70,22 +70,12 @@
         </div>
 
         <div class="timeline-container column is-10">
-          <%= render partial: "timeline", locals: { activities: @activities } %>
+          <%= render TimelineComponent.new(activities: @activities) %>
         </div>
       <% end %>
 
       <div class="active-years-container column is-2">
-        <aside class="menu">
-          <ul class="menu-list">
-            <% @active_years.each do |year| %>
-              <li class="has-text-centered">
-                <% link_class = year == @year ? "year-link is-active" : "year-link" %>
-
-                <%= link_to year, user_path(@user, year: year), class: link_class %>
-              </li>
-            <% end %>
-          </ul>
-        </aside>
+        <%= render YearsMenuComponent.new(user: @user, years: @years, active_year: @selected_year) %>
       </div>
 
     </div>

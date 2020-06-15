@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.6.6"
+ruby File.read(".ruby-version")
 
 gem "bootsnap", require: false
 gem "chronic"
@@ -12,7 +12,9 @@ gem "rails"
 gem "rollbar"
 gem "sidekiq"
 gem "sidekiq-limit_fetch"
+gem "slim-rails"
 gem "turbolinks"
+gem "view_component"
 gem "webpacker"
 
 group :development, :test do
