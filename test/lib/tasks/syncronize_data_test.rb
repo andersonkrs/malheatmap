@@ -13,7 +13,7 @@ class SyncronizeDataTest < ActiveSupport::TestCase
       performed_count += 1
     }
 
-    UserData::Update.stub :call!, stubbed_method do
+    UpdateUserData.stub :call!, stubbed_method do
       invoke
     end
 
@@ -31,7 +31,7 @@ class SyncronizeDataTest < ActiveSupport::TestCase
       performed_count += 1
     }
 
-    UserData::Update.stub :call!, stubbed_method do
+    UpdateUserData.stub :call!, stubbed_method do
       invoke
     end
 

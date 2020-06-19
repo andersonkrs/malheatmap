@@ -6,10 +6,9 @@ class SubscriptionForm < ApplicationForm
   }x.freeze
 
   validates :username, presence: true, format: { with: VALID_USERNAME_REGEX }
-
   after_validation :clean_username
 
-  def already_subscribed?
+  def user_already_subscribed?
     User.exists?(username: username)
   end
 
@@ -20,10 +19,8 @@ class SubscriptionForm < ApplicationForm
   private
 
   def persist
-    subscription = Subscription.create!(username: username, processed: false)
-    SubscriptionJob.set(wait: 1.second).perform_later(subscription)
-
-    self.id = subscription.id
+    result = CreateSubscription.call(username: username)
+    self.id = result.subscription.id
   end
 
   def clean_username

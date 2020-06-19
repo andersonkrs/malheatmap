@@ -2,7 +2,7 @@
   document.querySelector('form').reset()
 
   <% if @subscription.errors.any? %>
-    const message = '<%= j render(partial: "alert", locals: { message: @subscription.errors.full_messages.first }) %>'
+    const message = '<%= j render(NotificationComponent.new(message: @subscription.errors.full_messages.first)) %>'
     document.querySelector('.notifications-container').innerHTML = message
   <% else %>
     App.consumer.subscriptions.create({ channel: 'SubscriptionChannel', process_id: '<%= @subscription.id %>' }, {

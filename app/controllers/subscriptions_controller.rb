@@ -7,7 +7,7 @@ class SubscriptionsController < ApplicationController
     @subscription = SubscriptionForm.new(subscription_params)
     return if @subscription.invalid?
 
-    if @subscription.already_subscribed?
+    if @subscription.user_already_subscribed?
       redirect_to_user_page
     else
       @subscription.save!

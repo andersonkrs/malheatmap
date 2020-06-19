@@ -2,22 +2,20 @@
   - activities_by_month_and_date.each do |month, dates|
 
     .header.timeline-header
-      - formated_month = month.strftime("%B")
+      - formatted_month = month.strftime("%B")
 
       - if header?(month)
-        span.header-marker.tag.is-medium.is-primary
-          = formated_month
+        span.header-marker.tag.is-medium.is-primary = formatted_month
       - else
-        span.separator-marker.tag.is-primary
-          = formated_month
+        span.separator-marker.tag.is-primary = formatted_month
 
     - dates.each do |date, activities|
       .timeline-item id=date
         .timeline-marker.is-primary
         .timeline-content
           p.heading = date.strftime("%B %-d, %Y")
-          = render(ActivityComponent.with_collection(activities))
+          = render ActivityComponent.with_collection(activities)
 
     - if footer?(month)
       header.timeline-header
-        span.footer-marker.tag.is-medium.is-primary = formated_month
+        span.footer-marker.tag.is-medium.is-primary = formatted_month

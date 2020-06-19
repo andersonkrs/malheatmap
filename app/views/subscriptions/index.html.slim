@@ -1,0 +1,28 @@
+- content_for :head do
+  meta name="turbolinks-cache-control" content="no-cache"
+
+- @section_class = "is-medium"
+
+.div
+  .columns.is-centered.is-multiline
+    .column.is-full.has-text-centered.has-text-primary
+      span.icon.is-large
+        i.fas.fa-4x.fa-fire
+      h1.title.has-text-centered = t("app.title")
+
+    .column.is-half.form-container
+      = form_with model: @subscription, method: "post" do |form|
+        .field
+          p.has-text-centered = t(".enter_your_mal_profile_html")
+
+        .field.notifications-container
+
+        .field.has-addons
+          .control.is-expanded
+            = form.text_field :username, id: "username", class: "input", placeholder: t(".username.placeholder")
+
+          .control
+            = form.button t(".subscribe"), class: "button is-primary",
+                                       data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" }
+
+  .loader-container

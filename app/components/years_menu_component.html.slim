@@ -1,6 +1,5 @@
 .aside.menu
   ul.menu-list
-    - @years.each do |year, active|
+    - @years_with_link_class.each do |year, link_class|
       li.has-text-centered
-        - link_class = active ? "is-active" : ""
         = link_to(year, user_path(@user, year: year), class: link_class)

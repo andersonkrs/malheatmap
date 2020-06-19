@@ -36,13 +36,13 @@ class SubscriptionFormTest < ActiveSupport::TestCase
     assert_nil @form.username
   end
 
-  test "enqueues subscription job when saves" do
+  test "enqueues subscription job when it saves" do
     assert @form.save
 
     subscription = Subscription.find_by(username: @form.username)
     assert_not subscription.processed?
 
-    assert_enqueued_with job: SubscriptionJob, args: [subscription]
+    assert_enqueued_with job: ProcessSubscriptionJob, args: [subscription]
   end
 
   test "does not create any subscription when username is invalid" do

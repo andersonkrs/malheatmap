@@ -13,10 +13,13 @@ detectors:
     enabled: true
     exclude:
       - initialize
+    max_statements: 10
   UtilityFunction:
     enabled: false
   InstanceVariableAssumption:
     enabled: false
+  DuplicateMethodCall:
+    max_calls: 2
 
 
 directories:

@@ -1,7 +1,7 @@
 require "test_helper"
 
 class TimelineComponentTest < ViewComponent::TestCase
-  test "renders each timeline marker correclty" do
+  test "renders each timeline marker correctly" do
     activities = [
       build(:activity, date: Date.new(2020, 10, 1)),
       build(:activity, date: Date.new(2020, 7, 1)),
