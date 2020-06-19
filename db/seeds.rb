@@ -40,4 +40,4 @@ items = [
   end
 end
 
-UserData::GenerateActivitiesFromHistory.call!(user: user)
+GenerateUserActivitiesFromHistory.call!(user: user)
