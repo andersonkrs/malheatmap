@@ -2,7 +2,7 @@
   "name": "mal_heatmap",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.13.0",
+    "@fortawesome/fontawesome-free": "^5.13.1",
     "@rails/actioncable": "^6.0.3",
     "@rails/ujs": "^6.0.3",
     "@rails/webpacker": "5.1.1",
