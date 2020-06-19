@@ -1,28 +1,22 @@
 (function () {
   document.querySelector('form').reset()
 
-  <% if @subscription.errors.any? %>
-    const message = '<%= j render(partial: "alert", locals: { message: @subscription.errors.full_messages.first }) %>'
-    document.querySelector('.notifications-container').innerHTML = message
-  <% else %>
-    App.consumer.subscriptions.create({ channel: 'SubscriptionChannel', process_id: '<%= @subscription.id %>' }, {
-      connected () {
-        document.querySelector('form').style.display = 'none'
-        document.querySelector('.loader-container').innerHTML = '<%= j render(partial: "loader") %>'
-      },
+  App.consumer.subscriptions.create({ channel: 'SubscriptionChannel', process_id: '<%= @subscription.id %>' }, {
+    connected () {
+      document.querySelector('form').style.display = 'none'
+      document.querySelector('.loader-container').innerHTML = '<%= j render(partial: "loader") %>'
+    },
 
-      received (data) {
-        this.unsubscribe()
+    received (data) {
+      this.unsubscribe()
 
-        if (data.status === 'success') {
-          Turbolinks.visit(data.user_url, { action: 'advance' })
-        } else {
-          document.querySelector('form').style.display = ''
-          document.querySelector('.loader-container').innerHTML = ''
-          document.querySelector('.notifications-container').innerHTML = data.template
-        }
+      if (data.status === 'success') {
+        Turbolinks.visit(data.user_url, { action: 'advance' })
+      } else {
+        document.querySelector('form').style.display = ''
+        document.querySelector('.loader-container').innerHTML = ''
+        document.querySelector('.notifications-container').innerHTML = data.template
       }
-    })
-  <% end %>
-
+    }
+  })
 }())

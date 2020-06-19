@@ -9,8 +9,8 @@ class ActivityComponentTest < ViewComponent::TestCase
   test "renders manga activity correctly" do
     component = render_inline(ActivityComponent.new(activity: @manga_activity))
 
-    assert_include "https://myanimelist.net/anime", component.css("a").attribute("href")
-    assert_equal "fas fa-book-reader", component.css("i").attribute("class")
+    assert_includes component.css("a").attribute("href").value, "https://myanimelist.net/manga"
+    assert_equal "fas fa-book-reader", component.css("i").attribute("class").value
     assert_includes component.text, @manga_activity.name
     assert_includes component.text, "10 chapters"
   end
@@ -18,8 +18,8 @@ class ActivityComponentTest < ViewComponent::TestCase
   test "renders anime activity correctly" do
     component = render_inline(ActivityComponent.new(activity: @anime_activity))
 
-    assert_include "https://myanimelist.net/anime", component.css("a").attribute("href")
-    assert_equal "fas fa-tv", component.css("i").attribute("class")
+    assert_includes component.css("a").attribute("href").value, "https://myanimelist.net/anime"
+    assert_equal "fas fa-tv", component.css("i").attribute("class").value
     assert_includes component.text, @anime_activity.name
     assert_includes component.text, "2 episodes"
   end

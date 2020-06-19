@@ -1,0 +1,71 @@
+@import "application";
+
+:root {
+  --square-size: 12px;
+  --square-gap: 2.5px;
+  --week-width: calc(var(--square-size) + var(--square-gap));
+}
+
+.graph {
+  display: inline-grid;
+  grid-template-areas: "empty months"
+                       "days squares";
+  grid-template-columns: auto 1fr;
+  grid-gap: 6px;
+  font-size: 12px;
+}
+
+.months {
+  grid-area: months;
+}
+
+.days {
+  grid-area: days;
+}
+
+.days, .squares {
+  display: grid;
+  grid-gap: var(--square-gap);
+  grid-template-rows: repeat(7, var(--square-size));
+}
+
+.days li:nth-child(odd) {
+  visibility: hidden;
+}
+
+.squares {
+  grid-area: squares;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--square-size);
+  position: relative;
+}
+
+.square {
+  display: inline-block;
+}
+
+.square[data-level="0"] {
+  background-color: #ebedf0;
+}
+
+.square[data-level="1"] {
+  background-color: #cde9fa;
+}
+
+.square[data-level="2"] {
+  background-color: #70c9ff;
+}
+
+.square[data-level="3"] {
+  background-color: #077ee0;
+}
+
+.square[data-level="4"] {
+  background-color: #1100c9;
+}
+
+.square > a {
+  display: block;
+  text-decoration: none;
+  height: 100%
+}

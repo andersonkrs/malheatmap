@@ -12,11 +12,11 @@ module Patterns
 
     define_callbacks :call
 
-    def self.before(&block)
+    def self.before_call(&block)
       set_callback(:call, :before, &block)
     end
 
-    def self.after(&block)
+    def self.after_call(&block)
       set_callback(:call, :after, &block)
     end
 

@@ -1,0 +1,50 @@
+= javascript_pack_tag "users", "data-turbolinks-track": "reload"
+= stylesheet_pack_tag "users", media: "all", "data-turbolinks-track": "reload"
+
+.columns
+  .column.is-6-fullhd.is-offset-3-fullhd.is-8-widescreen.is-offset-2-widescreen.is-8-desktop.is-offset-2-desktop.is-10-tablet.is-offset-1-tablet.is-full-mobile
+
+    .columns.is-multiline.is-gapless
+      .column.is-full.has-text-centered.mt-2
+        = link_to(root_path) do
+          span.icon.is-small
+            i.fas.fa-3x.fa-fire.has-text-primary
+      .column.is-full.has-text-centered.mt5
+        h3.title.is-3.has-text-centered
+          = link_to(t("app.title"), root_path, class: "root-link")
+
+    .columns.is-multiline
+      - cache @user do
+        .column.is-full
+          article.media
+            figure.user-avatar.media-left
+              p.image.is-96x96
+                img src=@user.avatar_url
+            .media-content
+              p
+                a.is-size-4 target="_blank" href=profile_url(@user.username) = @user.username
+
+      - cache @activities do
+        .column.is-full
+          .columns.is-multiline.bordered
+            .column.is-full
+              .graph-container.has-text-centered
+                = render GraphComponent.new(date_range: @date_range, activities: @activities)
+
+            .column.is-full
+              .columns.legend-container
+                .column.has-text-left title=t(".counting_help")
+                  = t(".counting_text")
+
+                .column.has-text-right
+                  span = t(".less")
+                  ul.legend
+                    - (0..4).each do |level|
+                      li.square data-level=level title=t(".levels.#{level}")
+                  span = t(".more")
+
+        .column.is-10.timeline-container
+          = render TimelineComponent.new(activities: @activities)
+
+        .column.is-2.years-menu-container
+          = render YearsMenuComponent.new(user: @user, years: @years, active_year: @selected_year)

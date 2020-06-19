@@ -13,18 +13,23 @@ detectors:
     enabled: true
     exclude:
       - initialize
+    max_statements: 10
   UtilityFunction:
     enabled: false
   InstanceVariableAssumption:
     enabled: false
-
+  DuplicateMethodCall:
+    max_calls: 2
+  NestedIterators:
+    max_allowed_nesting: 2
 
 directories:
   "app/controllers":
-    NestedIterators:
-      max_allowed_nesting: 2
     UnusedPrivateMethod:
       enabled: false
+    TooManyInstanceVariables:
+      enabled: false
+  "app/components":
     TooManyInstanceVariables:
       enabled: false
   "app/forms":

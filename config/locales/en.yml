@@ -42,10 +42,13 @@ en:
         Enter your <a target="_blank" rel="noopener noreferrer" href="https://myanimelist.net">MyAnimeList</a> profile:
       username:
         placeholder: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs"
+      subscribe: "Subscribe"
+    loader:
+      wait: "Please wait..."
   users:
     show:
       now: "Now"
-      beggining: "Beggining"
+      beggining: "Beginning"
       counting_text: "How is it counted?"
       counting_help: "A summary of watched episodes and read chapters by day."
       less: "Less"
@@ -68,5 +71,3 @@ en:
         zero: "No activities on %{date}"
         one: "One activity on %{date}"
         other: "%{count} activities on %{date}"
-
-
