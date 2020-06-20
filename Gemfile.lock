@@ -270,7 +270,7 @@ GEM
     unf_ext (0.0.7.7)
     unicode-display_width (1.7.0)
     vcr (6.0.0)
-    view_component (2.9.0)
+    view_component (2.11.1)
       activesupport (>= 5.0.0, < 7.0)
     web-console (4.0.2)
       actionview (>= 6.0.0)
