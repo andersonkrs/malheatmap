@@ -56,18 +56,10 @@ class GraphComponent < ViewComponent::Base
   def initialize(date_range:, activities:)
     @date_range = date_range
     @activities = activities
+    @weeks = @date_range.each_slice(7).to_a
 
-    @squares = @date_range.map do |date|
-      amount = grouped_activities.fetch(date, []).sum(&:amount)
-      Square.new(date: date, amount: amount)
-    end
-
-    @months = @date_range.uniq(&:beginning_of_month).map do |date|
-      Month.new(month: date.month,
-                year: date.year,
-                weeks: weeks_containing_month_year(date),
-                last: @date_range.last.beginning_of_month == date)
-    end
+    create_squares
+    create_months
   end
 
   def months_css_grid
@@ -84,13 +76,28 @@ class GraphComponent < ViewComponent::Base
     @grouped_activities ||= @activities.group_by(&:date)
   end
 
-  def weeks_containing_month_year(date)
-    weeks.select do |week|
-      week.any? { |day| day.beginning_of_month == date.beginning_of_month }
+  def create_squares
+    @squares = @date_range.map do |date|
+      amount = grouped_activities.fetch(date, []).sum(&:amount)
+      Square.new(date: date, amount: amount)
     end
   end
 
-  def weeks
-    @date_range.each_slice(7).to_a
+  def create_months
+    last_date = @date_range.last
+
+    @months = @date_range.uniq(&:beginning_of_month).map do |date|
+      Month.new(month: date.month,
+                year: date.year,
+                weeks: weeks_containing_month_year(date),
+                last: last_date.beginning_of_month == date)
+    end
+  end
+
+  # :reek:
+  def weeks_containing_month_year(date)
+    @weeks.select do |week|
+      week.any? { |day| day.beginning_of_month == date.beginning_of_month }
+    end
   end
 end
