@@ -1,10 +1,10 @@
 .graph
-  ul.months.has-text-left style="display: grid; grid-template-columns: #{columns_css_grid}"
-    - @columns.each do |column|
-      - if column.visible?
-        li.month = column.label
+  ul.months.has-text-left style="display: grid; grid-template-columns: #{months_css_grid}"
+    - @months.each do |month|
+      - if month.visible?
+        li.month[data-width=month.width] = month.label
       - else
-        li
+        li.month[data-width=month.width]
 
   ul.days
     - days_names.each do |day_name|

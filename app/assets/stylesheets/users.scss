@@ -1,0 +1,53 @@
+@import "application";
+
+.user-avatar {
+  overflow-y: hidden;
+}
+
+.timeline .timeline-item {
+  padding-bottom: 0.5em;
+  position: relative;
+}
+
+.activity > .manga {
+  padding-right: 4px;
+}
+
+.graph-container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
+  padding-bottom: 0;
+  align-items: center !important;
+
+  @include until($widescreen) {
+    padding-left: 5px;
+    padding-right: 5px;
+    align-items: flex-end !important;
+  }
+}
+
+.legend-container {
+  font-size: 11px;
+  padding-top: 0;
+}
+
+.legend-container .column {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.legend-container .legend {
+  position: relative;
+  bottom: -1px;
+  display: inline-block;
+  margin: 0 5px;
+  list-style: none;
+}
+
+.legend-container .legend li {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
