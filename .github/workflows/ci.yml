@@ -17,6 +17,9 @@ jobs:
       BUNDLE_PATH: vendor/bundle
 
     steps:
+    - name: Increase max fs watches
+      run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
     - name: Checkout code
       uses: actions/checkout@v1
 
