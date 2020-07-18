@@ -40,8 +40,6 @@ class GenerateUserActivitiesFromHistory < ApplicationService
     end
   end
 
-  # :reek:DuplicateMethodCall
-  # :reek:FeatureEnvy
   def find_last_processed_entry(date, item_id)
     @processed_entries
       .sort_by { |entry| [entry.timestamp, entry.created_at] }

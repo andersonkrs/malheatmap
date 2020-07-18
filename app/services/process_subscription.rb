@@ -1,28 +1,33 @@
 class ProcessSubscription < ApplicationService
-  delegate :subscription, :user, to: :context
+  delegate :subscription, to: :context
 
   before_call do
     context.user = User.create!(username: subscription.username)
   end
 
   def call
-    result = UpdateUserData.call(user: user)
+    result = UpdateUserData.call(user: context.user)
 
     if result.success?
-      context.response = { status: :success, user_url: user_path(user) }
+      context.response = { status: :success, redirect: user_path(context.user) }
     else
-      context.response = { status: :failure, template: render_error_alert(result.message) }
       rollback
+      context.response = { status: :failure, notification: render_error_alert(result.message) }
     end
   end
 
-  after_call do
+  rescue_from StandardError do |exception|
+    Rails.logger.error(exception)
+    context.response = { status: :failure, redirect: internal_error_path }
+  end
+
+  ensure_call do
     SubscriptionChannel.broadcast_to(subscription, context.response)
     subscription.update!(processed: true)
   end
 
   def rollback
-    context.user.destroy
+    context.user&.destroy
   end
 
   private

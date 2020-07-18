@@ -52,6 +52,5 @@ Rails.application.configure do
   end
 
   config.active_record.dump_schema_after_migration = false
-
-  config.crawler_requests_interval = 2
+  config.active_storage.service = :local
 end

@@ -10,9 +10,6 @@ jobs:
       postgres:
         image: postgres:12.1-alpine
         ports: ["5432:5432"]
-      redis:
-        image: redis:alpine
-        ports: ["6379:6379"]
 
     env:
       BUNDLE_JOBS: 4

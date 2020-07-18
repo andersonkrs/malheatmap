@@ -3,8 +3,7 @@ set -e
 
 echo "== Running linters =="
 bundle exec rubocop
-bundle exec reek
-bundle exec brakeman -A --no-pager
+bundle exec brakeman --no-pager
 yarn lint
 
 echo "== Running tests =="

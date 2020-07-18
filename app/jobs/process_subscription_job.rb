@@ -1,4 +1,6 @@
 class ProcessSubscriptionJob < ApplicationJob
+  include NoRetryJob
+
   private
 
   def perform(subscription)

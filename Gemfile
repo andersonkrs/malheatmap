@@ -26,7 +26,6 @@ end
 group :development do
   gem "brakeman"
   gem "listen"
-  gem "reek"
   gem "rubocop"
   gem "rubocop-rails", require: false
   gem "spring"

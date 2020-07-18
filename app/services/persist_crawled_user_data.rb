@@ -38,7 +38,7 @@ class PersistCrawledUserData < ApplicationService
       item = find_or_create_item(entry)
 
       Entry.create!(
-        user: user,
+        user_id: user.id,
         item: item,
         amount: entry[:amount],
         timestamp: entry[:timestamp]

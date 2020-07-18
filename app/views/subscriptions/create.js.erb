@@ -10,12 +10,12 @@
     received (data) {
       this.unsubscribe()
 
-      if (data.status === 'success') {
-        Turbolinks.visit(data.user_url, { action: 'advance' })
+      if (data.redirect) {
+        Turbolinks.visit(data.redirect, { action: 'advance' })
       } else {
         document.querySelector('form').style.display = ''
         document.querySelector('.loader-container').innerHTML = ''
-        document.querySelector('.notifications-container').innerHTML = data.template
+        document.querySelector('.notifications-container').innerHTML = data.notification
       }
     }
   })

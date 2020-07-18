@@ -59,5 +59,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         end
       end
     end
+
+    test "redirects to 404 if user does not exist" do
+      get user_url("fakeuser")
+
+      assert_redirected_to not_found_url
+    end
   end
 end

@@ -44,7 +44,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.active_job.queue_adapter = :sidekiq
+  config.active_job.queue_adapter = :async
 
   hosts = ENV.fetch("RAILS_HOSTS", "").split(";")
 
@@ -52,5 +52,5 @@ Rails.application.configure do
   config.action_cable.allowed_request_origins |= hosts
   config.web_console.whiny_requests = false
 
-  config.crawler_requests_interval = 3
+  config.active_storage.service = :local
 end

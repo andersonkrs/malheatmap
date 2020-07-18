@@ -65,6 +65,119 @@
     {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
+      "fingerprint": "1941f8f57f50ff1b8e2f807079cf6548273afbbfff8ecb0bb89c4dc413283761",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/users/show.html.slim",
+      "line": 50,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => TimelineComponent.new(:activities => User.find_by!(:username => params[:username]).activities.for_date_range(Graph::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range).ordered_as_timeline), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "UsersController",
+          "method": "show",
+          "line": 11,
+          "file": "app/controllers/users_controller.rb",
+          "rendered": {
+            "name": "users/show",
+            "file": "app/views/users/show.html.slim"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "users/show"
+      },
+      "user_input": "params[:year]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "4fd861c2509805bff868d1ccfe2e92167ade9e3f1256cd0c8964b191de16f3f7",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/html_screenshot.rb",
+      "line": 59,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "Open3.capture3(\"#{executable} #{@source.path} --filename='<%= url %>' #{params.join(\" \")}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "HtmlScreenshot",
+        "method": "exec_in_source_path"
+      },
+      "user_input": "params.join(\" \")",
+      "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "6e788c0e6e9c4fcaf5c748f9798fb7393c6a84369e769c5862875e821bcce434",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/users/show.html.slim",
+      "line": 35,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => GraphComponent.new(:date_range => Graph::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range, :activities => User.find_by!(:username => params[:username]).activities.for_date_range(Graph::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range).ordered_as_timeline), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "UsersController",
+          "method": "show",
+          "line": 11,
+          "file": "app/controllers/users_controller.rb",
+          "rendered": {
+            "name": "users/show",
+            "file": "app/views/users/show.html.slim"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "users/show"
+      },
+      "user_input": "params[:year]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "97db2d3eb9bf6c43608f62739d528c0fe66faa1dc49b9a69cac08fbbcd8e80b3",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/users/show.html.slim",
+      "line": 53,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => YearsMenuComponent.new(:user => User.find_by!(:username => params[:username]), :years => User.find_by!(:username => params[:username]).activities.unique_years, :active_year => ((params[:year].to_i or Time.zone.today.year))), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "UsersController",
+          "method": "show",
+          "line": 11,
+          "file": "app/controllers/users_controller.rb",
+          "rendered": {
+            "name": "users/show",
+            "file": "app/views/users/show.html.slim"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "users/show"
+      },
+      "user_input": "params[:year]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
       "fingerprint": "e88f4bd4fbcdf5f0054a07deffc2e5cea3c34f96efc4425cc63e3a45b05009af",
       "check_name": "Render",
       "message": "Render path contains parameter value",
@@ -94,6 +207,6 @@
       "note": ""
     }
   ],
-  "updated": "2020-06-17 23:26:05 -0300",
+  "updated": "2020-07-18 12:50:43 -0300",
   "brakeman_version": "4.8.2"
 }

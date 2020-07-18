@@ -10,14 +10,10 @@ class SubscriptionForm < ApplicationForm
     User.exists?(username: username)
   end
 
-  def model_name
-    ActiveModel::Name.new(self, nil, "Subscription")
-  end
-
   private
 
   def persist
-    result = CreateSubscription.call(username: username)
+    result = CreateSubscription.call!(username: username)
     self.id = result.subscription.id
   end
 

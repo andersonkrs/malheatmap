@@ -24,6 +24,8 @@ Rails.application.configure do
 
   config.active_support.deprecation = :stderr
 
-  config.crawler_requests_interval = 0
   config.active_job.queue_adapter = :test
+  config.active_storage.service = :test
+
+  config.log_level = :debug
 end

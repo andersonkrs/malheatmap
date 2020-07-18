@@ -19,7 +19,7 @@ class ProcessSubscriptionTest < ActiveSupport::TestCase
 
       assert User.exists?(username: @subscription.username)
       assert @subscription.processed?
-      assert_broadcast_on @stream_id, status: :success, user_url: user_path(@subscription.username)
+      assert_broadcast_on @stream_id, status: :success, redirect: user_path(@subscription.username)
     end
   end
 
@@ -35,7 +35,17 @@ class ProcessSubscriptionTest < ActiveSupport::TestCase
       assert @subscription.processed?
 
       expected_template = ApplicationController.render(NotificationComponent.new(message: "something went wrong!"))
-      assert_broadcast_on @stream_id, status: :failure, template: expected_template
+      assert_broadcast_on @stream_id, status: :failure, notification: expected_template
+    end
+  end
+
+  test "broadcasts internal server error message when something unexpected happen" do
+    UpdateUserData.stub(:call, -> { raise StandardError, "something went wrong" }) do
+      @service.call
+
+      assert_not User.exists?(username: @subscription.username)
+      assert @subscription.processed?
+      assert_broadcast_on @stream_id, status: :failure, redirect: internal_error_path
     end
   end
 end

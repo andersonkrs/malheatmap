@@ -2,7 +2,7 @@ require "test_helper"
 
 class SubscriptionFormTest < ActiveSupport::TestCase
   setup do
-    @form = SubscriptionForm.new(username: "andersonkrs")
+    @form = SubscriptionForm.new(username: "https://myanimelist.net/profile/andersonkrs")
   end
 
   context "validations" do
@@ -36,28 +36,20 @@ class SubscriptionFormTest < ActiveSupport::TestCase
     assert_nil @form.username
   end
 
-  test "enqueues subscription job when it saves" do
-    assert @form.save
+  test "calls create subscription job with cleaned username" do
+    subscription = create(:subscription)
+    result_mock = Minitest::Mock.new
+    result_mock.expect(:subscription, subscription)
 
-    subscription = Subscription.find_by(username: @form.username)
-    assert_not subscription.processed?
+    service_mock = lambda { |username:|
+      assert_equal "andersonkrs", username
+      result_mock
+    }
 
-    assert_enqueued_with job: ProcessSubscriptionJob, args: [subscription]
-  end
-
-  test "does not create any subscription when username is invalid" do
-    @form.username = "aksjdiajsdamd 12ç .1 eq"
-
-    assert_no_changes -> { Subscription.count } do
-      @form.save
-    end
-  end
-
-  test "does not enqueue any job when username is invalid" do
-    @form.username = "ak -2- -3p "
-
-    assert_no_enqueued_jobs do
-      @form.save
+    CreateSubscription.stub(:call!, service_mock) do
+      assert @form.save
+      assert_equal subscription.id, @form.id
+      result_mock.verify
     end
   end
 end

@@ -2,6 +2,7 @@ class UpdateUserData < ApplicationPipelineService
   step CrawlUserData
   step PersistCrawledUserData
   step GenerateUserActivitiesFromHistory, if: :new_data?
+  step GenerateUserSignature
 
   private
 

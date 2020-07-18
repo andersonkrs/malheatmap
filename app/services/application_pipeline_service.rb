@@ -1,2 +1,3 @@
-class ApplicationPipelineService < Patterns::PipelineService
+class ApplicationPipelineService
+  include Patterns::Pipeline
 end

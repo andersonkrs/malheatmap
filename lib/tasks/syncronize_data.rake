@@ -12,5 +12,6 @@ task syncronize_data: [:environment] do
     UpdateUserData.call!(user: user)
   rescue StandardError => error
     logger.error error
+    Rollbar.error(error)
   end
 end

@@ -1,15 +1,28 @@
 module Patterns
-  class Form
-    include ActiveModel::Model
-    include ActiveModel::Validations::Callbacks
+  module Form
+    extend ActiveSupport::Concern
 
-    def save
-      validate ? persist : false
-    end
+    included do
+      include ActiveModel::Model
+      include ActiveModel::Validations::Callbacks
 
-    def save!
-      validate!
-      persist
+      def model_name
+        ActiveModel::Name.new(self, nil, self.class.to_s.demodulize.remove("Form"))
+      end
+
+      def save
+        if validate
+          persist
+          true
+        else
+          false
+        end
+      end
+
+      def save!
+        validate!
+        persist
+      end
     end
   end
 end
