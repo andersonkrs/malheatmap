@@ -36,6 +36,8 @@ module MalHeatmap
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
 
+    config.exceptions_app = routes
+
     config.crawler = config_for(:crawler)
   end
 end

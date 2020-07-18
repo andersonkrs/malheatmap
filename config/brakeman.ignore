@@ -3,13 +3,13 @@
     {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
-      "fingerprint": "09d51c1ac05c536b34cf370d159efbd25b6b22c1bcf5eff6bbef1376299ec37a",
+      "fingerprint": "1941f8f57f50ff1b8e2f807079cf6548273afbbfff8ecb0bb89c4dc413283761",
       "check_name": "Render",
       "message": "Render path contains parameter value",
       "file": "app/views/users/show.html.slim",
-      "line": 44,
+      "line": 50,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => TimelineComponent.new(:activities => User.find_by!(:username => params[:id]).activities.for_date_range(Graph::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range).ordered_as_timeline), {})",
+      "code": "render(action => TimelineComponent.new(:activities => User.find_by!(:username => params[:username]).activities.for_date_range(Graph::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range).ordered_as_timeline), {})",
       "render_path": [
         {
           "type": "controller",
@@ -34,13 +34,13 @@
     {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
-      "fingerprint": "17953a581c15409ea303deb0bdb873e0e74c4155194dc0ec452668aa6d377c65",
+      "fingerprint": "6e788c0e6e9c4fcaf5c748f9798fb7393c6a84369e769c5862875e821bcce434",
       "check_name": "Render",
       "message": "Render path contains parameter value",
       "file": "app/views/users/show.html.slim",
-      "line": 47,
+      "line": 35,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => YearsMenuComponent.new(:user => User.find_by!(:username => params[:id]), :years => User.find_by!(:username => params[:id]).activities.unique_years, :active_year => ((params[:year].to_i or Time.zone.today.year))), {})",
+      "code": "render(action => GraphComponent.new(:date_range => Graph::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range, :activities => User.find_by!(:username => params[:username]).activities.for_date_range(Graph::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range).ordered_as_timeline), {})",
       "render_path": [
         {
           "type": "controller",
@@ -63,15 +63,35 @@
       "note": ""
     },
     {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "7b593b07aee8a29412b750122a4d4532395ddbea3db9ebee74d37fb449262e80",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/html_screenshot.rb",
+      "line": 26,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "Open3.capture3(executable, source, *params, :binmode => true)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "HtmlScreenshot",
+        "method": "take"
+      },
+      "user_input": "params",
+      "confidence": "High",
+      "note": ""
+    },
+    {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
-      "fingerprint": "e88f4bd4fbcdf5f0054a07deffc2e5cea3c34f96efc4425cc63e3a45b05009af",
+      "fingerprint": "97db2d3eb9bf6c43608f62739d528c0fe66faa1dc49b9a69cac08fbbcd8e80b3",
       "check_name": "Render",
       "message": "Render path contains parameter value",
       "file": "app/views/users/show.html.slim",
-      "line": 29,
+      "line": 53,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => GraphComponent.new(:date_range => Graph::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range, :activities => User.find_by!(:username => params[:id]).activities.for_date_range(Graph::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range).ordered_as_timeline), {})",
+      "code": "render(action => YearsMenuComponent.new(:user => User.find_by!(:username => params[:username]), :years => User.find_by!(:username => params[:username]).activities.unique_years, :active_year => ((params[:year].to_i or Time.zone.today.year))), {})",
       "render_path": [
         {
           "type": "controller",
@@ -94,6 +114,6 @@
       "note": ""
     }
   ],
-  "updated": "2020-06-17 23:26:05 -0300",
+  "updated": "2020-07-21 15:35:23 -0300",
   "brakeman_version": "4.8.2"
 }

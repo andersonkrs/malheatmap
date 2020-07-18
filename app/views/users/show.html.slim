@@ -6,12 +6,12 @@
 
     .columns.is-multiline.is-gapless
       .column.is-full.has-text-centered.mt-2
-        = link_to(root_path) do
+        = link_to root_path do
           span.icon.is-small
             i.fas.fa-3x.fa-fire.has-text-primary
       .column.is-full.has-text-centered.mt5
         h3.title.is-3.has-text-centered
-          = link_to(t("app.title"), root_path, class: "root-link")
+          = link_to t("app.title"), root_path, class: "root-link"
 
     .columns.is-multiline
       - cache @user do
@@ -22,7 +22,10 @@
                 img src=@user.avatar_url
             .media-content
               p
-                a.is-size-4 target="_blank" href=profile_url(@user.username) = @user.username
+                = link_to(profile_url(@user.username), target: "_blank", rel: "noopener noreferrer", class: "is-size-4") do
+                  = @user.username
+              .signature-field.pt-3
+                = render partial: "users/signature_field"
 
       - cache @activities do
         .column.is-full

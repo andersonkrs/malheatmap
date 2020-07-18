@@ -51,3 +51,11 @@
   width: 10px;
   height: 10px;
 }
+
+.signature-field > .field > .field-label {
+  flex-basis: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-right: 0.5em;
+  text-align: left;
+}

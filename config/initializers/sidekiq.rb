@@ -14,16 +14,21 @@ Sidekiq.configure_server do |config|
   ActiveRecord::Base.logger = Sidekiq.logger
 end
 
-unless Sidekiq.server?
+if Sidekiq.server?
+  Sidekiq::Cron::Job.load_from_hash YAML.load_file("config/schedule.yml")
+else
   require "sidekiq/web"
+  require "sidekiq/cron/web"
 
-  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-    ActiveSupport::SecurityUtils.secure_compare(
-      ::Digest::SHA256.hexdigest(username),
-      ::Digest::SHA256.hexdigest(Rails.application.credentials.sidekiq[:username])
-    ) & ActiveSupport::SecurityUtils.secure_compare(
-      ::Digest::SHA256.hexdigest(password),
-      ::Digest::SHA256.hexdigest(Rails.application.credentials.sidekiq[:password])
-    )
+  if Rails.env.production?
+    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+      ActiveSupport::SecurityUtils.secure_compare(
+        ::Digest::SHA256.hexdigest(username),
+        ::Digest::SHA256.hexdigest(Rails.application.credentials.sidekiq[:username])
+      ) & ActiveSupport::SecurityUtils.secure_compare(
+        ::Digest::SHA256.hexdigest(password),
+        ::Digest::SHA256.hexdigest(Rails.application.credentials.sidekiq[:password])
+      )
+    end
   end
 end

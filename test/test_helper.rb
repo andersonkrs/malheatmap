@@ -58,3 +58,7 @@ module ActiveSupport
     end
   end
 end
+
+Minitest.after_run do
+  FileUtils.rm_rf(Rails.root.join("tmp/storage", Rails.env))
+end

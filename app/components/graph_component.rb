@@ -94,7 +94,6 @@ class GraphComponent < ViewComponent::Base
     end
   end
 
-  # :reek:
   def weeks_containing_month_year(date)
     @weeks.select do |week|
       week.any? { |day| day.beginning_of_month == date.beginning_of_month }

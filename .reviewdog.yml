@@ -1,8 +1,6 @@
 runner:
   rubocop:
     cmd: bin/rubocop --parallel
-  reek:
-    cmd: bin/reek --single-line .
   brakeman:
     cmd: bin/brakeman --quiet --format tabs
   standardjs:

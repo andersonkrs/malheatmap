@@ -1,2 +1,3 @@
-class ApplicationForm < Patterns::Form
+class ApplicationForm
+  include Patterns::Form
 end

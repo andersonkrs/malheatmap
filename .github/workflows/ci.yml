@@ -10,9 +10,6 @@ jobs:
       postgres:
         image: postgres:12.1-alpine
         ports: ["5432:5432"]
-      redis:
-        image: redis:alpine
-        ports: ["6379:6379"]
 
     env:
       BUNDLE_JOBS: 4
@@ -20,6 +17,9 @@ jobs:
       BUNDLE_PATH: vendor/bundle
 
     steps:
+    - name: Increase max fs watches
+      run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
     - name: Checkout code
       uses: actions/checkout@v1
 

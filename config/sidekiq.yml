@@ -2,6 +2,8 @@
 :queues:
   - low
   - default
+  - active_storage_analysis
+  - active_storage_purge
 :limits:
   low: 1
 :timeout: 8

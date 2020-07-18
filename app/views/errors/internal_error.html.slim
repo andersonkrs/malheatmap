@@ -1,0 +1,11 @@
+- @section_class = "is-medium"
+
+.div
+  .columns.is-centered.is-multiline
+    = render partial: "shared/app_header"
+
+    .column.is-full.has-text-centered.mt-3
+      h3.subtitle = t(".error")
+
+    .column.is-full.has-text-centered
+      = image_pack_tag "media/images/sorry.gif"
