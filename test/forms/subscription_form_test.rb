@@ -46,7 +46,7 @@ class SubscriptionFormTest < ActiveSupport::TestCase
       result_mock
     }
 
-    CreateSubscription.stub(:call!, service_mock) do
+    Subscription::Create.stub(:call!, service_mock) do
       assert @form.save
       assert_equal subscription.id, @form.id
       result_mock.verify

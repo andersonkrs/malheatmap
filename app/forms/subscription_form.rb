@@ -13,7 +13,7 @@ class SubscriptionForm < ApplicationForm
   private
 
   def persist
-    result = CreateSubscription.call!(username: username)
+    result = Subscription::Create.call!(username: username)
     self.id = result.subscription.id
   end
 

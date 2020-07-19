@@ -18,7 +18,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal "text/javascript", @response.media_type
     assert 1, Subscription.count
-    assert_enqueued_jobs 1, only: ProcessSubscriptionJob, queue: :default
+    assert_enqueued_jobs 1, only: Subscription::ProcessJob, queue: :default
   end
 
   test "does not enqueue anything when creating invalid subscription" do

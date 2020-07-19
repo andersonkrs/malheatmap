@@ -1,8 +1,6 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby File.read(".ruby-version")
-
 gem "bootsnap", require: false
 gem "chronic"
 gem "mechanize"
@@ -11,6 +9,7 @@ gem "puma"
 gem "rails"
 gem "rollbar"
 gem "sidekiq"
+gem "sidekiq-cron"
 gem "sidekiq-limit_fetch"
 gem "slim-rails"
 gem "turbolinks"
