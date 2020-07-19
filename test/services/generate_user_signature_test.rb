@@ -24,13 +24,10 @@ class GenerateUserSignatureTest < ActiveSupport::TestCase
 
     assert @user.signature.attached?
     @user.signature.blob.open do |file|
-      generated_signature = Phashion::Image.new(file.path)
-
       fixture = File.join(file_fixture_path, "user_signature.png")
       FileUtils.cp(file.path, fixture) unless File.file?(fixture)
-      fixture_signature = Phashion::Image.new(fixture)
 
-      assert_equal generated_signature.duplicate?(fixture_signature), true
+      assert_equal Imatcher.compare(file.path, fixture, threshold: 0.5).match?, true
     end
   end
 end

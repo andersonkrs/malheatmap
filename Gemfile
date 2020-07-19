@@ -35,7 +35,7 @@ end
 
 group :test do
   gem "capybara"
-  gem "phashion"
+  gem "imatcher"
   gem "selenium-webdriver"
   gem "shoulda"
   gem "simplecov", require: false
