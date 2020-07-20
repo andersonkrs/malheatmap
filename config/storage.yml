@@ -1,7 +1,9 @@
 local:
   service: Disk
-  root: <%= Rails.root.join("storage") %>
+  root: <%= Rails.root.join("tmp/storage", Rails.env) %>
 
-test:
-  service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
+google_cloud_storage:
+  service: GCS
+  project: mal-heatmap
+  credentials: <%= Rails.application.credentials.google_cloud_service_key.to_json %>
+  bucket: malheatmapsignatures

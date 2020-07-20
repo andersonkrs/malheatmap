@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem "bootsnap", require: false
 gem "chronic"
+gem "google-cloud-storage", require: false
 gem "mechanize"
 gem "pg"
 gem "puma"
