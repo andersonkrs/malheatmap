@@ -1,0 +1,4 @@
+schedule_users_update:
+  cron: "0 */12 * * *"
+  class: "ScheduleUsersDataUpdateJob"
+  name: "Schedule users data update - every 12 hours"

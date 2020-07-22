@@ -15,9 +15,7 @@ Sidekiq.configure_server do |config|
 end
 
 if Sidekiq.server?
-  Sidekiq::Cron::Job.create(name: "Schedule users data update - every 12 hours",
-                            cron: "0 */12 * * *",
-                            class: "ScheduleUsersDataUpdateJob")
+  Sidekiq::Cron::Job.load_from_hash YAML.load_file("config/schedule.yml")
 else
   require "sidekiq/web"
   require "sidekiq/cron/web"
