@@ -4,25 +4,26 @@ class User
 
     before_call do
       Rails.logger.info "Generating signature for user: #{user.username}"
+    end
 
-      @tempfile = File.open(Rails.root.join("tmp/#{user.id}.html"), "w+")
+    around_call do |block|
+      Tempfile.create(%w[signature .html], Rails.root.join("tmp")) do |tempfile|
+        @tempfile = tempfile
+        block.call
+      end
     end
 
     def call
       @tempfile.write(signature_html)
 
       screenshot = HtmlScreenshot
-                     .source(@tempfile)
+                     .from(@tempfile.path)
                      .crop(width: 824, height: 150)
-                     .selector(".signature")
+                     .element(".signature")
 
-      screenshot.take do |file|
-        user.signature.attach(io: file, filename: "#{user.username}.png")
+      screenshot.take do |output|
+        user.signature.attach(io: output, filename: "#{user.username}.png")
       end
-    end
-
-    ensure_call do
-      File.delete(@tempfile)
     end
 
     private

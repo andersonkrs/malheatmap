@@ -1,65 +1,48 @@
 require "open3"
 
 class HtmlScreenshot
-  class << self
-    def source(file)
-      @source = file
-      self
-    end
+  class ScreenshotError < StandardError; end
 
-    def crop(width:, height:)
-      params << "#{width}x#{height} --crop"
-      self
-    end
+  def initialize(source)
+    @source = source
+  end
 
-    def selector(selector)
-      params << "--selector='#{selector}'"
-      self
-    end
+  def self.from(source)
+    new(source)
+  end
 
-    def take(&block)
-      if run_command
-        File.open("#{@source.path}.png") do |file|
-          block.call(file)
-        ensure
-          File.delete(file)
-        end
+  def crop(width:, height:)
+    params << "--width=#{width}"
+    params << "--height=#{height}"
+    self
+  end
 
-        true
-      else
-        false
-      end
-    end
+  def element(selector)
+    params << "--element='#{selector}'"
+    self
+  end
 
-    private
+  def take(&block)
+    output, err, status = Open3.capture3(executable, @source, *params, binmode: true)
+    raise ScreenshotError, err unless status.success?
 
-    def params
-      @params ||= []
-    end
+    block.call(StringIO.new(output))
+  end
 
-    def run_command
-      stdout, stderr, status = exec_in_source_path
+  private
 
-      if status.success?
-        Rails.logger.info stdout
-        true
-      else
-        Rails.logger.error stderr
-        false
-      end
-    end
+  def params
+    @params ||= ["--scale-factor=1", launch_options]
+  end
 
-    def exec_in_source_path
-      Dir.chdir File.dirname(@source) do
-        cmd = "#{executable} #{@source.path} --filename='<%= url %>' #{params.join(' ')}"
-        Rails.logger.info(cmd)
+  def executable
+    Rails.root.join("node_modules/.bin/capture-website").to_s
+  end
 
-        Open3.capture3(cmd)
-      end
-    end
-
-    def executable
-      Rails.root.join("node_modules/.bin/pageres")
-    end
+  def launch_options
+    options = {
+      "args" => %w[--no-sandbox --disable-setuid-sandbox]
+    }
+    "--launch-options='#{options.to_json}'"
   end
 end
