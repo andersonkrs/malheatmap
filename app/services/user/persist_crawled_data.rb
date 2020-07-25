@@ -10,6 +10,7 @@ class User
         context.data_updated = true
       else
         context.data_updated = false
+        Rails.logger.info("User #{user.username} hasn't new data")
       end
     end
 
@@ -28,8 +29,7 @@ class User
     end
 
     def import_profile_data
-      user.assign_attributes(**crawled_data[:profile])
-      user.save!
+      user.update!(**crawled_data[:profile])
     end
 
     def import_recent_history
@@ -38,7 +38,7 @@ class User
       crawled_data[:history].each do |entry|
         item = find_or_create_item(entry)
 
-        Entry.create!(user: user, item: item, amount: entry[:amount], timestamp: entry[:timestamp])
+        user.entries.create!(item: item, amount: entry[:amount], timestamp: entry[:timestamp])
       end
     end
 

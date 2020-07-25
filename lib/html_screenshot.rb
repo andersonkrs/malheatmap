@@ -22,6 +22,11 @@ class HtmlScreenshot
     self
   end
 
+  def transparent_background
+    params << "--no-default-background"
+    self
+  end
+
   def take(&block)
     output, err, status = Open3.capture3(executable, @source, *params, binmode: true)
     raise ScreenshotError, err unless status.success?

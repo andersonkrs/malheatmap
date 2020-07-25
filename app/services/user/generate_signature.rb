@@ -3,7 +3,7 @@ class User
     delegate :user, to: :context
 
     before_call do
-      Rails.logger.info "Generating signature for user: #{user.username}"
+      Rails.logger.info("Generating signature for user: #{user.username}")
     end
 
     around_call do |block|
@@ -20,6 +20,7 @@ class User
                      .from(@tempfile.path)
                      .crop(width: 824, height: 150)
                      .element(".signature")
+                     .transparent_background
 
       screenshot.take do |output|
         user.signature.attach(io: output, filename: "#{user.username}.png")

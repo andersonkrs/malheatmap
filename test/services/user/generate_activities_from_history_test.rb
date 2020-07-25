@@ -14,10 +14,8 @@ class User
     test "creates activity with current position if there's just one entry" do
       create(:entry, user: @user, timestamp: Date.new(2020, 1, 1), amount: 10)
 
-      @service.call
-
       assert_changes -> { activities.size }, from: 0, to: 1 do
-        @user.reload
+        @service.call
       end
 
       activity = activities.first
@@ -31,10 +29,8 @@ class User
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 1), amount: 10)
       end
 
-      @service.call
-
       assert_changes -> { activities.size }, from: 0, to: 1 do
-        @user.reload
+        @service.call
       end
 
       assert_equal 10, activities.first.amount
@@ -46,10 +42,8 @@ class User
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 2), amount: 15)
       end
 
-      @service.call
-
       assert_changes -> { activities.size }, from: 0, to: 2 do
-        @user.reload
+        @service.call
       end
 
       assert_equal 10, activities.first.amount
@@ -60,10 +54,8 @@ class User
       create(:entry, :manga, user: @user, timestamp: DateTime.new(2020, 1, 1, 12, 15), amount: 10)
       create(:entry, :anime, user: @user, timestamp: DateTime.new(2020, 1, 1, 13, 30), amount: 20)
 
-      @service.call
-
       assert_changes -> { activities.size }, from: 0, to: 2 do
-        @user.reload
+        @service.call
       end
 
       first_activity = activities.first
@@ -83,7 +75,6 @@ class User
       end
 
       @service.call
-      @user.reload
 
       assert_equal 10, activities.first.amount
       assert_equal(-4, activities.second.amount)
@@ -98,10 +89,8 @@ class User
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 7), amount: 26)
       end
 
-      @service.call
-
       assert_changes -> { activities.size }, from: 0, to: 3 do
-        @user.reload
+        @service.call
       end
 
       activity = activities.first
@@ -115,6 +104,18 @@ class User
       activity = activities.third
       assert_equal 11, activity.amount
       assert_equal Date.new(2020, 1, 7), activity.date
+    end
+
+    test "should keep the entry with the greater amount when they have the same timestamp" do
+      create(:item) do |item|
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 7, 25, 14, 16), amount: 25)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 7, 25, 14, 16), amount: 1)
+      end
+
+      @service.call
+
+      activity = activities.first
+      assert_equal 25, activity.amount
     end
   end
 end

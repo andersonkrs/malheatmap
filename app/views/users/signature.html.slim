@@ -3,5 +3,5 @@ html
     style
       = File.read(File.join(Rails.root, 'public', Webpacker.manifest.lookup('graph.css'))).html_safe
   body
-    .signature style="padding: 0.75em; display: inline-grid"
+    .signature style="padding: 0.75em; display: inline-grid; background-color: transparent;"
       = render GraphComponent.new(date_range: date_range, activities: activities)
