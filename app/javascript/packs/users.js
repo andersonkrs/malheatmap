@@ -1,7 +1,11 @@
 import '../../assets/stylesheets/users.scss'
 
 document.addEventListener('turbolinks:load', () => {
-  document.querySelector('.copy-signature').onclick = () => {
+  const copyButton = document.querySelector('.copy-signature')
+
+  if (!copyButton) return
+
+  copyButton.onclick = () => {
     const input = document.querySelector('input.signature-input')
     input.select()
 

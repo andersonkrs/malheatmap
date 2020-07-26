@@ -1,9 +1,12 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+ruby File.read(".ruby-version")
+
 gem "bootsnap", require: false
 gem "chronic"
 gem "google-cloud-storage", require: false
+gem "image_processing"
 gem "mechanize"
 gem "pg"
 gem "puma"
