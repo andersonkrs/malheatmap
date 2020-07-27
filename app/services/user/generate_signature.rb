@@ -24,10 +24,7 @@ class User
                      .element(".signature")
 
       screenshot.take do |output|
-        image = MiniMagick::Image.read(output)
-        image.resize(MAL::SIGNATURE_MAX_SIZE)
-
-        user.signature.attach(io: File.open(image.path), filename: "#{user.username}.png")
+        resize_and_upload(output)
       end
     end
 
@@ -45,6 +42,13 @@ class User
         },
         layout: nil
       )
+    end
+
+    def resize_and_upload(screenshot)
+      image = MiniMagick::Image.read(screenshot)
+      image.resize(MAL::SIGNATURE_MAX_SIZE)
+
+      user.signature.attach(io: File.open(image.path), filename: "#{user.username}.png")
     end
   end
 end
