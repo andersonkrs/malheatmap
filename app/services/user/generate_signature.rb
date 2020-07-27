@@ -1,3 +1,5 @@
+require "mini_magick"
+
 class User
   class GenerateSignature < ApplicationService
     delegate :user, to: :context
@@ -20,10 +22,12 @@ class User
                      .from(@tempfile.path)
                      .crop(width: 824, height: 150)
                      .element(".signature")
-                     .transparent_background
 
       screenshot.take do |output|
-        user.signature.attach(io: output, filename: "#{user.username}.png")
+        image = MiniMagick::Image.read(output)
+        image.resize(MAL::SIGNATURE_MAX_SIZE)
+
+        user.signature.attach(io: File.open(image.path), filename: "#{user.username}.png")
       end
     end
 

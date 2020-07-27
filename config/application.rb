@@ -33,8 +33,6 @@ module MalHeatmap
 
     config.action_cable.mount_path = "/cable"
 
-    config.active_storage.variant_processor = :vips
-
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
 

@@ -2,9 +2,7 @@ class SignaturesController < ApplicationController
   before_action :set_user
 
   def show
-    signature = @user.signature.variant(resize_to_limit: [600, 150])
-
-    redirect_to url_for(signature)
+    redirect_to url_for(@user.signature)
   end
 
   private
