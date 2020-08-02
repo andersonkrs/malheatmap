@@ -1,5 +1,5 @@
 class Entry < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, inverse_of: :entries
   belongs_to :item
 
   delegate :name, :kind, :mal_id, to: :item

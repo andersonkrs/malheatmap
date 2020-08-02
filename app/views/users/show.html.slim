@@ -1,5 +1,6 @@
-= javascript_pack_tag "users", "data-turbolinks-track": "reload"
-= stylesheet_pack_tag "users", media: "all", "data-turbolinks-track": "reload"
+= content_for :head do
+  = javascript_pack_tag "users", "data-turbolinks-track": "reload"
+  = stylesheet_pack_tag "users", media: "all", "data-turbolinks-track": "reload"
 
 .columns
   .column.is-6-fullhd.is-offset-3-fullhd.is-8-widescreen.is-offset-2-widescreen.is-8-desktop.is-offset-2-desktop.is-10-tablet.is-offset-1-tablet.is-full-mobile
@@ -9,7 +10,7 @@
         = link_to root_path do
           span.icon.is-small
             i.fas.fa-3x.fa-fire.has-text-primary
-      .column.is-full.has-text-centered.mt5
+      .column.is-full.has-text-centered
         h3.title.is-3.has-text-centered
           = link_to t("app.title"), root_path, class: "root-link"
 
@@ -24,8 +25,8 @@
               p
                 = link_to(profile_url(@user.username), target: "_blank", rel: "noopener noreferrer", class: "is-size-4") do
                   = @user.username
-              .signature-field.pt-3
-                = render partial: "users/signature_field"
+              .bb-code.pt-3
+                = render partial: "users/bb_code"
 
       - cache @activities do
         .column.is-full
