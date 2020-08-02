@@ -53,10 +53,14 @@
   margin: 1px;
 }
 
-.signature-field > .field > .field-label {
+.bb-code > .field > .field-label {
   flex-basis: 0;
   flex-grow: 0;
   flex-shrink: 0;
-  margin-right: 0.5em;
+  margin-right: 0;
   text-align: left;
+}
+
+.bb-code > .field > .field-label > label {
+  min-width: 70px;
 }
