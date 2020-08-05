@@ -281,8 +281,6 @@ GEM
     sidekiq-cron (1.2.0)
       fugit (~> 1.1)
       sidekiq (>= 4.2.1)
-    sidekiq-limit_fetch (3.4.0)
-      sidekiq (>= 4)
     signet (0.14.0)
       addressable (~> 2.3)
       faraday (>= 0.17.3, < 2.0)
@@ -381,7 +379,6 @@ DEPENDENCIES
   shoulda
   sidekiq
   sidekiq-cron
-  sidekiq-limit_fetch
   simplecov
   simplecov-cobertura
   slim-rails

@@ -6,7 +6,7 @@
 .columns.is-centered.is-multiline
   = render partial: "shared/app_header"
 
-  .column.is-half-desktop.is-half-fullhd.is-full-tablet.is-full-mobile.form-container
+  .column.is-full-desktop.is-half-fullhd.is-full-tablet.is-full-mobile.form-container
     = form_with model: @subscription, method: "post" do |form|
       .field
         p.has-text-centered = t(".enter_your_mal_profile_html")
@@ -22,4 +22,7 @@
           = form.button t(".subscribe"), class: "button is-primary",
                                      data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" }
 
+
+  .column.is-full.has-text-centered
+    p = "About"
 .loader-container
