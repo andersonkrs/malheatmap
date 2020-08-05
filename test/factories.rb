@@ -46,5 +46,9 @@ FactoryBot.define do
     mal_id { Faker::Number.unique.positive.to_i }
     name { Faker::Book.title }
     kind { Item.kinds.keys.sample }
+
+    initialize_with do
+      Item.find_or_initialize_by(**attributes)
+    end
   end
 end
