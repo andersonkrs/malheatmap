@@ -18,7 +18,7 @@ class Subscription
     end
 
     rescue_from StandardError do |exception|
-      Rails.logger.error(exception)
+      NotifyError.call!(error: exception)
       context.response = { status: :failure, redirect: internal_error_path }
     end
 

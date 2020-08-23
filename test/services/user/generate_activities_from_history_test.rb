@@ -67,7 +67,7 @@ class User
       assert_equal first_activity.date, second_activity.date
     end
 
-    test "creates negative activity when user fall back the current postition" do
+    test "creates negative activity when user fall back the current position" do
       create(:item) do |item|
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 1), amount: 10)
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 2), amount: 5)
@@ -109,13 +109,16 @@ class User
     test "should keep the entry with the greater amount when they have the same timestamp" do
       create(:item) do |item|
         create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 7, 25, 14, 16), amount: 25)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 7, 25, 14, 16), amount: 10)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 7, 25, 14, 16), amount: 3)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 7, 25, 14, 16), amount: 2)
         create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 7, 25, 14, 16), amount: 1)
       end
 
       @service.call
 
-      activity = activities.first
-      assert_equal 25, activity.amount
+      assert_equal 1, activities.size
+      assert_equal 25, activities.first.amount
     end
   end
 end

@@ -3,26 +3,25 @@
 
 - @section_class = "is-medium"
 
-.columns.is-centered.is-multiline
-  = render partial: "shared/app_header"
+.columns.is-multiline
+  = render partial: "shared/header"
 
-  .column.is-full-desktop.is-half-fullhd.is-full-tablet.is-full-mobile.form-container
-    = form_with model: @subscription, method: "post" do |form|
-      .field
-        p.has-text-centered = t(".enter_your_mal_profile_html")
+  .column.is-full
+    .loader-container
 
-      .field.notifications-container
-        = render NotificationComponent.new(message: flash[:error])
+    .columns.form-container.is-multiline.is-centered
+      .column.is-full-desktop.is-half-fullhd.is-full-tablet.is-full-mobile
+        = form_with model: @subscription, method: "post" do |form|
+          .field
+            p.has-text-centered = t(".enter_your_mal_profile_html")
 
-      .field.has-addons
-        .control.is-expanded
-          = form.text_field :username, id: "username", class: "input", placeholder: t(".username.placeholder")
+          .field.notifications-container
+            = render NotificationComponent.new(message: flash[:error])
 
-        .control
-          = form.button t(".subscribe"), class: "button is-primary",
-                                     data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" }
+          .field.has-addons
+            .control.is-expanded
+              = form.text_field :username, id: "username", class: "input", placeholder: t(".username.placeholder")
 
-
-  .column.is-full.has-text-centered
-    p = "About"
-.loader-container
+            .control
+              = form.button t(".subscribe"), class: "button is-primary",
+                                             data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" }

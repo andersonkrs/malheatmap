@@ -1,0 +1,31 @@
+.div
+  .columns.is-centered
+    = render partial: "shared/header"
+
+  .columns.is-centered
+    .column.is-two-fifths.mt-2
+      h3.has-text-centered.subtitle = "About"
+      p
+        |
+          MAL Heatmap is a tool for track your anime/manga consumption based on your <a href='https://myanimelist.net'>myanimelist.net</a> history.
+          <br>
+          <a href='https://myanimelist.net'>myanimelist.net</a> just keep the last three weeks of your history, after this time, they'll delete it. When you subscribe your account, we'll save your history daily, so you can look back to all your activities.
+          <br><br>
+          Inspirations:
+          <br> - <a href='https://github.blog/2013-01-07-introducing-contributions/'>Github contirbutions calendar</a>
+          <br> - <a href='https://anime.plus/'>anime.plus</a>
+          <br> - <a href='https://malsignature.com/'>MAL Signature</a>
+
+  .columns.is-centered
+    .column.is-two-fifths
+      h3.has-text-centered.subtitle = "Privacy"
+      p = "We download and store publicly available data related to your myanimelist.net account, which are: profile information (username, avatar url) and the current history (episodes watched, chapters read, historic datetime, anime/manga name and url)."
+
+  .columns.is-centered
+    .column.is-two-fifths
+      h3.has-text-centered.subtitle = "Contact and external links"
+      p
+        |
+          Email: hello@malheatmap.com
+          <br>
+          <a href='https://github.com/AndersonSKM/malheatmap'>Source Code</a>
