@@ -18,3 +18,5 @@ html
     section class="section #{@section_class}"
       .container.is-fluid
         = yield
+        .columns.mt-4
+          = render partial: "shared/footer"

@@ -40,6 +40,7 @@ class User
     def persist_activities
       ActiveRecord::Base.transaction do
         user.activities.delete_all
+
         @processed_activities.each do |activity|
           user.activities << activity
         end
@@ -48,7 +49,7 @@ class User
 
     def find_last_processed_entry(date, item)
       @processed_entries
-        .sort_by { |entry| [entry.timestamp, entry.created_at] }
+        .sort_by { |entry| [entry.timestamp, entry.amount, entry.created_at] }
         .find_all { |entry| entry.timestamp.to_date <= date && entry.item.id == item.id }
         .last
     end

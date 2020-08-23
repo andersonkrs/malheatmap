@@ -3,7 +3,7 @@
 
   App.consumer.subscriptions.create({ channel: 'SubscriptionChannel', process_id: '<%= @subscription.id %>' }, {
     connected () {
-      document.querySelector('form').style.display = 'none'
+      document.querySelector('.form-container').style.display = 'none'
       document.querySelector('.loader-container').innerHTML = '<%= j render(partial: "loader") %>'
     },
 
@@ -13,7 +13,7 @@
       if (data.redirect) {
         Turbolinks.visit(data.redirect, { action: 'advance' })
       } else {
-        document.querySelector('form').style.display = ''
+        document.querySelector('.form-container').style.display = ''
         document.querySelector('.loader-container').innerHTML = ''
         document.querySelector('.notifications-container').innerHTML = data.notification
       }

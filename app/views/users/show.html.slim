@@ -37,8 +37,8 @@
 
             .column.is-full
               .columns.legend-container
-                .column.has-text-left title=t(".counting_help")
-                  = t(".counting_text")
+                .column.has-text-left
+                  = link_to t(".faq_label"), faq_path
 
                 .column.has-text-right
                   span = t(".less")

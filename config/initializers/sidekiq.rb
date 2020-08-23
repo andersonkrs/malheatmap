@@ -15,10 +15,11 @@ Sidekiq.configure_server do |config|
 end
 
 if Sidekiq.server?
-  Sidekiq::Cron::Job.load_from_hash YAML.load_file("config/schedule.yml")
+  Sidekiq.schedule = YAML.load_file("config/schedule.yml")
+  SidekiqScheduler::Scheduler.instance.reload_schedule!
 else
   require "sidekiq/web"
-  require "sidekiq/cron/web"
+  require "sidekiq-scheduler/web"
 
   if Rails.env.production?
     Sidekiq::Web.use Rack::Auth::Basic do |username, password|
