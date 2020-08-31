@@ -1,6 +1,6 @@
 require "test_helper"
 
-class GraphComponentTest < ViewComponent::TestCase
+class CalendarComponentTest < ViewComponent::TestCase
   test "renders squares correctly" do
     range = (Date.new(2019, 5, 5)..Date.new(2020, 5, 9))
     activities = [
@@ -9,9 +9,9 @@ class GraphComponentTest < ViewComponent::TestCase
       build(:activity, date: Date.new(2020, 1, 3), amount: 9),
       build(:activity, date: Date.new(2020, 1, 4), amount: 13)
     ]
-    component = render_inline(GraphComponent.new(date_range: range, activities: activities))
+    component = render_inline(CalendarComponent.new(date_range: range, activities: activities))
 
-    squares = component.css(".graph > .squares > .square")
+    squares = component.css(".calendar > .squares > .square")
 
     assert_equal 371, squares.size
     assert_equal "2019-05-05", squares.first.attr("data-date")
@@ -46,43 +46,43 @@ class GraphComponentTest < ViewComponent::TestCase
 
   test "renders days names correctly" do
     range = (Date.new(2019, 5, 5)..Date.new(2020, 5, 9))
-    component = render_inline(GraphComponent.new(date_range: range, activities: []))
+    component = render_inline(CalendarComponent.new(date_range: range, activities: []))
 
-    component.css(".graph > .days > .day").then do |elements|
+    component.css(".calendar > .days > .day").then do |elements|
       assert_equal %w[Sun Mon Tue Wed Thu Fri Sat], elements.map(&:text)
     end
   end
 
   test "renders each month correctly" do
     range = (Date.new(2019, 5, 5)..Date.new(2020, 5, 9))
-    component = render_inline(GraphComponent.new(date_range: range, activities: []))
+    component = render_inline(CalendarComponent.new(date_range: range, activities: []))
 
-    component.css(".graph > .months > .month").then do |elements|
+    component.css(".calendar > .months > .month").then do |elements|
       assert_equal %w[May Jun Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr May], elements.map(&:text)
     end
   end
 
   test "does not show month's label if it has just one week" do
     range = (Date.new(2019, 5, 26)..Date.new(2020, 5, 26))
-    component = render_inline(GraphComponent.new(date_range: range, activities: []))
+    component = render_inline(CalendarComponent.new(date_range: range, activities: []))
 
-    component.css(".graph > .months > .month").then do |elements|
+    component.css(".calendar > .months > .month").then do |elements|
       assert_equal %w[Jun Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr May], elements.map(&:text).reject(&:blank?)
     end
 
     range = (Date.new(2019, 4, 28)..Date.new(2020, 4, 29))
-    component = render_inline(GraphComponent.new(date_range: range, activities: []))
+    component = render_inline(CalendarComponent.new(date_range: range, activities: []))
 
-    component.css(".graph > .months > .month").then do |elements|
+    component.css(".calendar > .months > .month").then do |elements|
       assert_equal %w[May Jun Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr], elements.map(&:text).reject(&:blank?)
     end
   end
 
   test "calculate months css grid correctly" do
     range = (Date.new(2019, 6, 16)..Date.new(2020, 6, 19))
-    component = render_inline(GraphComponent.new(date_range: range, activities: []))
+    component = render_inline(CalendarComponent.new(date_range: range, activities: []))
 
-    component.css(".graph > .months").attribute("style").then do |attribute|
+    component.css(".calendar > .months").attribute("style").then do |attribute|
       expected_grid = [
         "calc(var(--week-width) * 2) /* Jun */",
         "calc(var(--week-width) * 4) /* Jul */",
@@ -107,8 +107,8 @@ class GraphComponentTest < ViewComponent::TestCase
     range = (Date.new(2017, 12, 31)..Date.new(2018, 12, 31))
 
     loop do
-      component = render_inline(GraphComponent.new(date_range: range, activities: []))
-      widths = component.css(".graph > .months > .month/@data-width").map(&:value).map(&:to_i)
+      component = render_inline(CalendarComponent.new(date_range: range, activities: []))
+      widths = component.css(".calendar > .months > .month/@data-width").map(&:value).map(&:to_i)
       weeks_size = (range.count / 7.0).ceil
 
       assert_equal weeks_size, widths.sum

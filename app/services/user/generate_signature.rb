@@ -31,7 +31,7 @@ class User
     private
 
     def signature_html
-      date_range = Graph::CalculateDateRange.call(year: Time.zone.today.year).range
+      date_range = Calendar::CalculateDateRange.call(year: Time.zone.today.year).range
       activities = user.activities.for_date_range(date_range).order(date: :desc)
 
       ApplicationController.render(

@@ -6,7 +6,7 @@
   --week-width: calc(var(--square-size) + var(--square-gap));
 }
 
-.graph {
+.calendar {
   display: inline-grid;
   grid-template-areas: "empty months"
                        "days squares";
@@ -45,7 +45,7 @@
   shape-rendering: geometricPrecision;
   outline: 1px solid rgba(27,31,35,.04);
   outline-offset: -1px;
-  border-radius: 4px;
+  border-radius: 2.5px;
 }
 
 .square[data-level="0"] {

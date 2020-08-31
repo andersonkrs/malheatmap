@@ -1,4 +1,6 @@
 = content_for :head do
+  = javascript_pack_tag "calendar", "data-turbolinks-track": "reload"
+  = stylesheet_pack_tag "calendar", media: "all", "data-turbolinks-track": "reload"
   = javascript_pack_tag "users", "data-turbolinks-track": "reload"
   = stylesheet_pack_tag "users", media: "all", "data-turbolinks-track": "reload"
 
@@ -32,8 +34,8 @@
         .column.is-full
           .columns.is-multiline.bordered
             .column.is-full
-              .graph-container.has-text-centered
-                = render GraphComponent.new(date_range: @date_range, activities: @activities)
+              .calendar-container.has-text-centered
+                = render CalendarComponent.new(date_range: @date_range, activities: @activities)
 
             .column.is-full
               .columns.legend-container
