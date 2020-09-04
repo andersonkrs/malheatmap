@@ -244,7 +244,7 @@ GEM
       uber (< 0.2.0)
     retriable (3.1.2)
     rexml (3.2.4)
-    rollbar (2.27.0)
+    rollbar (3.0.0)
     rubocop (0.89.1)
       parallel (~> 1.10)
       parser (>= 2.7.1.1)
