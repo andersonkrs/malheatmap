@@ -1,6 +1,13 @@
-![ci](https://github.com/AndersonSKM/malheatmap/workflows/ci/badge.svg)
+<h1 align="center">
+  MAL Heatmap
+</h1>
 
-# MAL Heatmap
+<div align="center">
+  <h4>
+    <a href="https://github.com/AndersonSKM/malheatmap"><img src="https://github.com/AndersonSKM/malheatmap/workflows/ci/badge.svg"/></a>
+  </h4>
+</div>
+
 <table>
 <tr>
 <td>
@@ -12,7 +19,9 @@
 </tr>
 </table>
 
-![Demo](app-demo.png?raw=true "Demo")
+https://malheatmap.com
+
+![Demo](.github/app-demo.png?raw=true "Demo")
 
 #### Motivation
 
@@ -39,7 +48,7 @@ Requirements:
 * PostgreSQL 11+
 * Ruby 2.6.6
 * Node 10+
-* ImageMagick
+* [ImageMagick](https://imagemagick.org/index.php)
 
 Since this app is a classical Rails project, there is nothing special here, to setup project:
 
