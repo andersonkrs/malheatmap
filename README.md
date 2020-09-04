@@ -2,11 +2,13 @@
   MAL Heatmap
 </h1>
 
-<div align="center">
-  <h4>
-    <a href="https://github.com/AndersonSKM/malheatmap"><img src="https://github.com/AndersonSKM/malheatmap/workflows/ci/badge.svg"/></a>
-  </h4>
-</div>
+<h4 align="center">
+  <a href="https://github.com/AndersonSKM/malheatmap"><img src="https://github.com/AndersonSKM/malheatmap/workflows/ci/badge.svg"/></a>
+</h4>
+
+<p align="center">
+ <a href="https://malheatmap.com">https://malheatmap.com</a>
+</p>
 
 <table>
 <tr>
@@ -18,8 +20,6 @@
 </td>
 </tr>
 </table>
-
-https://malheatmap.com
 
 ![Demo](.github/app-demo.png?raw=true "Demo")
 
