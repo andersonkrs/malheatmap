@@ -6,7 +6,7 @@
   --week-width: calc(var(--square-size) + var(--square-gap));
 }
 
-.graph {
+.calendar {
   display: inline-grid;
   grid-template-areas: "empty months"
                        "days squares";

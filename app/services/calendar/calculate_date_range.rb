@@ -1,4 +1,4 @@
-module Graph
+module Calendar
   class CalculateDateRange < ApplicationService
     delegate :year, to: :context
 

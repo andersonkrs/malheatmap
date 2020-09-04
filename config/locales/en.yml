@@ -36,13 +36,13 @@ en:
       chapters:
         one: "1 chapter"
         other: "%{count} chapters"
-    graph:
-      activities_on:
-        zero: "No activities on %{date}"
-        one: "One activity on %{date}"
-        other: "%{count} activities on %{date}"
     bb_code:
       label: "BB Code:"
+  calendar_component:
+    activities_on:
+      zero: "No activities on %{date}"
+      one: "One activity on %{date}"
+      other: "%{count} activities on %{date}"
   application:
     internal_error:
       error: "Oops! Sorry, this is unexpected, we are working to solve it, please try again later."

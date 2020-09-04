@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :set_selected_year, only: :show
 
   def show
-    @date_range = Graph::CalculateDateRange.call(year: @selected_year).range
+    @date_range = Calendar::CalculateDateRange.call(year: @selected_year).range
     @activities = @user.activities.for_date_range(@date_range).ordered_as_timeline
   end
 

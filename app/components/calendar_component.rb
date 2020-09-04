@@ -1,4 +1,4 @@
-class GraphComponent < ViewComponent::Base
+class CalendarComponent < ViewComponent::Base
   Month = Struct.new(:month, :year, :weeks, :last, keyword_init: true) do
     def label
       I18n.t("date.abbr_month_names")[month]
@@ -49,7 +49,7 @@ class GraphComponent < ViewComponent::Base
 
     def hint
       formatted_date = I18n.l(date, format: :long)
-      I18n.t("users.graph.activities_on", count: amount, date: formatted_date)
+      I18n.t("users.calendar_component.activities_on", count: amount, date: formatted_date)
     end
   end
 

@@ -49,7 +49,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    test "renders graph legend correctly" do
+    test "renders calendar legend correctly" do
       get user_url(@user)
 
       assert_select ".legend > .square", 5 do |elements|
