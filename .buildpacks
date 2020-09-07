@@ -1,3 +1,4 @@
 https://github.com/DuckyTeam/heroku-buildpack-imagemagick
 https://buildpack-registry.s3.amazonaws.com/buildpacks/heroku/google-chrome.tgz
+https://github.com/gaffneyc/heroku-buildpack-jemalloc.git
 https://github.com/heroku/heroku-buildpack-ruby
