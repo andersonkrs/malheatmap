@@ -25,7 +25,7 @@
 
 #### Motivation
 
-I've made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). Also I want to try web scrapping with ruby and learn a little bit about it.
+I've made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). Also, I want to try web scrapping with ruby and learn a little bit more about it.
 
 #### Built with
 
@@ -37,9 +37,9 @@ I've made this experiment to play around with some cool Rails features, like [Ac
 
 #### How it works
 
-The web app just displays the processed data and a set of jobs do the hard and dirty work of crawling, process and save data.
+The web app just displays the processed data and a set of jobs do the hard and dirty work of crawling, process, save data.
 
-So, when an user subscribe your profile do be tracked, a job will be triggered to check if the user exists on MAL and then crawl and process the data. While that, the UI will be connected to a channel awaiting a response from the job, once job is completed, the user will be redirected to his page. After subscribed, a cron will repeat this process daily to keep user's data updated.
+So, when the user subscribes to its profile to be tracked, a job will be triggered to check if the user exists on MAL and then crawl and process the data. While that, the UI will be connected to a channel awaiting a response from the job, once the job is completed, the user will be redirected to his page. After subscribing, a cron will repeat the crawling process daily to keep the user's data updated.
 
 #### Developing
 
