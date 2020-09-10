@@ -3,9 +3,16 @@ class User
     queue_as :low
 
     def perform(user)
-      Rails.logger.info "Updating data for user: #{user.username}"
+      logger.info("Updating data for user: #{user.username}")
 
-      User::UpdateData.call!(user: user)
+      result = User::UpdateData.call(user: user)
+      logger.error(result.message) if result.failure?
+    end
+
+    private
+
+    def logger
+      Rails.logger
     end
   end
 end

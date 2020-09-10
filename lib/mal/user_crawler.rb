@@ -19,6 +19,8 @@ module MAL
       @response
     rescue Mechanize::ResponseCodeError => error
       handle_response_code_error(error.response_code, error.message)
+    rescue Mechanize::ResponseReadError, Mechanize::RedirectLimitReachedError
+      raise Errors::CommunicationError
     end
 
     private

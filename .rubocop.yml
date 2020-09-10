@@ -2,6 +2,7 @@ require:
   - rubocop-rails
 
 AllCops:
+  NewCops: enable
   Exclude:
     - "tmp/**/*"
     - "vendor/**/*"

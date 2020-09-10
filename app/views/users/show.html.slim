@@ -1,3 +1,6 @@
+- page_title @user.username
+- meta_description t(".meta.description", username: @user.username)
+
 = content_for :head do
   = javascript_pack_tag "calendar", "data-turbolinks-track": "reload"
   = stylesheet_pack_tag "calendar", media: "all", "data-turbolinks-track": "reload"
@@ -5,7 +8,7 @@
   = stylesheet_pack_tag "users", media: "all", "data-turbolinks-track": "reload"
 
 .columns
-  .column.is-6-fullhd.is-offset-3-fullhd.is-8-widescreen.is-offset-2-widescreen.is-8-desktop.is-offset-2-desktop.is-10-tablet.is-offset-1-tablet.is-full-mobile
+  .column.is-8-fullhd.is-offset-2-fullhd.is-8-widescreen.is-offset-2-widescreen.is-10-desktop.is-offset-1-desktop.is-10-tablet.is-offset-1-tablet.is-full-mobile
 
     .columns.is-multiline.is-gapless
       .column.is-full.has-text-centered.mt-2
@@ -13,8 +16,8 @@
           span.icon.is-small
             i.fas.fa-3x.fa-fire.has-text-primary
       .column.is-full.has-text-centered
-        h3.title.is-3.has-text-centered
-          = link_to t("app.title"), root_path, class: "root-link"
+        h3.title.is-3
+          = link_to t("app.title"), root_path, class: "has-text-black-ter"
 
     .columns.is-multiline
       - cache @user do
@@ -38,10 +41,9 @@
                 = render CalendarComponent.new(date_range: @date_range, activities: @activities)
 
             .column.is-full
-              .columns.legend-container
+              .columns.legend-container.is-mobile
                 .column.has-text-left
                   = link_to t(".faq_label"), faq_path
-
                 .column.has-text-right
                   span = t(".less")
                   ul.legend

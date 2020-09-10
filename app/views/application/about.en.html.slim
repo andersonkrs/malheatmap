@@ -1,9 +1,11 @@
+- page_title "About"
+
 .div
   .columns.is-centered
     = render partial: "shared/header"
 
   .columns.is-centered
-    .column.is-two-fifths.mt-2
+    .column.is-half-desktop.mt-2
       h3.has-text-centered.subtitle = "About"
       p.mb-2
         |
@@ -21,20 +23,15 @@
           <br> - <a href='https://anime.plus/'>anime.plus</a>
           <br> - <a href='https://malsignature.com/'>MAL Signature</a>
 
-  .columns.is-centered
-    .column.is-two-fifths
-      h3.has-text-centered.subtitle = "Privacy"
+      h3.has-text-centered.subtitle.mt-5 = "Privacy"
       p = "We download and store publicly available data related to your myanimelist.net account, which are: profile information (username, avatar url) and the current history (episodes watched, chapters read, historic datetime, anime/manga name and url)."
 
-  .columns.is-centered
-    .column.is-two-fifths
-      h3.has-text-centered.subtitle = "Contact and external links"
+      h3.has-text-centered.subtitle.mt-5 = "Contact and external links"
       p
         |
-          Email: hello@malheatmap.com
+          Email: <a href='mailto:hello@malheatmap.com'>hello@malheatmap.com</a>
           <br>
           <a href='https://github.com/AndersonSKM/malheatmap'>Source Code</a>
 
-  .columns.is-centered
-    .column.is-two-fifths.has-text-centered
-      <a href="https://www.buymeacoffee.com/andersonkrs" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
+      .has-text-centered.mt-3
+        <a href="https://www.buymeacoffee.com/andersonkrs" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>

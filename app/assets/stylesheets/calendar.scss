@@ -46,6 +46,12 @@
   outline: 1px solid rgba(27,31,35,.04);
   outline-offset: -1px;
   border-radius: 2.5px;
+
+  & > a {
+    display: block;
+    text-decoration: none;
+    height: 100%
+  }
 }
 
 .square[data-level="0"] {
@@ -66,10 +72,4 @@
 
 .square[data-level="4"] {
   background-color: #1100c9;
-}
-
-.square > a {
-  display: block;
-  text-decoration: none;
-  height: 100%
 }

@@ -3,9 +3,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read(".ruby-version")
 
+gem "aws-sdk-s3", require: false
 gem "bootsnap", require: false
 gem "chronic"
-gem "google-cloud-storage", require: false
 gem "image_processing"
 gem "mechanize"
 gem "pg"
@@ -13,7 +13,6 @@ gem "puma"
 gem "rails"
 gem "rollbar"
 gem "sidekiq"
-gem "sidekiq-limit_fetch"
 gem "sidekiq-scheduler"
 gem "slim-rails"
 gem "turbolinks"

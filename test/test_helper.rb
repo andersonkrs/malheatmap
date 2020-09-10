@@ -25,6 +25,7 @@ require_relative "../config/environment"
 require "rails/test_help"
 require "minitest/mock"
 require "factory_bot_rails"
+require "webmock/minitest"
 
 Rails.application.load_tasks
 
@@ -47,14 +48,6 @@ module ActiveSupport
       parallelize_teardown do |_worker|
         SimpleCov.result
       end
-    end
-
-    setup do
-      VCR.insert_cassette [class_name.underscore, name].join("/")
-    end
-
-    teardown do
-      VCR.eject_cassette
     end
   end
 end

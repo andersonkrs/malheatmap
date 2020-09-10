@@ -67,4 +67,8 @@ Rollbar.configure do |config|
   # setup for Heroku. See:
   # https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment
   config.environment = ENV["ROLLBAR_ENV"].presence || Rails.env
+
+  config.custom_data_method = lambda { |_message, exception, _context|
+    exception.try(:context).to_h || {}
+  }
 end

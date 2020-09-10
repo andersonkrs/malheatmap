@@ -1,5 +1,6 @@
 class TimelineComponent < ViewComponent::Base
   def initialize(activities:)
+    super
     @activities = activities
   end
 

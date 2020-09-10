@@ -11,6 +11,8 @@ class SubscriptionFormTest < ActiveSupport::TestCase
     should allow_value("https://myanimelist.net/profile/andersonkrs").for(:username)
     should allow_value("http://myanimelist.net/profile/andersonkrs").for(:username)
     should allow_value("http://myanimelist.net/profile/andersonkrs/").for(:username)
+    should allow_value("https://myanimelist.net/history/andersonkrs").for(:username)
+    should allow_value("http://myanimelist.net/history/andersonkrs/").for(:username)
 
     should_not allow_value("andersonkrs#!@").for(:username)
     should_not allow_value("andersonkrs/").for(:username)
@@ -36,7 +38,7 @@ class SubscriptionFormTest < ActiveSupport::TestCase
     assert_nil @form.username
   end
 
-  test "calls create subscription job with cleaned username" do
+  test "calls create subscription service with cleaned username" do
     subscription = create(:subscription)
     result_mock = Minitest::Mock.new
     result_mock.expect(:subscription, subscription)
@@ -51,5 +53,12 @@ class SubscriptionFormTest < ActiveSupport::TestCase
       assert_equal subscription.id, @form.id
       result_mock.verify
     end
+  end
+
+  test "does not save if the user is already subscribed" do
+    create(:user, username: "andersonkrs")
+
+    assert_not @form.save
+    assert @form.errors.of_kind?(:username, :taken)
   end
 end

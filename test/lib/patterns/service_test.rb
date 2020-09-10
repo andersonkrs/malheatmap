@@ -77,7 +77,7 @@ module Patterns
         CalculationService.call!(number_1: "Invalid")
       end
 
-      assert "Invalid input", exception.context.message
+      assert_equal "Invalid input", exception.context.message
       assert exception.context.failure?
     end
   end

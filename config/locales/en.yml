@@ -3,13 +3,17 @@ en:
     title: "MAL Heatmap"
     about: "About"
     faq: "FAQ"
+    description: "MAL Heatmap is a tool for tracking your anime/manga consumption based on your myanimelist.net history."
   mal:
     crawler:
       errors:
         profile_not_found: "Profile not found for username %{username}. Please check if you typed it correctly."
+        communication_error: "A communication error with myanimelist.net has occurred. Please try again later"
   subscriptions:
     index:
-      enter_your_mal_profile_html: |
+      validations:
+        already_subscribed: "User is already subscribed"
+      form_label_html: |
         Enter your <a target="_blank" rel="noopener noreferrer" href="https://myanimelist.net">MyAnimeList</a> profile:
       username:
         placeholder: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs"
@@ -18,6 +22,8 @@ en:
       wait: "Please wait..."
   users:
     show:
+      meta:
+        description: "Check out %{username}'s profile on MAL Heatmap"
       now: "Now"
       beggining: "Beginning"
       faq_label: "How it works?"
@@ -45,6 +51,8 @@ en:
       other: "%{count} activities on %{date}"
   application:
     internal_error:
+      title: "500 Internal Server Error"
       error: "Oops! Sorry, this is unexpected, we are working to solve it, please try again later."
     not_found:
+      title: "404 Not Found"
       error: "Page not found! We couldn't find the page you are looking for."

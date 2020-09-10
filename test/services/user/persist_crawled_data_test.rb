@@ -24,24 +24,17 @@ class User
           }
         ]
       }
+      @checksum = SecureRandom.uuid
       @user = create(:user)
-      @service = PersistCrawledData.set(user: @user, crawled_data: @data)
+      @service = PersistCrawledData.set(user: @user, crawled_data: @data, checksum: @checksum)
     end
 
-    test "generates new checksum" do
-      assert_changes -> { @user.checksum } do
-        result = @service.call
-
-        assert result.success?
-        assert result.data_updated
-      end
-    end
-
-    test "updates profile data" do
+    test "updates profile data and checksum" do
       @service.call
 
       assert_equal "http://dummy/avatar", @user.avatar_url
       assert_equal 2, @user.entries.size
+      assert_equal @checksum, @user.checksum
     end
 
     test "inserts all entries to user" do
@@ -63,18 +56,6 @@ class User
       assert_equal 5, entry.mal_id
       assert_equal "One Punch Man", entry.name
       assert_equal "anime", entry.kind
-    end
-
-    test "does not update user's checksum when it does not have new entries" do
-      @user.update!(checksum: "f00289e0aa45a692cc224e0308f6bd92")
-
-      result = @service.call
-
-      assert result.success?
-      assert_not result.data_updated
-      assert_no_changes -> { @user.checksum } do
-        @user.reload
-      end
     end
 
     test "inserts just the new entries when user already has entries with more than 3 weeks" do

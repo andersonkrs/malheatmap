@@ -39,7 +39,7 @@ I've made this experiment to play around with some cool Rails features, like [Ac
 
 The web app just displays the processed data and a set of jobs do the hard and dirty work of crawling, process, save data.
 
-So, when the user subscribes to its profile to be tracked, a job will be triggered to check if the user exists on MAL and then crawl and process the data. While that, the UI will be connected to a channel awaiting a response from the job, once the job is completed, the user will be redirected to his page. After subscribing, a cron will repeat the crawling process daily to keep the user's data updated.
+So, when the user subscribes to its profile to be tracked, a job will be triggered to check if the user exists on MAL and then crawl and process the data. While that, the UI will be connected to a channel awaiting a response from the job, once the job is completed, the user will be redirected to his page. After subscribing, a recurring job will repeat the crawling process daily to keep the user's data updated.
 
 #### Developing
 
@@ -84,12 +84,17 @@ bin/qa
 
 ### Deployment
 
-This app is deployed with [Dokku](http://dokku.viewdocs.io/dokku/) hosted on [Digital Ocean](https://www.digitalocean.com).
+This app is deployed with [Dokku](http://dokku.viewdocs.io/dokku/) hosted on a VPS.
 
-Other tools used:
+Auxiliary tools:
 
 * [Rollbar](https://rollbar.com/) for error monitoring
 * [Papertrail](https://www.papertrail.com/) for log management
 * [Sidekiq](https://sidekiq.org/) as background job adapter
+
+#### Other Inspirations
+
+* [MAL Signature](https://malsignature.com)
+* [anime.plus](https://anime.plus)
 
 <a href="https://www.buymeacoffee.com/andersonkrs" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>

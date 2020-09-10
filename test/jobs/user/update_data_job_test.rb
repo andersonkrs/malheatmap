@@ -9,9 +9,10 @@ class User
     test "calls update data service with given user" do
       service_mock = lambda do |user:|
         assert_equal user, @user
+        Patterns::Service::Context.new(failure: false)
       end
 
-      User::UpdateData.stub(:call!, service_mock) do
+      User::UpdateData.stub(:call, service_mock) do
         User::UpdateDataJob.perform_now(@user)
       end
     end

@@ -2,8 +2,9 @@ local:
   service: Disk
   root: <%= Rails.root.join("tmp/storage", Rails.env) %>
 
-google_cloud_storage:
-  service: GCS
-  project: mal-heatmap
-  credentials: <%= Rails.application.credentials.google_cloud_service_key.to_json %>
-  bucket: malheatmapsignatures
+amazon:
+  service: S3
+  access_key_id: <%= Rails.application.credentials.aws[:access_key_id] %>
+  secret_access_key: <%= Rails.application.credentials.aws[:secret_access_key] %>
+  region: <%= Rails.application.credentials.aws[:region] %>
+  bucket: <%= Rails.application.credentials.aws[:bucket] %>

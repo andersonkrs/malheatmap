@@ -6,16 +6,18 @@ module Patterns
       attr_reader :context
 
       def initialize(context)
+        super
         @context = context
       end
     end
 
     class Context < OpenStruct
-      def merge(context)
-        current_hash = to_h
-        incoming_hash = context.to_h
+      def merge!(context)
+        context.to_h.each do |property, value|
+          send("#{property}=", value)
+        end
 
-        self.class.new(current_hash.merge(incoming_hash))
+        self
       end
 
       def success?
