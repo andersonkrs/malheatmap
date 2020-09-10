@@ -3,12 +3,6 @@ class NotifyError < ApplicationService
 
   def call
     Rails.logger.error(error)
-    Rollbar.error(error, **context_data)
-  end
-
-  private
-
-  def context_data
-    error.try(:context).to_h
+    Rollbar.error(error)
   end
 end
