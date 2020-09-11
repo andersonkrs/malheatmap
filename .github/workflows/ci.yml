@@ -58,7 +58,7 @@ jobs:
         curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b $HOME/bin
         reviewdog -reporter=github-check -tee
 
-    - name: Compile assets
+    - name: Test assets compilation
       run: RAILS_ENV=test bin/rails assets:precompile
 
     - name: Run unit tests
