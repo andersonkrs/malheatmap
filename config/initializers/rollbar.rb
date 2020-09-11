@@ -1,9 +1,3 @@
-handler = proc do |options|
-  exception = options[:exception]
-
-  options[:extra].merge(exception.try(:context).to_h)
-end
-
 Rollbar.configure do |config|
   # Without configuration, Rollbar is enabled in all environments.
   # To disable in specific environments, set config.enabled=false.
@@ -74,5 +68,7 @@ Rollbar.configure do |config|
   # https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment
   config.environment = ENV["ROLLBAR_ENV"].presence || Rails.env
 
-  config.transform << handler
+  config.custom_data_method = lambda { |_message, exception, _context|
+    exception.try(:context).to_h || {}
+  }
 end
