@@ -19,6 +19,10 @@
     "standard": "^14.3.4",
     "webpack-dev-server": "^3.11.0"
   },
+  "resolutions": {
+    "dot-prop": "^5.1.1",
+    "minimist": "^1.2.3"
+  },
   "browserslist": [
     "defaults"
   ],
