@@ -1,13 +1,14 @@
+= content_for :title do
+  = "FAQ"
+
 .div
   .columns.is-centered
     = render partial: "shared/header"
 
   .columns.is-centered
-    .column.is-two-fifths.mt-2
+    .column.is-half-desktop.mt-2
       h3.has-text-centered.subtitle = "FAQ"
 
-  .columns.is-centered
-    .column.is-two-fifths
       p.has-text-weight-bold = "What frequency my history is updated?"
       p = "Daily"
 
@@ -19,7 +20,7 @@
         = image_pack_tag "media/images/example_history.png"
       p.mt-2
         |
-          You started watching Nihon Chinbotsu 2020 at Aug 19, in this example, you'll have 5 activities at Aug 19 and 6 activities at Aug 20, 5 episodes of Nihon Chinbotsu and 1 episode of FLCL Progressive.
+          You started watching <em>Nihon Chinbotsu</em> 2020 at Aug 19, in this example, you'll have 5 activities at Aug 19 and 6 activities at Aug 20, 5 episodes of <em>Nihon Chinbotsu</em> and 1 episode of <em>FLCL Progressive</em>.
       p.mt-2.has-text-centered
         = image_pack_tag "media/images/example_timeline.png"
       p.mt-2
@@ -32,7 +33,11 @@
           You can copy the BB Code and put in your profile page or signature on <a href='https://myanimelist.net'>myanimelist.net</a>.
       p.mt-4.has-text-centered
         = image_pack_tag "media/images/example_profile.png"
-      p.has-text-weight-bold.mt-3 = "Why my image is not updating on MAL?"
+      p.has-text-weight-bold.mt-3 = "Why my calendar image is not updating on MAL?"
       p.mt-2
         |
           MAL caches images for a period, so it can take even 2 days to the updated image appear on MAL.
+      p.has-text-weight-bold.mt-3 = "What is the timezone used?"
+      p.mt-2
+        |
+          All dates and timestamps are in UTC.

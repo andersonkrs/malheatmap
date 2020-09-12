@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 html
   head
-    title = t("app.title")
+    title
+      - if content_for?(:title)
+        = yield(:title) + " - "
+      = t("app.title")
 
     meta name="viewport" content="width=device-width, initial-scale=1.0"
+    meta name="keywords" content="myanimelist, anime, manga, MAL"
+
+    - if content_for?(:meta)
+      = yield(:meta)
+    - else
+      meta name="description" content="#{t("app.description")}"
 
     = csrf_meta_tags
     = csp_meta_tag
 
     = stylesheet_pack_tag "application", media: "all", "data-turbolinks-track": "reload"
     = javascript_pack_tag "application", "data-turbolinks-track": "reload"
-    = javascript_pack_tag "alert", "data-turbolinks-track": "reload"
 
     = yield :head
 

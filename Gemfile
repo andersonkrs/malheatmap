@@ -13,7 +13,7 @@ gem "puma"
 gem "rails"
 gem "rollbar"
 gem "sidekiq"
-gem "sidekiq-limit_fetch"
+gem "sidekiq-limit_fetch", require: false
 gem "sidekiq-scheduler"
 gem "slim-rails"
 gem "turbolinks"

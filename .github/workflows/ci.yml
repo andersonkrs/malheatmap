@@ -95,3 +95,4 @@ jobs:
         ssh-private-key: ${{ secrets.DOKKU_SSH_KEY }}
         dokku-host:  ${{ secrets.DOKKU_HOST }}
         app-name: 'malheatmap'
+        git-push-flags: --force

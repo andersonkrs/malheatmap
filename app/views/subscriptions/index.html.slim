@@ -1,5 +1,6 @@
 - content_for :head do
-  meta name="turbolinks-cache-control" content="no-cache"
+  = javascript_pack_tag "notification", "data-turbolinks-track": "reload", async: true
+  = stylesheet_pack_tag "notification", media: "all", "data-turbolinks-track": "reload", async: true
 
 - @section_class = "is-medium"
 
@@ -13,7 +14,7 @@
       .column.is-full-desktop.is-half-fullhd.is-full-tablet.is-full-mobile
         = form_with model: @subscription, method: "post" do |form|
           .field
-            p.has-text-centered = t(".enter_your_mal_profile_html")
+            p.has-text-centered = t(".form_label_html")
 
           .field.notifications-container
             = render NotificationComponent.new(message: flash[:error])
