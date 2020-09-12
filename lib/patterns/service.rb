@@ -6,6 +6,7 @@ module Patterns
       attr_reader :context
 
       def initialize(context)
+        super
         @context = context
       end
     end

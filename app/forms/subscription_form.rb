@@ -1,7 +1,7 @@
 class SubscriptionForm < ApplicationForm
   attr_accessor :id, :username
 
-  USERNAME_REGEX = %r{\A(http?s?://(?:www\.)?myanimelist\.net/profile/[A-Za-z0-9\-\_]+/?|[A-Za-z0-9\-\_]+)\Z}x.freeze
+  USERNAME_REGEX = %r{\A(http?s?://(?:www\.)?myanimelist\.net/profile/[A-Za-z0-9\-_]+/?|[A-Za-z0-9\-_]+)\Z}x.freeze
 
   validates :username, presence: true, format: { with: USERNAME_REGEX }
   after_validation :clean_username

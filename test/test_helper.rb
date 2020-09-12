@@ -48,14 +48,6 @@ module ActiveSupport
         SimpleCov.result
       end
     end
-
-    setup do
-      VCR.insert_cassette [class_name.underscore, name].join("/")
-    end
-
-    teardown do
-      VCR.eject_cassette
-    end
   end
 end
 

@@ -1,6 +1,8 @@
 require "application_system_test_case"
 
 class SubscriptionsTest < ApplicationSystemTestCase
+  include VCRCassettes
+
   setup do
     visit subscriptions_url
   end

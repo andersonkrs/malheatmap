@@ -2,6 +2,8 @@ require "test_helper"
 
 class User
   class UpdateDataTest < ActiveSupport::TestCase
+    include VCRCassettes
+
     test "updates user data when crawling is ok" do
       user = create(:user, username: "ManOfBalance")
       result = UpdateData.call(user: user)

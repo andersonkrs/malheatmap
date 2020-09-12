@@ -54,6 +54,8 @@ class CalendarComponent < ViewComponent::Base
   end
 
   def initialize(date_range:, activities:)
+    super
+
     @date_range = date_range
     @activities = activities
     @weeks = @date_range.each_slice(7).to_a

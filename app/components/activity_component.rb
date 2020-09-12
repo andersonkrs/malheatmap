@@ -2,11 +2,16 @@ class ActivityComponent < ViewComponent::Base
   include MAL::URLS
 
   attr_reader :activity, :url, :icon_class, :amount
+
   delegate :mal_id, :name, :kind, :date, to: :activity
 
   def initialize(activity:)
+    super
     @activity = activity
+    configure_activity
+  end
 
+  def configure_activity
     if @activity.item.anime?
       @url = anime_url(mal_id)
       @icon_class = "fas fa-tv"

@@ -1,5 +1,6 @@
 class NotificationComponent < ViewComponent::Base
   def initialize(message:)
+    super
     @message = message
   end
 
