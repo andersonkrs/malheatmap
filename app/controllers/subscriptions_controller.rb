@@ -8,7 +8,7 @@ class SubscriptionsController < ApplicationController
 
     if @subscription.invalid?
       flash[:error] = @subscription.errors.full_messages.first
-      return redirect_to action: :index
+      return redirect_to_index
     end
 
     if @subscription.user_already_subscribed?
@@ -25,6 +25,10 @@ class SubscriptionsController < ApplicationController
   end
 
   def redirect_to_user_page
-    redirect_to user_path(@subscription.username), turbolinks: :advance
+    redirect_to(user_path(@subscription.username), turbolinks: :advance)
+  end
+
+  def redirect_to_index
+    redirect_to(action: :index, turbolinks: :advance)
   end
 end
