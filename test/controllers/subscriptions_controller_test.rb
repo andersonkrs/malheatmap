@@ -28,7 +28,6 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
       }
     }, xhr: true
 
-    assert flash["error"], "Username is invalid"
     assert_equal "text/javascript", @response.media_type
     assert_no_enqueued_jobs
   end

@@ -4,17 +4,20 @@ class SubscriptionForm < ApplicationForm
   USERNAME_REGEX = %r{\A(http?s?://(?:www\.)?myanimelist\.net/profile/[A-Za-z0-9\-_]+/?|[A-Za-z0-9\-_]+)\Z}x.freeze
 
   validates :username, presence: true, format: { with: USERNAME_REGEX }
-  after_validation :clean_username
-
-  def user_already_subscribed?
-    User.exists?(username: username)
-  end
+  validate :user_already_subscribed
 
   private
 
   def persist
     result = Subscription::Create.call!(username: username)
     self.id = result.subscription.id
+  end
+
+  def user_already_subscribed
+    clean_username
+    return if username.blank?
+
+    errors.add(:username, :taken) if User.exists?(username: username)
   end
 
   def clean_username

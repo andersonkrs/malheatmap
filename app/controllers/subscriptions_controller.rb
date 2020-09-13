@@ -5,23 +5,19 @@ class SubscriptionsController < ApplicationController
 
   def create
     @subscription = SubscriptionForm.new(subscription_params)
+    @subscription.save
 
-    if @subscription.invalid?
-      flash[:error] = @subscription.errors.full_messages.first
-      return redirect_to(action: :index)
-    end
-
-    if @subscription.user_already_subscribed?
-      redirect_to_user_page
-    else
-      @subscription.save!
-    end
+    redirect_to_user_page if user_already_subscribed?
   end
 
   private
 
   def subscription_params
     params.require(:subscription).permit(:username)
+  end
+
+  def user_already_subscribed?
+    @subscription.errors.of_kind?(:username, :taken)
   end
 
   def redirect_to_user_page

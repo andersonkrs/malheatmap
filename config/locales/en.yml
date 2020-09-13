@@ -11,6 +11,8 @@ en:
         communication_error: "A communication error with myanimelist.net has occurred. Please try again later"
   subscriptions:
     index:
+      validations:
+        already_subscribed: "User is already subscribed"
       form_label_html: |
         Enter your <a target="_blank" rel="noopener noreferrer" href="https://myanimelist.net">MyAnimeList</a> profile:
       username:
