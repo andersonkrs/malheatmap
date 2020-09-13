@@ -9,10 +9,12 @@ html lang="#{I18n.locale}"
     meta name="viewport" content="width=device-width, initial-scale=1.0"
     meta name="keywords" content="myanimelist, anime, manga, MAL"
 
-    - if content_for?(:meta)
-      = yield(:meta)
+    - if content_for?(:meta_description)
+      meta name="description" content="#{yield(:meta_description)}"
     - else
       meta name="description" content="#{t("app.description")}"
+
+    = yield :meta
 
     = csrf_meta_tags
     = csp_meta_tag
@@ -23,7 +25,7 @@ html lang="#{I18n.locale}"
     = yield :head
 
   body
-    section class="section #{@section_class}"
+    section class="section #{yield(:section_class)}"
       .container
         = yield
         .columns.mt-4

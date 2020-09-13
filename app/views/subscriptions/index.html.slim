@@ -1,8 +1,11 @@
+- content_for :meta do
+  meta name="turbolinks-cache-control" content="no-cache"
+
 - content_for :head do
   = javascript_pack_tag "notification", "data-turbolinks-track": "reload", async: true
   = stylesheet_pack_tag "notification", media: "all", "data-turbolinks-track": "reload", async: true
 
-- @section_class = "is-medium"
+- section_size :medium
 
 .columns.is-multiline
   = render partial: "shared/header"

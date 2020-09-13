@@ -49,6 +49,8 @@ en:
       other: "%{count} activities on %{date}"
   application:
     internal_error:
+      title: "500 Internal Server Error"
       error: "Oops! Sorry, this is unexpected, we are working to solve it, please try again later."
     not_found:
+      title: "404 Not Found"
       error: "Page not found! We couldn't find the page you are looking for."

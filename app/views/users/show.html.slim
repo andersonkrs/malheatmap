@@ -1,8 +1,5 @@
-= content_for :title do
-  = @user.username
-
-= content_for :meta do
-  meta name="description" content="#{t(".meta.description", username: @user.username)}"
+- page_title @user.username
+- meta_description t(".meta.description", username: @user.username)
 
 = content_for :head do
   = javascript_pack_tag "calendar", "data-turbolinks-track": "reload"
