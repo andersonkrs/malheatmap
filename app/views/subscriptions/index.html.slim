@@ -13,8 +13,8 @@
     .columns.form-container.is-multiline.is-centered
       .column.is-full-desktop.is-half-fullhd.is-full-tablet.is-full-mobile
         = form_with model: @subscription, method: "post" do |form|
-          .field
-            p.has-text-centered = t(".form_label_html")
+          .field.has-text-centered
+            label[for="username"] = t(".form_label_html")
 
           .field.notifications-container
             = render NotificationComponent.new(message: flash[:error])

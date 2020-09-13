@@ -13,7 +13,7 @@ class Subscription
         context.response = { status: :success, redirect: user_path(context.user) }
       else
         rollback
-        context.response = { status: :failure, notification: render_error_alert(result.message) }
+        context.response = { status: :failure, notification: render_error_notification(result.message) }
       end
     end
 
@@ -33,7 +33,7 @@ class Subscription
 
     private
 
-    def render_error_alert(message)
+    def render_error_notification(message)
       ApplicationController.render NotificationComponent.new(message: message)
     end
   end
