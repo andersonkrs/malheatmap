@@ -283,8 +283,6 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sidekiq-limit_fetch (3.4.0)
-      sidekiq (>= 4)
     sidekiq-scheduler (3.0.1)
       e2mmap
       redis (>= 3, < 5)
@@ -391,7 +389,6 @@ DEPENDENCIES
   selenium-webdriver
   shoulda
   sidekiq
-  sidekiq-limit_fetch
   sidekiq-scheduler
   simplecov
   simplecov-cobertura
