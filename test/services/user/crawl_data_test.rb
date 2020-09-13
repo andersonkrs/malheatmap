@@ -8,7 +8,7 @@ class User
       @service = CrawlData.set(crawler: @crawler_mock)
     end
 
-    test "returns crawled data" do
+    test "returns crawled data and its checksum" do
       crawled_data = {
         profile: {
           avatar_url: "http://dummy/avatar"
@@ -29,7 +29,8 @@ class User
       @crawler_mock.verify
 
       assert result.success?
-      assert crawled_data, result.crawled_data
+      assert_equal crawled_data, result.crawled_data
+      assert result.checksum
     end
 
     test "returns error message wen crawl fails" do
@@ -42,7 +43,7 @@ class User
       @crawler_mock.verify
 
       assert result.failure?
-      assert result.message, error_message
+      assert_equal result.message, error_message
     end
   end
 end

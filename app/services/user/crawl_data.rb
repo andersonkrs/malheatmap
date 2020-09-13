@@ -10,8 +10,16 @@ class User
 
     def call
       context.crawled_data = crawler.crawl
+      context.checksum = generate_checksum
     rescue MAL::Errors::CrawlError => error
       context.fail(message: error.message)
+    end
+
+    private
+
+    def generate_checksum
+      json = Marshal.dump(context.crawled_data)
+      Digest::MD5.hexdigest(json)
     end
   end
 end

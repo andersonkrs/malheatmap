@@ -1,38 +1,21 @@
 class User
   class PersistCrawledData < ApplicationService
-    delegate :user, :crawled_data, to: :context
+    delegate :user, :crawled_data, :checksum, to: :context
 
     def call
-      user.checksum = generate_data_checksum
-
-      if user.checksum_changed?
-        persist
-        context.data_updated = true
-      else
-        context.data_updated = false
-        Rails.logger.info("User #{user.username} hasn't new data")
+      ActiveRecord::Base.transaction do
+        update_profile_data
+        update_recent_history
       end
     end
 
     private
 
-    def generate_data_checksum
-      json = Marshal.dump(crawled_data)
-      Digest::MD5.hexdigest(json)
+    def update_profile_data
+      user.update!(**crawled_data[:profile], checksum: checksum)
     end
 
-    def persist
-      ActiveRecord::Base.transaction do
-        import_profile_data
-        import_recent_history
-      end
-    end
-
-    def import_profile_data
-      user.update!(**crawled_data[:profile])
-    end
-
-    def import_recent_history
+    def update_recent_history
       user.history.visible_to_user_on_mal.delete_all
 
       crawled_data[:history].each do |entry|

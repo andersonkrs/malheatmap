@@ -6,12 +6,12 @@ module Patterns
     included do
       class_attribute :steps, default: []
 
-      def call
+      def run
         steps.each do |step|
           next unless should_run?(step)
 
           result = step[:service].call(context.to_h)
-          @context = context.merge(result)
+          context.merge!(result)
 
           context.fail if result.failure?
         end

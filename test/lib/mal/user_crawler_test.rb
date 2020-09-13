@@ -34,7 +34,17 @@ class UserCrawlerTest < ActiveSupport::TestCase
   test "raises profile not found error when user does not exist" do
     crawler = MAL::UserCrawler.new("fakeuser123")
 
-    assert_raises MAL::Errors::ProfileNotFound do
+    assert_raises MAL::Errors::ProfileNotFound, I18n.t("mal.crawler.errors.profile_not_found") do
+      crawler.crawl
+    end
+  end
+
+  test "raises communication error when some connection error occur" do
+    crawler = MAL::UserCrawler.new("someuser")
+
+    stub_request(:any, /#{MAL::HOST}/).to_return(status: 303)
+
+    assert_raises MAL::Errors::CommunicationError, I18n.t("mal.crawler.errors.communication_error") do
       crawler.crawl
     end
   end

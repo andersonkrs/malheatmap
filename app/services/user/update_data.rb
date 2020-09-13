@@ -1,14 +1,14 @@
 class User
   class UpdateData < ApplicationPipeline
     step CrawlData
-    step PersistCrawledData
-    step GenerateActivitiesFromHistory, if: :new_data?
+    step PersistCrawledData, if: :checksum_changed?
+    step GenerateActivitiesFromHistory, if: :checksum_changed?
     step GenerateSignature
 
     private
 
-    def new_data?
-      context.data_updated
+    def checksum_changed?
+      @checksum_changed ||= context.checksum != context.user.checksum
     end
   end
 end

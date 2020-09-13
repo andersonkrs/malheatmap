@@ -17,7 +17,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     }, xhr: true
 
     assert_equal "text/javascript", @response.media_type
-    assert 1, Subscription.count
+    assert_equal 1, Subscription.count
     assert_enqueued_jobs 1, only: Subscription::ProcessJob, queue: :default
   end
 
@@ -44,6 +44,6 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to user_path(user)
     assert_no_enqueued_jobs
-    assert 0, Subscription.count
+    assert_equal 0, Subscription.count
   end
 end

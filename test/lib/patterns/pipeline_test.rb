@@ -24,10 +24,10 @@ module Patterns
       include Patterns::Pipeline
 
       step DivideNumbers
-      step DoubleResult, if: :result_greater_than_10
+      step DoubleResult, if: :result_greater_or_equal_10
 
-      def result_greater_than_10
-        context.result > 10
+      def result_greater_or_equal_10
+        context.result >= 10
       end
     end
 
@@ -35,14 +35,14 @@ module Patterns
       context = PipelineService.call(number_1: 100, number_2: 10)
 
       assert context.success?
-      assert 20, context.result
+      assert_equal 20, context.result
     end
 
     test "does not call the step service if the condition is false" do
       context = PipelineService.call(number_1: 10, number_2: 2)
 
       assert context.success?
-      assert 5, context.result
+      assert_equal 5, context.result
     end
 
     test "does not call the step service if the previous step fails" do

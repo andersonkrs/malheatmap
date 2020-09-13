@@ -41,7 +41,7 @@ class UserTest < ActiveSupport::TestCase
       test "returns activities for the given date range" do
         results = @user.activities.for_date_range(Date.new(2020, 7, 11)..Date.new(2020, 8, 11)).map(&:name)
 
-        assert 3, results.size
+        assert_equal 3, results.size
         assert_includes results, "Cowboy Bebop"
         assert_includes results, "Dragon Ball GT"
         assert_includes results, "One Piece"

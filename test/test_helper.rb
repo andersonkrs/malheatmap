@@ -25,6 +25,7 @@ require_relative "../config/environment"
 require "rails/test_help"
 require "minitest/mock"
 require "factory_bot_rails"
+require "webmock/minitest"
 
 Rails.application.load_tasks
 
