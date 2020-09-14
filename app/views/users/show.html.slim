@@ -41,10 +41,9 @@
                 = render CalendarComponent.new(date_range: @date_range, activities: @activities)
 
             .column.is-full
-              .columns.legend-container
+              .columns.legend-container.is-mobile
                 .column.has-text-left
                   = link_to t(".faq_label"), faq_path
-
                 .column.has-text-right
                   span = t(".less")
                   ul.legend
