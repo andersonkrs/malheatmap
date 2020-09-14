@@ -20,3 +20,9 @@ library.add(
 )
 
 dom.watch()
+
+document.addEventListener('turbolinks:before-render', function (event) {
+  dom.i2svg({
+    node: event.data.newBody
+  })
+})
