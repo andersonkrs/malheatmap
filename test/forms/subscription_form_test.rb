@@ -11,6 +11,8 @@ class SubscriptionFormTest < ActiveSupport::TestCase
     should allow_value("https://myanimelist.net/profile/andersonkrs").for(:username)
     should allow_value("http://myanimelist.net/profile/andersonkrs").for(:username)
     should allow_value("http://myanimelist.net/profile/andersonkrs/").for(:username)
+    should allow_value("https://myanimelist.net/history/andersonkrs").for(:username)
+    should allow_value("http://myanimelist.net/history/andersonkrs/").for(:username)
 
     should_not allow_value("andersonkrs#!@").for(:username)
     should_not allow_value("andersonkrs/").for(:username)
