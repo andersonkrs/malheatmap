@@ -33,7 +33,6 @@ I've made this experiment to play around with some cool Rails features, like [Ac
 * [PostgreSQL](https://www.postgresql.org/)
 * [Redis](https://redis.io/)
 * [Bulma CSS](https://bulma.io/)
-* [Google Cloud Storage](https://cloud.google.com/storage)
 
 #### How it works
 
@@ -90,6 +89,8 @@ Auxiliary tools:
 
 * [Rollbar](https://rollbar.com/) for error monitoring
 * [Papertrail](https://www.papertrail.com/) for log management
+* [UptimeRobot](https://uptimerobot.com/) for uptime monitoring
+* [Amazon S3](https://aws.amazon/com/s3) as storage service
 * [Sidekiq](https://sidekiq.org/) as background job adapter
 
 #### Other Inspirations
