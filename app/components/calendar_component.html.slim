@@ -13,4 +13,4 @@
   ul.squares
     - @squares.each do |square|
       li.square data-level=square.level data-date=square.date title=square.hint
-        a href="##{square.date}"
+        a href="##{square.date}" data-turbolinks="false"
