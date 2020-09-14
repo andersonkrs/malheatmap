@@ -5,7 +5,7 @@ module MAL
     include URLS
 
     def initialize(username)
-      super()
+      super
       @username = username
       @response = { profile: {}, history: [] }
 
@@ -18,7 +18,7 @@ module MAL
 
       @response
     rescue Mechanize::ResponseCodeError => error
-      handle_response_code_error(error.response_code, error.message)
+      handle_response_code_error(error.response_code.to_i, error.message)
     rescue Mechanize::ResponseReadError, Mechanize::RedirectLimitReachedError
       raise Errors::CommunicationError
     end
@@ -48,6 +48,7 @@ module MAL
 
     def fetch_history(kind)
       page.link_with(text: "#{kind.capitalize} History").click
+      return if private_history?
 
       page.xpath("//tr[td[@class='borderClass']]").each do |row|
         entry = Parsers::Entry.new(row).parse
@@ -57,13 +58,18 @@ module MAL
       end
     end
 
-    def handle_response_code_error(response_code, message)
-      custom_exceptions = {
-        "404" => Errors::ProfileNotFound
-      }
-      exception = custom_exceptions[response_code] || Errors::CrawlError
+    def private_history?
+      page.at_xpath("//div[@class='badresult']").present?
+    end
 
-      raise exception.new(message, username: @username)
+    def handle_response_code_error(response_code, message)
+      exception_class = if response_code == 404
+                          Errors::ProfileNotFound
+                        else
+                          Errors::CommunicationError
+                        end
+
+      raise exception_class.new(message, username: @username)
     end
   end
 end

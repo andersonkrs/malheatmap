@@ -1,0 +1,15 @@
+default: &default
+  url: "https://analytics.malheatmap.com"
+  site_id: 1
+
+development:
+  <<: *default
+  enabled: false
+
+test:
+  <<: *default
+  enabled: false
+
+production:
+  <<: *default
+  enabled: true

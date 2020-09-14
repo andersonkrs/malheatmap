@@ -3,10 +3,6 @@ require "test_helper"
 class UserCrawlerTest < ActiveSupport::TestCase
   include VCRCassettes
 
-  setup do
-    travel_to Time.zone.local(2020, 3, 21, 12, 30)
-  end
-
   test "returns user profile info" do
     crawler = MAL::UserCrawler.new("andersonkrs")
     result = crawler.crawl
@@ -31,6 +27,13 @@ class UserCrawlerTest < ActiveSupport::TestCase
     assert_equal 0, result[:history].size
   end
 
+  test "returns no entries when user sets the history as private" do
+    crawler = MAL::UserCrawler.new("-Kazami")
+    result = crawler.crawl
+
+    assert_equal 0, result[:history].size
+  end
+
   test "raises profile not found error when user does not exist" do
     crawler = MAL::UserCrawler.new("fakeuser123")
 
@@ -45,6 +48,16 @@ class UserCrawlerTest < ActiveSupport::TestCase
     stub_request(:any, /#{MAL::HOST}/).to_return(status: 303)
 
     assert_raises MAL::Errors::CommunicationError, I18n.t("mal.crawler.errors.communication_error") do
+      crawler.crawl
+    end
+  end
+
+  test "raises communication error when MAL returns any 5xx error" do
+    crawler = MAL::UserCrawler.new("someuser")
+
+    stub_request(:any, /#{MAL::HOST}/).to_return(status: 503)
+
+    assert_raises MAL::Errors::CommunicationError do
       crawler.crawl
     end
   end

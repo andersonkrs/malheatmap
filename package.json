@@ -2,12 +2,15 @@
   "name": "mal_heatmap",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@rails/actioncable": "^6.0.3",
     "@rails/ujs": "^6.0.3",
     "@rails/webpacker": "5.2.1",
     "bulma": "^0.9.0",
     "bulma-timeline": "^3.0.4",
     "capture-website-cli": "^1.0.0",
+    "rails-erb-loader": "^5.5.2",
     "turbolinks": "^5.2.0",
     "uglifyjs-webpack-plugin": "^2.2.0"
   },
@@ -19,7 +22,8 @@
   },
   "resolutions": {
     "dot-prop": "^5.1.1",
-    "minimist": "^1.2.3"
+    "minimist": "^1.2.3",
+    "node-forge": "^0.10.0"
   },
   "browserslist": [
     "defaults"

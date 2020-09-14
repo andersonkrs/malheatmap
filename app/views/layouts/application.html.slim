@@ -24,7 +24,7 @@ html lang="#{I18n.locale}"
 
     = yield :head
 
-    script src="https://kit.fontawesome.com/210bca511f.js" crossorigin="anonymous"
+    = javascript_pack_tag "analytics", "data-turbolinks-track": "reload"
   body
     section class="section #{yield(:section_class)}"
       .container

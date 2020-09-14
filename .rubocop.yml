@@ -26,6 +26,7 @@ Metrics/ClassLength:
 
 Metrics/BlockLength:
   Exclude:
+    - config/**/*
     - spec/**/*
     - test/**/*
 

@@ -5,6 +5,7 @@ import 'channels'
 import consumer from 'channels/consumer'
 
 import '../../assets/stylesheets/application.scss'
+import 'src/fontawesome.js'
 
 require.context('../../assets/images', true)
 

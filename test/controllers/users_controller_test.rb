@@ -22,6 +22,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
       get user_url(@user, year: 2019)
 
+      assert_select ".years-menu"
+
       assert_select "#2019-01-01", 1
       assert_select "#2020-01-01", 0
 
@@ -43,6 +45,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
       get user_url(@user)
 
+      assert_select ".timeline"
       assert_select ".timeline-item/@id" do |elements|
         expected_items = %w[2020-07-02 2020-07-01 2020-06-02 2020-06-01 2020-05-02 2020-05-01]
         assert_equal expected_items, elements.map(&:value)
@@ -58,6 +61,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
           assert element.attr("title").present?
         end
       end
+    end
+
+    test "does not render calendar either timeline when user does not have any activity" do
+      get user_url(@user)
+
+      assert_select ".timeline", 0
+      assert_select ".yarns-menu", 0
+      assert_select "p", /#{@user.username} does not have any activity yet/
     end
 
     test "redirects to 404 if user does not exist" do

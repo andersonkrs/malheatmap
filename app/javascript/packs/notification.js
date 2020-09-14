@@ -1,6 +1,6 @@
 import '../../assets/stylesheets/notification.scss'
 
-export default document.addEventListener('click', (event) => {
+document.addEventListener('click', (event) => {
   if (!event.target.matches('.notification button.delete')) return
 
   const notification = event.target.parentNode

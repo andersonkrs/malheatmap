@@ -1,6 +1,3 @@
-- content_for :meta do
-  meta name="turbolinks-cache-control" content="no-cache"
-
 - content_for :head do
   = javascript_pack_tag "notification", "data-turbolinks-track": "reload", async: true
   = stylesheet_pack_tag "notification", media: "all", "data-turbolinks-track": "reload", async: true
@@ -14,10 +11,11 @@
     .loader-container
 
     .columns.form-container.is-multiline.is-centered
-      .column.is-full-desktop.is-half-fullhd.is-full-tablet.is-full-mobile
+      .column.is-three-quarters-desktop.is-half-fullhd.is-full-tablet.is-full-mobile
         = form_with model: @subscription, method: "post" do |form|
           .field.has-text-centered
-            label[for="username"] = t(".form_label_html")
+            = form.label :username do
+              = t(".form_label_html")
 
           .field.notifications-container
 
@@ -27,4 +25,5 @@
 
             .control
               = form.button t(".subscribe"), class: "button is-primary",
-                                             data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" }
+                                             data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" },
+                                             onclick: "window._paq.push(['trackEvent', 'Subscription', 'Click'])"

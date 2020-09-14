@@ -51,8 +51,14 @@
                       li.square data-level=level title=t(".levels.#{level}")
                   span = t(".more")
 
-        .column.is-10.timeline-container
-          = render TimelineComponent.new(activities: @activities)
+        - if @activities.any?
+          .column.is-10.timeline-container
+            = render TimelineComponent.new(activities: @activities)
 
-        .column.is-2.years-menu-container
-          = render YearsMenuComponent.new(user: @user, years: @years, active_year: @selected_year)
+          .column.is-2.years-menu-container
+            = render YearsMenuComponent.new(user: @user, years: @years, active_year: @selected_year)
+        - else
+          .column.is-10.is-offset-1.has-text-centered.mt-2
+            p.subtitle = t(".user_without_activities", username: @user.username)
+            .mt-2
+            = image_pack_tag "media/images/no_activity.png"
