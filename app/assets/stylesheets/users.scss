@@ -21,7 +21,7 @@
   padding-bottom: 0;
   align-items: center !important;
 
-  @include until($widescreen) {
+  @include until($fullhd) {
     padding-left: 5px;
     padding-right: 5px;
     align-items: flex-end !important;
@@ -31,26 +31,26 @@
 .legend-container {
   font-size: 11px;
   padding-top: 0;
-}
 
-.legend-container .column {
-  padding-left: 16px;
-  padding-right: 16px;
-}
+  & .legend {
+    position: relative;
+    bottom: -1px;
+    display: inline-block;
+    margin: 0 5px;
+    list-style: none;
 
-.legend-container .legend {
-  position: relative;
-  bottom: -1px;
-  display: inline-block;
-  margin: 0 5px;
-  list-style: none;
-}
+    & li {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 1px;
+    }
+  }
 
-.legend-container .legend li {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 1px;
+  & .column {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }
 
 .bb-code > .field > .field-label {
@@ -59,8 +59,8 @@
   flex-shrink: 0;
   margin-right: 0;
   text-align: left;
-}
 
-.bb-code > .field > .field-label > label {
-  min-width: 70px;
+  & label {
+    min-width: 70px;
+  }
 }
