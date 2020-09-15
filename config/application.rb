@@ -38,5 +38,6 @@ module MalHeatmap
     config.exceptions_app = routes
 
     config.crawler = config_for(:crawler)
+    config.analytics = config_for(:analytics)
   end
 end

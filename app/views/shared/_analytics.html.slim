@@ -1,0 +1,41 @@
+- if Rails.configuration.analytics[:enabled]
+  javascript:
+    (function () {
+      window._paq = window._paq || []
+
+      // Configure Matomo analytics
+      window._paq.push(['trackPageView'])
+      window._paq.push(['enableLinkTracking'])
+
+      const url = '#{Rails.configuration.analytics[:url]}'
+      const siteId = '#{Rails.configuration.analytics[:site_id]}'
+      const trackerUrl = `${url}/matomo.php`
+      const jsUrl = `${url}/matomo.js`
+
+      // Load script from Matomo
+      window._paq.push(['setTrackerUrl', trackerUrl])
+      window._paq.push(['setSiteId', siteId])
+
+      const script = document.createElement('script')
+      const firstScript = document.getElementsByTagName('script')[0]
+      script.type = 'text/javascript'
+      script.id = 'matomo-js'
+      script.async = true
+      script.src = jsUrl
+      firstScript.parentNode.insertBefore(script, firstScript)
+
+      let previousPageUrl = null;
+
+      addEventListener('turbolinks:load', function (event) {
+        if (previousPageUrl) {
+          window._paq.push(['setReferrerUrl', previousPageUrl])
+          window._paq.push(['setCustomUrl', window.location.href])
+          window._paq.push(['setDocumentTitle', document.title])
+          if (event.data && event.data.timing) {
+            window._paq.push(['setGenerationTimeMs', event.data.timing.visitEnd - event.data.timing.visitStart]);
+          }
+          window._paq.push(['trackPageView'])
+        }
+        previousPageUrl = window.location.href
+      })
+    })()
