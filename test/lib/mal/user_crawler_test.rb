@@ -48,4 +48,14 @@ class UserCrawlerTest < ActiveSupport::TestCase
       crawler.crawl
     end
   end
+
+  test "raises communication error when MAL returns any 5xx error" do
+    crawler = MAL::UserCrawler.new("someuser")
+
+    stub_request(:any, /#{MAL::HOST}/).to_return(status: 503)
+
+    assert_raises MAL::Errors::CommunicationError do
+      crawler.crawl
+    end
+  end
 end

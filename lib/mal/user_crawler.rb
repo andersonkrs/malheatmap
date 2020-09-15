@@ -5,7 +5,7 @@ module MAL
     include URLS
 
     def initialize(username)
-      super()
+      super
       @username = username
       @response = { profile: {}, history: [] }
 
@@ -18,7 +18,7 @@ module MAL
 
       @response
     rescue Mechanize::ResponseCodeError => error
-      handle_response_code_error(error.response_code, error.message)
+      handle_response_code_error(error.response_code.to_i, error.message)
     rescue Mechanize::ResponseReadError, Mechanize::RedirectLimitReachedError
       raise Errors::CommunicationError
     end
@@ -58,12 +58,13 @@ module MAL
     end
 
     def handle_response_code_error(response_code, message)
-      custom_exceptions = {
-        "404" => Errors::ProfileNotFound
-      }
-      exception = custom_exceptions[response_code] || Errors::CrawlError
+      exception_class = if response_code == 404
+                          Errors::ProfileNotFound
+                        else
+                          Errors::CommunicationError
+                        end
 
-      raise exception.new(message, username: @username)
+      raise exception_class.new(message, username: @username)
     end
   end
 end

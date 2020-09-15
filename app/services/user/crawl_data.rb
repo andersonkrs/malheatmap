@@ -19,7 +19,7 @@ class User
 
     def generate_checksum
       json = Marshal.dump(context.crawled_data)
-      Digest::MD5.hexdigest(json)
+      OpenSSL::Digest::MD5.hexdigest(json)
     end
   end
 end
