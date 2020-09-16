@@ -10,5 +10,6 @@ document.addEventListener('turbolinks:load', () => {
     input.select()
 
     document.execCommand('copy')
+    window._paq.push(['trackEvent', 'User Profile', 'Signature Copied'])
   }
 })

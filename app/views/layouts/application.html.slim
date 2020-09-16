@@ -22,9 +22,9 @@ html lang="#{I18n.locale}"
     = stylesheet_pack_tag "application", media: "all", "data-turbolinks-track": "reload"
     = javascript_pack_tag "application", "data-turbolinks-track": "reload"
 
-    = render partial: "shared/analytics"
-
     = yield :head
+
+    = javascript_pack_tag "analytics", "data-turbolinks-track": "reload"
   body
     section class="section #{yield(:section_class)}"
       .container
