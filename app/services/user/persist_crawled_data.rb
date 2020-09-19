@@ -28,7 +28,7 @@ class User
     def find_or_create_item(entry)
       id, kind, name = entry.values_at(:item_id, :item_kind, :item_name)
 
-      Item.find_or_create_by!(mal_id: id, kind: kind, name: name)
+      Item.create_or_find_by!(mal_id: id, kind: kind, name: name)
     end
   end
 end
