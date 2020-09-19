@@ -5,7 +5,7 @@ class Subscription
     def call
       context.subscription = Subscription.create!(username: username, processed: false)
 
-      Subscription::ProcessJob.set(wait: 2.seconds).perform_later(context.subscription)
+      Subscription::ProcessJob.set(wait: 1.second).perform_later(context.subscription)
     end
   end
 end
