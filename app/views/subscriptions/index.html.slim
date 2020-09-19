@@ -11,7 +11,7 @@
     .loader-container
 
     .columns.form-container.is-multiline.is-centered
-      .column.is-full-desktop.is-half-fullhd.is-full-tablet.is-full-mobile
+      .column.is-three-quarters-desktop.is-half-fullhd.is-full-tablet.is-full-mobile
         = form_with model: @subscription, method: "post" do |form|
           .field.has-text-centered
             label[for="username"] = t(".form_label_html")
@@ -24,4 +24,5 @@
 
             .control
               = form.button t(".subscribe"), class: "button is-primary",
-                                             data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" }
+                                             data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" },
+                                             onclick: "window._paq.push(['trackEvent', 'Subscription', 'Click'])"
