@@ -48,6 +48,7 @@ module MAL
 
     def fetch_history(kind)
       page.link_with(text: "#{kind.capitalize} History").click
+      return if private_history?
 
       page.xpath("//tr[td[@class='borderClass']]").each do |row|
         entry = Parsers::Entry.new(row).parse
@@ -55,6 +56,10 @@ module MAL
 
         @response[:history] << entry
       end
+    end
+
+    def private_history?
+      page.at_xpath("//div[@class='badresult']").present?
     end
 
     def handle_response_code_error(response_code, message)

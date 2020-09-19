@@ -31,6 +31,13 @@ class UserCrawlerTest < ActiveSupport::TestCase
     assert_equal 0, result[:history].size
   end
 
+  test "returns no entries when user sets the history as private" do
+    crawler = MAL::UserCrawler.new("-Kazami")
+    result = crawler.crawl
+
+    assert_equal 0, result[:history].size
+  end
+
   test "raises profile not found error when user does not exist" do
     crawler = MAL::UserCrawler.new("fakeuser123")
 
