@@ -27,6 +27,8 @@
 
 I've made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). Also, I want to try web scrapping with ruby and learn a little bit more about it.
 
+Also, this gave me an opportunity to test some gems, like [ViewComponent](https://github.com/github/view_component).
+
 #### Built with
 
 * [Ruby on Rails](https://rubyonrails.org/)
