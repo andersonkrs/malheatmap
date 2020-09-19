@@ -3,10 +3,6 @@ require "test_helper"
 class UserCrawlerTest < ActiveSupport::TestCase
   include VCRCassettes
 
-  setup do
-    travel_to Time.zone.local(2020, 3, 21, 12, 30)
-  end
-
   test "returns user profile info" do
     crawler = MAL::UserCrawler.new("andersonkrs")
     result = crawler.crawl
