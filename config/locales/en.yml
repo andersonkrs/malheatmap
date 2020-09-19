@@ -33,6 +33,7 @@ en:
         "2": "From 5 to 8 episodes/chapters watched/read on date"
         "3": "From 9 to 12 episodes/chapters watched/read on date"
         "4": "12+ episodes/chapters watched/read on date"
+      user_without_activities: "%{username} does not have any activity yet. Its history might not be public"
     activity:
       episodes:
         one: "1 episode"
