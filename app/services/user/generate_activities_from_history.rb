@@ -38,12 +38,11 @@ class User
     end
 
     def persist_activities
+      activities_data = @processed_activities.map { |activity| activity.attributes.compact }
+
       ActiveRecord::Base.transaction do
         user.activities.delete_all
-
-        @processed_activities.each do |activity|
-          user.activities << activity
-        end
+        Activity.insert_all!(activities_data) if activities_data.present?
       end
     end
 
@@ -60,7 +59,7 @@ class User
       end
 
       if current_activity.blank?
-        current_activity = Activity.new(date: date, item: item, amount: 0)
+        current_activity = Activity.new(user: user, date: date, item: item, amount: 0)
         @processed_activities << current_activity
       end
 

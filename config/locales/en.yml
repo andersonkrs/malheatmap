@@ -17,7 +17,7 @@ en:
         placeholder: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs"
       subscribe: "Subscribe"
     loader:
-      wait: "Please wait..."
+      wait: "Please wait. It can take a while to prepare your data..."
   users:
     show:
       meta:

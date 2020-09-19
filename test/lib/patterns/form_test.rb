@@ -5,7 +5,8 @@ module Patterns
     class TestForm
       include Patterns::Form
 
-      attr_accessor :id, :name
+      attribute :id
+      attribute :name
 
       validates :name, presence: true
 

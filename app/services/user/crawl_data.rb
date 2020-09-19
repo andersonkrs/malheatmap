@@ -5,7 +5,7 @@ class User
     before_call do
       context.crawler ||= MAL::UserCrawler.new(user.username)
 
-      Rails.logger.info("Crawling data for user: #{user.username}")
+      Rails.logger.info("Crawling data for user: #{user}")
     end
 
     def call

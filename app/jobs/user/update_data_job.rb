@@ -2,17 +2,20 @@ class User
   class UpdateDataJob < ApplicationJob
     queue_as :low
 
-    def perform(user)
-      logger.info("Updating data for user: #{user.username}")
-
-      result = User::UpdateData.call(user: user)
-      logger.error(result.message) if result.failure?
+    before_perform do |job|
+      Rails.logger.info("Updating data for user: #{job.arguments.first}")
     end
 
-    private
+    after_perform do |job|
+      Rails.logger.info(job.job_result)
+    end
 
-    def logger
-      Rails.logger
+    attr_reader :job_result
+
+    def perform(user)
+      result = User::UpdateData.call(user: user)
+
+      @job_result = { success: result.success?, message: result.message }
     end
   end
 end

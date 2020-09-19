@@ -8,12 +8,10 @@
   <% if @subscription.errors.any? %>
     notifications.innerHTML = '<%= j render(NotificationComponent.new(message: @subscription.errors.full_messages.first)) %>'
   <% else %>
-    App.consumer.subscriptions.create({ channel: 'SubscriptionChannel', process_id: '<%= @subscription.id %>' }, {
-      connected () {
-        form.style.display = 'none'
-        loader.innerHTML = '<%= j render(partial: "loader") %>'
-      },
+    form.style.display = 'none'
+    loader.innerHTML = '<%= j render(partial: "loader") %>'
 
+    App.consumer.subscriptions.create({ channel: 'SubscriptionChannel', process_id: '<%= @subscription.id %>' }, {
       received (data) {
         this.unsubscribe()
 

@@ -3,7 +3,8 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   schedule:
-    interval: daily
+    interval: weekly
+    day: saturday
     time: '08:00'
   open-pull-requests-limit: 10
 - package-ecosystem: bundler
@@ -16,3 +17,13 @@ updates:
   labels:
   - dependency
   - ruby
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: saturday
+    time: '08:00'
+  open-pull-requests-limit: 10
+  labels:
+  - dependency
+  - actions

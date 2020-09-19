@@ -32,4 +32,8 @@ class User < ApplicationRecord
   def to_param
     username
   end
+
+  def to_s
+    username
+  end
 end

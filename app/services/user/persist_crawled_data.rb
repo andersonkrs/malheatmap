@@ -19,16 +19,21 @@ class User
       user.history.visible_to_user_on_mal.delete_all
 
       crawled_data[:history].each do |entry|
-        item = find_or_create_item(entry)
+        item_id = upsert_item(entry)
 
-        user.entries.create!(item: item, amount: entry[:amount], timestamp: entry[:timestamp])
+        user.entries.create!(item_id: item_id, amount: entry[:amount], timestamp: entry[:timestamp])
       end
     end
 
-    def find_or_create_item(entry)
-      id, kind, name = entry.values_at(:item_id, :item_kind, :item_name)
+    def upsert_item(entry)
+      item_data = {
+        mal_id: entry[:item_id],
+        kind: entry[:item_kind],
+        name: entry[:item_name]
+      }
 
-      Item.create_or_find_by!(mal_id: id, kind: kind, name: name)
+      result = Item.upsert(item_data, unique_by: %i[mal_id kind])
+      result.first["id"]
     end
   end
 end

@@ -1,6 +1,6 @@
-:concurrency: 5
+:concurrency: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
 :queues:
-  - [low, 1]
-  - [default, 2]
+  - low
+  - default
   - active_storage_analysis
   - active_storage_purge
