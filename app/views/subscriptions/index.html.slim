@@ -14,7 +14,8 @@
       .column.is-three-quarters-desktop.is-half-fullhd.is-full-tablet.is-full-mobile
         = form_with model: @subscription, method: "post" do |form|
           .field.has-text-centered
-            label[for="username"] = t(".form_label_html")
+            = form.label :username do
+              = raw(@subscription.class.human_attribute_name(:username))
 
           .field.notifications-container
 

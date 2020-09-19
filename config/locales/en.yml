@@ -4,6 +4,11 @@ en:
     about: "About"
     faq: "FAQ"
     description: "MAL Heatmap is a tool for tracking your anime/manga consumption based on your myanimelist.net history."
+  activemodel:
+    attributes:
+      subscription_form:
+        username: |
+          Enter your <a target="_blank" rel="noopener noreferrer" href="https://myanimelist.net">MyAnimeList</a> profile:
   mal:
     crawler:
       errors:
@@ -11,10 +16,6 @@ en:
         communication_error: "A communication error with myanimelist.net has occurred. Please try again later"
   subscriptions:
     index:
-      validations:
-        already_subscribed: "User is already subscribed"
-      form_label_html: |
-        Enter your <a target="_blank" rel="noopener noreferrer" href="https://myanimelist.net">MyAnimeList</a> profile:
       username:
         placeholder: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs"
       subscribe: "Subscribe"
