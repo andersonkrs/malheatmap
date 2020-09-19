@@ -4,6 +4,7 @@ module Patterns
 
     included do
       include ActiveModel::Model
+      include ActiveModel::Attributes
       include ActiveModel::Validations::Callbacks
 
       def model_name
