@@ -52,4 +52,14 @@ class SubscriptionsTest < ApplicationSystemTestCase
     perform_enqueued_jobs
     assert_current_path user_path("animeisgood8")
   end
+
+  test "shows a hint when subscribing a user without entries" do
+    fill_in "username", with: "https://myanimelist.net/profile/jibaku"
+
+    click_on "Subscribe"
+    assert_text "Please wait..."
+
+    perform_enqueued_jobs
+    assert_text /does not have any activity yet/
+  end
 end

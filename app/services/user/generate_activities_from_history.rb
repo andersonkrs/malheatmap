@@ -42,7 +42,7 @@ class User
 
       ActiveRecord::Base.transaction do
         user.activities.delete_all
-        Activity.insert_all!(activities_data)
+        Activity.insert_all!(activities_data) if activities_data.present?
       end
     end
 

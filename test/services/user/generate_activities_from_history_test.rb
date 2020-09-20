@@ -128,5 +128,14 @@ class User
       assert_equal 1, activities.size
       assert_equal 25, activities.first.amount
     end
+
+    test "deletes all activities if the user does not have entries anymore" do
+      create(:activity, user: @user)
+
+      @service.call
+      @user.reload
+
+      assert_equal 0, activities.size
+    end
   end
 end
