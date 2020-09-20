@@ -34,7 +34,7 @@ class User
         updated_at: Time.zone.now
       }
 
-      result = Item.upsert(item_data, unique_by: %i[mal_id kind])
+      result = Item.upsert(item_data, unique_by: %i[mal_id kind]) # rubocop:disable Rails/SkipsModelValidations
       result.first["id"]
     end
   end
