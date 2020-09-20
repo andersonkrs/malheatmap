@@ -115,8 +115,8 @@ CREATE TABLE public.activities (
     item_id uuid NOT NULL,
     date date NOT NULL,
     amount integer NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
@@ -141,8 +141,8 @@ CREATE TABLE public.entries (
     "timestamp" timestamp without time zone NOT NULL,
     amount integer NOT NULL,
     user_id uuid NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     item_id uuid NOT NULL
 );
 
@@ -155,8 +155,8 @@ CREATE TABLE public.items (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     mal_id integer NOT NULL,
     name character varying NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     kind public.item_kind NOT NULL
 );
 
@@ -192,8 +192,8 @@ CREATE TABLE public.users (
     username character varying NOT NULL,
     avatar_url character varying,
     checksum character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
@@ -423,6 +423,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200329145233'),
 ('20200404024047'),
 ('20200603022918'),
-('20200619144433');
+('20200619144433'),
+('20200920150238');
 
 

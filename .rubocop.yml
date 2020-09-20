@@ -43,3 +43,6 @@ Layout/MultilineMethodCallIndentation:
 
 Naming/RescuedExceptionsVariableName:
   PreferredName: error
+
+Rails/SkipsModelValidations:
+  Enabled: false

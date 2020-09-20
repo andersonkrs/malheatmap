@@ -14,8 +14,9 @@ class User
     test "creates activity with current position if there's just one entry" do
       create(:entry, user: @user, timestamp: Date.new(2020, 1, 1), amount: 10)
 
+      @service.call
       assert_changes -> { activities.size }, from: 0, to: 1 do
-        @service.call
+        @user.reload
       end
 
       activity = activities.first
@@ -29,8 +30,9 @@ class User
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 1), amount: 10)
       end
 
+      @service.call
       assert_changes -> { activities.size }, from: 0, to: 1 do
-        @service.call
+        @user.reload
       end
 
       assert_equal 10, activities.first.amount
@@ -42,8 +44,9 @@ class User
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 2), amount: 15)
       end
 
+      @service.call
       assert_changes -> { activities.size }, from: 0, to: 2 do
-        @service.call
+        @user.reload
       end
 
       assert_equal 10, activities.first.amount
@@ -54,8 +57,9 @@ class User
       create(:entry, :manga, user: @user, timestamp: DateTime.new(2020, 1, 1, 12, 15), amount: 10)
       create(:entry, :anime, user: @user, timestamp: DateTime.new(2020, 1, 1, 13, 30), amount: 20)
 
+      @service.call
       assert_changes -> { activities.size }, from: 0, to: 2 do
-        @service.call
+        @user.reload
       end
 
       first_activity = activities.first
@@ -76,6 +80,7 @@ class User
 
       @service.call
 
+      @user.reload
       assert_equal 10, activities.first.amount
       assert_equal(-4, activities.second.amount)
     end
@@ -89,8 +94,10 @@ class User
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 7), amount: 26)
       end
 
+      @service.call
+
       assert_changes -> { activities.size }, from: 0, to: 3 do
-        @service.call
+        @user.reload
       end
 
       activity = activities.first
@@ -116,6 +123,7 @@ class User
       end
 
       @service.call
+      @user.reload
 
       assert_equal 1, activities.size
       assert_equal 25, activities.first.amount

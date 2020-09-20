@@ -29,12 +29,10 @@ class User
       item_data = {
         mal_id: entry[:item_id],
         kind: entry[:item_kind],
-        name: entry[:item_name],
-        created_at: Time.zone.now,
-        updated_at: Time.zone.now
+        name: entry[:item_name]
       }
 
-      result = Item.upsert(item_data, unique_by: %i[mal_id kind]) # rubocop:disable Rails/SkipsModelValidations
+      result = Item.upsert(item_data, unique_by: %i[mal_id kind])
       result.first["id"]
     end
   end
