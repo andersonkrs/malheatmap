@@ -5,7 +5,7 @@ class User
     delegate :user, to: :context
 
     before_call do
-      Rails.logger.info("Generating signature for user: #{user.username}")
+      Rails.logger.info("Generating signature for user: #{user}")
     end
 
     around_call do |block|

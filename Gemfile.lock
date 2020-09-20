@@ -131,6 +131,11 @@ GEM
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    lograge (0.11.2)
+      actionpack (>= 4)
+      activesupport (>= 4)
+      railties (>= 4)
+      request_store (~> 1.0)
     loofah (2.7.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -216,6 +221,8 @@ GEM
       ffi (~> 1.0)
     redis (4.2.2)
     regexp_parser (1.7.1)
+    request_store (1.5.0)
+      rack (>= 1.4)
     rexml (3.2.4)
     rollbar (3.0.0)
     rubocop (0.91.0)
@@ -342,6 +349,7 @@ DEPENDENCIES
   image_processing
   imatcher
   listen
+  lograge
   mechanize
   pg
   pry-byebug
