@@ -25,7 +25,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
     fill_in "username", with: "asdkkiok1i2k3io1k"
 
     click_on "Subscribe"
-    assert_text "Please wait..."
+    assert_text(/Please wait/)
 
     perform_enqueued_jobs
 
@@ -47,7 +47,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
     fill_in "username", with: "https://myanimelist.net/profile/animeisgood8"
 
     click_on "Subscribe"
-    assert_text "Please wait..."
+    assert_text(/Please wait/)
 
     perform_enqueued_jobs
     assert_current_path user_path("animeisgood8")
@@ -57,7 +57,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
     fill_in "username", with: "https://myanimelist.net/profile/jibaku"
 
     click_on "Subscribe"
-    assert_text "Please wait..."
+    assert_text(/Please wait/)
 
     perform_enqueued_jobs
     assert_text(/does not have any activity yet/)
