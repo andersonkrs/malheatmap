@@ -1,15 +1,18 @@
 import '../../assets/stylesheets/users.scss'
 
-document.addEventListener('click', (event) => {
-  if (event.target.matches('.copy-signature')) {
+document.addEventListener('turbolinks:load', function () {
+  document.querySelector('.copy-signature').onclick = function () {
     const input = document.querySelector('input.signature-input')
+    input.focus()
     input.select()
 
     document.execCommand('copy')
     window._paq.push(['trackEvent', 'User Profile', 'BB Code Copied'])
   }
 
-  if (event.target.matches('li.square > a')) {
-    window._paq.push(['trackEvent', 'User Profile', 'Calendar Navigation', event.target.href])
-  }
+  document.addEventListener('click', function (event) {
+    if (event.target.matches('li.square > a')) {
+      window._paq.push(['trackEvent', 'User Profile', 'Calendar Navigation', event.target.href])
+    }
+  })
 })
