@@ -42,6 +42,14 @@ The web app just displays the processed data and a set of jobs do the hard and d
 
 So, when the user subscribes to its profile to be tracked, a job will be triggered to check if the user exists on MAL and then crawl and process the data. While that, the UI will be connected to a channel awaiting a response from the job, once the job is completed, the user will be redirected to his page. After subscribing, a recurring job will repeat the crawling process daily to keep the user's data updated.
 
+<table>
+  <tr>
+    <td>
+      <img src=".github/subscription_demo.gif" alt="Subscription Demo" width="360" height="240">
+    </td> 
+  </tr>
+</table>
+
 #### Developing
 
 Requirements:
@@ -92,6 +100,7 @@ Auxiliary tools:
 * [Rollbar](https://rollbar.com/) for error monitoring
 * [Papertrail](https://www.papertrail.com/) for log management
 * [UptimeRobot](https://uptimerobot.com/) for uptime monitoring
+* [Matomo](https://matomo.org) for analytics
 * [Amazon S3](https://aws.amazon/com/s3) as storage service
 * [Sidekiq](https://sidekiq.org/) as background job adapter
 
