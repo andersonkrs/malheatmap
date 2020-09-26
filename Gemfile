@@ -41,8 +41,7 @@ group :test do
   gem "imatcher"
   gem "selenium-webdriver"
   gem "shoulda"
-  gem "simplecov", "~> 0.18", require: false # https://github.com/codeclimate/test-reporter/issues/413
-  gem "simplecov-cobertura", require: false
+  gem "simplecov", "~> 0.17.1", require: false # https://github.com/codeclimate/test-reporter/issues/413
   gem "vcr"
   gem "webdrivers"
   gem "webmock"

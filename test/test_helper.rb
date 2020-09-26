@@ -2,16 +2,9 @@ ENV["RAILS_ENV"] ||= "test"
 ENV["COVERAGE"] ||= "true"
 
 require "simplecov"
-require "simplecov-cobertura"
 
 if ENV["COVERAGE"] == "true"
-  SimpleCov.formatters = [
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::CoberturaFormatter
-  ]
-
   SimpleCov.use_merging true
-  SimpleCov.minimum_coverage 95
   SimpleCov.start do
     add_filter "config"
     add_filter "vendor"
