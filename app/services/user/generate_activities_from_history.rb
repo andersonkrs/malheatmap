@@ -27,14 +27,14 @@ class User
       end
     end
 
-    def generate_activity_from_entry(entry)
-      date = entry.timestamp.to_date
-      item = entry.item
+    def generate_activity_from_entry(current_entry)
+      date = current_entry.timestamp.to_date
+      item = current_entry.item
 
       activity = find_or_initialize_activity(date, item)
-      previous_entry = find_last_processed_entry(date, item) || entry
+      previous_entry = find_previous_processed_entry(date, item) || current_entry
 
-      calculate_activity_amount(activity, entry.amount, previous_entry.amount)
+      calculate_activity_amount(activity, current_entry.amount, previous_entry.amount)
     end
 
     def persist_activities
@@ -46,7 +46,7 @@ class User
       end
     end
 
-    def find_last_processed_entry(date, item)
+    def find_previous_processed_entry(date, item)
       @processed_entries
         .sort_by { |entry| [entry.timestamp, entry.amount, entry.created_at] }
         .find_all { |entry| entry.timestamp.to_date <= date && entry.item.id == item.id }
