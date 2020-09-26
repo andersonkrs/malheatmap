@@ -3,9 +3,9 @@
 </h1>
 
 <h4 align="center">
-  <a href="https://github.com/AndersonSKM/malheatmap"><img src="https://github.com/AndersonSKM/malheatmap/workflows/ci/badge.svg"/></a>
-  <a href="https://codeclimate.com/github/AndersonSKM/malheatmap/maintainability"><img src="https://api.codeclimate.com/v1/badges/73438b976e8c224d94f1/maintainability" /></a>
-  <a href="https://codeclimate.com/github/AndersonSKM/malheatmap/test_coverage"><img src="https://api.codeclimate.com/v1/badges/73438b976e8c224d94f1/test_coverage" /></a>
+  <a href="https://github.com/andersonkrs/malheatmap"><img src="https://github.com/andersonkrs/malheatmap/workflows/ci/badge.svg"/></a>
+  <a href="https://codeclimate.com/github/andersonkrs/malheatmap/maintainability"><img src="https://api.codeclimate.com/v1/badges/73438b976e8c224d94f1/maintainability" /></a>
+  <a href="https://codeclimate.com/github/andersonkrs/malheatmap/test_coverage"><img src="https://api.codeclimate.com/v1/badges/73438b976e8c224d94f1/test_coverage" /></a>
 </h4>
 
 <p align="center">
