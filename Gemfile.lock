@@ -362,7 +362,7 @@ DEPENDENCIES
   shoulda
   sidekiq
   sidekiq-scheduler
-  simplecov
+  simplecov (~> 0.18)
   simplecov-cobertura
   slim-rails
   spring

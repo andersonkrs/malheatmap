@@ -74,9 +74,11 @@ jobs:
       run: bin/rails test:system
 
     - name: Publish code coverage
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_REPORTER_ID }}
       run: |
         export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
-        ./cc-test-reporter after-build -r ${{ secrets.CODE_CLIMATE_REPORTER_ID }}
+        ./cc-test-reporter after-build
 
     - name: Upload failed tests screenshots
       uses: actions/upload-artifact@v1
