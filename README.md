@@ -4,6 +4,8 @@
 
 <h4 align="center">
   <a href="https://github.com/AndersonSKM/malheatmap"><img src="https://github.com/AndersonSKM/malheatmap/workflows/ci/badge.svg"/></a>
+  <a href="https://codeclimate.com/github/AndersonSKM/malheatmap/maintainability"><img src="https://api.codeclimate.com/v1/badges/73438b976e8c224d94f1/maintainability" /></a>
+  <a href="https://codeclimate.com/github/AndersonSKM/malheatmap/test_coverage"><img src="https://api.codeclimate.com/v1/badges/73438b976e8c224d94f1/test_coverage" /></a>
 </h4>
 
 <p align="center">
@@ -23,18 +25,18 @@
 
 ![Demo](.github/app-demo.png?raw=true "Demo")
 
-#### Motivation
-
-I've made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). Also, I want to try web scrapping with ruby and learn a little bit more about it.
-
-Also, this allowed me to test some gems, like [ViewComponent](https://github.com/github/view_component).
-
 #### Built with
 
 * [Ruby on Rails](https://rubyonrails.org/)
 * [PostgreSQL](https://www.postgresql.org/)
 * [Redis](https://redis.io/)
 * [Bulma CSS](https://bulma.io/)
+
+#### Motivation
+
+I've made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). Also, I want to try web scrapping with ruby and learn a little bit more about it.
+
+Also, this allowed me to test some gems, like [ViewComponent](https://github.com/github/view_component).
 
 #### How it works
 
