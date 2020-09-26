@@ -32,9 +32,9 @@ class User
       item = entry.item
 
       activity = find_or_initialize_activity(date, item)
-      last_entry = find_last_processed_entry(date, item) || entry
+      previous_entry = find_last_processed_entry(date, item) || entry
 
-      calculate_activity_amount(activity, entry.amount, last_entry.amount)
+      calculate_activity_amount(activity, entry.amount, previous_entry.amount)
     end
 
     def persist_activities
@@ -66,9 +66,9 @@ class User
       current_activity
     end
 
-    def calculate_activity_amount(activity, current_amount, last_amount)
-      if current_amount != last_amount
-        activity.amount += current_amount - last_amount
+    def calculate_activity_amount(activity, current_amount, previous_amount)
+      if current_amount != previous_amount
+        activity.amount += current_amount - previous_amount
       else
         activity.amount = current_amount
       end
