@@ -42,6 +42,10 @@ module ActiveSupport
         SimpleCov.result
       end
     end
+
+    teardown do
+      Rails.cache.clear
+    end
   end
 end
 

@@ -29,6 +29,18 @@ class User < ApplicationRecord
     end
   end
 
+  def self.cached_count
+    Rails.cache.fetch(cached_count_key, expires_in: 1.month) { count }
+  end
+
+  def self.reset_cached_count
+    Rails.cache.delete(cached_count_key)
+  end
+
+  def self.cached_count_key
+    "#{table_name}/count"
+  end
+
   def to_param
     username
   end
