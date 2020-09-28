@@ -1,4 +1,4 @@
 schedule_users_update:
-  every: "12h"
+  cron: "*/30 * * * *"
   class: "ScheduleUsersDataUpdateJob"
-  description: "Schedule users data update"
+  description: "Schedule users data update every 30 minutes"
