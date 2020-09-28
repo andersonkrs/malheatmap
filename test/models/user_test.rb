@@ -87,4 +87,22 @@ class UserTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "caches the record count" do
+    create_list(:user, 3)
+    assert_equal 3, User.cached_count
+
+    create_list(:user, 2)
+    assert_equal 3, User.cached_count
+  end
+
+  test "resets the cached record count" do
+    create(:user)
+    assert_equal 1, User.cached_count
+
+    create(:user)
+    User.reset_cached_count
+
+    assert_equal 2, User.cached_count
+  end
 end

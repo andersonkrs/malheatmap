@@ -16,6 +16,10 @@ en:
       username:
         placeholder: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs"
       subscribe: "Subscribe"
+      subscribed_users:
+        zero: "No subscribed users yet"
+        one: "One subscribed user!"
+        other: "%{count} subscribed users!"
     loader:
       wait: "Please wait. It can take a while to prepare your data..."
   users:

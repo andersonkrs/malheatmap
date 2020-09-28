@@ -24,6 +24,19 @@ class Subscription
       end
     end
 
+    test "resets users count cache when subscribes successfully" do
+      create_list(:user, 2)
+
+      result_mock = Minitest::Mock.new
+      result_mock.expect(:success?, true)
+
+      User::UpdateData.stub(:call, result_mock) do
+        assert_changes -> { User.cached_count }, from: 2, to: 3 do
+          @service.call
+        end
+      end
+    end
+
     test "broadcasts status error with error template when update service returns an error" do
       result_mock = Minitest::Mock.new
       result_mock.expect(:success?, false)

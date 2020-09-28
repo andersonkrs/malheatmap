@@ -2,9 +2,12 @@ require "test_helper"
 
 class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   test "returns success when get index" do
+    create_list(:user, 3)
+
     get subscriptions_url
 
     assert_response :success
+    assert_select "p", "3 subscribed users!"
   end
 
   test "enqueues the job when creating a valid subscription" do

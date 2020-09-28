@@ -10,6 +10,7 @@ class Subscription
       result = User::UpdateData.call(user: context.user)
 
       if result.success?
+        reset_caches
         context.response = { status: :success, redirect: user_path(context.user) }
       else
         rollback
@@ -35,6 +36,10 @@ class Subscription
 
     def render_error_notification(message)
       ApplicationController.render NotificationComponent.new(message: message)
+    end
+
+    def reset_caches
+      User.reset_cached_count
     end
   end
 end
