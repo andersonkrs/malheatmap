@@ -21,6 +21,13 @@ class User
             item_id: 5,
             item_name: "One Punch Man",
             item_kind: "anime"
+          },
+          {
+            timestamp: "2019-12-06T15:00:00",
+            amount: 4,
+            item_id: 5,
+            item_name: "One Punch Man",
+            item_kind: "anime"
           }
         ]
       }
@@ -33,12 +40,12 @@ class User
       @service.call
 
       assert_equal "http://dummy/avatar", @user.avatar_url
-      assert_equal 2, @user.entries.size
+      assert_equal 3, @user.entries.size
       assert_equal @checksum, @user.checksum
     end
 
     test "inserts all entries to user" do
-      assert_changes -> { @user.entries.count }, from: 0, to: 2 do
+      assert_changes -> { @user.entries.count }, from: 0, to: 3 do
         @service.call
       end
 
@@ -49,6 +56,13 @@ class User
       assert_equal 121, entry.mal_id
       assert_equal "Death Note", entry.name
       assert_equal "manga", entry.kind
+
+      entry = entries.second
+      assert_equal DateTime.new(2019, 12, 6, 15, 0, 0), entry.timestamp
+      assert_equal 4, entry.amount
+      assert_equal 5, entry.mal_id
+      assert_equal "One Punch Man", entry.name
+      assert_equal "anime", entry.kind
 
       entry = entries.last
       assert_equal DateTime.new(2019, 12, 6, 16, 11, 3), entry.timestamp
@@ -61,7 +75,7 @@ class User
     test "inserts just the new entries when user already has entries with more than 3 weeks" do
       create(:entry, user: @user, timestamp: 22.days.ago.in_time_zone)
 
-      assert_changes -> { @user.entries.count }, from: 1, to: 3 do
+      assert_changes -> { @user.entries.count }, from: 1, to: 4 do
         @service.call
       end
     end
