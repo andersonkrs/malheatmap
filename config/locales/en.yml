@@ -1,4 +1,11 @@
 en:
+  helpers:
+    submit:
+      subscription:
+        create: "Subscribe"
+    placeholder:
+      subscription:
+        username: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs"
   app:
     title: "MAL Heatmap"
     about: "About"
@@ -13,9 +20,6 @@ en:
     index:
       form_label_html: |
         Enter your <a target="_blank" rel="noopener noreferrer" href="https://myanimelist.net">MyAnimeList</a> profile:
-      username:
-        placeholder: "e.g. andersonkrs or https://myanimelist.net/profile/andersonkrs"
-      subscribe: "Subscribe"
       subscribed_users:
         zero: "No subscribed users yet"
         one: "One subscribed user!"
