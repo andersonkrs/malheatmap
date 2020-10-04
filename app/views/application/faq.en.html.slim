@@ -42,7 +42,20 @@
       p.mt-2
         |
           MAL caches images for a period, so it can take even 2 days to the updated image appear on MAL.
-      p.has-text-weight-bold.mt-3 = "What is the timezone used?"
+      p.has-text-weight-bold.mt-3 = "What is the time zone used?"
       p.mt-2
         |
-          All dates and timestamps are in UTC.
+          Currently, we use the user's location through the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database to determine its time zone. Whether the location is not set or invalid,
+          we are going to use UTC as default.
+      p.mt-1
+        |
+          If you want to have your activities dates 100% correct, make sure that you have a valid location in your profile.
+          Unfortunately, there's no way for MAL Heatmap to get the user's time zone through the public data on its profile, this information is private,
+          only accessible by the user itself.
+      p.mt-1
+        |
+          All this is to ensure consistency between your MAL history and your activities on MAL Heatmap since MAL displays history dates relative to the user's time zone.<br>
+          So, when you have some entry in your MAL history like: <strong>5 hours ago</strong>, we will use the current time on the user's time zone to calculate the corresponding date.
+      p.mt-1
+        |
+          The calendar range is also calculated using the time zone.

@@ -1,9 +1,15 @@
 class User < ApplicationRecord
   has_one_attached :signature
 
+  validates :time_zone, presence: true
+  validates :latitude, numericality: true, allow_nil: true
+  validates :longitude, numericality: true, allow_nil: true
+
   has_many :entries, dependent: :delete_all, inverse_of: :user do
     def visible_to_user_on_mal
-      where("timestamp >= ?", MAL::USER_HISTORY_VISIBILITY_PERIOD.ago.at_beginning_of_day.in_time_zone)
+      history_limit_date = (MAL::USER_HISTORY_VISIBILITY_PERIOD - 1.day).ago.at_beginning_of_day
+
+      where(Entry.arel_table[:timestamp].gteq(history_limit_date))
     end
   end
 

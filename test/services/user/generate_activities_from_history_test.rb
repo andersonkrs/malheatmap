@@ -14,7 +14,7 @@ class User
     test "creates activity with current position if there's just one entry" do
       create(:entry, user: @user, timestamp: Date.new(2020, 1, 1), amount: 10)
 
-      @service.call
+      @service.call!
       assert_changes -> { activities.size }, from: 0, to: 1 do
         @user.reload
       end
@@ -30,7 +30,7 @@ class User
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 1), amount: 10)
       end
 
-      @service.call
+      @service.call!
       assert_changes -> { activities.size }, from: 0, to: 1 do
         @user.reload
       end
@@ -44,7 +44,7 @@ class User
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 2), amount: 15)
       end
 
-      @service.call
+      @service.call!
       assert_changes -> { activities.size }, from: 0, to: 2 do
         @user.reload
       end
@@ -57,7 +57,7 @@ class User
       create(:entry, :manga, user: @user, timestamp: DateTime.new(2020, 1, 1, 12, 15), amount: 10)
       create(:entry, :anime, user: @user, timestamp: DateTime.new(2020, 1, 1, 13, 30), amount: 20)
 
-      @service.call
+      @service.call!
       assert_changes -> { activities.size }, from: 0, to: 2 do
         @user.reload
       end
@@ -78,7 +78,7 @@ class User
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 2), amount: 6)
       end
 
-      @service.call
+      @service.call!
 
       @user.reload
       assert_equal 10, activities.first.amount
@@ -94,7 +94,7 @@ class User
         create(:entry, item: item, user: @user, timestamp: Date.new(2020, 1, 7), amount: 26)
       end
 
-      @service.call
+      @service.call!
 
       assert_changes -> { activities.size }, from: 0, to: 3 do
         @user.reload
@@ -122,7 +122,7 @@ class User
         create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 7, 25, 14, 16), amount: 1)
       end
 
-      @service.call
+      @service.call!
       @user.reload
 
       assert_equal 1, activities.size
@@ -132,10 +132,20 @@ class User
     test "deletes all activities if the user does not have entries anymore" do
       create(:activity, user: @user)
 
-      @service.call
+      @service.call!
       @user.reload
 
       assert_equal 0, activities.size
+    end
+
+    test "generates activities based on user time zone" do
+      @user.update!(time_zone: "Australia/Adelaide")
+      create(:entry, user: @user, timestamp: Time.find_zone(@user.time_zone).local(2020, 4, 10, 5))
+
+      @service.call!
+      @user.reload
+
+      assert_equal Date.new(2020, 4, 10), activities.first.date
     end
   end
 end

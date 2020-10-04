@@ -7,12 +7,18 @@ class User
       @processed_activities = []
     end
 
+    around_call :switch_to_user_time_zone
+
     def call
       generate_activities_per_day
       persist_activities
     end
 
     private
+
+    def switch_to_user_time_zone(&block)
+      Time.use_zone(user.time_zone) { block.call }
+    end
 
     def generate_activities_per_day
       entries = user

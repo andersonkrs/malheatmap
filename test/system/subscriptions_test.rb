@@ -14,7 +14,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
   end
 
   test "shows invalid username notification when submitting invalid username format" do
-    fill_in "username", with: "/ $ anns2!"
+    fill_in "subscription[username]", with: "/ $ anns2!"
 
     click_on "Subscribe"
 
@@ -22,7 +22,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
   end
 
   test "shows profile not found notification when submitting invalid username" do
-    fill_in "username", with: "asdkkiok1i2k3io1k"
+    fill_in "subscription[username]", with: "asdkkiok1i2k3io1k"
 
     click_on "Subscribe"
     assert_text(/Please wait/)
@@ -36,7 +36,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
 
   test "redirects to user profile when username is already subscribed" do
     user = create(:user)
-    fill_in "username", with: user.username
+    fill_in "subscription[username]", with: user.username
 
     click_on "Subscribe"
 
@@ -44,7 +44,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
   end
 
   test "redirects to user profile when username is valid but not subscribed yet" do
-    fill_in "username", with: "https://myanimelist.net/profile/animeisgood8"
+    fill_in "subscription[username]", with: "https://myanimelist.net/profile/animeisgood8"
 
     click_on "Subscribe"
     assert_text(/Please wait/)
@@ -54,7 +54,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
   end
 
   test "shows a hint when subscribing a user without entries" do
-    fill_in "username", with: "https://myanimelist.net/profile/jibaku"
+    fill_in "subscription[username]", with: "https://myanimelist.net/profile/jibaku"
 
     click_on "Subscribe"
     assert_text(/Please wait/)

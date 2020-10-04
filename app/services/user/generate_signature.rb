@@ -11,7 +11,8 @@ class User
     around_call do |block|
       Tempfile.create(%w[signature .html], Rails.root.join("tmp")) do |tempfile|
         @tempfile = tempfile
-        block.call
+
+        Time.use_zone(user.time_zone) { block.call }
       end
     end
 

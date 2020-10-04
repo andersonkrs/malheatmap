@@ -18,10 +18,12 @@ class User
       create(:activity, user: @user, amount: 8, date: Date.new(2019, 8, 7))
       create(:activity, user: @user, amount: 7, date: Date.new(2019, 7, 26))
       create(:activity, user: @user, amount: 5, date: Date.new(2019, 6, 30))
+
+      @service = GenerateSignature.set(user: @user)
     end
 
     test "generates user signature correctly using current date" do
-      GenerateSignature.call!(user: @user)
+      @service.call!
 
       assert @user.signature.attached?
       @user.signature.blob.open do |file|

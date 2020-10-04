@@ -193,7 +193,11 @@ CREATE TABLE public.users (
     avatar_url character varying,
     checksum character varying,
     created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+    updated_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    location character varying,
+    time_zone character varying DEFAULT 'UTC'::character varying NOT NULL,
+    latitude double precision,
+    longitude double precision
 );
 
 
@@ -424,6 +428,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200404024047'),
 ('20200603022918'),
 ('20200619144433'),
-('20200920150238');
+('20200920150238'),
+('20201002030547');
 
 
