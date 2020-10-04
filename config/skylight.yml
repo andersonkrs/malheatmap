@@ -1,3 +1,4 @@
 authentication: <%= Rails.application.credentials.skylight_token %>
+enable_sidekiq: true
 ignored_endpoints:
   - HealthCheckController#index
