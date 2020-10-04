@@ -129,7 +129,6 @@ GEM
     imatcher (0.1.9)
       chunky_png (~> 1.3.5)
     jmespath (1.4.0)
-    json (2.3.1)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -269,11 +268,10 @@ GEM
       sidekiq (>= 3)
       thwait
       tilt (>= 1.4.0)
-    simplecov (0.17.1)
+    simplecov (0.19.0)
       docile (~> 1.1)
-      json (>= 1.8, < 3)
-      simplecov-html (~> 0.10.0)
-    simplecov-html (0.10.2)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.3)
     skylight (4.3.1)
       skylight-core (= 4.3.1)
     skylight-core (4.3.1)
@@ -369,7 +367,7 @@ DEPENDENCIES
   shoulda
   sidekiq
   sidekiq-scheduler
-  simplecov (~> 0.17.1)
+  simplecov (~> 0.19.0)
   skylight
   slim-rails
   spring
