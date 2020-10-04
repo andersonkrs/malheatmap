@@ -5,13 +5,14 @@ class User
     setup do
       @user = build(:user)
       @crawler_mock = Minitest::Mock.new
-      @service = CrawlData.set(crawler: @crawler_mock)
+      @service = CrawlData.set(user: @user, crawler: @crawler_mock)
     end
 
     test "returns crawled data and its checksum" do
       crawled_data = {
         profile: {
-          avatar_url: "http://dummy/avatar"
+          avatar_url: "http://dummy/avatar",
+          location: "Jakarta"
         },
         history: [
           {
@@ -25,12 +26,12 @@ class User
       }
       @crawler_mock.expect(:crawl, crawled_data)
 
-      result = @service.call(user: @user)
+      result = @service.call
       @crawler_mock.verify
 
       assert result.success?
       assert_equal crawled_data, result.crawled_data
-      assert result.checksum
+      assert result.checksum.present?
     end
 
     test "returns error message wen crawl fails" do
@@ -39,7 +40,7 @@ class User
         raise MAL::Errors::CrawlError, error_message
       end
 
-      result = @service.call(user: @user)
+      result = @service.call
       @crawler_mock.verify
 
       assert result.failure?

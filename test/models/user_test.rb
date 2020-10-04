@@ -9,6 +9,12 @@ class UserTest < ActiveSupport::TestCase
   context "validations" do
     should_not validate_presence_of(:avatar_url)
     should_not validate_presence_of(:checksum)
+    should validate_presence_of(:time_zone)
+    should_not validate_presence_of(:latitude)
+    should_not validate_presence_of(:longitude)
+
+    should validate_numericality_of(:latitude).allow_nil
+    should validate_numericality_of(:longitude).allow_nil
   end
 
   class ActivitiesScopesTest
@@ -72,12 +78,14 @@ class UserTest < ActiveSupport::TestCase
   class EntriesScopesTest
     class VisibleToUserOnMalTest < ActiveSupport::TestCase
       setup do
-        @user = create(:user)
+        @user = create(:user, time_zone: "America/Sao_Paulo")
+
+        travel_to Time.find_zone(@user.time_zone).local(2020, 3, 10, 22, 20)
       end
 
-      test "returns entries from the last three weeks" do
+      test "returns entries from the last twenty days" do
         create(:entry)
-        create(:entry, user: @user, timestamp: 22.days.ago)
+        create(:entry, user: @user, timestamp: 21.days.ago)
         entry1 = create(:entry, user: @user, timestamp: 2.days.ago)
         entry2 = create(:entry, user: @user, timestamp: 5.days.ago)
 

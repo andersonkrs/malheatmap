@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
   helper MAL::URLS
 
-  before_action :set_user, only: :show
-  before_action :set_user_years, only: :show
-  before_action :set_selected_year, only: :show
+  before_action :set_user
+  before_action :set_user_years
+  before_action :set_selected_year
+
+  around_action :switch_to_user_time_zone
 
   def show
     @date_range = Calendar::CalculateDateRange.call(year: @selected_year).range
@@ -24,7 +26,11 @@ class UsersController < ApplicationController
     @selected_year = if @years.include?(params[:year].to_i)
                        params[:year].to_i
                      else
-                       Time.zone.today.year
+                       Time.find_zone(@user.time_zone).today.year
                      end
+  end
+
+  def switch_to_user_time_zone(&block)
+    Time.use_zone(@user.time_zone) { block.call }
   end
 end

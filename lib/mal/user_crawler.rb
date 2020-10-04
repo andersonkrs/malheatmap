@@ -30,11 +30,11 @@ module MAL
 
       self.history_added = proc { sleep config[:requests_interval] }
       self.open_timeout = config[:timeout]
-      self.read_timeout = open_timeout
+      self.read_timeout = config[:timeout]
     end
 
     def crawl_profile
-      get profile_url(@username)
+      get(profile_url(@username))
 
       @response[:profile] = Parsers::Profile.new(page).parse
     end
@@ -42,24 +42,14 @@ module MAL
     def crawl_history
       page.link_with(text: "History").click
 
-      fetch_history(:anime)
-      fetch_history(:manga)
+      crawl_history_kind(:anime)
+      crawl_history_kind(:manga)
     end
 
-    def fetch_history(kind)
+    def crawl_history_kind(kind)
       page.link_with(text: "#{kind.capitalize} History").click
-      return if private_history?
 
-      page.xpath("//tr[td[@class='borderClass']]").each do |row|
-        entry = Parsers::Entry.new(row).parse
-        entry[:item_kind] = kind
-
-        @response[:history] << entry
-      end
-    end
-
-    def private_history?
-      page.at_xpath("//div[@class='badresult']").present?
+      @response[:history] += Parsers::History.new(page, kind: kind).parse
     end
 
     def handle_response_code_error(response_code, message)

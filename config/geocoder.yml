@@ -1,0 +1,11 @@
+development:
+  lookup: :nominatim
+  http_headers:
+    "User-Agent": "https://malheatmap.com"
+
+production:
+  lookup: :opencagedata
+  api_key: <%= Rails.application.credentials.opencage[:api_key] %>
+
+test:
+  lookup: :test

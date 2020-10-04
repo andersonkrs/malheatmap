@@ -21,7 +21,7 @@ class User
         assert_equal({ success: true, message: "OK" }, result)
       end
 
-      assert mocked_result.verify
+      mocked_result.verify
     end
   end
 end

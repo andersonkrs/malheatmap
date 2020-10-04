@@ -33,7 +33,7 @@ class User
       item_id = find_processed_item_id(item_data)
       item_id ||= upsert_item(item_data)
 
-      user.entries.create!(item_id: item_id, amount: entry[:amount], timestamp: entry[:timestamp])
+      user.entries.create!(item_id: item_id, amount: entry[:amount], timestamp: convert_timestamp(entry[:timestamp]))
     end
 
     def map_item_from_entry(entry)
@@ -53,6 +53,15 @@ class User
 
       result.first["id"].tap do |item_id|
         @processed_items[item_id] = item_data
+      end
+    end
+
+    def convert_timestamp(natural_timestamp)
+      Time.use_zone(user.time_zone) do
+        Chronic
+          .parse(natural_timestamp, context: :past, now: Time.zone.now)
+          .change(sec: 0, usec: 0, offset: Time.zone.formatted_offset)
+          .utc
       end
     end
   end

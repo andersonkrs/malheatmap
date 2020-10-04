@@ -3,21 +3,25 @@ require "test_helper"
 class UserCrawlerTest < ActiveSupport::TestCase
   include VCRCassettes
 
-  test "returns user profile info" do
+  test "returns user profile info with geolocation and history" do
     crawler = MAL::UserCrawler.new("andersonkrs")
     result = crawler.crawl
 
     assert_equal(
-      { avatar_url: "https://cdn.myanimelist.net/images/userimages/7868083.jpg?t=1582993800" },
+      {
+        location: "Sorocaba, Brazil",
+        avatar_url: "https://cdn.myanimelist.net/images/userimages/7868083.jpg?t=1601605800"
+      },
       result[:profile]
     )
-  end
 
-  test "returns all entries when user has history" do
-    crawler = MAL::UserCrawler.new("andersonkrs")
-    result = crawler.crawl
+    assert_equal 10, result[:history].size
 
-    assert_equal 5, result[:history].size
+    entry = result[:history].first
+    assert_equal "Sep 21, 7:33 PM", entry[:timestamp]
+    assert_equal 39_597, entry[:item_id]
+    assert_equal "Sword Art Online: Alicization - War of Underworld", entry[:item_name]
+    assert_equal 9, entry[:amount]
   end
 
   test "returns no entries when user does not have history" do
