@@ -23,7 +23,7 @@ class HealthCheckControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :service_unavailable
-    assert process_mock.verify
+    process_mock.verify
   end
 
   test "returns ok if sidekiq is up" do
@@ -35,6 +35,6 @@ class HealthCheckControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :ok
-    assert process_mock.verify
+    process_mock.verify
   end
 end

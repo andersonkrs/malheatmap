@@ -52,6 +52,19 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
+    test "renders the calendar range respecting the user time zone" do
+      @user.update!(time_zone: "America/Sao_Paulo")
+
+      travel_to Time.zone.local(2020, 10, 4, 2)
+
+      get user_url(@user)
+
+      assert_select ".calendar > .squares > .square" do |elements|
+        assert_equal "2020-10-03", elements.last.attr("data-date")
+        assert_equal "2019-09-29", elements.first.attr("data-date")
+      end
+    end
+
     test "renders calendar legend correctly" do
       get user_url(@user)
 
@@ -67,7 +80,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       get user_url(@user)
 
       assert_select ".timeline", 0
-      assert_select ".yarns-menu", 0
+      assert_select ".years-menu", 0
       assert_select "p", /#{@user.username} does not have any activity yet/
     end
 

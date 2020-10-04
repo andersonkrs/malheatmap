@@ -83,16 +83,16 @@ module Patterns
     end
 
     class_methods do
-      def before_call(&block)
-        set_callback(:call, :before, &block)
+      def before_call(*filters, &block)
+        set_callback(:call, :before, *filters, &block)
       end
 
-      def after_call(&block)
-        set_callback(:call, :after, &block)
+      def after_call(*filters, &block)
+        set_callback(:call, :after, *filters, &block)
       end
 
-      def around_call(&block)
-        set_callback(:call, :around, &block)
+      def around_call(*filters, &block)
+        set_callback(:call, :around, *filters, &block)
       end
 
       def ensure_call(&block)

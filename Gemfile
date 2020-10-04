@@ -6,6 +6,7 @@ ruby File.read(".ruby-version")
 gem "aws-sdk-s3", require: false
 gem "bootsnap", require: false
 gem "chronic"
+gem "geocoder"
 gem "image_processing"
 gem "lograge"
 gem "mechanize"
@@ -19,6 +20,7 @@ gem "slim-rails"
 gem "turbolinks"
 gem "view_component"
 gem "webpacker"
+gem "wheretz"
 
 group :development, :test do
   gem "factory_bot_rails"

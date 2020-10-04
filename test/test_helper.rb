@@ -29,7 +29,6 @@ module ActiveSupport
     include ActiveJob::TestHelper
     include ActionCable::TestHelper
     include FactoryBot::Syntax::Methods
-    include MechanizeTestHelper
 
     parallelize
 
