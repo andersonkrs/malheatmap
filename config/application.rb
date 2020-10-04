@@ -40,5 +40,7 @@ module MalHeatmap
     config.crawler = config_for(:crawler)
     config.analytics = config_for(:analytics)
     config.geocoder = config_for(:geocoder)
+
+    config.skylight.probes += %w(redis)
   end
 end

@@ -274,6 +274,10 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    skylight (4.3.1)
+      skylight-core (= 4.3.1)
+    skylight-core (4.3.1)
+      activesupport (>= 4.2.0)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -366,6 +370,7 @@ DEPENDENCIES
   sidekiq
   sidekiq-scheduler
   simplecov (~> 0.17.1)
+  skylight
   slim-rails
   spring
   spring-watcher-listen
