@@ -11,7 +11,7 @@ class User
         crawled_data[:profile].merge!(
           latitude: geodata.latitude,
           longitude: geodata.longitude,
-          time_zone: WhereTZ.lookup(*geodata.coordinates)
+          time_zone: time_zone_for(*geodata.coordinates)
         )
       end
 
@@ -28,6 +28,11 @@ class User
 
     def location
       crawled_data.dig(:profile, :location)
+    end
+
+    def time_zone_for(lat, long)
+      results = [WhereTZ.lookup(lat, long)].flatten.compact
+      results.first
     end
   end
 end
