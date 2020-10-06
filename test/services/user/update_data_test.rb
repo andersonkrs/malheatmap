@@ -48,21 +48,27 @@ class User
       end
     end
 
-    test "updates user updated at even if the checksum dit not change" do
+    test "updates signature if the user checksum changed" do
+      attach_user_signature
+
+      assert_changes(-> { @user.signature.blob.created_at }) { @service.call! }
+    end
+
+    test "updates signature if the checksum dit not change but the last signature date changed" do
+      attach_user_signature
+
+      travel_to Time.zone.tomorrow
+
       OpenSSL::Digest::MD5.stub(:hexdigest, @user.checksum) do
-        assert_changes -> { @user.updated_at } do
-          @service.call!
-          @user.reload
-        end
+        assert_changes(-> { @user.signature.blob.created_at }) { @service.call! }
       end
     end
 
-    test "generates signature even if the checksum did not change" do
+    test "does not update signature if checksum did not change and the blob was generated on the current date" do
+      attach_user_signature
+
       OpenSSL::Digest::MD5.stub(:hexdigest, @user.checksum) do
-        assert_changes -> { @user.signature.attached? }, from: false, to: true do
-          @service.call!
-          @user.reload
-        end
+        assert_no_changes(-> { @user.signature.blob.created_at }) { @service.call! }
       end
     end
 
@@ -72,6 +78,13 @@ class User
 
       assert result.failure?
       assert result.message.present?
+    end
+
+    private
+
+    def attach_user_signature
+      @user.signature.attach(io: File.open(file_fixture("user_signature.png")),
+                             filename: "#{@user.username}.png")
     end
   end
 end

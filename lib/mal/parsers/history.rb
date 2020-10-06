@@ -26,7 +26,7 @@ module MAL
           amount: row.at_xpath(".//td[1]/strong").text.to_i,
           item_id: extract_item_id(row),
           item_name: row.at_xpath(".//td[1]/a").text,
-          item_kind: @kind
+          item_kind: @kind.to_s
         }
       end
 
