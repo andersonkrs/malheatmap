@@ -21,7 +21,7 @@ jobs:
       run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
     - name: Checkout code
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2.3.3
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
@@ -99,7 +99,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.3.3
       with:
         fetch-depth: 0
 
