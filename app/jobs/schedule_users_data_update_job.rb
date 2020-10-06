@@ -4,9 +4,9 @@ class ScheduleUsersDataUpdateJob < ApplicationJob
   def perform
     Rails.logger.info "Updating users data"
 
-    users = users_have_not_been_updated(at_least: 8.hours)
+    users = users_have_not_been_updated(at_least: 4.hours)
     users.each do |user|
-      User::UpdateDataJob.set(wait: 5.seconds).perform_later(user)
+      User::UpdateDataJob.perform_later(user)
     end
   end
 
@@ -16,7 +16,7 @@ class ScheduleUsersDataUpdateJob < ApplicationJob
     User
       .where(User.arel_table[:updated_at].lteq(at_least.ago))
       .order(:updated_at)
-      .limit(50)
+      .limit(100)
       .select(:id)
       .shuffle
   end

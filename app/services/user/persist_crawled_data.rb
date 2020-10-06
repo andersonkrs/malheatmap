@@ -2,10 +2,6 @@ class User
   class PersistCrawledData < ApplicationService
     delegate :user, :crawled_data, :checksum, to: :context
 
-    before_call do
-      @processed_items = {}
-    end
-
     def call
       ActiveRecord::Base.transaction do
         update_profile_data
@@ -20,43 +16,47 @@ class User
     end
 
     def update_recent_history
+      return if crawled_data[:history].empty?
+
       user.history.visible_to_user_on_mal.delete_all
+      save_items
+      insert_entries
+    end
 
-      crawled_data[:history].each do |entry|
-        insert_entry(entry)
+    def save_items
+      items = crawled_data[:history].map do |entry|
+        {
+          mal_id: entry[:item_id],
+          kind: entry[:item_kind],
+          name: entry[:item_name]
+        }
+      end.uniq
+
+      @saved_items = Item.upsert_all(items, unique_by: %i[mal_id kind], returning: %i[id name mal_id kind])
+      @saved_items.each(&:symbolize_keys!)
+    end
+
+    def insert_entries
+      entries = crawled_data[:history].map do |entry|
+        {
+          user_id: user.id,
+          item_id: item_id_for_entry(entry),
+          amount: entry[:amount],
+          timestamp: convert_natural_timestamp(entry[:timestamp])
+        }
       end
+
+      Entry.insert_all(entries)
     end
 
-    def insert_entry(entry)
-      item_data = map_item_from_entry(entry)
-
-      item_id = find_processed_item_id(item_data)
-      item_id ||= upsert_item(item_data)
-
-      user.entries.create!(item_id: item_id, amount: entry[:amount], timestamp: convert_timestamp(entry[:timestamp]))
-    end
-
-    def map_item_from_entry(entry)
-      {
-        mal_id: entry[:item_id],
-        kind: entry[:item_kind],
-        name: entry[:item_name]
-      }
-    end
-
-    def find_processed_item_id(item_data)
-      @processed_items.key(item_data)
-    end
-
-    def upsert_item(item_data)
-      result = Item.upsert(item_data, unique_by: %i[mal_id kind])
-
-      result.first["id"].tap do |item_id|
-        @processed_items[item_id] = item_data
+    def item_id_for_entry(entry)
+      item = @saved_items.find do |saved_item|
+        saved_item.values_at(:mal_id, :kind) == entry.values_at(:item_id, :item_kind)
       end
+      item[:id]
     end
 
-    def convert_timestamp(natural_timestamp)
+    def convert_natural_timestamp(natural_timestamp)
       Time.use_zone(user.time_zone) do
         Chronic
           .parse(natural_timestamp, context: :past, now: Time.zone.now)

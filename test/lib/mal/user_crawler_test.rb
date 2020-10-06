@@ -20,6 +20,7 @@ class UserCrawlerTest < ActiveSupport::TestCase
     entry = result[:history].first
     assert_equal "Sep 21, 7:33 PM", entry[:timestamp]
     assert_equal 39_597, entry[:item_id]
+    assert_equal "anime", entry[:item_kind]
     assert_equal "Sword Art Online: Alicization - War of Underworld", entry[:item_name]
     assert_equal 9, entry[:amount]
   end

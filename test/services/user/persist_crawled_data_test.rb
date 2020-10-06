@@ -44,7 +44,7 @@ class User
     end
 
     test "updates profile data and checksum" do
-      @service.call
+      @service.call!
 
       assert_equal "http://dummy/avatar", @user.avatar_url
       assert_equal "Adelaide, Australia", @user.location
@@ -57,7 +57,7 @@ class User
 
     test "inserts all entries to user" do
       assert_changes -> { @user.entries.count }, from: 0, to: 3 do
-        @service.call
+        @service.call!
       end
 
       entries = @user.entries.order(timestamp: :desc)
@@ -87,7 +87,16 @@ class User
       create(:entry, user: @user, timestamp: 21.days.ago)
 
       assert_changes -> { @user.entries.count }, from: 1, to: 4 do
-        @service.call
+        @service.call!
+      end
+    end
+
+    test "does not dele user entries if just the profile changed" do
+      @data[:history] = []
+      create(:entry, user: @user, timestamp: 5.days.ago)
+
+      assert_no_changes -> { @user.entries.count } do
+        @service.call!
       end
     end
   end

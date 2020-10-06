@@ -1,13 +1,16 @@
 class SubscriptionsController < ApplicationController
   def index
-    @subscription = SubscriptionForm.new
+    @subscription = Subscription.new
   end
 
   def create
-    @subscription = SubscriptionForm.new(subscription_params)
-    @subscription.save
+    @subscription = Subscription.new(subscription_params)
 
-    redirect_to_user_page if user_already_subscribed?
+    if @subscription.save
+      enqueue_process_job
+    elsif user_already_subscribed?
+      redirect_to_user_page
+    end
   end
 
   private
@@ -22,5 +25,11 @@ class SubscriptionsController < ApplicationController
 
   def redirect_to_user_page
     redirect_to(user_path(@subscription.username), turbolinks: :advance)
+  end
+
+  def enqueue_process_job
+    response_delay_threshold = 2.seconds
+
+    Subscription::ProcessJob.set(wait: response_delay_threshold).perform_later(@subscription)
   end
 end
