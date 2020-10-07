@@ -71,4 +71,11 @@ Rollbar.configure do |config|
   config.custom_data_method = lambda { |_message, exception, _context|
     exception.try(:context).to_h || {}
   }
+
+  config.exception_level_filters.merge!({
+                                          "ActionController::RoutingError" => "ignore",
+                                          "ActionDispatch::Http::Parameters::ParseError" => "ignore",
+                                          "ActionController::UnknownHttpMethod" => "ignore",
+                                          "ActionController::UnknownFormat" => "ignore"
+                                        })
 end

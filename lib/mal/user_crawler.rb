@@ -4,6 +4,13 @@ module MAL
   class UserCrawler < Mechanize
     include URLS
 
+    INTERNAL_COMMUNICATION_ERRORS = [
+      Mechanize::ResponseReadError,
+      Mechanize::RedirectLimitReachedError,
+      Net::ReadTimeout,
+      Net::OpenTimeout
+    ].freeze
+
     def initialize(username)
       super
       @username = username
@@ -19,7 +26,7 @@ module MAL
       @response
     rescue Mechanize::ResponseCodeError => error
       handle_response_code_error(error.response_code.to_i, error.message)
-    rescue Mechanize::ResponseReadError, Mechanize::RedirectLimitReachedError
+    rescue *INTERNAL_COMMUNICATION_ERRORS
       raise Errors::CommunicationError
     end
 
