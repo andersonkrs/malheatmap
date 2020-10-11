@@ -8,7 +8,8 @@ module MAL
       Mechanize::ResponseReadError,
       Mechanize::RedirectLimitReachedError,
       Net::ReadTimeout,
-      Net::OpenTimeout
+      Net::OpenTimeout,
+      OpenSSL::SSL::SSLError
     ].freeze
 
     def initialize(username)

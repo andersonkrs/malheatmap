@@ -5,7 +5,7 @@ class User
     def perform(user)
       result = User::UpdateData.call(user: user)
 
-      Rails.logger.warn(result.message) if result.failur
+      Rails.logger.warn(result.message) if result.failure?
     end
   end
 end
