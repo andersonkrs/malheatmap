@@ -4,10 +4,6 @@ class User
   class GenerateSignature < ApplicationService
     delegate :user, to: :context
 
-    before_call do
-      Rails.logger.info("Generating signature for user: #{user}")
-    end
-
     around_call do |block|
       Tempfile.create(%w[signature .html], Rails.root.join("tmp")) do |tempfile|
         @tempfile = tempfile

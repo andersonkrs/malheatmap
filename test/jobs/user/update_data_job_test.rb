@@ -8,8 +8,7 @@ class User
 
     test "calls update data service with given user" do
       mocked_result = Minitest::Mock.new
-      mocked_result.expect(:success?, true)
-      mocked_result.expect(:message, "OK")
+      mocked_result.expect(:failure?, false)
 
       mocked_call = lambda do |user:|
         assert_equal user, @user
@@ -17,8 +16,7 @@ class User
       end
 
       User::UpdateData.stub(:call, mocked_call) do
-        result = User::UpdateDataJob.perform_now(@user)
-        assert_equal({ success: true, message: "OK" }, result)
+        User::UpdateDataJob.perform_now(@user)
       end
 
       mocked_result.verify
