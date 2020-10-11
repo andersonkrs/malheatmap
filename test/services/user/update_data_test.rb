@@ -42,9 +42,11 @@ class User
     test "does not update user location if it did not change" do
       @user.update!(location: "Bandung, West Java, Indonesia")
 
-      assert_no_changes -> { @user.attributes.slice(:latitude, :longitude, :time_zone) } do
-        @service.call
-        @user.reload
+      OpenSSL::Digest::MD5.stub(:hexdigest, @user.checksum) do
+        assert_no_changes -> { @user.attributes.slice("latitude", "longitude", "time_zone") } do
+          @service.call
+          @user.reload
+        end
       end
     end
 

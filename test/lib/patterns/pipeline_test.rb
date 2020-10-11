@@ -31,6 +31,22 @@ module Patterns
       end
     end
 
+    class ServiceWithBlocksSteps
+      include Patterns::Pipeline
+
+      before_call do
+        context.steps = []
+      end
+
+      step do
+        context.steps << 1
+      end
+
+      step do
+        context.steps << 2
+      end
+    end
+
     test "calls each service and returns final context as result" do
       context = PipelineService.call(number_1: 100, number_2: 10)
 
@@ -50,6 +66,13 @@ module Patterns
 
       assert context.failure?
       assert_equal "Failure", context.message
+    end
+
+    test "should accepts blocks as steps and execute them correctly" do
+      context = ServiceWithBlocksSteps.call
+
+      assert context.success?
+      assert_equal [1, 2], context.steps
     end
   end
 end
