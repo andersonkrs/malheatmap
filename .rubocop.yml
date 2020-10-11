@@ -20,20 +20,13 @@ Style/Documentation:
   Enabled: false
 
 Metrics/ClassLength:
-  Exclude:
-    - spec/**/*
-    - test/**/*
+  Enabled: false
 
 Metrics/BlockLength:
-  Exclude:
-    - config/**/*
-    - spec/**/*
-    - test/**/*
+  Enabled: false
 
 Metrics/MethodLength:
-  Exclude:
-    - spec/**/*
-    - test/**/*
+  Enabled: false
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
