@@ -8,7 +8,6 @@
   <a href="https://github.com/andersonkrs/malheatmap"><img src="https://github.com/andersonkrs/malheatmap/workflows/ci/badge.svg"/></a>
   <a href="https://codeclimate.com/github/andersonkrs/malheatmap/maintainability"><img src="https://api.codeclimate.com/v1/badges/46216781798a6f8f02f9/maintainability" /></a>
   <a href="https://codeclimate.com/github/andersonkrs/malheatmap/test_coverage"><img src="https://api.codeclimate.com/v1/badges/46216781798a6f8f02f9/test_coverage" /></a>
-  <a href="https://www.skylight.io/app/applications/J8hCjPhY5lKe"><img src="https://api.codeclimate.com/v1/badges/46216781798a6f8f02f9/test_coverage" /></a>
   <a href="https://oss.skylight.io/app/applications/J8hCjPhY5lKe"><img src="https://badges.skylight.io/status/J8hCjPhY5lKe.svg" /></a>
 </h4>
 
