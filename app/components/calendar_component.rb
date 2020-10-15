@@ -25,8 +25,9 @@ class CalendarComponent < ViewComponent::Base
     def month_ends_on_the_last_saturday_of_the_last_week?
       last_week = weeks.last
       last_week_day = last_week.last
+      last_month_day = Date.new(year, month, 1).end_of_month
 
-      last_week_day.saturday? && last_week_day == Date.new(year, month, 1).end_of_month
+      last_week_day.saturday? && last_week_day == last_month_day
     end
 
     def last_month?
