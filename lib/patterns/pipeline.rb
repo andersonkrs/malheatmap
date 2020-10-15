@@ -34,10 +34,14 @@ module Patterns
         if callable.is_a?(Proc)
           instance_eval(&callable)
         else
-          result = callable.call(context.to_h)
-          context.merge!(result)
-          context.fail if result.failure?
+          call_service(callable)
         end
+      end
+
+      def call_service(service)
+        result = service.call(context.to_h)
+        context.merge!(result)
+        context.fail if result.failure?
       end
     end
 
