@@ -26,7 +26,9 @@ gem "wheretz"
 group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
+  gem "jazz_fingers"
   gem "pry-byebug"
+  gem "solargraph"
 end
 
 group :development do
