@@ -4,29 +4,30 @@
 
 - section_size :medium
 
-.columns.is-multiline
-  = render partial: "shared/header"
+.is-align-self-center
+  .columns.is-multiline.is-centered
+    = render partial: "shared/header"
 
-  .column.is-full
-    .loader-container
+    .column.is-full
+      .loader-container
 
-    .columns.form-container.is-multiline.is-centered
-      .column.is-three-quarters-desktop.is-half-fullhd.is-full-tablet.is-full-mobile
-        = form_with model: @subscription, method: "post" do |form|
-          .field.has-text-centered
-            = form.label :username do
-              = t(".form_label_html")
+      .columns.form-container.is-multiline.is-centered
+        .column.is-half-desktop
+          = form_with model: @subscription, method: "post" do |form|
+            .field.has-text-centered
+              = form.label :username do
+                = t(".form_label_html")
 
-          .field.notifications-container
+            .field.notifications-container
 
-          .field.has-addons
-            .control.is-expanded
-              = form.text_field :username, placeholder: true, class: "input"
+            .field.has-addons
+              .control.is-expanded
+                = form.text_field :username, placeholder: true, class: "input"
 
-            .control
-              = form.button class: "button is-primary",
-                            data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" },
-                            onclick: "window._paq.push(['trackEvent', 'Subscription', 'Click'])"
-          .field.pt-4.has-text-centered
-            p
-              i = t(".subscribed_users", count: User.cached_count)
+              .control
+                = form.button class: "button is-primary",
+                              data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" },
+                              onclick: "window._paq.push(['trackEvent', 'Subscription', 'Click'])"
+            .field.pt-4.has-text-centered
+              p
+                i = t(".subscribed_users", count: User.cached_count)
