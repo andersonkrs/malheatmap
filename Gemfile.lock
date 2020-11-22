@@ -343,7 +343,7 @@ GEM
     unicode-display_width (1.7.0)
     unicode_utils (1.4.0)
     vcr (6.0.0)
-    view_component (2.21.0)
+    view_component (2.22.1)
       activesupport (>= 5.0.0, < 7.0)
     web-console (4.1.0)
       actionview (>= 6.0.0)
