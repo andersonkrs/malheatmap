@@ -48,7 +48,9 @@ FactoryBot.define do
     kind { Item.kinds.keys.sample }
 
     initialize_with do
-      Item.find_or_initialize_by(**attributes)
+      Item.find_or_initialize_by(**attributes.slice(:mal_id, :kind)) do |item|
+        item.name = attributes[:name]
+      end
     end
   end
 end

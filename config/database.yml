@@ -9,11 +9,11 @@ default: &default
 
 development:
   <<: *default
-  database: mal_heatmap_development
+  database: malheatmap_development
 
 test:
   <<: *default
-  database: mal_heatmap_test
+  database: malheatmap_test
 
 production:
   <<: *default

@@ -61,8 +61,8 @@ GEM
     ast (2.4.1)
     awesome_print (1.8.0)
     aws-eventstream (1.1.0)
-    aws-partitions (1.390.0)
-    aws-sdk-core (3.109.2)
+    aws-partitions (1.402.0)
+    aws-sdk-core (3.110.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
       aws-sigv4 (~> 1.1)
@@ -70,7 +70,7 @@ GEM
     aws-sdk-kms (1.39.0)
       aws-sdk-core (~> 3, >= 3.109.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.83.2)
+    aws-sdk-s3 (1.86.0)
       aws-sdk-core (~> 3, >= 3.109.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.1)
@@ -84,7 +84,7 @@ GEM
     brakeman (4.10.0)
     builder (3.2.4)
     byebug (11.1.3)
-    capybara (3.33.0)
+    capybara (3.34.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -93,7 +93,6 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
-    chronic (0.10.2)
     chunky_png (1.3.12)
     coderay (1.1.3)
     concurrent-ruby (1.1.7)
@@ -114,13 +113,15 @@ GEM
     factory_bot_rails (6.1.0)
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
-    faker (2.14.0)
+    faker (2.15.1)
       i18n (>= 1.6, < 2)
     ffi (1.13.1)
     fugit (1.3.9)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.3)
     geocoder (1.6.4)
+    gitlab-chronic (0.10.6)
+      numerizer (~> 0.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashdiff (1.0.1)
@@ -141,7 +142,7 @@ GEM
       pry-coolline (~> 0.2)
     jmespath (1.4.0)
     json (2.3.1)
-    listen (3.2.1)
+    listen (3.3.3)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     lograge (0.11.2)
@@ -183,6 +184,7 @@ GEM
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
     ntlm-http (0.1.1)
+    numerizer (0.2.0)
     parallel (1.19.2)
     parser (2.7.2.0)
       ast (~> 2.4.1)
@@ -196,7 +198,7 @@ GEM
     pry-coolline (0.2.5)
       coolline (~> 0.5)
     public_suffix (4.0.6)
-    puma (5.0.4)
+    puma (5.1.0)
       nio4r (~> 2.0)
     raabro (1.3.3)
     rack (2.2.3)
@@ -242,7 +244,7 @@ GEM
     reverse_markdown (2.0.0)
       nokogiri
     rexml (3.2.4)
-    rollbar (3.1.0)
+    rollbar (3.1.1)
     rubocop (0.93.1)
       parallel (~> 1.10)
       parser (>= 2.7.1.5)
@@ -354,7 +356,7 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (>= 3.0, < 4.0)
-    webmock (3.9.4)
+    webmock (3.10.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -381,10 +383,10 @@ DEPENDENCIES
   bootsnap
   brakeman
   capybara
-  chronic
   factory_bot_rails
   faker
   geocoder
+  gitlab-chronic
   image_processing
   imatcher
   jazz_fingers
