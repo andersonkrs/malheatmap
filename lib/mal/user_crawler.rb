@@ -3,6 +3,7 @@ require "mechanize"
 module MAL
   class UserCrawler < Mechanize
     include URLS
+    include Stubbing
 
     INTERNAL_COMMUNICATION_ERRORS = [
       Mechanize::ResponseReadError,
@@ -21,7 +22,10 @@ module MAL
     end
 
     def crawl
+      return stubed_response(@username) if stubed?(@username)
+
       crawl_profile
+      crawl_geolocation
       crawl_history
 
       @response
@@ -47,11 +51,31 @@ module MAL
       @response[:profile] = Parsers::Profile.new(page).parse
     end
 
+    def crawl_geolocation
+      location = @response.dig(:profile, :location)
+      return if location.blank?
+
+      result = Geocoder.search(location)
+      return if result.blank?
+
+      geodata = result.first
+      @response[:profile].merge!(
+        latitude: geodata.latitude,
+        longitude: geodata.longitude,
+        time_zone: time_zone_for(*geodata.coordinates)
+      )
+    end
+
     def crawl_history
       page.link_with(text: "History").click
 
       crawl_history_kind(:anime)
       crawl_history_kind(:manga)
+    end
+
+    def time_zone_for(lat, long)
+      results = [WhereTZ.lookup(lat, long)].flatten.compact
+      results.first
     end
 
     def crawl_history_kind(kind)

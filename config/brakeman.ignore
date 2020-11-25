@@ -3,13 +3,13 @@
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
-      "fingerprint": "7b593b07aee8a29412b750122a4d4532395ddbea3db9ebee74d37fb449262e80",
+      "fingerprint": "471686eced2f182c054a06e0b6d6c21015166446379122ab7f5f12d2ebed0000",
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "lib/html_screenshot.rb",
       "line": 26,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "Open3.capture3(executable, source, *params, :binmode => true)",
+      "code": "Open3.capture3(executable, *params, :stdin_data => source, :binmode => true)",
       "render_path": null,
       "location": {
         "type": "method",
@@ -19,101 +19,8 @@
       "user_input": "params",
       "confidence": "High",
       "note": ""
-    },
-    {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "8083f36a05b10f13f02c3e072c412342ef55eea843c0bdc160527ead9a21841d",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/users/show.html.slim",
-      "line": 36,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => CalendarComponent.new(:date_range => Calendar::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range, :activities => User.find_by!(:username => params[:username]).activities.for_date_range(Calendar::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range).ordered_as_timeline), {})",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "UsersController",
-          "method": "show",
-          "line": 11,
-          "file": "app/controllers/users_controller.rb",
-          "rendered": {
-            "name": "users/show",
-            "file": "app/views/users/show.html.slim"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "users/show"
-      },
-      "user_input": "params[:year]",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "8d23160834b3d027480ab9208503cffbf99c6cb8bc228a7479115f214c2c0946",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/users/show.html.slim",
-      "line": 51,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => TimelineComponent.new(:activities => User.find_by!(:username => params[:username]).activities.for_date_range(Calendar::CalculateDateRange.call(:year => ((params[:year].to_i or Time.zone.today.year))).range).ordered_as_timeline), {})",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "UsersController",
-          "method": "show",
-          "line": 11,
-          "file": "app/controllers/users_controller.rb",
-          "rendered": {
-            "name": "users/show",
-            "file": "app/views/users/show.html.slim"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "users/show"
-      },
-      "user_input": "params[:year]",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "97db2d3eb9bf6c43608f62739d528c0fe66faa1dc49b9a69cac08fbbcd8e80b3",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/users/show.html.slim",
-      "line": 54,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => YearsMenuComponent.new(:user => User.find_by!(:username => params[:username]), :years => User.find_by!(:username => params[:username]).activities.unique_years, :active_year => ((params[:year].to_i or Time.zone.today.year))), {})",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "UsersController",
-          "method": "show",
-          "line": 11,
-          "file": "app/controllers/users_controller.rb",
-          "rendered": {
-            "name": "users/show",
-            "file": "app/views/users/show.html.slim"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "users/show"
-      },
-      "user_input": "params[:year]",
-      "confidence": "Weak",
-      "note": ""
     }
   ],
-  "updated": "2020-09-03 23:33:43 -0300",
-  "brakeman_version": "4.9.0"
+  "updated": "2020-11-25 07:55:33 -0300",
+  "brakeman_version": "4.10.0"
 }

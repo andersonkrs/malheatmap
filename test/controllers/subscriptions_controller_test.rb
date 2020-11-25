@@ -19,10 +19,12 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
       }
     }, xhr: true
 
+    assert_response :accepted
     assert_equal "text/javascript", @response.media_type
     assert_equal 1, Subscription.count
 
     created_subscription = Subscription.find_by(username: username)
+    assert_enqueued_jobs 1
     assert_enqueued_with job: Subscription::ProcessJob, args: [created_subscription]
   end
 
@@ -33,6 +35,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
       }
     }, xhr: true
 
+    assert_response :unprocessable_entity
     assert_equal "text/javascript", @response.media_type
     assert_equal 0, Subscription.count
     assert_no_enqueued_jobs

@@ -1,6 +1,8 @@
 module MAL
   module Parsers
     class History
+      include Helpers
+
       def initialize(page, kind:)
         @page = page
         @kind = kind
@@ -22,10 +24,10 @@ module MAL
 
       def parse_entry(row)
         {
-          timestamp: row.at_xpath(".//td[2]").text.strip,
+          timestamp: clean_text(row.at_xpath(".//td[2]").text),
           amount: row.at_xpath(".//td[1]/strong").text.to_i,
           item_id: extract_item_id(row),
-          item_name: row.at_xpath(".//td[1]/a").text,
+          item_name: clean_text(row.at_xpath(".//td[1]/a").text),
           item_kind: @kind.to_s
         }
       end

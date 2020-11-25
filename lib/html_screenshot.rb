@@ -23,7 +23,7 @@ class HtmlScreenshot
   end
 
   def take(&block)
-    output, err, status = Open3.capture3(executable, @source, *params, binmode: true)
+    output, err, status = Open3.capture3(executable, *params, stdin_data: @source, binmode: true)
     raise ScreenshotError, err unless status.success?
 
     block.call(StringIO.new(output))

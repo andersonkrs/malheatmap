@@ -12,14 +12,19 @@ Sidekiq.configure_server do |config|
     url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" }
   }
 
+  Sidekiq.logger.level = Rails.configuration.log_level
   Rails.logger = Sidekiq.logger
   ActiveRecord::Base.logger = Sidekiq.logger
+
+  config.on(:startup) do
+    if Rails.env.production?
+      Sidekiq.schedule = YAML.load_file("config/schedule.yml")
+      SidekiqScheduler::Scheduler.instance.reload_schedule!
+    end
+  end
 end
 
-if Sidekiq.server?
-  Sidekiq.schedule = YAML.load_file("config/schedule.yml")
-  SidekiqScheduler::Scheduler.instance.reload_schedule!
-else
+unless Sidekiq.server?
   require "sidekiq/web"
   require "sidekiq-scheduler/web"
 
