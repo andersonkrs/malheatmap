@@ -89,28 +89,10 @@ class UserTest < ActiveSupport::TestCase
         entry1 = create(:entry, user: @user, timestamp: 2.days.ago)
         entry2 = create(:entry, user: @user, timestamp: 5.days.ago)
 
-        results = @user.history.visible_to_user_on_mal.pluck(:id)
+        results = @user.entries.visible_to_user_on_mal.pluck(:id)
 
         assert_equal results.sort, [entry1.id, entry2.id].sort
       end
     end
-  end
-
-  test "caches the record count" do
-    create_list(:user, 3)
-    assert_equal 3, User.cached_count
-
-    create_list(:user, 2)
-    assert_equal 3, User.cached_count
-  end
-
-  test "resets the cached record count" do
-    create(:user)
-    assert_equal 1, User.cached_count
-
-    create(:user)
-    User.reset_cached_count
-
-    assert_equal 2, User.cached_count
   end
 end

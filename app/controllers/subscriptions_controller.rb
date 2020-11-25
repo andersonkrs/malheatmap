@@ -7,9 +7,11 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
-      enqueue_process_job
+      render :create, status: :accepted
     elsif user_already_subscribed?
       redirect_to_user_page
+    else
+      render :create, status: :unprocessable_entity
     end
   end
 
@@ -25,11 +27,5 @@ class SubscriptionsController < ApplicationController
 
   def redirect_to_user_page
     redirect_to(user_path(@subscription.username), turbolinks: :advance)
-  end
-
-  def enqueue_process_job
-    response_delay_threshold = 2.seconds
-
-    Subscription::ProcessJob.set(wait: response_delay_threshold).perform_later(@subscription)
   end
 end

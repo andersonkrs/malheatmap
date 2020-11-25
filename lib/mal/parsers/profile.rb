@@ -1,13 +1,15 @@
 module MAL
   module Parsers
     class Profile
+      include Helpers
+
       def initialize(page)
         @page = page
       end
 
       def parse
         {
-          location: location,
+          location: clean_text(location),
           avatar_url: avatar_url
         }
       end

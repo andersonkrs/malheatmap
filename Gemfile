@@ -5,8 +5,8 @@ ruby File.read(".ruby-version")
 
 gem "aws-sdk-s3", require: false
 gem "bootsnap", require: false
-gem "chronic"
 gem "geocoder"
+gem "gitlab-chronic"
 gem "image_processing"
 gem "lograge"
 gem "mechanize"
@@ -23,10 +23,11 @@ gem "view_component"
 gem "webpacker"
 gem "wheretz"
 
+gem "jazz_fingers"
+
 group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
-  gem "jazz_fingers"
   gem "pry-byebug"
   gem "solargraph"
 end

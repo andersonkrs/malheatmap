@@ -1,4 +1,6 @@
 class Subscription < ApplicationRecord
+  include Processable
+
   USERNAME_REGEX = %r{\A(http?s?://(?:www\.)?myanimelist\.net/(profile|history)/[A-Za-z0-9\-_]+/?|
                       [A-Za-z0-9\-_]+)\Z}x.freeze
 

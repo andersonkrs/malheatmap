@@ -4,13 +4,18 @@ class UserCrawlerTest < ActiveSupport::TestCase
   include VCRCassettes
 
   test "returns user profile info with geolocation and history" do
+    Geocoder::Lookup::Test.add_stub("Sorocaba, Brazil", [{ coordinates: [-23.4961296, -47.4542266] }])
     crawler = MAL::UserCrawler.new("andersonkrs")
+
     result = crawler.crawl
 
     assert_equal(
       {
         location: "Sorocaba, Brazil",
-        avatar_url: "https://cdn.myanimelist.net/images/userimages/7868083.jpg?t=1601605800"
+        avatar_url: "https://cdn.myanimelist.net/images/userimages/7868083.jpg?t=1601605800",
+        latitude: -23.4961296,
+        longitude: -47.4542266,
+        time_zone: "America/Sao_Paulo"
       },
       result[:profile]
     )
@@ -23,6 +28,25 @@ class UserCrawlerTest < ActiveSupport::TestCase
     assert_equal "anime", entry[:item_kind]
     assert_equal "Sword Art Online: Alicization - War of Underworld", entry[:item_name]
     assert_equal 9, entry[:amount]
+  end
+
+  test "does not return user geolocation if the user does not have location on the profile" do
+    crawler = MAL::UserCrawler.new("ft_suhail")
+    result = crawler.crawl
+    profile = result[:profile]
+
+    assert profile[:location].blank?
+    assert profile[:time_zone].blank?
+    assert profile[:latitude].blank?
+    assert profile[:longitude].blank?
+  end
+
+  test "removes blank spaces from item name and timestamp" do
+    crawler = MAL::UserCrawler.new("ft_suhail")
+    result = crawler.crawl
+    profile = result[:profile]
+
+    assert_equal "", profile[:location]
   end
 
   test "returns no entries when user does not have history" do
