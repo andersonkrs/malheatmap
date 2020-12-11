@@ -30,7 +30,7 @@ module ActiveSupport
     include ActionCable::TestHelper
     include FactoryBot::Syntax::Methods
 
-    # parallelize
+    parallelize
 
     if ENV["COVERAGE"] == "true"
       parallelize_setup do |worker|

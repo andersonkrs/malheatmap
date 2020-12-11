@@ -15,7 +15,7 @@ class User
 
       true
     rescue MAL::Errors::CrawlError => error
-      errors[:base] << error.message
+      errors.add(:base, error.message)
       false
     end
 

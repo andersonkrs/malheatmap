@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby File.read(".ruby-version")
+ruby File.read(".ruby-version").strip
 
 gem "aws-sdk-s3", require: false
 gem "bootsnap", require: false
@@ -12,23 +12,21 @@ gem "lograge"
 gem "mechanize"
 gem "pg"
 gem "puma"
-gem "rails"
+gem "rails", "~> 6.1.0"
 gem "rollbar"
 gem "sidekiq"
 gem "sidekiq-scheduler"
-gem "skylight"
+gem "skylight", "~> 5.0.0.beta4"
 gem "slim-rails"
 gem "turbolinks"
 gem "view_component"
 gem "webpacker"
 gem "wheretz"
 
-gem "jazz_fingers"
-
 group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
-  gem "pry-byebug"
+  gem "jazz_fingers"
   gem "solargraph"
 end
 
