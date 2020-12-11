@@ -22,7 +22,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def user_already_subscribed?
-    @subscription.errors.of_kind?(:username, :taken)
+    @subscription.errors.added?(:username, :taken)
   end
 
   def redirect_to_user_page
