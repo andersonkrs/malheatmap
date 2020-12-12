@@ -85,14 +85,14 @@ jobs:
       if: failure()
       with:
         name: system-tests-screenshots
-        path: tmp/screenshots
+        path: tmp/screenshots/**/*.png
 
     - name: Upload Rails logs
       uses: actions/upload-artifact@v2.2.1
       if: failure()
       with:
         name: logs
-        path: log
+        path: log/**/*.log
   deploy:
     needs: qa
     if: ${{ github.ref == 'refs/heads/master' }}

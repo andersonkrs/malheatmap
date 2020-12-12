@@ -20,6 +20,10 @@ end
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :headless_chrome
 
+  parallelize_setup do |worker|
+    Webdrivers.install_dir = File.expand_path("~/.webdrivers/#{worker}")
+  end
+
   def before_teardown
     super
     flush_browser_logs
