@@ -4,7 +4,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@rails/actioncable": "^6.0.3",
+    "@rails/actioncable": "^6.1.0",
     "@rails/ujs": "^6.0.3",
     "@rails/webpacker": "5.2.1",
     "bulma": "^0.9.1",
