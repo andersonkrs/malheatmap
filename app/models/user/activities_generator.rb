@@ -2,14 +2,14 @@ class User
   class ActivitiesGenerator
     def initialize(user)
       @user = user
-      @processed_entries = {}
-      @processed_activities = {}
+      @processed_entries = ProcessedEntries.new
+      @processed_activities = ProcessedActivities.new
     end
 
     def run
       user.with_time_zone do
-        generate_activities_per_day_from_history
-        persist_activities
+        calculate_activities_per_day_from_history
+        persist
       end
     end
 
@@ -17,7 +17,7 @@ class User
 
     attr_reader :user, :processed_entries, :processed_activities
 
-    def generate_activities_per_day_from_history
+    def calculate_activities_per_day_from_history
       entries = user
                   .entries
                   .eager_load(:item)
@@ -26,7 +26,7 @@ class User
       entries.each do |entry|
         generate_activity_from_entry(entry)
 
-        record_processed_entry(entry)
+        processed_entries << entry
       end
     end
 
@@ -34,45 +34,67 @@ class User
       date = current_entry.timestamp.to_date
       item = current_entry.item
 
-      activity = find_or_initialize_activity_by(date, item)
-      previous_entry = find_previous_processed_entry(date, item) || current_entry
+      activity = processed_activities.find_or_create(item, date)
 
-      calculate_activity_amount(activity, current_entry.amount, previous_entry.amount)
+      previous_entry = processed_entries.find_last_for(item, date)
+      if previous_entry.blank?
+        activity.amount = current_entry.amount
+      else
+        activity.amount += current_entry.amount - previous_entry.amount
+      end
     end
 
-    def find_previous_processed_entry(date, item)
-      processed_entries
+    def persist
+      ApplicationRecord.transaction do
+        user.activities.delete_all
+
+        processed_activities.each do |activity|
+          user.activities << activity
+        end
+      end
+    end
+  end
+
+  class ProcessedEntries
+    def initialize
+      @entries = {}
+    end
+
+    def <<(entry)
+      entries[entry.item_id] ||= []
+      entries[entry.item_id] << entry
+    end
+
+    def find_last_for(item, date)
+      entries
         .fetch(item.id, [])
         .sort_by { |entry| [entry.timestamp, entry.amount, entry.created_at] }
         .find_all { |entry| entry.timestamp.to_date <= date }
         .last
     end
 
-    def find_or_initialize_activity_by(date, item)
-      processed_activities["#{date}/#{item.id}"] ||= Activity.new(date: date, item: item, amount: 0)
+    private
+
+    attr_reader :entries
+  end
+
+  class ProcessedActivities
+    def initialize
+      @activities = {}
     end
 
-    def calculate_activity_amount(activity, current_amount, previous_amount)
-      if current_amount != previous_amount
-        activity.amount += current_amount - previous_amount
-      else
-        activity.amount = current_amount
+    def each(&block)
+      activities.each_value do |activity|
+        block.call(activity)
       end
     end
 
-    def record_processed_entry(entry)
-      processed_entries[entry.item_id] ||= []
-      processed_entries[entry.item_id] << entry
+    def find_or_create(item, date)
+      activities["#{item.id}/#{date}"] ||= Activity.new(item: item, date: date, amount: 0)
     end
 
-    def persist_activities
-      ActiveRecord::Base.transaction do
-        user.activities.delete_all
+    private
 
-        processed_activities.each_value do |activity|
-          user.activities << activity
-        end
-      end
-    end
+    attr_reader :activities
   end
 end
