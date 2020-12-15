@@ -106,10 +106,10 @@ This app is deployed with [Dokku](http://dokku.viewdocs.io/dokku/) hosted on a V
 Auxiliary tools:
 
 * [Rollbar](https://rollbar.com/) for error monitoring
-* [Papertrail](https://www.papertrail.com/) for log management
 * [UptimeRobot](https://uptimerobot.com/) for uptime monitoring
 * [Matomo](https://matomo.org) for analytics
-* [Amazon S3](https://aws.amazon/com/s3) as storage service
+* [Amazon S3](https://aws.amazon.com/s3) as storage service
+* [Amazon Cloud Watch](https://aws.amazon.com/cloudwatch) for log management
 * [Sidekiq](https://sidekiq.org/) as background job adapter
 
 #### Other Inspirations
