@@ -27,7 +27,6 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "jazz_fingers"
-  gem "solargraph"
 end
 
 group :development do
@@ -35,6 +34,7 @@ group :development do
   gem "listen"
   gem "rubocop"
   gem "rubocop-rails", require: false
+  gem "solargraph"
   gem "spring"
   gem "spring-watcher-listen"
   gem "web-console"

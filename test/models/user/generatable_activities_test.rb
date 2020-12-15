@@ -136,5 +136,35 @@ class User
 
       assert_equal Date.new(2020, 4, 10), activities.first.date
     end
+
+    test "acumulates just the amount of new episiodes/chapters after the first entry" do
+      create(:item) do |item|
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 14, 33), amount: 8)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 14, 33), amount: 8)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 14, 33), amount: 9)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 14, 33), amount: 9)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 14, 33), amount: 10)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 14, 33), amount: 10)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 23, 28), amount: 11)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 23, 28), amount: 11)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 23, 28), amount: 12)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 23, 28), amount: 12)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 23, 28), amount: 13)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 2, 23, 28), amount: 13)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 3, 23, 25), amount: 14)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 3, 23, 25), amount: 14)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 3, 23, 25), amount: 15)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 3, 23, 25), amount: 15)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 3, 23, 25), amount: 16)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 3, 23, 25), amount: 16)
+        create(:entry, item: item, user: @user, timestamp: Time.zone.local(2020, 10, 5, 21, 29), amount: 17)
+      end
+
+      @user.generate_activities
+
+      assert_equal 13, activities.first.amount
+      assert_equal 3, activities.second.amount
+      assert_equal 1, activities.third.amount
+    end
   end
 end

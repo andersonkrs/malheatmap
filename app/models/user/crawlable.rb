@@ -26,7 +26,7 @@ class User
     private
 
     def crawler
-      MAL::UserCrawler.new(username)
+      @crawler ||= MAL::UserCrawler.new(username)
     end
   end
 end
