@@ -338,7 +338,7 @@ GEM
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
-    tzinfo (2.0.3)
+    tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
       unf_ext
@@ -346,7 +346,7 @@ GEM
     unicode-display_width (1.7.0)
     unicode_utils (1.4.0)
     vcr (6.0.0)
-    view_component (2.23.1)
+    view_component (2.23.2)
       activesupport (>= 5.0.0, < 7.0)
     web-console (4.1.0)
       actionview (>= 6.0.0)
