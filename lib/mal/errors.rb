@@ -13,6 +13,7 @@ module MAL
     end
 
     class ProfileNotFound < CrawlError; end
+
     class CommunicationError < CrawlError; end
   end
 end
