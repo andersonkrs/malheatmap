@@ -103,7 +103,17 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Check deploy lock
+      continue-on-error: true
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: dokku apps:locked malheatmap
+        host: ${{ secrets.DOKKU_HOST }}
+        username: dokku
+        privateKey: ${{ secrets.DOKKU_SSH_KEY }}
+
     - id: deploy
+      if: failure()
       name: Deploy to dokku
       uses: idoberko2/dokku-deploy-github-action@v1
       with:
