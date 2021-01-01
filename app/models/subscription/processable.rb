@@ -35,7 +35,7 @@ class Subscription
     end
 
     def render_error_notification(message)
-      ApplicationController.render NotificationComponent.new(message: message)
+      ApplicationController.render NotificationComponent.new(message: message), layout: false
     end
   end
 end
