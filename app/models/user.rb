@@ -26,13 +26,17 @@ class User < ApplicationRecord
         .order(date: :desc, name: :asc)
     end
 
-    def unique_years
-      Rails.cache.fetch("#{proxy_association.owner.cache_key_with_version}/unique-years") do
-        distinct
-          .order(year: :desc)
-          .pluck(Arel.sql("cast(date_part('year', date) as int) as year"))
+    def first_date
+      Rails.cache.fetch("#{proxy_association.owner.cache_key_with_version}/first-activity-date") do
+        order(date: :asc).limit(1).pick(:date)
       end
     end
+  end
+
+  def active_years
+    initial_date = [created_at.to_date, activities.first_date].compact.min
+
+    (initial_date.year..Time.zone.today.year)
   end
 
   def with_time_zone(&block)

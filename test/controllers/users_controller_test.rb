@@ -33,6 +33,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       assert_select "#2020-01-01", 1
     end
 
+    test "renders each year on years menu since user has been subscribed even if there is no activity in it" do
+      create(:activity, user: @user)
+      travel_to Time.zone.local(2022, 10, 1)
+
+      get user_url(@user)
+
+      assert_select ".years-menu > ul > li > a" do |elements|
+        assert %w[2020 2021 2022], elements.map(&:text)
+      end
+    end
+
     test "renders timeline activities dates ordered as desc" do
       travel_to Time.zone.local(2020, 12, 1)
 
@@ -76,12 +87,21 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    test "does not render calendar either timeline when user does not have any activity" do
+    test "does not render the timeline when user does not have any activity" do
       get user_url(@user)
 
       assert_select ".timeline", 0
       assert_select ".years-menu", 0
       assert_select "p", /#{@user.username} does not have any activity yet/
+    end
+
+    test "renders the timeline if user has any activity in other year than the selected" do
+      create(:activity, user: @user, date: Date.new(2019, 1, 1))
+
+      get user_url(@user, year: 2020)
+
+      assert_select ".timeline"
+      assert_select ".years-menu"
     end
 
     test "redirects to 404 if user does not exist" do
