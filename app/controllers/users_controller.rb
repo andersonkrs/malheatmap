@@ -2,11 +2,8 @@ class UsersController < ApplicationController
   helper MAL::URLS
   helper CalendarHelper
 
-  before_action :set_user
-  before_action :set_user_years
+  around_action :set_user
   before_action :set_selected_year
-
-  around_action :switch_to_user_time_zone
 
   def show
     @date_range = helpers.calculate_date_range_for_year(@selected_year)
@@ -15,23 +12,23 @@ class UsersController < ApplicationController
 
   private
 
-  def set_user
+  # rubocop:disable Naming/AccessorMethodName
+  def set_user(&block)
     @user = User.find_by!(username: params[:username])
-  end
 
-  def set_user_years
-    @years = @user.activities.unique_years
+    @user.with_time_zone(&block)
   end
+  # rubocop:enable Naming/AccessorMethodName
 
   def set_selected_year
-    @selected_year = if @years.include?(params[:year].to_i)
-                       params[:year].to_i
+    @selected_year = if @user.active_years.include?(year_param)
+                       year_param
                      else
-                       Time.find_zone(@user.time_zone).today.year
+                       Time.zone.today.year
                      end
   end
 
-  def switch_to_user_time_zone(&block)
-    @user.with_time_zone { block.call }
+  def year_param
+    @year_param ||= params[:year].to_i
   end
 end

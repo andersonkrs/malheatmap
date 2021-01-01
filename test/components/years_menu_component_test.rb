@@ -8,7 +8,7 @@ class YearsMenuComponentTest < ViewComponent::TestCase
   end
 
   test "renders each year with correctly user link" do
-    component = render_inline(YearsMenuComponent.new(user: @user, years: [2020, 2019, 2018], active_year: 2019))
+    component = render_inline(YearsMenuComponent.new(user: @user, years: [2019, 2018, 2020], active_year: 2019))
 
     links = component.css("a")
     assert_equal 3, links.size

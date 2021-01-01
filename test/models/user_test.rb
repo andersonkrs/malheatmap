@@ -17,22 +17,25 @@ class UserTest < ActiveSupport::TestCase
     should validate_numericality_of(:longitude).allow_nil
   end
 
+  test "returns the years range since the user subscribed or had recorded the first activity" do
+    travel_to Date.new(2021, 1, 1)
+    user = create(:user)
+
+    assert_equal (2021..2021), user.active_years
+
+    travel_to Date.new(2017, 10, 15)
+    user = create(:user)
+    travel_to Date.new(2021, 1, 1)
+
+    assert_equal (2017..2021), user.active_years
+
+    create(:activity, user: user, date: Date.new(2016, 12, 30))
+    user.touch
+
+    assert_equal (2016..2021), user.active_years
+  end
+
   class ActivitiesScopesTest
-    class UniqueYearsTest < ActiveSupport::TestCase
-      setup do
-        @user = create(:user)
-        create(:activity, user: @user, date: Date.new(2020, 1, 1))
-        create(:activity, user: @user, date: Date.new(2019, 1, 1))
-        create(:activity, user: @user, date: Date.new(2021, 1, 1))
-      end
-
-      test "returns all years which user has activities" do
-        results = @user.activities.unique_years
-
-        assert_equal [2021, 2020, 2019], results
-      end
-    end
-
     class ForDateRangeTest < ActiveSupport::TestCase
       setup do
         @user = create(:user)
