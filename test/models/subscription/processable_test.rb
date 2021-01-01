@@ -3,7 +3,6 @@ require "test_helper"
 class User
   class ProcessableTest < ActiveSupport::TestCase
     include Rails.application.routes.url_helpers
-    include CrawledDataTestHelper
 
     test "enqueues background job to process after create" do
       subcription = build(:subscription)
@@ -24,40 +23,47 @@ class User
       end
     end
 
-    test "broadcasts status success with user url when update service returns success" do
+    test "processing should broadcast status success with user url when crawler returns valid data" do
       subscription = create(:subscription)
       MAL::UserCrawler.stub_response(subscription.username, valid_crawled_data)
 
       subscription.process!
 
       assert User.exists?(username: subscription.username)
-      assert subscription.processed?
+      assert subscription.reload.processed?
       assert_broadcast_on(SubscriptionChannel.broadcasting_for(subscription),
                           status: :success, redirect: user_path(subscription.username))
     end
 
-    test "broadcasts status error with error template when update service returns an error" do
+    test "processing should broadcast status error with error template when crawler returns an error" do
       subscription = create(:subscription)
       MAL::UserCrawler.stub_response(subscription.username, MAL::Errors::CrawlError.new("error!"))
 
       subscription.process!
 
       assert_not User.exists?(username: subscription.username)
-      assert subscription.processed?
+      assert subscription.reload.processed?
       assert_broadcast_on(SubscriptionChannel.broadcasting_for(subscription),
                           status: :failure,
-                          notification: ApplicationController.render(NotificationComponent.new(message: "error!")))
+                          notification: ApplicationController.render(NotificationComponent.new(message: "error!"),
+                                                                     layout: false))
     end
 
-    test "broadcasts internal server error message when something unexpected happen" do
+    test "processing should broadcast internal server error message when something unexpected happen" do
       subscription = create(:subscription)
-      create(:user, username: subscription.username)
+      MAL::UserCrawler.stub_response(subscription.username, StandardError.new("unexpected error!"))
 
       subscription.process!
 
-      assert subscription.processed?
+      assert subscription.reload.processed?
       assert_broadcast_on(SubscriptionChannel.broadcasting_for(subscription),
                           status: :failure, redirect: internal_error_path)
+    end
+
+    private
+
+    def valid_crawled_data
+      JSON.parse(file_fixture("user_crawled_data.json").read, symbolize_names: true)
     end
   end
 end
