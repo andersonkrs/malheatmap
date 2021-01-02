@@ -18,7 +18,7 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "standard": "^16.0.3",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.1"
   },
   "resolutions": {
     "dot-prop": "^5.1.1",
