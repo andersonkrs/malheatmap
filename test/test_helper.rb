@@ -20,8 +20,6 @@ require "minitest/mock"
 require "factory_bot_rails"
 require "webmock/minitest"
 
-Rails.application.load_tasks
-
 Dir["./test/support/**/*.rb"].sort.each { |file| require file }
 
 module ActiveSupport
@@ -42,7 +40,12 @@ module ActiveSupport
       end
     end
 
+    setup do
+      Rails.application.load_tasks
+    end
+
     teardown do
+      Rake::Task.clear
       Rails.cache.clear
     end
   end
