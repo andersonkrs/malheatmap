@@ -20,7 +20,7 @@ class User
     end
 
     def crawl_mal_data_later
-      CrawlDataJob.perform_later(self)
+      CrawlDataJob.set(wait: 5.seconds).perform_later(self)
     end
 
     private
