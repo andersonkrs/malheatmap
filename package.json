@@ -2,7 +2,7 @@
   "name": "mal_heatmap",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@rails/actioncable": "^6.1.1",
     "@rails/ujs": "^6.1.1",
