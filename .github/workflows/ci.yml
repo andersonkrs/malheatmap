@@ -1,7 +1,5 @@
 name: ci
 on:
-  schedule:
-    - cron: "0 18 * * SAT"
   push:
 
 jobs:
@@ -107,6 +105,7 @@ jobs:
 
     - id: deploy
       name: Deploy to dokku
+      continue-on-error: true
       uses: idoberko2/dokku-deploy-github-action@v1
       with:
         ssh-private-key: ${{ secrets.DOKKU_SSH_KEY }}
