@@ -17,7 +17,6 @@ end
 require_relative "../config/environment"
 require "rails/test_help"
 require "minitest/mock"
-require "factory_bot_rails"
 require "webmock/minitest"
 
 Dir["./test/support/**/*.rb"].sort.each { |file| require file }
@@ -26,7 +25,8 @@ module ActiveSupport
   class TestCase
     include ActiveJob::TestHelper
     include ActionCable::TestHelper
-    include FactoryBot::Syntax::Methods
+
+    fixtures :all
 
     parallelize
 

@@ -3,7 +3,7 @@ require "test_helper"
 class User
   class CrawlableTest < ActiveSupport::TestCase
     setup do
-      @user = create(:user)
+      @user = users(:babyoda)
 
       stub_crawler
     end
@@ -62,9 +62,9 @@ class User
       assert_equal 3, @user.activities.count
     end
 
-    test "updates item name if its been updated" do
+    test "updates item name if it has changed" do
       entry_data = @response[:history].first
-      item = create(:item, mal_id: entry_data[:item_id], kind: entry_data[:item_kind], name: "Old Name")
+      item = Item.create!(mal_id: entry_data[:item_id], kind: entry_data[:item_kind], name: "Old Name")
 
       @user.crawl_mal_data
 
@@ -75,7 +75,7 @@ class User
 
     test "does not delete user entries if just the profile changed" do
       @response[:history] = []
-      create(:entry, user: @user, timestamp: 5.days.ago)
+      @user.entries.create!(timestamp: 5.days.ago, item: items(:boruto), amount: 10)
 
       assert_no_changes -> { @user.entries.count } do
         @user.crawl_mal_data

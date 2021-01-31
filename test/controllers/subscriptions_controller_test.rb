@@ -2,8 +2,6 @@ require "test_helper"
 
 class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   test "returns success when get index" do
-    create_list(:user, 3)
-
     get subscriptions_url
 
     assert_response :success
@@ -42,7 +40,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "redirects to user profile when it is already subscribed" do
-    user = create(:user)
+    user = users(:babyoda)
 
     post subscriptions_url, params: {
       subscription: {

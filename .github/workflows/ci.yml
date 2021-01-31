@@ -28,8 +28,6 @@ jobs:
 
     - name: Setup Node
       uses: actions/setup-node@v2.1.4
-      with:
-        node-version: '10.x'
 
     - name: Cache Ruby Dependencies
       uses: actions/cache@v2.1.3

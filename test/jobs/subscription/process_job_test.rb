@@ -3,7 +3,7 @@ require "test_helper"
 class Subscription
   class ProcessJobTest < ActiveSupport::TestCase
     setup do
-      @subscription = create(:subscription)
+      @subscription = Subscription.new(username: "random")
     end
 
     test "calls subscription process!" do

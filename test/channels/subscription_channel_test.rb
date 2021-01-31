@@ -2,7 +2,7 @@ require "test_helper"
 
 class SubscriptionChannelTest < ActionCable::Channel::TestCase
   test "subscribes with correct process id" do
-    process = create(:subscription)
+    process = Subscription.create!(username: "random")
 
     subscribe process_id: process.id
 
@@ -23,7 +23,7 @@ class SubscriptionChannelTest < ActionCable::Channel::TestCase
   end
 
   test "does not subscribe if it's already processed" do
-    process = create(:subscription, processed: true)
+    process = Subscription.create!(username: "random", processed: true)
 
     subscribe process_id: process.id
 

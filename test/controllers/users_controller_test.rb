@@ -5,9 +5,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     setup do
       travel_to Time.zone.local(2020, 5, 2)
 
-      @user = create(:user)
-      @anime_item = create(:item, mal_id: 1, kind: :anime, name: "Death Note")
-      @manga_item = create(:item, mal_id: 2, kind: :manga, name: "Naruto")
+      @user = users(:babyoda)
     end
 
     test "returns success" do
@@ -17,8 +15,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "filters activities by year" do
-      create(:activity, item: @anime_item, user: @user, date: Date.new(2019, 1, 1), amount: 1)
-      create(:activity, item: @anime_item, user: @user, date: Date.new(2020, 1, 1), amount: 1)
+      @user.activities.create!(item: items(:naruto), date: Date.new(2019, 1, 1), amount: 1)
+      @user.activities.create!(item: items(:naruto), date: Date.new(2020, 1, 1), amount: 1)
 
       get user_url(@user, year: 2019)
 
@@ -34,7 +32,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "renders each year on years menu since user has been subscribed even if there is no activity in it" do
-      create(:activity, user: @user)
+      @user.activities.create!(item: items(:naruto), date: Date.new(2021, 1, 1), amount: 1)
       travel_to Time.zone.local(2022, 10, 1)
 
       get user_url(@user)
@@ -47,12 +45,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     test "renders timeline activities dates ordered as desc" do
       travel_to Time.zone.local(2020, 12, 1)
 
-      create(:activity, user: @user, date: Date.new(2020, 5, 1))
-      create(:activity, user: @user, date: Date.new(2020, 5, 2))
-      create(:activity, user: @user, date: Date.new(2020, 6, 1))
-      create(:activity, user: @user, date: Date.new(2020, 6, 2))
-      create(:activity, user: @user, date: Date.new(2020, 7, 1))
-      create(:activity, user: @user, date: Date.new(2020, 7, 2))
+      @user.activities.create!(item: items(:bleach), date: Date.new(2020, 5, 1), amount: 1)
+      @user.activities.create!(item: items(:bleach), date: Date.new(2020, 5, 2), amount: 1)
+      @user.activities.create!(item: items(:bleach), date: Date.new(2020, 6, 1), amount: 1)
+      @user.activities.create!(item: items(:bleach), date: Date.new(2020, 6, 2), amount: 1)
+      @user.activities.create!(item: items(:bleach), date: Date.new(2020, 7, 1), amount: 1)
+      @user.activities.create!(item: items(:bleach), date: Date.new(2020, 7, 2), amount: 1)
 
       get user_url(@user)
 
@@ -64,11 +62,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "renders the calendar range respecting the user time zone" do
-      @user.update!(time_zone: "America/Sao_Paulo")
-
       travel_to Time.zone.local(2020, 10, 4, 2)
 
-      get user_url(@user)
+      get user_url(users(:anderson))
 
       assert_select ".calendar > .squares > .square" do |elements|
         assert_equal "2020-10-03", elements.last.attr("data-date")
@@ -96,7 +92,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "renders the timeline if user has any activity in other year than the selected" do
-      create(:activity, user: @user, date: Date.new(2019, 1, 1))
+      @user.activities.create!(item: items(:naruto), amount: 1, date: Date.new(2019, 1, 1))
 
       get user_url(@user, year: 2020)
 

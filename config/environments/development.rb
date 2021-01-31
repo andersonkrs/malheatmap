@@ -40,7 +40,7 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = true
 
   # Raises error for missing translations.
-  config.action_view.raise_on_missing_translations = true
+  config.i18n.raise_on_missing_translations = true
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.

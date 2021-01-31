@@ -4,7 +4,7 @@ class YearsMenuComponentTest < ViewComponent::TestCase
   include Rails.application.routes.url_helpers
 
   setup do
-    @user = build(:user)
+    @user = users(:babyoda)
   end
 
   test "renders each year with correctly user link" do

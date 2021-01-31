@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby File.read(".ruby-version").strip
+ruby "~> 2.7.2"
 
 gem "aws-sdk-s3", require: false
 gem "bootsnap", require: false
@@ -24,7 +24,6 @@ gem "webpacker"
 gem "wheretz"
 
 group :development, :test do
-  gem "factory_bot_rails"
   gem "faker"
   gem "jazz_fingers"
 end
