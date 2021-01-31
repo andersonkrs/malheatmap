@@ -113,11 +113,6 @@ GEM
     erubi (1.10.0)
     et-orbi (1.2.4)
       tzinfo
-    factory_bot (6.1.0)
-      activesupport (>= 5.0.0)
-    factory_bot_rails (6.1.0)
-      factory_bot (~> 6.1.0)
-      railties (>= 5.0.0)
     faker (2.15.1)
       i18n (>= 1.6, < 2)
     ffi (1.14.2)
@@ -390,7 +385,6 @@ DEPENDENCIES
   bootsnap
   brakeman
   capybara
-  factory_bot_rails
   faker
   geocoder
   gitlab-chronic
@@ -429,4 +423,4 @@ RUBY VERSION
    ruby 2.7.2p137
 
 BUNDLED WITH
-   2.1.4
+   2.2.7

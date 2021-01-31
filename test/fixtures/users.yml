@@ -1,0 +1,18 @@
+anderson:
+  username: "andersonkrs"
+  avatar_url: "https://robohash.org/reprehenderitconsequaturcumque.png?size=300x300&set=set1"
+  checksum: "fd0e3bf872605c4ac18324f42e6b03ef"
+  time_zone: "America/Sao_Paulo"
+
+babyoda:
+  username: "BABYODA"
+  avatar_url: "https://robohash.org/quimollitiafacere.png?size=300x300&set=set1"
+  checksum: "45cb3c92e57d1decc9c7814d76d8ef6a"
+  time_zone: "UTC"
+
+john_doe:
+  username: "jonhdoe"
+  avatar_url: "https://robohash.org/jonhdoe.png?size=300x300&set=set1"
+  checksum: "813f7b56-5786-4c4a-85d3-d23a84022673"
+  time_zone: "UTC"
+

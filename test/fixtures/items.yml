@@ -1,0 +1,39 @@
+naruto:
+  name: "Naruto"
+  kind: "anime"
+  mal_id: 20
+
+boruto:
+  name: "Boruto"
+  kind: "anime"
+  mal_id: 11
+
+cowboy_bebop:
+  name: "Cowboy Bebop"
+  kind: "anime"
+  mal_id: 1
+
+dragon_ball_gt:
+  name: "Dragon Ball GT"
+  kind: "anime"
+  mal_id: 138
+
+one_piece:
+  name: "One Piece"
+  kind: "manga"
+  mal_id: 13
+
+bleach:
+  name: "Bleach"
+  kind: "manga"
+  mal_id: 12
+
+monster:
+  name: "Monster"
+  kind: "manga"
+  mal_id: 1
+
+berserk:
+  name: "Berserk"
+  kind: "manga"
+  mal_id: 2

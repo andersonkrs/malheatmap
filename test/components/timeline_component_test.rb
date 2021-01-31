@@ -3,12 +3,12 @@ require "test_helper"
 class TimelineComponentTest < ViewComponent::TestCase
   test "renders each timeline marker correctly" do
     activities = [
-      build(:activity, date: Date.new(2020, 10, 1)),
-      build(:activity, date: Date.new(2020, 7, 1)),
-      build(:activity, date: Date.new(2020, 4, 1)),
-      build(:activity, date: Date.new(2020, 3, 1)),
-      build(:activity, date: Date.new(2020, 2, 1)),
-      build(:activity, date: Date.new(2020, 1, 1))
+      Activity.new(item: items(:one_piece), amount: 1, date: Date.new(2020, 10, 1)),
+      Activity.new(item: items(:one_piece), amount: 1, date: Date.new(2020, 7, 1)),
+      Activity.new(item: items(:one_piece), amount: 1, date: Date.new(2020, 4, 1)),
+      Activity.new(item: items(:one_piece), amount: 1, date: Date.new(2020, 3, 1)),
+      Activity.new(item: items(:one_piece), amount: 1, date: Date.new(2020, 2, 1)),
+      Activity.new(item: items(:one_piece), amount: 1, date: Date.new(2020, 1, 1))
     ]
 
     component = render_inline(TimelineComponent.new(activities: activities))
@@ -20,9 +20,9 @@ class TimelineComponentTest < ViewComponent::TestCase
 
   test "renders grouped activities per day" do
     activities = [
-      build(:activity, date: Date.new(2019, 6, 1)),
-      build(:activity, date: Date.new(2019, 6, 1)),
-      build(:activity, date: Date.new(2019, 5, 1))
+      Activity.new(item: items(:one_piece), amount: 1, date: Date.new(2019, 6, 1)),
+      Activity.new(item: items(:one_piece), amount: 1, date: Date.new(2019, 6, 1)),
+      Activity.new(item: items(:one_piece), amount: 1, date: Date.new(2019, 5, 1))
     ]
 
     component = render_inline(TimelineComponent.new(activities: activities))

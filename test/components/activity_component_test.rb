@@ -2,8 +2,8 @@ require "test_helper"
 
 class ActivityComponentTest < ViewComponent::TestCase
   setup do
-    @manga_activity = build(:activity, :manga, amount: 10)
-    @anime_activity = build(:activity, :anime, amount: 2)
+    @manga_activity = Activity.new(item: items(:one_piece), amount: 10)
+    @anime_activity = Activity.new(item: items(:cowboy_bebop), amount: 2)
   end
 
   test "renders manga activity correctly" do

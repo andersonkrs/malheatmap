@@ -3,7 +3,7 @@ require "test_helper"
 class User
   class CrawlDataJobTest < ActiveJob::TestCase
     setup do
-      @user = build(:user)
+      @user = users(:babyoda)
     end
 
     test "executes user crawling" do

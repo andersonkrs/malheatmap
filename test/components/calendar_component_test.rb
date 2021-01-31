@@ -4,10 +4,10 @@ class CalendarComponentTest < ViewComponent::TestCase
   test "renders squares correctly" do
     range = (Date.new(2019, 5, 5)..Date.new(2020, 5, 9))
     activities = [
-      build(:activity, date: Date.new(2020, 1, 1), amount: 1),
-      build(:activity, date: Date.new(2020, 1, 2), amount: 5),
-      build(:activity, date: Date.new(2020, 1, 3), amount: 9),
-      build(:activity, date: Date.new(2020, 1, 4), amount: 13)
+      Activity.new(item: items(:naruto), date: Date.new(2020, 1, 1), amount: 1),
+      Activity.new(item: items(:naruto), date: Date.new(2020, 1, 2), amount: 5),
+      Activity.new(item: items(:naruto), date: Date.new(2020, 1, 3), amount: 9),
+      Activity.new(item: items(:naruto), date: Date.new(2020, 1, 4), amount: 13)
     ]
     component = render_inline(CalendarComponent.new(date_range: range, activities: activities))
 

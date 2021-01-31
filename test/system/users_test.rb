@@ -2,14 +2,14 @@ require "application_system_test_case"
 
 class UsersTest < ApplicationSystemTestCase
   setup do
-    @user = create(:user)
+    @user = users(:babyoda)
   end
 
   test "user can navigate through active years" do
     last_year = Time.zone.today.last_year.year
 
-    manga = create(:activity, :manga, user: @user, date: Time.zone.today)
-    anime = create(:activity, :anime, user: @user, date: 1.year.ago)
+    manga = @user.activities.create!(amount: 1, item: items(:cowboy_bebop), date: Time.zone.today)
+    anime = @user.activities.create!(amount: 1, item: items(:naruto), date: 1.year.ago)
 
     visit user_url(@user)
 

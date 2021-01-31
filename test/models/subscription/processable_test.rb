@@ -5,7 +5,7 @@ class User
     include Rails.application.routes.url_helpers
 
     test "enqueues background job to process after create" do
-      subcription = build(:subscription)
+      subcription = Subscription.new(username: "test")
 
       assert_enqueued_jobs 1 do
         subcription.save!
@@ -16,7 +16,7 @@ class User
     end
 
     test "does not enqueue anything when updating" do
-      subcription = create(:subscription)
+      subcription = Subscription.create!(username: "test")
 
       assert_no_enqueued_jobs do
         subcription.touch
@@ -24,7 +24,7 @@ class User
     end
 
     test "processing should broadcast status success with user url when crawler returns valid data" do
-      subscription = create(:subscription)
+      subscription = Subscription.create!(username: "random")
       MAL::UserCrawler.stub_response(subscription.username, valid_crawled_data)
 
       subscription.process!
@@ -36,7 +36,7 @@ class User
     end
 
     test "processing should broadcast status error with error template when crawler returns an error" do
-      subscription = create(:subscription)
+      subscription = Subscription.create!(username: "random")
       MAL::UserCrawler.stub_response(subscription.username, MAL::Errors::CrawlError.new("error!"))
 
       subscription.process!
@@ -50,7 +50,7 @@ class User
     end
 
     test "processing should broadcast internal server error message when something unexpected happen" do
-      subscription = create(:subscription)
+      subscription = Subscription.create!(username: "random")
       MAL::UserCrawler.stub_response(subscription.username, StandardError.new("unexpected error!"))
 
       subscription.process!

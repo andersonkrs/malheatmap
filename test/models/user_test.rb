@@ -19,32 +19,28 @@ class UserTest < ActiveSupport::TestCase
 
   test "returns the years range since the user subscribed or had recorded the first activity" do
     travel_to Date.new(2021, 1, 1)
-    user = create(:user)
-
+    user = User.create!(username: "random1")
     assert_equal (2021..2021), user.active_years
 
     travel_to Date.new(2017, 10, 15)
-    user = create(:user)
+    user = User.create!(username: "random2")
     travel_to Date.new(2021, 1, 1)
-
     assert_equal (2017..2021), user.active_years
 
-    create(:activity, user: user, date: Date.new(2016, 12, 30))
+    user.activities.create!(item: items(:naruto), amount: 1, date: Date.new(2016, 12, 30))
     user.touch
-
     assert_equal (2016..2021), user.active_years
   end
 
   class ActivitiesScopesTest
     class ForDateRangeTest < ActiveSupport::TestCase
       setup do
-        @user = create(:user)
-        create(:activity, user: @user, date: Date.new(2020, 6, 11), item: create(:item, name: "Naruto"))
-        create(:activity, user: @user, date: Date.new(2020, 7, 11), item: create(:item, name: "One Piece"))
-        create(:activity, user: @user, date: Date.new(2020, 7, 11), item: create(:item, name: "Dragon Ball GT"))
-        create(:activity, user: @user, date: Date.new(2020, 8, 11), item: create(:item, name: "Cowboy Bebop"))
-        create(:activity, user: @user, date: Date.new(2020, 9, 11), item: create(:item, name: "Bleach"))
-        create(:activity, date: Date.new(2020, 7, 11))
+        @user = users(:babyoda)
+        @user.activities.create!(amount: 1, date: Date.new(2020, 6, 11), item: items(:naruto))
+        @user.activities.create!(amount: 1, date: Date.new(2020, 7, 11), item: items(:one_piece))
+        @user.activities.create!(amount: 1, date: Date.new(2020, 7, 11), item: items(:dragon_ball_gt))
+        @user.activities.create!(amount: 1, date: Date.new(2020, 8, 11), item: items(:cowboy_bebop))
+        @user.activities.create!(amount: 1, date: Date.new(2020, 9, 11), item: items(:bleach))
       end
 
       test "returns activities for the given date range" do
@@ -59,10 +55,10 @@ class UserTest < ActiveSupport::TestCase
 
     class OrderedAsTimelineTest < ActiveSupport::TestCase
       setup do
-        @user = create(:user)
-        create(:activity, user: @user, date: Date.new(2020, 7, 11), item: create(:item, name: "One Piece"))
-        create(:activity, user: @user, date: Date.new(2020, 7, 11), item: create(:item, name: "Dragon Ball GT"))
-        create(:activity, user: @user, date: Date.new(2020, 8, 11), item: create(:item, name: "Cowboy Bebop"))
+        @user = users(:babyoda)
+        @user.activities.create!(amount: 1, date: Date.new(2020, 7, 11), item: items(:one_piece))
+        @user.activities.create!(amount: 1, date: Date.new(2020, 7, 11), item: items(:dragon_ball_gt))
+        @user.activities.create!(amount: 1, date: Date.new(2020, 8, 11), item: items(:cowboy_bebop))
       end
 
       test "returns records ordered by date desc and name asc" do
@@ -81,16 +77,15 @@ class UserTest < ActiveSupport::TestCase
   class EntriesScopesTest
     class VisibleToUserOnMalTest < ActiveSupport::TestCase
       setup do
-        @user = create(:user, time_zone: "America/Sao_Paulo")
+        @user = users(:anderson)
 
         travel_to Time.find_zone(@user.time_zone).local(2020, 3, 10, 22, 20)
       end
 
       test "returns entries from the last twenty days" do
-        create(:entry)
-        create(:entry, user: @user, timestamp: 21.days.ago)
-        entry1 = create(:entry, user: @user, timestamp: 2.days.ago)
-        entry2 = create(:entry, user: @user, timestamp: 5.days.ago)
+        @user.entries.create!(item: items(:bleach), timestamp: 21.days.ago, amount: 1)
+        entry1 = @user.entries.create!(timestamp: 2.days.ago, amount: 1, item: items(:bleach))
+        entry2 = @user.entries.create!(timestamp: 5.days.ago, amount: 1, item: items(:bleach))
 
         results = @user.entries.visible_to_user_on_mal.pluck(:id)
 

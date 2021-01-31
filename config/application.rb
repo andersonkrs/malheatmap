@@ -27,11 +27,14 @@ module MalHeatmap
     config.active_record.schema_format = :sql
 
     config.generators.orm :active_record, primary_key_type: :uuid
-    config.generators.test_framework :test_unit, fixture: false
-    config.generators.factory_bot true
+    config.generators.test_framework :test_unit, fixture: true
     config.generators.template_engine = :slim
 
     config.action_cable.mount_path = "/cable"
+
+    config.active_storage.queues.analysis = nil
+    config.active_storage.queues.purge = nil
+    config.active_storage.queues.mirror = nil
 
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
@@ -45,3 +48,6 @@ module MalHeatmap
     config.skylight.probes += %w[redis]
   end
 end
+
+ActiveSupport::Deprecation.disallowed_warnings = :all
+ActiveSupport::Deprecation.disallowed_behavior = :log

@@ -35,7 +35,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
   end
 
   test "redirects to user profile when username is already subscribed" do
-    user = create(:user)
+    user = users(:babyoda)
     fill_in "subscription[username]", with: user.username
 
     click_on "Subscribe"

@@ -5,19 +5,23 @@ class User
     setup do
       travel_to Date.new(2020, 5, 1)
 
-      @user = create(:user)
-      create(:activity, user: @user, amount: 6, date: Date.new(2020, 5, 1))
-      create(:activity, user: @user, amount: 4, date: Date.new(2020, 4, 4))
-      create(:activity, user: @user, amount: 3, date: Date.new(2020, 3, 14))
-      create(:activity, user: @user, amount: 2, date: Date.new(2020, 2, 20))
-      create(:activity, user: @user, amount: 1, date: Date.new(2020, 1, 1))
-      create(:activity, user: @user, amount: 30, date: Date.new(2019, 12, 1))
-      create(:activity, user: @user, amount: 20, date: Date.new(2019, 11, 15))
-      create(:activity, user: @user, amount: 10, date: Date.new(2019, 10, 2))
-      create(:activity, user: @user, amount: 9, date: Date.new(2019, 9, 12))
-      create(:activity, user: @user, amount: 8, date: Date.new(2019, 8, 7))
-      create(:activity, user: @user, amount: 7, date: Date.new(2019, 7, 26))
-      create(:activity, user: @user, amount: 5, date: Date.new(2019, 6, 30))
+      @user = users(:babyoda)
+      @user.activities.create!(
+        [
+          { item: items(:bleach), amount: 6, date: Date.new(2020, 5, 1) },
+          { item: items(:bleach), amount: 4, date: Date.new(2020, 4, 4) },
+          { item: items(:bleach), amount: 3, date: Date.new(2020, 3, 14) },
+          { item: items(:bleach), amount: 2, date: Date.new(2020, 2, 20) },
+          { item: items(:bleach), amount: 1, date: Date.new(2020, 1, 1) },
+          { item: items(:bleach), amount: 30, date: Date.new(2019, 12, 1) },
+          { item: items(:bleach), amount: 20, date: Date.new(2019, 11, 15) },
+          { item: items(:bleach), amount: 10, date: Date.new(2019, 10, 2) },
+          { item: items(:bleach), amount: 9, date: Date.new(2019, 9, 12) },
+          { item: items(:bleach), amount: 8, date: Date.new(2019, 8, 7) },
+          { item: items(:bleach), amount: 7, date: Date.new(2019, 7, 26) },
+          { item: items(:bleach), amount: 5, date: Date.new(2019, 6, 30) }
+        ]
+      )
     end
 
     test "generates user signature correctly using current date" do

@@ -3,20 +3,19 @@ require "test_helper"
 class User
   class ScheduleCrawlingJobTest < ActiveJob::TestCase
     test "schedules update data job for each user which is qualified for updating based on the last update date" do
-      qualified_users = create_list(:user, 3, updated_at: 12.hours.ago)
-      create_list(:user, 4, updated_at: 3.hours.ago)
-      create_list(:user, 2, updated_at: 2.hours.ago)
+      users(:babyoda).update!(updated_at: 12.hours.ago)
+      users(:john_doe).update!(updated_at: 13.hours.ago)
+      users(:anderson).update!(updated_at: 1.hour.ago)
 
       ScheduleCrawlingJob.perform_now
 
-      assert_enqueued_jobs 3
-      assert_enqueued_with job: User::CrawlDataJob, args: [qualified_users.first]
-      assert_enqueued_with job: User::CrawlDataJob, args: [qualified_users.second]
-      assert_enqueued_with job: User::CrawlDataJob, args: [qualified_users.third]
+      assert_enqueued_jobs 2
+      assert_enqueued_with job: User::CrawlDataJob, args: [users(:john_doe)]
+      assert_enqueued_with job: User::CrawlDataJob, args: [users(:babyoda)]
 
       travel_to 12.hours.from_now
 
-      assert_enqueued_jobs 9 do
+      assert_enqueued_jobs 3 do
         ScheduleCrawlingJob.perform_now
       end
     end
