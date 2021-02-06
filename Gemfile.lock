@@ -83,7 +83,7 @@ GEM
     backport (1.1.2)
     benchmark (0.1.1)
     bindex (0.8.1)
-    bootsnap (1.6.0)
+    bootsnap (1.7.1)
       msgpack (~> 1.0)
     brakeman (5.0.0)
     builder (3.2.4)
