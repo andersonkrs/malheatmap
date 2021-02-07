@@ -33,10 +33,10 @@ group :development do
   gem "listen"
   gem "rubocop"
   gem "rubocop-rails", require: false
-  gem "solargraph"
   gem "spring"
   gem "spring-watcher-listen"
   gem "web-console"
+  gem "yard"
 end
 
 group :test do
