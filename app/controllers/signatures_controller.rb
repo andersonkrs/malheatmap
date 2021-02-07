@@ -9,7 +9,7 @@ class SignaturesController < ApplicationController
 
   def set_user
     @user = User
-              .eager_load(signature_attachment: :blob)
+              .with_attached_signature
               .find_by!(username: params[:user_username])
   end
 end

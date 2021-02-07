@@ -80,8 +80,6 @@ GEM
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.2.2)
       aws-eventstream (~> 1, >= 1.0.2)
-    backport (1.1.2)
-    benchmark (0.1.1)
     bindex (0.8.1)
     bootsnap (1.7.1)
       msgpack (~> 1.0)
@@ -134,7 +132,6 @@ GEM
       ruby-vips (>= 2.0.17, < 3)
     imatcher (0.1.9)
       chunky_png (~> 1.3.5)
-    jaro_winkler (1.5.4)
     jazz_fingers (5.2.2)
       awesome_print (~> 1.6)
       pry (~> 0.10)
@@ -142,10 +139,6 @@ GEM
       pry-coolline (~> 0.2)
     jmespath (1.4.0)
     json (2.3.1)
-    kramdown (2.3.0)
-      rexml
-    kramdown-parser-gfm (1.1.0)
-      kramdown (~> 2.0)
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -247,8 +240,6 @@ GEM
     regexp_parser (2.0.3)
     request_store (1.5.0)
       rack (>= 1.4)
-    reverse_markdown (2.0.0)
-      nokogiri
     rexml (3.2.4)
     rollbar (3.1.1)
     rubocop (1.9.1)
@@ -307,20 +298,6 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 5.0)
-    solargraph (0.40.2)
-      backport (~> 1.1)
-      benchmark
-      bundler (>= 1.17.2)
-      e2mmap
-      jaro_winkler (~> 1.5)
-      kramdown (~> 2.3)
-      kramdown-parser-gfm (~> 1.1)
-      parser (~> 3.0)
-      reverse_markdown (>= 1.0.5, < 3)
-      rubocop (>= 0.52)
-      thor (~> 1.0)
-      tilt (~> 2.0)
-      yard (~> 0.9, >= 0.9.24)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -409,7 +386,6 @@ DEPENDENCIES
   simplecov (~> 0.17.1)
   skylight (~> 5.0.0.beta5)
   slim-rails
-  solargraph
   spring
   spring-watcher-listen
   turbolinks
@@ -420,6 +396,7 @@ DEPENDENCIES
   webmock
   webpacker
   wheretz
+  yard
 
 RUBY VERSION
    ruby 2.7.2p137
