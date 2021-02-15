@@ -10,6 +10,20 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: citext; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
+
+
+--
 -- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -220,7 +234,7 @@ CREATE TABLE public.subscriptions (
 
 CREATE TABLE public.users (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
-    username character varying NOT NULL,
+    username public.citext NOT NULL,
     avatar_url character varying,
     checksum character varying,
     created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -493,6 +507,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201002030547'),
 ('20201206123608'),
 ('20201210195647'),
-('20201210195648');
+('20201210195648'),
+('20210214155211'),
+('20210214203654');
 
 

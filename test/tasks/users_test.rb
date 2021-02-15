@@ -1,23 +1,7 @@
 require "test_helper"
 
 class UsersTasksTest < ActiveSupport::TestCase
-  test "creates a user and move all old user's entries to it" do
-    old_user = users(:anderson)
-    old_user.entries.create!(item: items(:naruto), timestamp: Time.zone.now, amount: 1)
-    old_user.entries.create!(item: items(:boruto), timestamp: Time.zone.now, amount: 2)
-    old_user.entries.create!(item: items(:cowboy_bebop), timestamp: Time.zone.now, amount: 10)
-
-    Rake::Task["users:merge"].invoke(old_user.username, "NewUser")
-
-    created_user = User.find_by(username: "NewUser")
-    assert created_user
-    assert_equal 3, created_user.entries.count
-    assert created_user.entries.exists?(id: old_user.entries.map(&:id))
-    assert_enqueued_with job: User::CrawlDataJob, args: [created_user]
-    assert_not User.exists?(id: old_user.id)
-  end
-
-  test "moves the old user's entries to the new user when it already exists" do
+  test "moves the old user's entries to the new user" do
     old_user = users(:anderson)
     old_user.entries.create!(item: items(:naruto), timestamp: Time.zone.now, amount: 1)
     old_user.entries.create!(item: items(:boruto), timestamp: Time.zone.now, amount: 2)
@@ -37,9 +21,23 @@ class UsersTasksTest < ActiveSupport::TestCase
   end
 
   test "does not do anything if the old user name does not exit" do
-    Rake::Task["users:merge"].invoke("old_user", "new_user")
+    assert_raises ActiveRecord::RecordNotFound do
+      Rake::Task["users:merge"].invoke("old_user", "new_user")
+    end
 
     assert_not User.exists?(username: "old_user")
+    assert_not User.exists?(username: "new_user")
+  end
+
+  test "does not do anything if the new user name does not exit" do
+    old_user = users(:anderson)
+    old_user.entries.create!(item: items(:naruto), timestamp: Time.zone.now, amount: 1)
+
+    assert_raises ActiveRecord::RecordNotFound do
+      Rake::Task["users:merge"].invoke(old_user.username, "new_user")
+    end
+
+    assert old_user.reload.present?
     assert_not User.exists?(username: "new_user")
   end
 end

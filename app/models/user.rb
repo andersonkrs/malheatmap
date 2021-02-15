@@ -2,6 +2,7 @@ class User < ApplicationRecord
   include Crawlable
   include GeneratableSignature
   include GeneratableActivities
+  include Mergeable
 
   validates :time_zone, presence: true
   validates :latitude, numericality: true, allow_nil: true
