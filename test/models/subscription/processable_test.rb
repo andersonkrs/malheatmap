@@ -53,7 +53,9 @@ class User
       subscription = Subscription.create!(username: "random")
       MAL::UserCrawler.stub_response(subscription.username, StandardError.new("unexpected error!"))
 
-      subscription.process!
+      assert_raises StandardError do
+        subscription.process!
+      end
 
       assert subscription.reload.processed?
       assert_broadcast_on(SubscriptionChannel.broadcasting_for(subscription),
