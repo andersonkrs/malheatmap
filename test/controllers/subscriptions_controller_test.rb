@@ -52,4 +52,18 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 0, Subscription.count
     assert_no_enqueued_jobs
   end
+
+  test "should ignore username case and redirects to user profile" do
+    user = users(:babyoda)
+
+    post subscriptions_url, params: {
+      subscription: {
+        username: user.username.titleize
+      }
+    }
+
+    assert_redirected_to user_path(user.username.titleize)
+    assert_equal 0, Subscription.count
+    assert_no_enqueued_jobs
+  end
 end
