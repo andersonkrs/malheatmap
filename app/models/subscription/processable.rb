@@ -12,27 +12,24 @@ class Subscription
     end
 
     def process!
-      response = try_crawl_user_data
+      user = User.create!(username: username)
+
+      if user.crawl_mal_data
+        response = { status: :success, redirect: user_path(user) }
+      else
+        user.destroy
+        response = { status: :failure, notification: render_error_notification(user.errors[:base].first) }
+      end
 
       SubscriptionChannel.broadcast_to(self, response)
+    rescue StandardError
+      SubscriptionChannel.broadcast_to(self, status: :failure, redirect: internal_error_path)
+      raise
+    ensure
       update!(processed: true)
     end
 
     private
-
-    def try_crawl_user_data
-      user = User.create!(username: username)
-
-      if user.crawl_mal_data
-        { status: :success, redirect: user_path(user) }
-      else
-        user.destroy
-        { status: :failure, notification: render_error_notification(user.errors[:base].first) }
-      end
-    rescue StandardError => error
-      ErrorNotifier.notify(error)
-      { status: :failure, redirect: internal_error_path }
-    end
 
     def render_error_notification(message)
       ApplicationController.render NotificationComponent.new(message: message), layout: false
