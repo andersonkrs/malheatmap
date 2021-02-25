@@ -2,20 +2,14 @@ class User
   class ScheduleCrawlingJob < ApplicationJob
     queue_as :default
 
-    def perform
-      users = users_which_have_not_been_updated(at_least: 12.hours.ago)
+    def perform(batch_size: 100, batch_interval: 15)
+      User.in_batches(of: batch_size).each_with_index do |batch, batch_index|
+        interval = batch_interval.minutes * (batch_index + 1)
 
-      users.each(&:crawl_mal_data_later)
-    end
-
-    private
-
-    def users_which_have_not_been_updated(at_least:)
-      User
-        .where("updated_at <= ?", at_least)
-        .order(:updated_at)
-        .limit(50)
-        .shuffle
+        batch.each do |user|
+          user.crawl_mal_data_later(wait: interval)
+        end
+      end
     end
   end
 end

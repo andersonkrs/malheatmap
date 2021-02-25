@@ -35,7 +35,7 @@ columns:
     default_function: 
     collation: 
     comment: 
-  - &18 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+  - &19 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: amount
     sql_type_metadata: &11 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
@@ -52,7 +52,7 @@ columns:
     default_function: 
     collation: 
     comment: 
-  - &16 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+  - &17 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: user_id
     sql_type_metadata: *1
@@ -87,7 +87,7 @@ columns:
     default_function: CURRENT_TIMESTAMP
     collation: 
     comment: 
-  - &17 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+  - &18 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: item_id
     sql_type_metadata: *1
@@ -149,7 +149,7 @@ columns:
     default_function: 
     collation: 
     comment: 
-  - &19 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+  - &15 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: blob_id
     sql_type_metadata: *4
@@ -342,8 +342,28 @@ columns:
         limit: 
         precision: 
         scale: 
-      oid: 17722
+      oid: 16529
       fmod: -1
+    'null': false
+    default: 
+    default_function: 
+    collation: 
+    comment: 
+  active_storage_variant_records:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    name: id
+    sql_type_metadata: *4
+    'null': false
+    default: 
+    default_function: nextval('active_storage_variant_records_id_seq'::regclass)
+    collation: 
+    comment: 
+  - *15
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: 
+    name: variation_digest
+    sql_type_metadata: *3
     'null': false
     default: 
     default_function: 
@@ -361,7 +381,7 @@ columns:
         limit: 
         precision: 
         scale: 
-      oid: 19026
+      oid: 16387
       fmod: -1
     'null': false
     default: 
@@ -409,7 +429,7 @@ columns:
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: latitude
-    sql_type_metadata: &15 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+    sql_type_metadata: &16 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
       delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
         sql_type: double precision
         type: :float
@@ -426,7 +446,7 @@ columns:
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: longitude
-    sql_type_metadata: *15
+    sql_type_metadata: *16
     'null': true
     default: 
     default_function: 
@@ -434,8 +454,8 @@ columns:
     comment: 
   activities:
   - *8
-  - *16
   - *17
+  - *18
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: date
@@ -453,29 +473,9 @@ columns:
     default_function: 
     collation: 
     comment: 
-  - *18
+  - *19
   - *13
   - *14
-  active_storage_variant_records:
-  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-    serial: true
-    name: id
-    sql_type_metadata: *4
-    'null': false
-    default: 
-    default_function: nextval('active_storage_variant_records_id_seq'::regclass)
-    collation: 
-    comment: 
-  - *19
-  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-    serial: 
-    name: variation_digest
-    sql_type_metadata: *3
-    'null': false
-    default: 
-    default_function: 
-    collation: 
-    comment: 
 primary_keys:
   entries: id
   active_storage_attachments: id
@@ -484,9 +484,9 @@ primary_keys:
   schema_migrations: version
   subscriptions: id
   items: id
+  active_storage_variant_records: id
   users: id
   activities: id
-  active_storage_variant_records: id
 data_sources:
   entries: true
   active_storage_attachments: true
@@ -495,9 +495,9 @@ data_sources:
   schema_migrations: true
   subscriptions: true
   items: true
+  active_storage_variant_records: true
   users: true
   activities: true
-  active_storage_variant_records: true
 indexes:
   entries:
   - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
@@ -601,6 +601,21 @@ indexes:
     type: 
     using: :btree
     comment: 
+  active_storage_variant_records:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: active_storage_variant_records
+    name: index_active_storage_variant_records_uniqueness
+    unique: true
+    columns:
+    - blob_id
+    - variation_digest
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where: 
+    type: 
+    using: :btree
+    comment: 
   users:
   - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
     table: users
@@ -650,21 +665,6 @@ indexes:
     - user_id
     - item_id
     - date
-    lengths: {}
-    orders: {}
-    opclasses: {}
-    where: 
-    type: 
-    using: :btree
-    comment: 
-  active_storage_variant_records:
-  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-    table: active_storage_variant_records
-    name: index_active_storage_variant_records_uniqueness
-    unique: true
-    columns:
-    - blob_id
-    - variation_digest
     lengths: {}
     orders: {}
     opclasses: {}
