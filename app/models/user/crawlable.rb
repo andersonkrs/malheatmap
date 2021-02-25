@@ -19,8 +19,8 @@ class User
       false
     end
 
-    def crawl_mal_data_later
-      CrawlDataJob.set(wait: 5.seconds).perform_later(self)
+    def crawl_mal_data_later(wait: 5.seconds)
+      CrawlDataJob.set(wait: wait).perform_later(self)
     end
 
     private

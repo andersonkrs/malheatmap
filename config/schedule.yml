@@ -1,4 +1,4 @@
 schedule_users_update:
-  cron: "*/30 * * * *"
+  cron: "0 */8 * * *"
   class: "User::ScheduleCrawlingJob"
-  description: "Schedule users crawling every 30 minutes"
+  description: "Schedule users crawling every 8 hours"
