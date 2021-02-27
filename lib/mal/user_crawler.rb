@@ -22,13 +22,13 @@ module MAL
     end
 
     def crawl
-      return stubed_response(@username) if stubed?(@username)
+      return stubed_response(username) if stubed?(username)
 
       crawl_profile
       crawl_geolocation
       crawl_history
 
-      @response
+      response
     rescue Mechanize::ResponseCodeError => error
       handle_response_code_error(error.response_code.to_i, error.message)
     rescue *INTERNAL_COMMUNICATION_ERRORS
@@ -36,6 +36,8 @@ module MAL
     end
 
     private
+
+    attr_reader :username, :response
 
     def setup_crawler_options
       config = Rails.configuration.crawler
@@ -46,9 +48,9 @@ module MAL
     end
 
     def crawl_profile
-      get(profile_url(@username))
+      get(profile_url(username))
 
-      @response[:profile] = Parsers::Profile.new(page).parse
+      response[:profile] = Parsers::Profile.new(page).parse
     end
 
     def crawl_geolocation
@@ -56,13 +58,15 @@ module MAL
       return if location.blank?
 
       result = Geocoder.search(location)
-      return if result.blank?
+      coordinates = result&.first&.coordinates
+      return if coordinates.blank?
 
-      geodata = result.first
-      @response[:profile].merge!(
-        latitude: geodata.latitude,
-        longitude: geodata.longitude,
-        time_zone: time_zone_for(*geodata.coordinates)
+      lat, long = *coordinates
+
+      response[:profile].merge!(
+        latitude: lat,
+        longitude: long,
+        time_zone: time_zone_for(lat, long)
       )
     end
 
@@ -76,12 +80,14 @@ module MAL
     def time_zone_for(lat, long)
       results = [WhereTZ.lookup(lat, long)].flatten.compact
       results.first
+    rescue ArgumentError
+      "UTC"
     end
 
     def crawl_history_kind(kind)
       page.link_with(text: "#{kind.capitalize} History").click
 
-      @response[:history] += Parsers::History.new(page, kind: kind).parse
+      response[:history] += Parsers::History.new(page, kind: kind).parse
     end
 
     def handle_response_code_error(response_code, message)
@@ -91,7 +97,7 @@ module MAL
                           Errors::CommunicationError
                         end
 
-      raise exception_class.new(message, username: @username)
+      raise exception_class.new(message, username: username)
     end
   end
 end
