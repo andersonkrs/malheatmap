@@ -1,39 +1,49 @@
 ENV["COVERAGE"] = "false"
 
 require "test_helper"
-require "webdrivers"
 require "capybara"
+require "capybara/cuprite"
 
 Capybara.default_max_wait_time = 20
 
-Capybara.register_driver :headless_chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(
-    args: %w[headless no-sandbox window-size=1920,1080]
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(
+    app,
+    **{
+      window_size: [1200, 800],
+      browser_options: {},
+      process_timeout: 10,
+      # Enable debugging capabilities
+      inspector: true,
+      # Allow running Chrome in a headful mode by setting HEADLESS env
+      # var to a falsey value
+      headless: !ENV["HEADLESS"].in?(%w[n 0 no false])
+    }
   )
-  Capybara::Selenium::Driver.new(app, browser: :chrome,
-                                      options: options,
-                                      desired_capabilities: {
-                                        "goog:loggingPrefs" => { browser: "ALL" }
-                                      })
 end
 
-class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :headless_chrome
+Capybara.singleton_class.prepend(Module.new do
+  attr_accessor :last_used_session
 
-  parallelize_setup do |worker|
-    Webdrivers.install_dir = File.expand_path("~/.webdrivers/#{worker}")
-  end
-
-  def before_teardown
+  def using_session(name, &block)
+    self.last_used_session = name
     super
-    flush_browser_logs
+  ensure
+    self.last_used_session = nil
   end
+end)
+
+class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  driven_by :cuprite
 
   private
 
-  def flush_browser_logs
-    page.driver.browser.manage.logs.get("browser").each do |entry|
-      Rails.logger.info "[Browser] #{entry}"
-    end
+  def pause
+    page.driver.pause
+  end
+
+  # Drop #debug anywhere in a test to open a Chrome inspector and pause the execution
+  def debug(*args)
+    page.driver.debug(*args)
   end
 end
