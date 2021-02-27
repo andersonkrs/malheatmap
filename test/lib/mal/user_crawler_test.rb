@@ -41,6 +41,28 @@ class UserCrawlerTest < ActiveSupport::TestCase
     assert profile[:longitude].blank?
   end
 
+  test "returns UTC as timezone when the geolocation is not a country" do
+    Geocoder::Lookup::Test.add_stub("Caspian Sea", [{ coordinates: [41.7789772, 50.5607579] }])
+
+    crawler = MAL::UserCrawler.new("Moruna")
+    result = crawler.crawl
+    profile = result[:profile]
+
+    assert_equal "UTC", profile[:time_zone]
+  end
+
+  test "does not return the timezone if the geolocation returns empty coordinates" do
+    Geocoder::Lookup::Test.add_stub("Sorocaba, Brazil", [{ coordinates: [] }])
+
+    crawler = MAL::UserCrawler.new("hacker_4chan")
+    result = crawler.crawl
+    profile = result[:profile]
+
+    assert profile[:time_zone].blank?
+    assert profile[:latitude].blank?
+    assert profile[:longitude].blank?
+  end
+
   test "removes blank spaces from item name and timestamp" do
     crawler = MAL::UserCrawler.new("ft_suhail")
     result = crawler.crawl
