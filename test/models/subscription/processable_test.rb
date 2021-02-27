@@ -57,6 +57,7 @@ class User
         subscription.process!
       end
 
+      assert_not User.exists?(username: subscription.username)
       assert subscription.reload.processed?
       assert_broadcast_on(SubscriptionChannel.broadcasting_for(subscription),
                           status: :failure, redirect: internal_error_path)

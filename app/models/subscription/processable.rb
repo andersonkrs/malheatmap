@@ -23,6 +23,7 @@ class Subscription
 
       SubscriptionChannel.broadcast_to(self, response)
     rescue StandardError
+      user&.destroy
       SubscriptionChannel.broadcast_to(self, status: :failure, redirect: internal_error_path)
       raise
     ensure
