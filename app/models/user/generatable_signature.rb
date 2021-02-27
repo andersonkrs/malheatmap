@@ -20,7 +20,7 @@ class User
 
     def obsolete_signature?
       with_time_zone do
-        signature.blob.created_at.in_time_zone(time_zone).to_date != Time.zone.today
+        signature.blob.created_at.to_date != Time.zone.today
       end
     end
   end
