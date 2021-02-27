@@ -41,11 +41,10 @@ end
 
 group :test do
   gem "capybara"
+  gem "cuprite"
   gem "imatcher"
-  gem "selenium-webdriver"
   gem "shoulda"
   gem "simplecov", "~> 0.17.1", require: false # https://github.com/codeclimate/test-reporter/issues/413
   gem "vcr"
-  gem "webdrivers"
   gem "webmock"
 end
