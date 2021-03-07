@@ -242,7 +242,8 @@ CREATE TABLE public.users (
     location character varying,
     time_zone character varying DEFAULT 'UTC'::character varying NOT NULL,
     latitude double precision,
-    longitude double precision
+    longitude double precision,
+    count_each_entry_as_an_activity boolean DEFAULT false NOT NULL
 );
 
 
@@ -509,6 +510,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201210195647'),
 ('20201210195648'),
 ('20210214155211'),
-('20210214203654');
+('20210214203654'),
+('20210307134347');
 
 

@@ -175,5 +175,27 @@ class User
       assert_equal 3, activities.second.amount
       assert_equal 1, activities.third.amount
     end
+
+    test "sums the entry count by day when the user calculates each entry as an activity despite the amount recorded" do
+      @user.count_each_entry_as_an_activity = true
+      @user.save!
+      @user.entries.create!(
+        [
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 10, 2, 14, 33), amount: 8 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 10, 2, 14, 33), amount: 9 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 10, 3, 23, 25), amount: 14 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 10, 3, 23, 25), amount: 14 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 10, 5, 21, 29), amount: 5 }
+        ]
+      )
+
+      @user.generate_activities
+
+      assert_equal 3, activities.size
+
+      assert_equal 2, activities.first.amount
+      assert_equal 2, activities.second.amount
+      assert_equal 1, activities.third.amount
+    end
   end
 end

@@ -35,7 +35,7 @@ columns:
     default_function: 
     collation: 
     comment: 
-  - &19 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+  - &18 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: amount
     sql_type_metadata: &11 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
@@ -52,7 +52,7 @@ columns:
     default_function: 
     collation: 
     comment: 
-  - &17 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+  - &16 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: user_id
     sql_type_metadata: *1
@@ -87,7 +87,7 @@ columns:
     default_function: CURRENT_TIMESTAMP
     collation: 
     comment: 
-  - &18 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+  - &17 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: item_id
     sql_type_metadata: *1
@@ -304,7 +304,7 @@ columns:
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: processed
-    sql_type_metadata: !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+    sql_type_metadata: &20 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
       delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
         sql_type: boolean
         type: :boolean
@@ -342,7 +342,7 @@ columns:
         limit: 
         precision: 
         scale: 
-      oid: 16529
+      oid: 49297
       fmod: -1
     'null': false
     default: 
@@ -369,6 +369,30 @@ columns:
     default_function: 
     collation: 
     comment: 
+  activities:
+  - *8
+  - *16
+  - *17
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: 
+    name: date
+    sql_type_metadata: !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: date
+        type: :date
+        limit: 
+        precision: 
+        scale: 
+      oid: 1082
+      fmod: -1
+    'null': false
+    default: 
+    default_function: 
+    collation: 
+    comment: 
+  - *18
+  - *13
+  - *14
   users:
   - *8
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
@@ -381,7 +405,7 @@ columns:
         limit: 
         precision: 
         scale: 
-      oid: 16387
+      oid: 49155
       fmod: -1
     'null': false
     default: 
@@ -429,7 +453,7 @@ columns:
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: latitude
-    sql_type_metadata: &16 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+    sql_type_metadata: &19 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
       delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
         sql_type: double precision
         type: :float
@@ -446,36 +470,21 @@ columns:
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
     name: longitude
-    sql_type_metadata: *16
+    sql_type_metadata: *19
     'null': true
     default: 
     default_function: 
     collation: 
     comment: 
-  activities:
-  - *8
-  - *17
-  - *18
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: 
-    name: date
-    sql_type_metadata: !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
-      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-        sql_type: date
-        type: :date
-        limit: 
-        precision: 
-        scale: 
-      oid: 1082
-      fmod: -1
+    name: count_each_entry_as_an_activity
+    sql_type_metadata: *20
     'null': false
-    default: 
+    default: 'false'
     default_function: 
     collation: 
     comment: 
-  - *19
-  - *13
-  - *14
 primary_keys:
   entries: id
   active_storage_attachments: id
@@ -485,8 +494,8 @@ primary_keys:
   subscriptions: id
   items: id
   active_storage_variant_records: id
-  users: id
   activities: id
+  users: id
 data_sources:
   entries: true
   active_storage_attachments: true
@@ -496,8 +505,8 @@ data_sources:
   subscriptions: true
   items: true
   active_storage_variant_records: true
-  users: true
   activities: true
+  users: true
 indexes:
   entries:
   - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
@@ -616,20 +625,6 @@ indexes:
     type: 
     using: :btree
     comment: 
-  users:
-  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-    table: users
-    name: index_users_on_username
-    unique: true
-    columns:
-    - username
-    lengths: {}
-    orders: {}
-    opclasses: {}
-    where: 
-    type: 
-    using: :btree
-    comment: 
   activities:
   - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
     table: activities
@@ -672,5 +667,19 @@ indexes:
     type: 
     using: :btree
     comment: 
-version: 20210214203654
+  users:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: users
+    name: index_users_on_username
+    unique: true
+    columns:
+    - username
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where: 
+    type: 
+    using: :btree
+    comment: 
+version: 20210307134347
 database_version: 120006
