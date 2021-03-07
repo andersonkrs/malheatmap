@@ -8,14 +8,7 @@ class User < ApplicationRecord
   validates :latitude, numericality: true, allow_nil: true
   validates :longitude, numericality: true, allow_nil: true
 
-  has_many :entries, dependent: :delete_all, inverse_of: :user do
-    def visible_to_user_on_mal
-      history_limit_date = 20.days.ago.at_beginning_of_day
-
-      where("timestamp >= ?", history_limit_date)
-    end
-  end
-
+  has_many :entries, dependent: :delete_all, inverse_of: :user
   has_many :activities, dependent: :delete_all, inverse_of: :user do
     def for_date_range(range)
       where(date: range)

@@ -82,6 +82,32 @@ class User
       end
     end
 
+    test "does not update entries older that the oldest present on the crawled data payload" do
+      travel_to Time.zone.local(2020, 10, 3, 20, 0, 0)
+
+      entry_to_be_updated = { timestamp: Time.zone.local(2020, 10, 1, 20, 0, 0), item: items(:one_punch_man),
+                              amount: 1 }
+      entry_not_to_be_updated = { timestamp: Time.zone.local(2020, 9, 30), item: items(:one_punch_man), amount: 2 }
+
+      @user.entries.create!([entry_to_be_updated, entry_not_to_be_updated])
+
+      @user.crawl_mal_data
+
+      assert_not @user.entries.exists?(entry_to_be_updated)
+      assert @user.entries.exists?(entry_not_to_be_updated)
+    end
+
+    test "raises an error if the oldest crawled entry is older than 30 days" do
+      @user.entries.create!([timestamp: Time.zone.now, item: items(:one_punch_man), amount: 2])
+
+      entry_data = @response[:history].first
+      entry_data[:timestamp] = "30 days ago"
+
+      assert_raises CrawledDataProcessor::DeletingOldHistoryNotAllowed do
+        @user.crawl_mal_data
+      end
+    end
+
     test "does not update user's data when checksum did not change" do
       @user.crawl_mal_data
 
