@@ -29,9 +29,8 @@ class SubscriptionsTest < ApplicationSystemTestCase
 
     perform_enqueued_jobs
 
-    assert_text <<~MESSAGE.strip
-      Profile not found for username asdkkiok1i2k3io1k. Please check if you typed it correctly.
-    MESSAGE
+    assert_current_path(subscriptions_path)
+    assert_text(/Profile not found for username/)
   end
 
   test "redirects to user profile when username is already subscribed" do

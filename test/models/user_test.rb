@@ -73,24 +73,4 @@ class UserTest < ActiveSupport::TestCase
       end
     end
   end
-
-  class EntriesScopesTest
-    class VisibleToUserOnMalTest < ActiveSupport::TestCase
-      setup do
-        @user = users(:anderson)
-
-        travel_to Time.find_zone(@user.time_zone).local(2020, 3, 10, 22, 20)
-      end
-
-      test "returns entries from the last twenty days" do
-        @user.entries.create!(item: items(:bleach), timestamp: 21.days.ago, amount: 1)
-        entry1 = @user.entries.create!(timestamp: 2.days.ago, amount: 1, item: items(:bleach))
-        entry2 = @user.entries.create!(timestamp: 5.days.ago, amount: 1, item: items(:bleach))
-
-        results = @user.entries.visible_to_user_on_mal.pluck(:id)
-
-        assert_equal results.sort, [entry1.id, entry2.id].sort
-      end
-    end
-  end
 end

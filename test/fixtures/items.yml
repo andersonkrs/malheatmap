@@ -13,6 +13,11 @@ cowboy_bebop:
   kind: "anime"
   mal_id: 1
 
+one_punch_man:
+  name: "One Punch Man"
+  kind: "anime"
+  mal_id: 5
+
 dragon_ball_gt:
   name: "Dragon Ball GT"
   kind: "anime"
