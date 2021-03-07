@@ -77,7 +77,7 @@ class User
         raise DeletingOldHistoryNotAllowed, "User: #{@user} - Date: #{oldest_crawled_entry_date}"
       end
 
-      recent_entries.destroy_all
+      recent_entries.delete_all
     end
 
     def oldest_crawled_entry_date
