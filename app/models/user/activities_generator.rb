@@ -36,11 +36,22 @@ class User
 
       activity = processed_activities.find_or_create(item, date)
 
+      # Some uses prefer to count their activities by entry line in their history
+      # like other existing tools, MALGraph for example
+      activity.amount += if user.count_each_entry_as_an_activity?
+                           1
+                         else
+                           calculate_amount_from_last_entry_position(current_entry, item, date)
+                         end
+    end
+
+    def calculate_amount_from_last_entry_position(current_entry, item, date)
       previous_entry = processed_entries.find_last_for(item, date)
+
       if previous_entry.blank?
-        activity.amount = current_entry.amount
+        current_entry.amount
       else
-        activity.amount += current_entry.amount - previous_entry.amount
+        current_entry.amount - previous_entry.amount
       end
     end
 
