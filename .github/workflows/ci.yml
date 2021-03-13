@@ -33,17 +33,17 @@ jobs:
       uses: actions/cache@v2.1.4
       with:
         path: vendor/bundle
-        key: ${{ runner.os }}-gem-${{ hashFiles('Gemfile.lock') }}
+        key: ${{ runner.os }}-gem-v1-${{ hashFiles('Gemfile.lock') }}
         restore-keys: |
-          ${{ runner.os }}-gem-
+          ${{ runner.os }}-gem-v1
 
     - name: Cache Node Dependencies
       uses: actions/cache@v2.1.4
       with:
         path: node_modules
-        key: ${{ runner.os }}-node_modules-${{ hashFiles('yarn.lock') }}
+        key: ${{ runner.os }}-node_modules-v1-${{ hashFiles('yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-node_modules-
+          ${{ runner.os }}-node_modules-v1
 
     - name: Setup
       run: bin/setup
