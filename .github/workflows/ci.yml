@@ -59,6 +59,12 @@ jobs:
     - name: Test assets compilation
       run: RAILS_ENV=test bin/rails assets:precompile
 
+    - name: Setup Code Climate Reporter
+      run: |
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter before-build
+
     - name: Run unit tests
       run: bin/rails test
 
@@ -66,9 +72,9 @@ jobs:
       run: bin/rails test:system
 
     - name: Publish code coverage
-      uses: paambaati/codeclimate-action@v2.7.5
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      run: |
+        export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
+        ./cc-test-reporter after-build -r ${{ secrets.CC_TEST_REPORTER_ID }}
 
     - name: Upload failed tests screenshots
       uses: actions/upload-artifact@v2.2.2
