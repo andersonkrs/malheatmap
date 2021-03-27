@@ -26,7 +26,9 @@
   "resolutions": {
     "dot-prop": "^5.1.1",
     "minimist": "^1.2.3",
-    "node-forge": "^0.10.0"
+    "node-forge": "^0.10.0",
+    "ssri": "^8.0.1",
+    "is-svg": "^4.2.2"
   },
   "browserslist": [
     "defaults"
