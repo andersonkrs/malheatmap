@@ -27,6 +27,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
     click_on "Subscribe"
     assert_text(/Please wait/)
 
+    assert_enqueued_jobs 1
     perform_enqueued_jobs
 
     assert_current_path(subscriptions_path)
