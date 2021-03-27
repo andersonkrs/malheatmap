@@ -12,7 +12,7 @@ Capybara.register_driver(:cuprite) do |app|
     **{
       window_size: [1200, 800],
       browser_options: {},
-      process_timeout: 10,
+      process_timeout: 30,
       # Enable debugging capabilities
       inspector: true,
       # Allow running Chrome in a headful mode by setting HEADLESS env
