@@ -15,5 +15,15 @@ module MAL
     class ProfileNotFound < CrawlError; end
 
     class CommunicationError < CrawlError; end
+
+    class UnableToNavigateToHistoryPage < CrawlError
+      def initialize(body:, uri:)
+        super()
+        @body = body
+        @uri = uri
+      end
+
+      attr_reader :body, :uri
+    end
   end
 end

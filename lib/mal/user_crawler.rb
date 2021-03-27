@@ -72,7 +72,8 @@ module MAL
     end
 
     def crawl_history
-      page.link_with(text: "History").click
+      history_link = page.link_with(text: "History")
+      raise UnableToNavigateToHistory.new(body: page.body, uri: page.uri) if history_link.nil?
 
       crawl_history_kind(:anime)
       crawl_history_kind(:manga)
