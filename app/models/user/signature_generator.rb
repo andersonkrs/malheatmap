@@ -31,7 +31,7 @@ class User
 
     def signature_html
       date_range = calculate_date_range_for_year(Time.zone.today.year)
-      activities = user.activities.for_date_range(date_range).order(date: :desc)
+      activities = user.activities.includes(:item).for_date_range(date_range).order(date: :desc)
 
       ApplicationController.render(
         "users/signature",
