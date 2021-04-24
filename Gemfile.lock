@@ -125,7 +125,7 @@ GEM
     fugit (1.4.1)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
-    geocoder (1.6.6)
+    geocoder (1.6.7)
     gitlab-chronic (0.10.6)
       numerizer (~> 0.2)
     globalid (0.4.2)
