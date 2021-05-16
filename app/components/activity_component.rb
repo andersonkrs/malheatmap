@@ -8,10 +8,7 @@ class ActivityComponent < ViewComponent::Base
   def initialize(activity:)
     super
     @activity = activity
-    configure_activity
-  end
 
-  def configure_activity
     if @activity.item.anime?
       @url = anime_url(mal_id)
       @icon_class = "fas fa-tv"

@@ -27,7 +27,7 @@ class TimelineComponentTest < ViewComponent::TestCase
 
     component = render_inline(TimelineComponent.new(activities: activities))
 
-    assert_equal 2, component.css("#2019-06-01").css("p.activity").size
-    assert_equal 1, component.css("#2019-05-01").css("p.activity").size
+    assert_equal 2, component.css("[data-date='2019-06-01']").css("p.activity").size
+    assert_equal 1, component.css("[data-date='2019-05-01']").css("p.activity").size
   end
 end
