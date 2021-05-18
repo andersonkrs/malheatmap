@@ -10,7 +10,7 @@
         span.separator-marker.tag.is-primary = formatted_month
 
     - dates.each do |date, activities|
-      .timeline-item data-date=date
+      .timeline-item id=date
         .timeline-marker.is-primary
         .timeline-content
           p.heading = date.strftime("%B %-d, %Y")
