@@ -7,7 +7,9 @@ class ActivityComponent < ViewComponent::Base
 
   def initialize(activity:)
     super
-    if activity.item.anime?
+    @activity = activity
+
+    if @activity.item.anime?
       @url = anime_url(mal_id)
       @icon_class = "fas fa-tv"
       @amount = I18n.t("users.activity.episodes", count: @activity.amount)
