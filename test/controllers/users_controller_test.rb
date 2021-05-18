@@ -22,13 +22,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
       assert_select ".years-menu"
 
-      assert_select ".timeline-item[data-date='2019-01-01']", 1
-      assert_select ".timeline-item[data-date='2020-01-01']", 0
+      assert_select "#2019-01-01", 1
+      assert_select "#2020-01-01", 0
 
       get user_url(@user, year: 2020)
 
-      assert_select ".timeline-item[data-date='2019-01-01']", 0
-      assert_select ".timeline-item[data-date='2020-01-01']", 1
+      assert_select "#2019-01-01", 0
+      assert_select "#2020-01-01", 1
     end
 
     test "renders each year on years menu since user has been subscribed even if there is no activity in it" do
@@ -55,7 +55,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       get user_url(@user)
 
       assert_select ".timeline"
-      assert_select ".timeline-item/@data-date" do |elements|
+      assert_select ".timeline-item/@id" do |elements|
         expected_items = %w[2020-07-02 2020-07-01 2020-06-02 2020-06-01 2020-05-02 2020-05-01]
         assert_equal expected_items, elements.map(&:value)
       end
