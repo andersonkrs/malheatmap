@@ -8089,9 +8089,9 @@ tough-cookie@^4.0.0:
     universalify "^0.1.2"
 
 trim-newlines@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-4.0.0.tgz#34e90776d45f72136ccb5f8a49fbdb4761fb1bc0"
-  integrity sha512-KCkKbnBpPZ8GKB0BN7B9NHu41JI/+8c9oX+q/WFCehd7YWWz7ykjt14wwnqWrignSwfDkKMD0KpZnY4mz1AHfg==
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-4.0.1.tgz#caa1a0c92e86282c9cc8485ccd3ee5a6a4fbd958"
+  integrity sha512-5n5GIW0uEbjCB2PO6OoaG11rscJmLOLw12ZG9e0vBKNMToDJ2n1+AkUhJpGO2bLj3jXKa/gYTGVmilX5CCxqmA==
 
 ts-pnp@^1.1.6:
   version "1.2.0"
