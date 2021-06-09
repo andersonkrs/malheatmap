@@ -5,9 +5,9 @@ class User
     queue_as :low
 
     def perform(user)
-      result = user.crawl_mal_data
+      result = user.crawl_data
 
-      Rails.logger.warn(user.errors[:base].first) unless result
+      Rails.logger.warn(user.errors[:base]) unless result
     end
   end
 end

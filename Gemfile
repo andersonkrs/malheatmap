@@ -5,6 +5,7 @@ ruby "~> 2.7.2"
 
 gem "aws-sdk-s3", require: false
 gem "bootsnap", require: false
+gem "ferrum"
 gem "geocoder"
 gem "gitlab-chronic"
 gem "image_processing"
@@ -24,7 +25,6 @@ gem "webpacker"
 gem "wheretz"
 
 group :development, :test do
-  gem "faker"
   gem "jazz_fingers"
 end
 
@@ -43,6 +43,7 @@ group :test do
   gem "capybara"
   gem "cuprite"
   gem "imatcher"
+  gem "mocha"
   gem "shoulda"
   gem "simplecov", "~> 0.17.1", require: false # https://github.com/codeclimate/test-reporter/issues/413
   gem "vcr"

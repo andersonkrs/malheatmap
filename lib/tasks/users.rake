@@ -5,8 +5,8 @@ namespace :users do
     new_user = User.find_by!(username: args[:new_username])
 
     new_user.merge!(old_user)
-    new_user.crawl_mal_data_later
+    new_user.crawl_data_later
 
-    Rails.logger.info "Users have been merged succesfully"
+    Rails.logger.info "Users have been merged successfully"
   end
 end

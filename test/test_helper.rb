@@ -18,6 +18,7 @@ require_relative "../config/environment"
 require "rails/test_help"
 require "minitest/mock"
 require "webmock/minitest"
+require "mocha/minitest"
 
 Dir["./test/support/**/*.rb"].sort.each { |file| require file }
 

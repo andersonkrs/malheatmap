@@ -1,11 +1,14 @@
 require "test_helper"
 
 class User
-  class GeneratableSignatureTest < ActiveSupport::TestCase
+  class SignatureImageTest < ActiveSupport::TestCase
     setup do
+      @user = users(:babyoda)
+    end
+
+    test "generates user signature image correctly using current date" do
       travel_to Date.new(2020, 5, 1)
 
-      @user = users(:babyoda)
       @user.activities.create!(
         [
           { item: items(:bleach), amount: 6, date: Date.new(2020, 5, 1) },
@@ -22,10 +25,8 @@ class User
           { item: items(:bleach), amount: 5, date: Date.new(2019, 6, 30) }
         ]
       )
-    end
 
-    test "generates user signature correctly using current date" do
-      @user.generate_signature
+      @user.signature_image.generate
 
       assert @user.signature.attached?
       @user.signature.blob.open do |file|

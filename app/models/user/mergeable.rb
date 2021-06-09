@@ -3,7 +3,7 @@ class User
     extend ActiveSupport::Concern
 
     def merge!(old_user)
-      ApplicationRecord.transaction do
+      transaction do
         old_user.entries.update_all(user_id: id)
         old_user.destroy
 
