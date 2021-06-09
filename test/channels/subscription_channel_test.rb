@@ -23,7 +23,7 @@ class SubscriptionChannelTest < ActionCable::Channel::TestCase
   end
 
   test "does not subscribe if it's already processed" do
-    process = Subscription.create!(username: "random", processed: true)
+    process = Subscription.create!(username: "random", processed_at: Time.current)
 
     subscribe process_id: process.id
 

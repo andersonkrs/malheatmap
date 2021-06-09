@@ -13,13 +13,13 @@ class UsersTest < ApplicationSystemTestCase
 
     visit user_url(@user)
 
-    assert_text manga.name
-    assert_text anime.name
+    assert_text(/#{manga.name}/)
+    assert_text(/#{anime.name}/)
 
     click_on last_year.to_s
     assert_current_path user_path(@user, year: last_year)
 
-    assert_text anime.name
-    assert_no_text manga.name
+    assert_text(/#{anime.name}/)
+    assert_no_text(/#{manga.name}/)
   end
 end

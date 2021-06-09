@@ -1,5 +1,5 @@
 class ErrorNotifier
-  def self.notify(error)
+  def self.capture(error)
     Rails.logger.error(error)
     Rollbar.error(error)
   end

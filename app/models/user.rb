@@ -1,36 +1,35 @@
 class User < ApplicationRecord
   include Crawlable
-  include GeneratableSignature
-  include GeneratableActivities
   include Mergeable
+
+  has_one_attached :signature
+
+  has_many :entries, -> { includes(:item) }, inverse_of: :user, dependent: :delete_all
+  has_many :activities, -> { includes(:item) }, inverse_of: :user, dependent: :delete_all do
+    def generate_from_history
+      ActivitiesGenerator.new(proxy_association.owner).run
+    end
+  end
 
   validates :time_zone, presence: true
   validates :latitude, numericality: true, allow_nil: true
   validates :longitude, numericality: true, allow_nil: true
 
-  has_many :entries, dependent: :delete_all, inverse_of: :user
-  has_many :activities, dependent: :delete_all, inverse_of: :user do
-    def for_date_range(range)
-      where(date: range)
-    end
+  def calendar_dates
+    @calendar_dates ||= CalendarDates.new
+  end
 
-    def ordered_as_timeline
-      includes(:item)
-        .joins(:item)
-        .order(date: :desc, name: :asc)
-    end
-
-    def first_date
-      Rails.cache.fetch("#{proxy_association.owner.cache_key_with_version}/first-activity-date") do
-        order(date: :asc).limit(1).pick(:date)
-      end
-    end
+  def signature_image
+    @signature_image ||= SignatureImage.new(self)
   end
 
   def active_years
-    initial_date = [created_at.to_date, activities.first_date].compact.min
+    @active_years ||= begin
+      first_activity_date = activities.order(date: :asc).limit(1).pick(:date)
+      initial_date = [created_at.to_date, first_activity_date].compact.min
 
-    (initial_date.year..Time.zone.today.year)
+      (initial_date.year..Time.zone.today.year)
+    end
   end
 
   def with_time_zone(&block)

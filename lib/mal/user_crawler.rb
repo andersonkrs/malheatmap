@@ -3,7 +3,6 @@ require "mechanize"
 module MAL
   class UserCrawler < Mechanize
     include URLS
-    include Stubbing
 
     INTERNAL_COMMUNICATION_ERRORS = [
       Mechanize::ResponseReadError,
@@ -23,8 +22,6 @@ module MAL
     end
 
     def crawl
-      return stubed_response(username) if stubed?(username)
-
       crawl_profile
       crawl_geolocation
       crawl_history
@@ -73,7 +70,7 @@ module MAL
 
     def crawl_history
       history_link = page.link_with(text: "History")
-      raise UnableToNavigateToHistory.new(body: page.body, uri: page.uri) if history_link.nil?
+      raise Errors::UnableToNavigateToHistoryPage.new(body: page.body, uri: page.uri) if history_link.nil?
 
       crawl_history_kind(:anime)
       crawl_history_kind(:manga)
@@ -89,7 +86,10 @@ module MAL
     def crawl_history_kind(kind)
       page.link_with(text: "#{kind.capitalize} History").click
 
-      response[:history] += Parsers::History.new(page, kind: kind).parse
+      time_zone = response.dig(:profile, :time_zone)
+      Time.use_zone(time_zone) do
+        response[:history] += Parsers::History.new(page, kind: kind).parse
+      end
     end
 
     def handle_response_code_error(response_code, message)

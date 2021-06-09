@@ -2,16 +2,13 @@ class User
   module Crawlable
     extend ActiveSupport::Concern
 
-    included do
-      define_callbacks :crawl
+    def crawled_data
+      @crawled_data ||= CrawledData.new(self)
     end
 
-    def crawl_mal_data
-      run_callbacks(:crawl) do
-        user_data = crawler.crawl
-
-        CrawledDataProcessor.new(self, user_data).run
-      end
+    def crawl_data
+      pipeline = CrawlerPipeline.new(self)
+      pipeline.execute
 
       true
     rescue MAL::Errors::CrawlError => error
@@ -19,7 +16,7 @@ class User
       false
     end
 
-    def crawl_mal_data_later(wait: 5.seconds)
+    def crawl_data_later(wait: 5.seconds)
       CrawlDataJob.set(wait: wait).perform_later(self)
     end
 

@@ -4,45 +4,54 @@ class User
   class ProcessableTest < ActiveSupport::TestCase
     include Rails.application.routes.url_helpers
 
-    test "enqueues background job to process after create" do
-      subcription = Subscription.new(username: "test")
+    test "enqueues background job to process when submitted" do
+      subscription = Subscription.create!(username: "test")
 
       assert_enqueued_jobs 1 do
-        subcription.save!
+        subscription.submitted
       end
 
-      assert_equal false, subcription.processed?
-      assert_enqueued_with job: Subscription::ProcessJob, args: [subcription]
+      assert_equal false, subscription.processed?
+      assert_enqueued_with job: Subscription::ProcessJob, args: [subscription]
     end
 
-    test "does not enqueue anything when updating" do
-      subcription = Subscription.create!(username: "test")
+    test "does not enqueue anything when it's already been processed" do
+      subscription = Subscription.create!(username: "test", processed_at: Time.current)
 
       assert_no_enqueued_jobs do
-        subcription.touch
+        subscription.submitted
       end
     end
 
     test "processing should broadcast status success with user url when crawler returns valid data" do
-      subscription = Subscription.create!(username: "random")
-      MAL::UserCrawler.stub_response(subscription.username, valid_crawled_data)
+      MAL::UserCrawler.any_instance.stubs(:crawl).returns({
+                                                            profile: {
+                                                              avatar_url: "https://dummy/avatar",
+                                                              location: "Nowhere+",
+                                                              latitude: -34.92866,
+                                                              longitude: 138.59863,
+                                                              time_zone: "UTC"
+                                                            },
+                                                            history: []
+                                                          })
 
-      subscription.process!
+      subscription = Subscription.create!(username: "random")
+      subscription.processed
 
       assert User.exists?(username: subscription.username)
-      assert subscription.reload.processed?
+      assert subscription.processed?
       assert_broadcast_on(SubscriptionChannel.broadcasting_for(subscription),
                           status: :success, redirect: user_path(subscription.username))
     end
 
     test "processing should broadcast status error with error template when crawler returns an error" do
       subscription = Subscription.create!(username: "random")
-      MAL::UserCrawler.stub_response(subscription.username, MAL::Errors::CrawlError.new("error!"))
+      MAL::UserCrawler.any_instance.stubs(:crawl).raises(MAL::Errors::CrawlError.new("error!"))
 
-      subscription.process!
+      subscription.processed
 
       assert_not User.exists?(username: subscription.username)
-      assert subscription.reload.processed?
+      assert subscription.processed?
       assert_broadcast_on(SubscriptionChannel.broadcasting_for(subscription),
                           status: :failure,
                           notification: ApplicationController.render(NotificationComponent.new(message: "error!"),
@@ -51,22 +60,14 @@ class User
 
     test "processing should broadcast internal server error message when something unexpected happen" do
       subscription = Subscription.create!(username: "random")
-      MAL::UserCrawler.stub_response(subscription.username, StandardError.new("unexpected error!"))
+      MAL::UserCrawler.any_instance.stubs(:crawl).raises(ArgumentError, "unexpected error!")
 
-      assert_raises StandardError do
-        subscription.process!
-      end
+      subscription.processed
 
       assert_not User.exists?(username: subscription.username)
-      assert subscription.reload.processed?
+      assert subscription.processed?
       assert_broadcast_on(SubscriptionChannel.broadcasting_for(subscription),
                           status: :failure, redirect: internal_error_path)
-    end
-
-    private
-
-    def valid_crawled_data
-      JSON.parse(file_fixture("user_crawled_data.json").read, symbolize_names: true)
     end
   end
 end

@@ -7,6 +7,7 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
+      @subscription.submitted
       render :create, status: :accepted
     elsif user_already_subscribed?
       redirect_to_user_page

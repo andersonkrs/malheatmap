@@ -8,7 +8,7 @@ class User
 
     test "executes user crawling" do
       mock = Minitest::Mock.new(@user)
-      mock.expect(:crawl_mal_data, true)
+      mock.expect(:crawl_data, true)
 
       User::CrawlDataJob.perform_now(mock)
 

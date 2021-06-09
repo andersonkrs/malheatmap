@@ -224,7 +224,7 @@ CREATE TABLE public.subscriptions (
     username character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    processed boolean DEFAULT false NOT NULL
+    processed_at timestamp without time zone
 );
 
 
@@ -511,6 +511,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201210195648'),
 ('20210214155211'),
 ('20210214203654'),
-('20210307134347');
+('20210307134347'),
+('20210526022315');
 
 

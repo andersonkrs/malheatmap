@@ -11,7 +11,7 @@ class Subscription
     RESPONSE_DELAY_THRESHOLD = 2.seconds
 
     def perform(subscription)
-      subscription.process!
+      subscription.processed
     end
   end
 end

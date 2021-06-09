@@ -4,30 +4,35 @@ class Subscription
     include Rails.application.routes.url_helpers
 
     included do
-      after_commit :process_later, on: :create
+      scope :processed, -> { where.not(processed_at: nil) }
+      scope :pending, -> { where(processed_at: nil) }
     end
 
-    def process_later
-      Subscription::ProcessJob.enqueue(self)
+    def processed?
+      processed_at.present?
     end
 
-    def process!
-      user = User.create!(username: username)
+    def submitted
+      Subscription::ProcessJob.enqueue(self) unless processed?
+    end
 
-      if user.crawl_mal_data
-        response = { status: :success, redirect: user_path(user) }
-      else
-        user.destroy
-        response = { status: :failure, notification: render_error_notification(user.errors[:base].first) }
-      end
+    def processed
+      user = User.create_or_find_by!(username: username)
+
+      response = if user.crawl_data
+                   { status: :success, redirect: user_path(user) }
+                 else
+                   user.destroy!
+                   { status: :failure, notification: render_error_notification(user.errors[:base].first) }
+                 end
 
       SubscriptionChannel.broadcast_to(self, response)
-    rescue StandardError
+    rescue StandardError => error
       user&.destroy
       SubscriptionChannel.broadcast_to(self, status: :failure, redirect: internal_error_path)
-      raise
+      ErrorNotifier.capture(error)
     ensure
-      update!(processed: true)
+      update!(processed_at: Time.current)
     end
 
     private

@@ -3,16 +3,13 @@ require "test_helper"
 class Subscription
   class ProcessJobTest < ActiveSupport::TestCase
     setup do
-      @subscription = Subscription.new(username: "random")
+      @subscription = Subscription.create!(username: "random")
     end
 
-    test "calls subscription process!" do
-      mock = Minitest::Mock.new(@subscription)
-      mock.expect(:process!, nil)
+    test "calls subscription processed" do
+      Subscription::ProcessJob.perform_now(@subscription)
 
-      Subscription::ProcessJob.perform_now(mock)
-
-      mock.verify
+      assert true, @subscription.processed?
     end
   end
 end

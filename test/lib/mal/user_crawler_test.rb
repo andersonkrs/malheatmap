@@ -3,6 +3,8 @@ require "test_helper"
 class UserCrawlerTest < ActiveSupport::TestCase
   include VCRCassettes
 
+  setup { travel_to Date.new(2020, 9, 22) } # Entries timestamps are relative to current date, need to freeze
+
   test "returns user profile info with geolocation and history" do
     Geocoder::Lookup::Test.add_stub("Sorocaba, Brazil", [{ coordinates: [-23.4961296, -47.4542266] }])
     crawler = MAL::UserCrawler.new("andersonkrs")
@@ -23,7 +25,7 @@ class UserCrawlerTest < ActiveSupport::TestCase
     assert_equal 10, result[:history].size
 
     entry = result[:history].first
-    assert_equal "Sep 21, 7:33 PM", entry[:timestamp]
+    assert_equal Time.find_zone("America/Sao_Paulo").local(2020, 9, 21, 19, 33).utc, entry[:timestamp]
     assert_equal 39_597, entry[:item_id]
     assert_equal "anime", entry[:item_kind]
     assert_equal "Sword Art Online: Alicization - War of Underworld", entry[:item_name]

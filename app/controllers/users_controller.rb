@@ -1,13 +1,12 @@
 class UsersController < ApplicationController
   helper MAL::URLS
-  helper CalendarHelper
 
   around_action :set_user
   before_action :set_selected_year
 
   def show
-    @date_range = helpers.calculate_date_range_for_year(@selected_year)
-    @activities = @user.activities.for_date_range(@date_range).ordered_as_timeline
+    @date_range = @user.calendar_dates.range_for_year(@selected_year)
+    @activities = @user.activities.where(date: @date_range).ordered_as_timeline
   end
 
   private
@@ -29,6 +28,6 @@ class UsersController < ApplicationController
   end
 
   def year_param
-    @year_param ||= params[:year].to_i
+    @year_param ||= ActiveModel::Type::Integer.new.cast(params[:year])
   end
 end
