@@ -52,16 +52,18 @@ class User
 
     def capture_html_screenshot(html_file)
       Tempfile.open(%w[screenshot .png]) do |screenshot_file|
-        browser = Ferrum::Browser.new(
-          headless: true,
-          browser_options: { 'no-sandbox': nil, 'disable-setuid-sandbox': nil }
-        )
-        browser.go_to("file:#{html_file.path}")
-        browser.screenshot(selector: ".signature", path: screenshot_file.path, format: :png)
+        with_retries exception_class: Ferrum::Error do
+          browser = Ferrum::Browser.new(
+            headless: true,
+            browser_options: { 'no-sandbox': nil, 'disable-setuid-sandbox': nil }
+          )
+          browser.go_to("file:#{html_file.path}")
+          browser.screenshot(selector: ".signature", path: screenshot_file.path, format: :png)
+        ensure
+          browser&.quit
+        end
 
         screenshot_file
-      ensure
-        browser.quit
       end
     end
 
@@ -70,6 +72,19 @@ class User
         .source(screenshot_file)
         .resize_to_limit(600, 150)
         .call
+    end
+
+    def with_retries(exception_class:)
+      attempts = 0
+      begin
+        yield
+      rescue StandardError => error
+        raise error if !error.is_a?(exception_class) || attempts == 3
+
+        sleep(1)
+        attempts += 1
+        retry
+      end
     end
   end
 end
