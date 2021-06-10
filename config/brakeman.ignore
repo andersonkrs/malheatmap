@@ -1,26 +1,7 @@
 {
   "ignored_warnings": [
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "471686eced2f182c054a06e0b6d6c21015166446379122ab7f5f12d2ebed0000",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "lib/html_screenshot.rb",
-      "line": 26,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "Open3.capture3(executable, *params, :stdin_data => source, :binmode => true)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "HtmlScreenshot",
-        "method": "take"
-      },
-      "user_input": "params",
-      "confidence": "High",
-      "note": ""
-    }
+
   ],
-  "updated": "2020-11-25 07:55:33 -0300",
-  "brakeman_version": "4.10.0"
+  "updated": "2021-06-09 23:29:10 -0300",
+  "brakeman_version": "5.0.1"
 }
