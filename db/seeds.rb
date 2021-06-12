@@ -40,4 +40,4 @@ items = [
   end
 end
 
-user.generate_activities
+user.activities.generate_from_history
