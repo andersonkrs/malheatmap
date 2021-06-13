@@ -11,7 +11,11 @@ Capybara.register_driver(:cuprite) do |app|
     app,
     **{
       window_size: [1200, 800],
-      browser_options: {},
+      browser_options: {
+        "no-sandbox": nil,
+        "disable-setuid-sandbox": nil
+      },
+      timeout: 30,
       process_timeout: 30,
       # Enable debugging capabilities
       inspector: true,
