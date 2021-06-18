@@ -130,7 +130,7 @@ class User
       @user.entries.create!([timestamp: Time.zone.now, item: items(:one_punch_man), amount: 2])
       @crawler_response[:history].first[:timestamp] = 30.days.ago.in_time_zone
 
-      assert_raises CrawledData::DeletingOldHistoryNotAllowed do
+      assert_raises Crawlable::CrawledData::DeletingOldHistoryNotAllowed do
         @user.crawl_data
       end
 

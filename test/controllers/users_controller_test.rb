@@ -6,6 +6,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       travel_to Time.zone.local(2020, 5, 2)
 
       @user = users(:babyoda)
+      @user.update_columns(created_at: Time.current, updated_at: Time.current)
     end
 
     test "returns success" do
@@ -66,9 +67,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "renders the calendar range respecting the user time zone" do
+      user = users(:anderson)
       travel_to Time.zone.local(2020, 10, 4, 2)
+      user.update_columns(created_at: Time.current, updated_at: Time.current)
 
-      get user_url(users(:anderson))
+      get user_url(user)
 
       assert_select ".calendar > .squares > .square" do |elements|
         assert_equal "2020-10-03", elements.last.attr("data-date")
@@ -91,16 +94,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       get user_url(@user)
 
       assert_select ".timeline", 0
-      assert_select ".years-menu", 0
-      assert_select "p", /#{@user.username} does not have any activity yet/
+      assert_select ".years-menu", 1
+      assert_select "p", /#{@user.username} does not have any activity in 2020/
     end
 
-    test "renders the timeline if user has any activity in other year than the selected" do
+    test "renders the years menu if user has any activity in other year than the selected" do
       @user.activities.create!(item: items(:naruto), amount: 1, date: Date.new(2019, 1, 1))
 
       get user_url(@user, year: 2020)
 
-      assert_select ".timeline"
       assert_select ".years-menu"
     end
   end

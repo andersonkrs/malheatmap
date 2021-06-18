@@ -1,6 +1,6 @@
 .calendar
   ul.months.has-text-left style="display: grid; grid-template-columns: #{months_css_grid}"
-    - @months.each do |month|
+    - months.each do |month|
       - if month.visible?
         li.month[data-width=month.width] = month.label
       - else
@@ -11,7 +11,7 @@
       li.day = day_name
 
   ul.squares
-    - @squares.each do |square|
+    - squares.each do |square|
       li.square data-level=square.level data-date=square.date title=square.hint
         / The anchor is used to scroll the user to date that contains the activities, like a details page
         a href="##{square.date}" data-turbolinks="false"

@@ -59,6 +59,6 @@ class SubscriptionsTest < ApplicationSystemTestCase
     assert_text(/Please wait/)
 
     perform_enqueued_jobs
-    assert_text(/does not have any activity yet/)
+    assert_text(/does not have any activity/)
   end
 end

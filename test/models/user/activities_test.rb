@@ -135,9 +135,10 @@ class User
 
     test "generates activities based on user time zone" do
       @user.time_zone = "Australia/Adelaide"
-      @user.entries.create!(item: items(:naruto),
-                            timestamp: Time.find_zone(@user.time_zone).local(2020, 4, 10, 5),
-                            amount: 1)
+      @user.entries.build(item: items(:naruto),
+                          timestamp: Time.find_zone(@user.time_zone).local(2020, 4, 10, 5),
+                          amount: 1)
+      @user.save!
 
       @user.activities.generate_from_history
 
@@ -178,7 +179,7 @@ class User
 
     test "sums the entry count by day when the user calculates each entry as an activity despite the amount recorded" do
       @user.count_each_entry_as_an_activity = true
-      @user.entries.create!(
+      @user.entries.build(
         [
           { item: items(:naruto), timestamp: Time.zone.local(2020, 10, 2, 14, 33), amount: 8 },
           { item: items(:naruto), timestamp: Time.zone.local(2020, 10, 2, 14, 33), amount: 9 },
@@ -187,6 +188,7 @@ class User
           { item: items(:naruto), timestamp: Time.zone.local(2020, 10, 5, 21, 29), amount: 5 }
         ]
       )
+      @user.save!
 
       @user.activities.generate_from_history
 
