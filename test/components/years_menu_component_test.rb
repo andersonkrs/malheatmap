@@ -8,7 +8,7 @@ class YearsMenuComponentTest < ViewComponent::TestCase
   end
 
   test "renders each year with correctly user link" do
-    component = render_inline(YearsMenuComponent.new(user: @user, years: [2019, 2018, 2020], active_year: 2019))
+    component = render_inline(YearsMenuComponent.new(user: @user, years: [2019, 2018, 2020], selected_year: 2019))
 
     links = component.css("a")
     assert_equal 3, links.size
@@ -24,10 +24,10 @@ class YearsMenuComponentTest < ViewComponent::TestCase
   end
 
   test "sets active year with given selected year" do
-    component = render_inline(YearsMenuComponent.new(user: @user, years: [2020, 2019], active_year: 2020))
+    component = render_inline(YearsMenuComponent.new(user: @user, years: [2020, 2019], selected_year: 2020))
     assert_equal "2020", component.css("a.is-active").text
 
-    component = render_inline(YearsMenuComponent.new(user: @user, years: [2020, 2019], active_year: 2019))
+    component = render_inline(YearsMenuComponent.new(user: @user, years: [2020, 2019], selected_year: 2019))
     assert_equal "2019", component.css("a.is-active").text
   end
 end

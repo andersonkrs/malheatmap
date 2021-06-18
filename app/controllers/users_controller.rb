@@ -5,8 +5,7 @@ class UsersController < ApplicationController
   before_action :set_selected_year
 
   def show
-    @date_range = @user.calendar_dates.range_for_year(@selected_year)
-    @activities = @user.activities.where(date: @date_range).ordered_as_timeline
+    @calendar = @user.calendars[@selected_year]
   end
 
   private
@@ -20,7 +19,7 @@ class UsersController < ApplicationController
   # rubocop:enable Naming/AccessorMethodName
 
   def set_selected_year
-    @selected_year = if @user.active_years.include?(year_param)
+    @selected_year = if @user.calendars.exists?(year_param)
                        year_param
                      else
                        Time.zone.today.year

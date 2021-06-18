@@ -7,7 +7,6 @@ class SignatureControllerTest < ActionDispatch::IntegrationTest
       io: File.open(file_fixture("user_signature.png")),
       filename: "#{user.username}.png"
     )
-    user.save!
 
     get user_signature_path(user)
 

@@ -1,6 +1,5 @@
 class CalendarComponent < ViewComponent::Base
   # Component that represents the activities calendar
-  # The calendar always start on a Sunday
   #
   #              |Jan                |Feb                |Mar                |Apr
   #        SUN   04   11   18   25   01   08   15   22   29   07   14   21   28   04
@@ -25,7 +24,60 @@ class CalendarComponent < ViewComponent::Base
   # If the month is the last of the date range, we do not subtract, this adds the trailing amount of space to the
   # last month in order to match the sum of all months' widths with the total of weeks
   #
-  # width of the month's header = Number of weeks of the month * --week-width in pixes
+  # width of the month's header = Number of weeks of the month * --week-width in pixels
+
+  attr_reader :activities_amount_per_day
+
+  # Receives a hash grouping the sum of activities for each date
+  # @param [Hash{Date => Integer}] activities_amount_per_day
+  def initialize(activities_amount_per_day:)
+    super()
+
+    @activities_amount_per_day = activities_amount_per_day
+  end
+
+  def months_css_grid
+    months.map(&:css_width).join(" ")
+  end
+
+  def days_names
+    I18n.t("date.abbr_day_names").compact
+  end
+
+  def dates
+    @dates ||= activities_amount_per_day.keys.sort
+  end
+
+  def weeks
+    @weeks ||= dates.each_slice(7)
+  end
+
+  def squares
+    @squares ||= dates.map do |date|
+      Square.new(date: date, amount: activities_amount_per_day[date])
+    end
+  end
+
+  def months
+    @months ||= begin
+      last_date = dates.last
+
+      dates.uniq(&:beginning_of_month).map do |date|
+        Month.new(month: date.month,
+                  year: date.year,
+                  weeks: weeks_containing_month_year(date),
+                  last: last_date.beginning_of_month == date)
+      end
+    end
+  end
+
+  private
+
+  def weeks_containing_month_year(date)
+    weeks.select do |week|
+      week.any? { |day| day.beginning_of_month == date.beginning_of_month }
+    end
+  end
 
   Month = Struct.new(:month, :year, :weeks, :last, keyword_init: true) do
     def label
@@ -79,55 +131,6 @@ class CalendarComponent < ViewComponent::Base
     def hint
       formatted_date = I18n.l(date, format: :long)
       I18n.t("calendar_component.activities_on", count: amount, date: formatted_date)
-    end
-  end
-
-  def initialize(date_range:, activities:)
-    super
-
-    @date_range = date_range
-    @activities = activities
-    @weeks = @date_range.each_slice(7).to_a
-
-    create_squares
-    create_months
-  end
-
-  def months_css_grid
-    @months.map(&:css_width).join(" ")
-  end
-
-  def days_names
-    I18n.t("date.abbr_day_names").compact
-  end
-
-  private
-
-  def grouped_activities
-    @grouped_activities ||= @activities.group_by(&:date)
-  end
-
-  def create_squares
-    @squares = @date_range.map do |date|
-      amount = grouped_activities.fetch(date, []).sum(&:amount)
-      Square.new(date: date, amount: amount)
-    end
-  end
-
-  def create_months
-    last_date = @date_range.last
-
-    @months = @date_range.uniq(&:beginning_of_month).map do |date|
-      Month.new(month: date.month,
-                year: date.year,
-                weeks: weeks_containing_month_year(date),
-                last: last_date.beginning_of_month == date)
-    end
-  end
-
-  def weeks_containing_month_year(date)
-    @weeks.select do |week|
-      week.any? { |day| day.beginning_of_month == date.beginning_of_month }
     end
   end
 end
