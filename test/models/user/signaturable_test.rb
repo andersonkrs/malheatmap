@@ -1,7 +1,7 @@
 require "test_helper"
 
 class User
-  class SignatureImageTest < ActiveSupport::TestCase
+  class SignaturableTest < ActiveSupport::TestCase
     setup do
       @user = users(:babyoda)
     end

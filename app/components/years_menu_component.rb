@@ -1,7 +1,14 @@
 class YearsMenuComponent < ViewComponent::Base
-  def initialize(user:, years:, active_year:)
-    super
+  attr_reader :user, :years, :selected_year
+
+  def initialize(user:, years:, selected_year:)
+    super()
     @user = user
-    @years_with_link_class = years.sort.reverse.index_with { |year| "is-active" if active_year == year }
+    @years = years.sort.reverse
+    @selected_year = selected_year
+  end
+
+  def link_for_year(year)
+    link_to(year, user_path(user, year: year), class: selected_year == year ? "is-active" : "")
   end
 end

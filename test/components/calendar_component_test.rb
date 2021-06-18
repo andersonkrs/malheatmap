@@ -1,15 +1,24 @@
 require "test_helper"
 
 class CalendarComponentTest < ViewComponent::TestCase
+  def group_activities(dates:, activities: {})
+    dates.index_with do |date|
+      activities.fetch(date, 0)
+    end
+  end
+
   test "renders squares correctly" do
-    range = (Date.new(2019, 5, 5)..Date.new(2020, 5, 9))
-    activities = [
-      Activity.new(item: items(:naruto), date: Date.new(2020, 1, 1), amount: 1),
-      Activity.new(item: items(:naruto), date: Date.new(2020, 1, 2), amount: 5),
-      Activity.new(item: items(:naruto), date: Date.new(2020, 1, 3), amount: 9),
-      Activity.new(item: items(:naruto), date: Date.new(2020, 1, 4), amount: 13)
-    ]
-    component = render_inline(CalendarComponent.new(date_range: range, activities: activities))
+    activities = group_activities(
+      dates: Date.new(2019, 5, 5)..Date.new(2020, 5, 9),
+      activities: {
+        Date.new(2020, 1, 1) => 1,
+        Date.new(2020, 1, 2) => 5,
+        Date.new(2020, 1, 3) => 9,
+        Date.new(2020, 1, 4) => 13
+      }
+    )
+
+    component = render_inline(CalendarComponent.new(activities_amount_per_day: activities))
 
     squares = component.css(".calendar > .squares > .square")
 
@@ -45,8 +54,8 @@ class CalendarComponentTest < ViewComponent::TestCase
   end
 
   test "renders days names correctly" do
-    range = (Date.new(2019, 5, 5)..Date.new(2020, 5, 9))
-    component = render_inline(CalendarComponent.new(date_range: range, activities: []))
+    activities = group_activities(dates: Date.new(2019, 5, 5)..Date.new(2020, 5, 9))
+    component = render_inline(CalendarComponent.new(activities_amount_per_day: activities))
 
     component.css(".calendar > .days > .day").then do |elements|
       assert_equal %w[Sun Mon Tue Wed Thu Fri Sat], elements.map(&:text)
@@ -54,8 +63,8 @@ class CalendarComponentTest < ViewComponent::TestCase
   end
 
   test "renders each month correctly" do
-    range = (Date.new(2019, 5, 5)..Date.new(2020, 5, 9))
-    component = render_inline(CalendarComponent.new(date_range: range, activities: []))
+    activities = group_activities(dates: Date.new(2019, 5, 5)..Date.new(2020, 5, 9))
+    component = render_inline(CalendarComponent.new(activities_amount_per_day: activities))
 
     component.css(".calendar > .months > .month").then do |elements|
       assert_equal %w[May Jun Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr May], elements.map(&:text)
@@ -63,15 +72,15 @@ class CalendarComponentTest < ViewComponent::TestCase
   end
 
   test "does not show month's label if it has just one week" do
-    range = (Date.new(2019, 5, 26)..Date.new(2020, 5, 26))
-    component = render_inline(CalendarComponent.new(date_range: range, activities: []))
+    activities = group_activities(dates: Date.new(2019, 5, 26)..Date.new(2020, 5, 26))
+    component = render_inline(CalendarComponent.new(activities_amount_per_day: activities))
 
     component.css(".calendar > .months > .month").then do |elements|
       assert_equal %w[Jun Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr May], elements.map(&:text).reject(&:blank?)
     end
 
-    range = (Date.new(2019, 4, 28)..Date.new(2020, 4, 29))
-    component = render_inline(CalendarComponent.new(date_range: range, activities: []))
+    activities = group_activities(dates: Date.new(2019, 4, 28)..Date.new(2020, 4, 29))
+    component = render_inline(CalendarComponent.new(activities_amount_per_day: activities))
 
     component.css(".calendar > .months > .month").then do |elements|
       assert_equal %w[May Jun Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr], elements.map(&:text).reject(&:blank?)
@@ -79,8 +88,8 @@ class CalendarComponentTest < ViewComponent::TestCase
   end
 
   test "calculate months css grid correctly" do
-    range = (Date.new(2019, 6, 16)..Date.new(2020, 6, 19))
-    component = render_inline(CalendarComponent.new(date_range: range, activities: []))
+    activities = group_activities(dates: Date.new(2019, 6, 16)..Date.new(2020, 6, 19))
+    component = render_inline(CalendarComponent.new(activities_amount_per_day: activities))
 
     component.css(".calendar > .months").attribute("style").then do |attribute|
       expected_grid = [
@@ -107,7 +116,7 @@ class CalendarComponentTest < ViewComponent::TestCase
     range = (Date.new(2017, 12, 31)..Date.new(2018, 12, 31))
 
     loop do
-      component = render_inline(CalendarComponent.new(date_range: range, activities: []))
+      component = render_inline(CalendarComponent.new(activities_amount_per_day: group_activities(dates: range)))
       widths = component.css(".calendar > .months > .month/@data-width").map(&:value).map(&:to_i)
       weeks_size = (range.count / 7.0).ceil
 

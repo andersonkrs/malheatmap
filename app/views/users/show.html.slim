@@ -25,7 +25,7 @@
             article.media
               figure.user-avatar.media-left
                 p.image.is-96x96
-                  img src=@user.avatar_url
+                  img src=@user.avatar_url alt="User Avatar"
               .media-content
                 p
                   = link_to(profile_url(@user.username), target: "_blank", rel: "noopener noreferrer", class: "is-size-4") do
@@ -33,12 +33,12 @@
                 .bb-code.pt-3
                   = render partial: "users/bb_code"
 
-        - cache @activities do
+        - cache @calendar.activities do
           .column.is-full
             .columns.is-multiline.bordered
               .column.is-full
                 .calendar-container.has-text-centered
-                  = render CalendarComponent.new(date_range: @date_range, activities: @activities)
+                  = render CalendarComponent.new(activities_amount_per_day: @calendar.activities_amount_sum_per_day)
 
               .column.is-full
                 .columns.legend-container.is-mobile
@@ -51,14 +51,14 @@
                         li.square data-level=level title=t(".levels.#{level}")
                     span = t(".more")
 
-          - if @user.activities.any?
+          - if @calendar.activities.any?
             .column.is-10.timeline-container
-              = render TimelineComponent.new(activities: @activities)
-
-            .column.is-2.years-menu-container
-              = render YearsMenuComponent.new(user: @user, years: @user.active_years.to_a, active_year: @selected_year)
+              = render TimelineComponent.new(activities: @calendar.activities.ordered_as_timeline)
           - else
-            .column.is-10.is-offset-1.has-text-centered.mt-2
-              p.subtitle = t(".user_without_activities", username: @user.username)
+            .column.is-10.has-text-centered.mt-2
+              p.subtitle = t(".user_without_activities", username: @user.username, year: @selected_year)
               .mt-2
               = image_pack_tag "media/images/no_activity.png"
+
+          .column.is-2.years-menu-container
+            = render YearsMenuComponent.new(user: @user, years: @user.calendars.active_years.to_a, selected_year: @selected_year)

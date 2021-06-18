@@ -32,6 +32,35 @@ class UserCrawlerTest < ActiveSupport::TestCase
     assert_equal 9, entry[:amount]
   end
 
+  test "converts history timestamps correctly to UTC" do
+    travel_to Date.new(2021, 6, 18, 23)
+    Geocoder::Lookup::Test.add_stub("College/Massachusetts", [{ coordinates: [-23.4961296, -47.4542266] }])
+    crawler = MAL::UserCrawler.new("Squashbucklr")
+
+    result = crawler.crawl
+    dates = result[:history]
+              .filter { |entry| entry[:item_id] == 40_870 }
+              .pluck(:timestamp)
+              .sort
+              .reverse
+
+    Time.use_zone("America/New_York") do
+      assert_equal dates, [
+        Time.local(2021, 6, 15, 0, 23).utc,
+        Time.local(2021, 6, 14, 23, 58).utc,
+        Time.local(2021, 6, 14, 23, 28).utc,
+        Time.local(2021, 6, 14, 23, 4).utc,
+        Time.local(2021, 6, 14, 22, 40).utc,
+        Time.local(2021, 6, 14, 22, 13).utc,
+        Time.local(2021, 6, 14, 18, 52).utc,
+        Time.local(2021, 6, 14, 18, 28).utc,
+        Time.local(2021, 6, 14, 17, 59).utc,
+        Time.local(2021, 6, 14, 17, 34).utc,
+        Time.local(2021, 6, 14, 17, 5).utc
+      ]
+    end
+  end
+
   test "does not return user geolocation if the user does not have location on the profile" do
     crawler = MAL::UserCrawler.new("ft_suhail")
     result = crawler.crawl
