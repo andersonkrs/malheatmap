@@ -5,6 +5,8 @@ class UserCrawlerTest < ActiveSupport::TestCase
 
   setup { travel_to Date.new(2020, 9, 22) } # Entries timestamps are relative to current date, need to freeze
 
+  teardown { Geocoder::Lookup::Test.reset }
+
   test "returns user profile info with geolocation and history" do
     Geocoder::Lookup::Test.add_stub("Sorocaba, Brazil", [{ coordinates: [-23.4961296, -47.4542266] }])
     crawler = MAL::UserCrawler.new("andersonkrs")
@@ -33,8 +35,9 @@ class UserCrawlerTest < ActiveSupport::TestCase
   end
 
   test "converts history timestamps correctly to UTC" do
-    travel_to Date.new(2021, 6, 18, 23)
-    Geocoder::Lookup::Test.add_stub("College/Massachusetts", [{ coordinates: [-23.4961296, -47.4542266] }])
+    travel_to Time.zone.local(2021, 6, 18, 23)
+
+    Geocoder::Lookup::Test.add_stub("College/Massachusetts", [{ coordinates: [42.3788774, -72.032366] }])
     crawler = MAL::UserCrawler.new("Squashbucklr")
 
     result = crawler.crawl
@@ -46,17 +49,17 @@ class UserCrawlerTest < ActiveSupport::TestCase
 
     Time.use_zone("America/New_York") do
       assert_equal dates, [
-        Time.local(2021, 6, 15, 0, 23).utc,
-        Time.local(2021, 6, 14, 23, 58).utc,
-        Time.local(2021, 6, 14, 23, 28).utc,
-        Time.local(2021, 6, 14, 23, 4).utc,
-        Time.local(2021, 6, 14, 22, 40).utc,
-        Time.local(2021, 6, 14, 22, 13).utc,
-        Time.local(2021, 6, 14, 18, 52).utc,
-        Time.local(2021, 6, 14, 18, 28).utc,
-        Time.local(2021, 6, 14, 17, 59).utc,
-        Time.local(2021, 6, 14, 17, 34).utc,
-        Time.local(2021, 6, 14, 17, 5).utc
+        Time.zone.local(2021, 6, 15, 0, 23).utc,
+        Time.zone.local(2021, 6, 14, 23, 58).utc,
+        Time.zone.local(2021, 6, 14, 23, 28).utc,
+        Time.zone.local(2021, 6, 14, 23, 4).utc,
+        Time.zone.local(2021, 6, 14, 22, 40).utc,
+        Time.zone.local(2021, 6, 14, 22, 13).utc,
+        Time.zone.local(2021, 6, 14, 18, 52).utc,
+        Time.zone.local(2021, 6, 14, 18, 28).utc,
+        Time.zone.local(2021, 6, 14, 17, 59).utc,
+        Time.zone.local(2021, 6, 14, 17, 34).utc,
+        Time.zone.local(2021, 6, 14, 17, 5).utc
       ]
     end
   end
