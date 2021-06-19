@@ -39,9 +39,9 @@ module MAL
       end
 
       def parse_natural_timestamp(text)
-        date = Chronic.parse(text, context: :past, now: Time.zone.now)
+        date = Chronic.parse(text, context: :past)
 
-        date.change(sec: 0, usec: 0, offset: Time.zone.formatted_offset).utc
+        Time.zone.local_to_utc(date.change(sec: 0, usec: 0))
       end
     end
   end
