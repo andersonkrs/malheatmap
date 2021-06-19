@@ -62,7 +62,7 @@ class User
             browser.go_to("file:#{html_file.path}")
             browser.screenshot(selector: ".signature", path: screenshot_file.path, format: :png)
           ensure
-            browser.quit
+            browser&.quit
           end
 
           screenshot_file
