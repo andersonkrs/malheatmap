@@ -20,7 +20,7 @@ require "minitest/mock"
 require "webmock/minitest"
 require "mocha/minitest"
 
-Dir["./test/support/**/*.rb"].sort.each { |file| require file }
+Dir["./test/support/**/*.rb"].each { |file| require file }
 
 module ActiveSupport
   class TestCase
