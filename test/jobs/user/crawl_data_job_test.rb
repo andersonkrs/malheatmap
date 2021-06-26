@@ -7,12 +7,20 @@ class User
     end
 
     test "executes user crawling" do
-      mock = Minitest::Mock.new(@user)
-      mock.expect(:crawl_data, true)
+      MAL::UserCrawler.any_instance.stubs(:crawl).returns({
+                                                            profile: {
+                                                              avatar_url: "https://dummy/avatar",
+                                                              location: "Sao Paulo, Brazil",
+                                                              latitude: -34.92866,
+                                                              longitude: 138.59863,
+                                                              time_zone: "America/Sao_Paulo"
+                                                            },
+                                                            history: []
+                                                          })
 
-      User::CrawlDataJob.perform_now(mock)
-
-      mock.verify
+      assert_changes -> { @user.checksum } do
+        User::CrawlDataJob.perform_now(@user)
+      end
     end
   end
 end
