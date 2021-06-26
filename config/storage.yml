@@ -1,6 +1,6 @@
 local:
   service: Disk
-  root: <%= Rails.root.join("tmp/storage", Rails.env) %>
+  root: <%= Rails.root.join("storage", Rails.env) %>
 
 amazon:
   service: S3

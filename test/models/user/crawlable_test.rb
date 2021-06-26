@@ -88,6 +88,14 @@ class User
       assert_equal "One Punch Man", entry.name
       assert_equal "anime", entry.kind
 
+      assert_equal 1, @user.crawling_log_entries.count
+      crawling_log_entry = @user.crawling_log_entries.first
+      assert_equal crawling_log_entry.checksum, @user.checksum
+      assert_equal false, crawling_log_entry.failure?
+      assert_nil crawling_log_entry.failure_message
+      assert_equal @crawler_response, crawling_log_entry.raw_data.deep_symbolize_keys
+      assert_enqueued_with job: Purgeable::PurgeRecordJob, args: [crawling_log_entry]
+
       assert_equal 3, @user.activities.count
       assert_equal true, @user.signature.attached?
     end
@@ -112,29 +120,45 @@ class User
       end
     end
 
-    test "does not update entries older that the oldest present on the crawled data payload" do
+    test "does not destroy entries older that the oldest present on the crawled data payload" do
       travel_to Time.zone.local(2020, 10, 3, 20, 0, 0)
 
-      entry_to_be_updated = { timestamp: Time.zone.local(2020, 10, 1, 20, 0, 0), item: items(:one_punch_man),
-                              amount: 1 }
-      entry_not_to_be_updated = { timestamp: Time.zone.local(2020, 9, 30), item: items(:one_punch_man), amount: 2 }
-      @user.entries.create!([entry_to_be_updated, entry_not_to_be_updated])
+      entry_to_be_destroyed = { timestamp: Time.zone.local(2020, 10, 1, 20, 0, 0), item: items(:one_punch_man),
+                                amount: 1 }
+      entry_not_to_be_destroyed = { timestamp: Time.zone.local(2020, 9, 30), item: items(:one_punch_man), amount: 2 }
+      @user.entries.create!([entry_not_to_be_destroyed, entry_to_be_destroyed])
 
       @user.crawl_data
 
-      assert_not @user.entries.exists?(entry_to_be_updated)
-      assert @user.entries.exists?(entry_not_to_be_updated)
+      assert_not @user.entries.exists?(entry_to_be_destroyed)
+      assert @user.entries.exists?(entry_not_to_be_destroyed)
     end
 
     test "raises an error if the oldest crawled entry is older than 30 days" do
       @user.entries.create!([timestamp: Time.zone.now, item: items(:one_punch_man), amount: 2])
       @crawler_response[:history].first[:timestamp] = 30.days.ago.in_time_zone
 
-      assert_raises Crawlable::CrawledData::DeletingOldHistoryNotAllowed do
+      assert_raises Crawlable::CrawlingLogEntry::DeletingOldHistoryNotAllowed do
         @user.crawl_data
       end
 
       assert_equal 1, @user.entries.count
+    end
+
+    test "saves the navigation history" do
+      MAL::UserCrawler.any_instance.stubs(:history).returns(
+        [
+          stub(body: "<html>profile</html>", uri: URI.parse("https://dummy/myuser/profile")),
+          stub(body: "<html>history</html>", uri: URI.parse("https://dummy/myuser/history"))
+        ]
+      )
+      @user.crawl_data
+
+      visited_pages = @user.crawling_log_entries.first.visited_pages.order(:created_at)
+
+      assert_equal 2, visited_pages.size
+      assert_equal "profile.html", visited_pages.first.filename.sanitized
+      assert_equal "history.html", visited_pages.second.filename.sanitized
     end
 
     test "does not update user's data when checksum did not change" do
@@ -171,13 +195,33 @@ class User
       end
     end
 
-    test "returns false when a crawling error occurs" do
+    test "returns false when a crawling error occurs " do
       MAL::UserCrawler.any_instance.stubs(:crawl).raises(MAL::Errors::CrawlError.new("Something went wrong"))
 
       result = @user.crawl_data
 
       assert_equal false, result
       assert_equal ["Something went wrong"], @user.errors[:base]
+    end
+
+    test "creates a log entry with the failure message and an error occurs during the crawling" do
+      MAL::UserCrawler.any_instance.stubs(:history).returns([
+                                                              stub(body: "<html>something wrong here</html>",
+                                                                   uri: URI.parse("https://dummy/myuser/profile"))
+                                                            ])
+      MAL::UserCrawler.any_instance.stubs(:crawl).raises(MAL::Errors::CrawlError.new("Something wrong here"))
+
+      @user.crawl_data
+
+      assert_equal 1, @user.crawling_log_entries.size
+      log_entry = @user.crawling_log_entries.first
+      assert_equal true, log_entry.failure?
+      assert_equal "Something wrong here", log_entry.failure_message
+
+      visited_pages = log_entry.visited_pages.order(:created_at)
+
+      assert_equal 1, visited_pages.size
+      assert_equal "profile.html", visited_pages.first.filename.sanitized
     end
   end
 end
