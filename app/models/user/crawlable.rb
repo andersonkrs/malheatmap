@@ -2,8 +2,9 @@ class User
   module Crawlable
     extend ActiveSupport::Concern
 
-    def crawled_data
-      @crawled_data ||= CrawledData.new(self)
+    included do
+      has_many :crawling_log_entries, -> { order(created_at: :desc) }, class_name: "User::Crawlable::CrawlingLogEntry",
+                                                                       inverse_of: :user
     end
 
     def crawl_data

@@ -7,11 +7,12 @@ class User
       end
 
       def execute
-        new_data = crawler.crawl
-        user.crawled_data.import(new_data)
+        raw_data = crawler.crawl
 
-        generate_activities
-        generate_new_signature_image
+        process_raw_data(raw_data)
+      rescue StandardError => error
+        capture_failure_log_entry(error, raw_data: raw_data)
+        raise
       end
 
       private
@@ -22,16 +23,34 @@ class User
         @crawler ||= MAL::UserCrawler.new(user.username)
       end
 
-      def generate_activities
-        return unless user.crawled_data.changed?
+      def process_raw_data(data)
+        crawling_log_entry = create_log_entry(raw_data: data)
+        crawling_log_entry.apply_data_changes_to_user
 
-        user.activities.generate_from_history
+        user.activities.generate_from_history if user.saved_change_to_checksum?
+        user.signature_image.generate if user.signature_image.obsolete?
       end
 
-      def generate_new_signature_image
-        return if !user.crawled_data.changed? && !user.signature_image.obsolete?
+      def capture_failure_log_entry(error, raw_data:)
+        create_log_entry(failure: true, failure_message: error.message, raw_data: raw_data)
+      end
 
-        user.signature_image.generate
+      def create_log_entry(raw_data:, failure: false, failure_message: nil)
+        user.crawling_log_entries.create!(raw_data: raw_data,
+                                          failure: failure,
+                                          failure_message: failure_message) do |log|
+          attach_visited_pages(log)
+        end
+      end
+
+      def attach_visited_pages(log)
+        crawler.history.each do |page|
+          log.visited_pages.attach(
+            io: StringIO.new(page.body),
+            filename: "#{page.uri.path.split('/').last}.html",
+            content_type: "text/html"
+          )
+        end
       end
     end
   end

@@ -178,6 +178,22 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: crawling_log_entries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.crawling_log_entries (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    raw_data jsonb,
+    checksum character varying,
+    failure_message character varying,
+    failure boolean NOT NULL,
+    user_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: entries; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -309,6 +325,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: crawling_log_entries crawling_log_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.crawling_log_entries
+    ADD CONSTRAINT crawling_log_entries_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: entries entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -395,6 +419,13 @@ CREATE INDEX index_activities_on_user_id ON public.activities USING btree (user_
 --
 
 CREATE UNIQUE INDEX index_activities_on_user_id_and_item_id_and_date ON public.activities USING btree (user_id, item_id, date);
+
+
+--
+-- Name: index_crawling_log_entries_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_crawling_log_entries_on_user_id ON public.crawling_log_entries USING btree (user_id);
 
 
 --
@@ -512,6 +543,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210214155211'),
 ('20210214203654'),
 ('20210307134347'),
-('20210526022315');
+('20210526022315'),
+('20210622025419');
 
 

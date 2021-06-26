@@ -22,8 +22,9 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, Subscription.count
 
     created_subscription = Subscription.find_by(username: username)
-    assert_enqueued_jobs 1
+    assert_enqueued_jobs 2
     assert_enqueued_with job: Subscription::ProcessJob, args: [created_subscription]
+    assert_enqueued_with job: Purgeable::PurgeRecordJob, args: [created_subscription]
   end
 
   test "does not enqueue anything when creating invalid subscription" do

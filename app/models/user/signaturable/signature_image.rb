@@ -16,6 +16,7 @@ class User
 
       def obsolete?
         return true unless user.signature.attached?
+        return true if user.saved_change_to_checksum?
 
         user.signature.blob.created_at.in_time_zone.to_date != Time.zone.today
       end
