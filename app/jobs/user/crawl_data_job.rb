@@ -5,7 +5,11 @@ class User
     queue_as :low
 
     def perform(user)
-      ErrorNotifier.capture_info(user.errors.base, user: { id: user.id, email: user.email }) unless user.crawl_data
+      return if user.crawl_data
+
+      user.errors[:base].each do |error_message|
+        ErrorNotifier.capture_info(error_message, user: { id: user.id, username: user.username })
+      end
     end
   end
 end

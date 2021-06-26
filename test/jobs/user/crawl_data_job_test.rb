@@ -6,7 +6,7 @@ class User
       @user = users(:babyoda)
     end
 
-    test "executes user crawling" do
+    test "executes user crawling without errors" do
       MAL::UserCrawler.any_instance.stubs(:crawl).returns({
                                                             profile: {
                                                               avatar_url: "https://dummy/avatar",
@@ -21,6 +21,14 @@ class User
       assert_changes -> { @user.checksum } do
         User::CrawlDataJob.perform_now(@user)
       end
+    end
+
+    test "forwards the error message to the error notifier when the crawling fails" do
+      MAL::UserCrawler.any_instance.stubs(:crawl).raises(MAL::Errors::CrawlError.new("Something went wrong"))
+      ErrorNotifier.expects(:capture_info).with("Something went wrong",
+                                                user: { id: @user.id, username: @user.username }).once
+
+      User::CrawlDataJob.perform_now(@user)
     end
   end
 end
