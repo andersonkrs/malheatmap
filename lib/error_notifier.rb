@@ -4,7 +4,7 @@ class ErrorNotifier
     Rollbar.error(error)
   end
 
-  def capture_info(message, **extras)
+  def self.capture_info(message, **extras)
     Rails.logger.info(message)
     Rollbar.info(message, **extras)
   end
