@@ -15,14 +15,20 @@ class User
   module Calendars
     extend ActiveSupport::Concern
 
-    included do
-      after_find do
-        calendars.reload if instance_variable_defined? "@calendars"
-      end
-    end
-
     def calendars
       @calendars ||= CalendarList.new(self)
+    end
+
+    def reload(options = nil)
+      instance = super(options)
+      delete_cached_calendar
+      instance
+    end
+
+    private
+
+    def delete_cached_calendar
+      remove_instance_variable "@calendars" if instance_variable_defined? "@calendars"
     end
   end
 end

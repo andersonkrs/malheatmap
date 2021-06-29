@@ -14,7 +14,7 @@ class User
       @user.entries.create!(item: items(:naruto), timestamp: Date.new(2020, 1, 1), amount: 10)
 
       assert_changes -> { activities.count }, from: 0, to: 1 do
-        @user.activities.generate_from_history
+        assert_equal true, @user.activities.generate_from_history
       end
 
       activity = activities.first

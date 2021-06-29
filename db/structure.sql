@@ -187,9 +187,9 @@ CREATE TABLE public.crawling_log_entries (
     checksum character varying,
     failure_message character varying,
     failure boolean NOT NULL,
-    user_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    user_id uuid
 );
 
 
@@ -464,6 +464,14 @@ CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (usernam
 
 
 --
+-- Name: crawling_log_entries fk_rails_25a097bbfa; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.crawling_log_entries
+    ADD CONSTRAINT fk_rails_25a097bbfa FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: activities fk_rails_7e11bb717f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -544,6 +552,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210214203654'),
 ('20210307134347'),
 ('20210526022315'),
-('20210622025419');
+('20210622025419'),
+('20210629132446');
 
 

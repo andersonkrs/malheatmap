@@ -3,7 +3,7 @@ class User
     class CrawlingLogEntry < ApplicationRecord
       include Purgeable
 
-      purge_after 30.days
+      purge_after 3.days
 
       has_many_attached :visited_pages, service: :local
 

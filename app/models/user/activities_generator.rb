@@ -12,6 +12,8 @@ class User
         calculate_activities_per_day_from_history
         save
       end
+
+      true
     end
 
     private
