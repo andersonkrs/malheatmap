@@ -3,8 +3,10 @@ class User
     extend ActiveSupport::Concern
 
     included do
-      has_many :crawling_log_entries, -> { order(created_at: :desc) }, class_name: "User::Crawlable::CrawlingLogEntry",
-                                                                       inverse_of: :user
+      has_many :crawling_log_entries, -> { order(created_at: :desc) },
+               class_name: "User::Crawlable::CrawlingLogEntry",
+               inverse_of: :user, foreign_key: "user_id",
+               dependent: :destroy
     end
 
     def crawl_data

@@ -41,7 +41,8 @@ module MAL
       def parse_natural_timestamp(text)
         date = Chronic.parse(text, context: :past, now: Time.zone.now)
 
-        Time.zone.local(date.year, date.month, date.day, date.hour, date.min).utc
+        # For non logged users, MAL uses pacific time as default timezone
+        Time.find_zone("Pacific Time (US & Canada)").local(date.year, date.month, date.day, date.hour, date.min).utc
       end
     end
   end

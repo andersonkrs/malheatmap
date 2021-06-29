@@ -86,10 +86,7 @@ module MAL
     def crawl_history_kind(kind)
       page.link_with(text: "#{kind.capitalize} History").click
 
-      time_zone = response.dig(:profile, :time_zone)
-      Time.use_zone(time_zone) do
-        response[:history] += Parsers::History.new(page, kind: kind).parse
-      end
+      response[:history] += Parsers::History.new(page, kind: kind).parse
     end
 
     def handle_response_code_error(response_code, message)

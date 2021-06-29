@@ -334,7 +334,7 @@ columns:
         limit:
         precision:
         scale:
-      oid: 24748
+      oid: 16827
       fmod: -1
     'null': false
     default:
@@ -373,7 +373,7 @@ columns:
         limit:
         precision:
         scale:
-      oid: 24606
+      oid: 16685
       fmod: -1
     'null': false
     default:
@@ -523,17 +523,17 @@ columns:
     default_function:
     collation:
     comment:
+  - *7
+  - *8
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial:
     name: user_id
-    sql_type_metadata: *6
+    sql_type_metadata: *4
     'null': true
     default:
     default_function:
     collation:
     comment:
-  - *7
-  - *8
 primary_keys:
   subscriptions: id
   entries: id
@@ -746,5 +746,5 @@ indexes:
     type:
     using: :btree
     comment:
-version: 20210622025419
+version: 20210629132446
 database_version: 120007
