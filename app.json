@@ -7,11 +7,6 @@
   "website": "https://malheatmap.com",
   "repository": "git@github.com:andersonkrs/malheatmap.git",
   "logo": "https://malheatmap.com/favicon.ico",
-  "scripts": {
-    "dokku": {
-      "postdeploy": "bin/rails deployment:notify"
-    }
-  },
   "image": "gliderlabs/herokuish",
   "addons": [
     "dokku-postgres",
