@@ -1,0 +1,29 @@
+{
+  "name": "Tool for tracking your anime/manga consumption based on your myanimelist.net history.",
+  "keywords": [
+    "rails",
+    "myanimelist"
+  ],
+  "website": "https://malheatmap.com",
+  "repository": "https://github.com/andersonkrs/malheatmap",
+  "logo": "https://malheatmap.com/favicon.ico",
+  "scripts": {
+    "dokku": {
+      "postdeploy": "bin/notify_deployment"
+    }
+  },
+  "image": "gliderlabs/herokuish",
+  "addons": [
+    "dokku-postgres",
+    "dokku-redis"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/DuckyTeam/heroku-buildpack-imagemagick",
+      "url": "https://github.com/heroku/heroku-buildpack-google-chrome",
+      "url": "https://github.com/gaffneyc/heroku-buildpack-jemalloc",
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs",
+      "url": "https://github.com/heroku/heroku-buildpack-ruby"
+    }
+  ]
+}
