@@ -1,20 +1,20 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "~> 3.0.0"
+ruby "~> 3.0.1"
 
 gem "aws-sdk-s3", require: false
 gem "bootsnap", require: false
 gem "ferrum"
 gem "geocoder"
 gem "gitlab-chronic"
+gem "honeybadger"
 gem "image_processing"
 gem "lograge"
 gem "mechanize"
 gem "pg"
 gem "puma"
 gem "rails", "~> 6.1.4"
-gem "rollbar"
 gem "sidekiq"
 gem "sidekiq-scheduler"
 gem "skylight", "~> 5.1.1"

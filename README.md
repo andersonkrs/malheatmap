@@ -62,9 +62,9 @@ So, when the user subscribes to its profile to be tracked, a job will be trigger
 
 Requirements:
 
-* PostgreSQL 11+
-* Ruby 2.7.2
-* Node 10+
+* PostgreSQL 12.4+
+* Ruby 3.0.1
+* Node 14.17.0
 * [ImageMagick](https://imagemagick.org/index.php)
 
 Since this app is a classical Rails project, there is nothing special here, to setup project:
@@ -105,8 +105,7 @@ This app is deployed with [Dokku](http://dokku.viewdocs.io/dokku/) hosted on a V
 
 Auxiliary tools:
 
-* [Rollbar](https://rollbar.com/) for error monitoring
-* [UptimeRobot](https://uptimerobot.com/) for uptime monitoring
+* [Honeybadger](https://rollbar.com/) for error tracking and uptime monitoring
 * [Matomo](https://matomo.org) for analytics
 * [Amazon S3](https://aws.amazon.com/s3) as storage service
 * [Amazon Cloud Watch](https://aws.amazon.com/cloudwatch) for log management

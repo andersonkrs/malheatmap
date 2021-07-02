@@ -8,7 +8,7 @@ class User
       return if user.crawl_data
 
       user.errors[:base].each do |error_message|
-        ErrorNotifier.capture_info(error_message, user: { id: user.id, username: user.username })
+        ErrorNotifier.capture(error_message, user: { id: user.id })
       end
     end
   end
