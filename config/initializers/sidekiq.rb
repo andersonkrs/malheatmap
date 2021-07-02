@@ -5,6 +5,15 @@ Sidekiq.configure_client do |config|
   }
 end
 
+class ThreadedBrowserMiddleware
+  def initialize(options = nil); end
+
+  def call(_worker, _message, _queue)
+    BrowserSession.current = Sidekiq.options[:browser]
+    yield
+  end
+end
+
 Sidekiq.configure_server do |config|
   config.log_formatter = Sidekiq::Logger::Formatters::WithoutTimestamp.new
 
@@ -21,6 +30,16 @@ Sidekiq.configure_server do |config|
       Sidekiq.schedule = YAML.load_file("config/schedule.yml")
       SidekiqScheduler::Scheduler.instance.reload_schedule!
     end
+
+    config.options[:browser] = BrowserSession.new_browser
+  end
+
+  config.on(:quiet) do
+    config.options[:browser]&.quit
+  end
+
+  config.server_middleware do |chain|
+    chain.add ThreadedBrowserMiddleware
   end
 end
 

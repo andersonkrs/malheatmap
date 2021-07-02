@@ -50,20 +50,9 @@ class User
 
       def capture_html_screenshot(html_file)
         Tempfile.open(%w[screenshot .png]) do |screenshot_file|
-          with_retries exception_class: Ferrum::Error do
-            browser = Ferrum::Browser.new(
-              headless: true,
-              browser_options: {
-                "no-sandbox": nil,
-                "disable-setuid-sandbox": nil
-              },
-              timeout: 30,
-              process_timeout: 30
-            )
-            browser.go_to("file:#{html_file.path}")
-            browser.screenshot(selector: ".signature", path: screenshot_file.path, format: :png)
-          ensure
-            browser&.quit
+          BrowserSession.fetch_page do |page|
+            page.go_to("file:#{html_file.path}")
+            page.screenshot(selector: ".signature", path: screenshot_file.path, format: :png)
           end
 
           screenshot_file
