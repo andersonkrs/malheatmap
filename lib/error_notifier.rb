@@ -1,11 +1,6 @@
 class ErrorNotifier
-  def self.capture(error)
+  def self.capture(error, **extras)
     Rails.logger.error(error)
-    Rollbar.error(error)
-  end
-
-  def self.capture_info(message, **extras)
-    Rails.logger.info(message)
-    Rollbar.info(message, **extras)
+    Honeybadger.notify(error, context: extras)
   end
 end
