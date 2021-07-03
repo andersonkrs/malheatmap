@@ -14,6 +14,8 @@ class ThreadedBrowserMiddleware
   end
 end
 
+require_relative "../../lib/browser_session"
+
 Sidekiq.configure_server do |config|
   config.log_formatter = Sidekiq::Logger::Formatters::WithoutTimestamp.new
 
