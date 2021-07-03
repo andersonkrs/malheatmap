@@ -7,7 +7,14 @@ module Purgeable
   # If the job fails by the exception RecordNotPurgeable, the job will be rescheduled with the exponential interval
   extend ActiveSupport::Concern
 
-  class RecordNotPurgeable < StandardError; end
+  class RecordNotPurgeable < StandardError
+    attr_reader :created_at
+
+    def initialize(msg = nil, created_at:)
+      @created_at = created_at
+      super(msg)
+    end
+  end
 
   included do
     class_attribute :_purgeable_after, default: nil
@@ -26,7 +33,7 @@ module Purgeable
   end
 
   def purge!
-    raise Purgeable::RecordNotPurgeable unless can_be_purged?
+    raise Purgeable::RecordNotPurgeable.new(created_at: created_at) unless can_be_purged?
 
     destroy!
   end
