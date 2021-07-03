@@ -41,17 +41,21 @@ class User
         destroy_recent_history_entries(new_history_entries)
 
         cached_items = {}
-        new_history_entries.each do |entry_data|
-          history_entry = user.entries.build(amount: entry_data["amount"], timestamp: entry_data["timestamp"])
 
-          history_entry.item = fetch_item(cached_items, id: entry_data["item_id"], kind: entry_data["item_kind"])
-          history_entry.item.name = entry_data["item_name"]
-          history_entry.save!
+        entries_to_insert = new_history_entries.map do |entry_data|
+          history_entry = Entry.new(user: user, amount: entry_data["amount"], timestamp: entry_data["timestamp"])
+
+          history_entry.item_id = upsert_item(
+            cached_items,
+            mal_id: entry_data["item_id"],
+            kind: entry_data["item_kind"],
+            name: entry_data["item_name"]
+          )
+          history_entry.validate!
+          history_entry
         end
-      end
 
-      def fetch_item(cache, id:, kind:)
-        cache["#{id}/#{kind}"] ||= Item.find_or_initialize_by(mal_id: id, kind: kind)
+        insert_entries(entries_to_insert)
       end
 
       # Destroys the current recent entries from the oldest crawled entry date to not duplicate history
@@ -73,6 +77,27 @@ class User
         end
 
         entries.delete_all
+      end
+
+      def upsert_item(cache, mal_id:, kind:, name:)
+        cache["#{mal_id}/#{kind}"] ||= begin
+          result = Item.upsert(
+            {
+              mal_id: mal_id,
+              kind: kind,
+              name: name,
+              updated_at: Time.current
+            },
+            unique_by: :index_items_on_mal_id_and_kind,
+            returning: :id
+          )
+
+          result.first["id"]
+        end
+      end
+
+      def insert_entries(entries)
+        Entry.insert_all(entries.map { |entry| entry.attributes.except("id", "created_at", "updated_at") })
       end
     end
   end

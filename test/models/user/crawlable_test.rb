@@ -58,7 +58,7 @@ class User
       assert_equal 138.59863, @user.longitude
       assert_equal "Australia/Adelaide", @user.time_zone
 
-      assert_equal 4, @user.entries.size
+      assert_equal 4, @user.entries.count
       entries = @user.entries.order(timestamp: :desc)
       entry = entries.first
       assert_equal Time.find_zone(@user.time_zone).local(2020, 10, 3, 17, 30), entry.timestamp
