@@ -9,10 +9,7 @@ class User
 
       belongs_to :user
 
-      def raw_data=(value)
-        compute_checksum
-        super(value)
-      end
+      scope :order_by_latest, -> { order(created_at: :desc) }
 
       def apply_data_changes_to_user
         return if user.checksum == checksum
@@ -23,13 +20,13 @@ class User
         end
       end
 
+      def calculate_checksum
+        self.checksum = OpenSSL::Digest::MD5.hexdigest(Marshal.dump(raw_data))
+      end
+
       private
 
       class DeletingOldHistoryNotAllowed < StandardError; end
-
-      def compute_checksum
-        self.checksum = OpenSSL::Digest::MD5.hexdigest(Marshal.dump(raw_data))
-      end
 
       def update_profile(profile_data)
         user.update!(**profile_data, checksum: checksum)

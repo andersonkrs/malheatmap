@@ -11,7 +11,7 @@ class User
 
         process_raw_data(raw_data)
       rescue StandardError => error
-        capture_failure_log_entry(error, raw_data: raw_data)
+        capture_failure_log_entry(error: error, raw_data: raw_data)
         raise
       end
 
@@ -31,7 +31,7 @@ class User
         user.signature_image.generate if user.signature_image.obsolete?
       end
 
-      def capture_failure_log_entry(error, raw_data:)
+      def capture_failure_log_entry(error:, raw_data:)
         create_log_entry(failure: true, failure_message: error.message, raw_data: raw_data)
       end
 
@@ -39,6 +39,7 @@ class User
         user.crawling_log_entries.create!(raw_data: raw_data,
                                           failure: failure,
                                           failure_message: failure_message) do |log|
+          log.calculate_checksum
           attach_visited_pages(log)
         end
       end
