@@ -10,13 +10,10 @@ class BrowserSession
   # If there's no browser assigned to the thread a new browser process will be spawned and terminated after
   # performing the given block work on the func #fetch_page
 
-  def self.fetch_page
+  def self.fetch_page(&block)
     if current.present?
-      page = current.create_page
-      begin
-        yield(page)
-      ensure
-        page.close
+      with_new_page do |page|
+        block.call(page)
       end
     else
       temp_browser = new_browser
@@ -29,7 +26,7 @@ class BrowserSession
   end
 
   def self.new_browser
-    Ferrum.with_attempts(errors: StandardError, max: 3, wait: 1.second) do
+    Ferrum.with_attempts(errors: Ferrum::TimeoutError, max: 3, wait: 3.seconds) do
       Ferrum::Browser.new(
         headless: !ENV["HEADLESS"].in?(%w[n 0 no false]),
         browser_options: {
@@ -40,6 +37,17 @@ class BrowserSession
         process_timeout: 30
       ).tap do |browser|
         Rails.logger.info "Browser instance created PID: #{browser.process.pid}"
+      end
+    end
+  end
+
+  def self.with_new_page(&block)
+    Ferrum.with_attempts(errors: Ferrum::TimeoutError, max: 3, wait: 3.seconds) do
+      page = current.create_page
+      begin
+        block.call(page)
+      ensure
+        page.close
       end
     end
   end
