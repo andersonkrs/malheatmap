@@ -120,6 +120,28 @@ class User
       end
     end
 
+    test "updates user data when the new data checksum changes" do
+      travel_to Date.new(2020, 10, 3)
+      @user.crawl_data
+      @crawler_response[:profile][:avatar_url] = "https://dummy/new_avatar"
+
+      assert_changes -> { @user.checksum } do
+        @user.crawl_data
+        @user.reload
+      end
+
+      assert_equal 2, @user.crawling_log_entries.size
+
+      crawling_log_entries = @user.crawling_log_entries.order(:created_at)
+      previous_crawling_log = crawling_log_entries.first
+      current_crawling_log = crawling_log_entries.second
+
+      assert_equal "https://dummy/new_avatar", @user.avatar_url
+      assert_not_equal previous_crawling_log.checksum, current_crawling_log.checksum
+      assert_not_equal @user.checksum, previous_crawling_log.checksum
+      assert_equal @user.checksum, current_crawling_log.checksum
+    end
+
     test "does not destroy entries older that the oldest present on the crawled data payload" do
       travel_to Time.zone.local(2020, 10, 3, 20, 0, 0)
 
