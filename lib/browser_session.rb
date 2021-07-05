@@ -26,7 +26,7 @@ class BrowserSession
   end
 
   def self.new_browser
-    Ferrum.with_attempts(errors: Ferrum::TimeoutError, max: 3, wait: 3.seconds) do
+    Ferrum.with_attempts(errors: [Ferrum::TimeoutError, Ferrum::ProcessTimeoutError], max: 3, wait: 3.seconds) do
       Ferrum::Browser.new(
         headless: !ENV["HEADLESS"].in?(%w[n 0 no false]),
         browser_options: {
@@ -42,7 +42,7 @@ class BrowserSession
   end
 
   def self.with_new_page(&block)
-    Ferrum.with_attempts(errors: Ferrum::TimeoutError, max: 3, wait: 3.seconds) do
+    Ferrum.with_attempts(errors: [Ferrum::TimeoutError, Ferrum::ProcessTimeoutError], max: 3, wait: 3.seconds) do
       page = current.create_page
       begin
         block.call(page)
