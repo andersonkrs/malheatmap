@@ -9,8 +9,10 @@ class User
       end
 
       def generate
-        user.with_time_zone do
-          generate_from_activities
+        Instrumentation.instrument(title: "#{self.class.name}#generate") do
+          user.with_time_zone do
+            generate_from_activities
+          end
         end
       end
 

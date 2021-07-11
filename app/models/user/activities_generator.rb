@@ -8,9 +8,11 @@ class User
     end
 
     def run
-      user.with_time_zone do
-        calculate_activities_per_day_from_history
-        save
+      Instrumentation.instrument(title: "#{self.class.name}#run") do
+        user.with_time_zone do
+          calculate_activities_per_day_from_history
+          save
+        end
       end
 
       true
