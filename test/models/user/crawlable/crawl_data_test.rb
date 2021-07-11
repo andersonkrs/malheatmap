@@ -176,11 +176,11 @@ class User
       )
       @user.crawl_data
 
-      visited_pages = @user.crawling_log_entries.first.visited_pages.order(:created_at)
+      visited_pages = @user.crawling_log_entries.first.visited_pages
 
       assert_equal 2, visited_pages.size
-      assert_equal "profile.html", visited_pages.first.filename.sanitized
-      assert_equal "history.html", visited_pages.second.filename.sanitized
+      assert_includes visited_pages, { "body" => "<html>profile</html>", "path" => "/myuser/profile" }
+      assert_includes visited_pages, { "body" => "<html>history</html>", "path" => "/myuser/history" }
     end
 
     test "does not update user's data when checksum did not change" do
@@ -240,10 +240,10 @@ class User
       assert_equal true, log_entry.failure?
       assert_equal "Something wrong here", log_entry.failure_message
 
-      visited_pages = log_entry.visited_pages.order(:created_at)
+      visited_pages = log_entry.visited_pages
 
       assert_equal 1, visited_pages.size
-      assert_equal "profile.html", visited_pages.first.filename.sanitized
+      assert_equal "/myuser/profile", visited_pages.first["path"]
     end
   end
 end

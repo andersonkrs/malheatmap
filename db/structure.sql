@@ -189,7 +189,8 @@ CREATE TABLE public.crawling_log_entries (
     failure boolean NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    user_id uuid
+    user_id uuid,
+    visited_pages json
 );
 
 
@@ -553,6 +554,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210307134347'),
 ('20210526022315'),
 ('20210622025419'),
-('20210629132446');
+('20210629132446'),
+('20210711204405');
 
 
