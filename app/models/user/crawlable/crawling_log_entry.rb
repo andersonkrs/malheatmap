@@ -14,9 +14,11 @@ class User
       def apply_data_changes_to_user
         return if user.checksum == checksum
 
-        transaction do
-          update_history(raw_data["history"])
-          update_profile(raw_data["profile"])
+        Instrumentation.instrument(title: "#{self.class.name}#apply_data_changes_to_user") do
+          transaction do
+            update_history(raw_data["history"])
+            update_profile(raw_data["profile"])
+          end
         end
       end
 
