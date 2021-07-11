@@ -63,7 +63,7 @@ So, when the user subscribes to its profile to be tracked, a job will be trigger
 Requirements:
 
 * PostgreSQL 12.4+
-* Ruby 3.0.1
+* Ruby 3.0.2
 * Node 14.17.0
 * [ImageMagick](https://imagemagick.org/index.php)
 
