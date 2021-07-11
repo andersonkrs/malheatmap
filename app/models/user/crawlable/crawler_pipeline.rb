@@ -36,21 +36,21 @@ class User
       end
 
       def create_log_entry(raw_data:, failure: false, failure_message: nil)
-        user.crawling_log_entries.create!(raw_data: raw_data,
-                                          failure: failure,
-                                          failure_message: failure_message) do |log|
-          log.calculate_checksum
-          attach_visited_pages(log)
-        end
+        log_entry = user.crawling_log_entries.build(raw_data: raw_data,
+                                                    failure: failure,
+                                                    failure_message: failure_message,
+                                                    visited_pages: visited_pages)
+        log_entry.calculate_checksum
+        log_entry.save!
+        log_entry
       end
 
-      def attach_visited_pages(log)
-        crawler.history.each do |page|
-          log.visited_pages.attach(
-            io: StringIO.new(page.body),
-            filename: "#{page.uri.path.split('/').last}.html",
-            content_type: "text/html"
-          )
+      def visited_pages
+        crawler.history.map do |page|
+          {
+            body: page.body.force_encoding("UTF-8"),
+            path: page.uri.path
+          }
         end
       end
     end

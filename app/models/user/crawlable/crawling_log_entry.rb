@@ -5,8 +5,6 @@ class User
 
       purge_after 3.days
 
-      has_many_attached :visited_pages, service: :local
-
       belongs_to :user
 
       scope :order_by_latest, -> { order(created_at: :desc) }
