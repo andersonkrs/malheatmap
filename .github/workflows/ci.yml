@@ -27,7 +27,7 @@ jobs:
       uses: ruby/setup-ruby@v1
 
     - name: Setup Node
-      uses: actions/setup-node@v2.1.5
+      uses: actions/setup-node@v2.2.0
 
     - name: Cache Ruby Dependencies
       uses: actions/cache@v2.1.6
