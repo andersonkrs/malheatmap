@@ -4,14 +4,14 @@ class User
       super()
       @user = user
       @processed_entries = ProcessedEntries.new
-      @processed_activities = ProcessedActivities.new
+      @processed_activities = ProcessedActivities.new(user)
     end
 
     def run
       Instrumentation.instrument(title: "#{self.class.name}#run") do
         user.with_time_zone do
           calculate_activities_per_day_from_history
-          save
+          processed_activities.save!
         end
       end
 
@@ -35,8 +35,8 @@ class User
     end
 
     def generate_activity_from_entry(current_entry)
-      date = current_entry.timestamp.in_time_zone.to_date
       item = current_entry.item
+      date = current_entry.timestamp.in_time_zone.to_date
 
       activity = processed_activities.find_or_new(item, date)
 
@@ -45,72 +45,59 @@ class User
       activity.amount += if user.count_each_entry_as_an_activity?
                            1
                          else
-                           calculate_amount_from_last_entry_position(current_entry, item, date)
+                           calculate_amount_from_last_entry_position(current_entry)
                          end
     end
 
-    def calculate_amount_from_last_entry_position(current_entry, item, date)
-      previous_entry = processed_entries.find_last_for(item, date)
+    def calculate_amount_from_last_entry_position(current_entry)
+      last_amount = processed_entries.last_amount(current_entry)
 
-      if previous_entry.blank?
+      if last_amount.blank?
         current_entry.amount
       else
-        current_entry.amount - previous_entry.amount
+        current_entry.amount - last_amount
       end
-    end
-
-    def save
-      user.transaction do
-        user.activities.delete_all
-        activities_data = processed_activities.as_attributes_array("item_id", "amount", "date")
-
-        user.activities.insert_all(activities_data) if activities_data.any?
-      end
-    end
-
-    class ProcessedEntries
-      def initialize
-        @entries = {}
-      end
-
-      def <<(entry)
-        entries["#{entry.mal_id}/#{entry.kind}"] ||= []
-        entries["#{entry.mal_id}/#{entry.kind}"] << entry
-      end
-
-      def find_last_for(item, date)
-        entries
-          .fetch("#{item.mal_id}/#{item.kind}", [])
-          .sort_by { |entry| [entry.timestamp, entry.amount] }
-          .find_all { |entry| entry.timestamp.in_time_zone.to_date <= date }
-          .last
-      end
-
-      private
-
-      attr_reader :entries
     end
 
     class ProcessedActivities
-      def initialize
+      def initialize(user)
+        super()
+        @user = user
         @activities = {}
       end
 
       def find_or_new(item, date)
-        activities["#{item.mal_id}/#{item.kind}/#{date}"] ||= Activity.new(item: item, date: date, amount: 0)
+        activities["#{item.id}:#{date}"] ||= user.activities.build(item: item, date: date, amount: 0)
       end
 
-      def to_a
-        activities.values.flatten
-      end
+      def save!
+        user.activities.transaction do
+          user.activities.delete_all
 
-      def as_attributes_array(*attrs)
-        to_a.map { |activity| activity.attributes.extract!(*attrs) }
+          activities.each_value(&:save!)
+        end
       end
 
       private
 
-      attr_reader :activities
+      attr_reader :user, :activities
+    end
+
+    class ProcessedEntries
+      attr_reader :entries
+
+      def initialize
+        super()
+        @entries = {}
+      end
+
+      def <<(entry)
+        entries[entry.item_id] = entry.amount
+      end
+
+      def last_amount(entry)
+        entries[entry.item_id]
+      end
     end
   end
 end

@@ -16,8 +16,6 @@ Rails.application.configure do
 
   config.consider_all_requests_local = true
 
-  config.cache_store = :memory_store
-
   config.action_dispatch.show_exceptions = false
 
   config.action_controller.perform_caching = false

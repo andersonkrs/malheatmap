@@ -41,6 +41,8 @@ module MalHeatmap
 
     config.exceptions_app = routes
 
+    config.cache_store = :redis_cache_store, config_for(:redis)
+
     config.crawler = config_for(:crawler)
     config.analytics = config_for(:analytics)
     config.geocoder = config_for(:geocoder)
