@@ -31,5 +31,6 @@ spec/examples.txt
 /vendor
 .vscode
 .idea
+.dump
 
 config/credentials/production.key

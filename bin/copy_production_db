@@ -10,7 +10,7 @@ DUMP_FILE=tmp/database.dump
 
 if [ ! -f $DUMP_FILE ]; then
   echo "=== Dumping DB on remote ==="
-  ssh "$SSH_HOST" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null 'dokku postgres:export malheatmap-pg' | pv >$DUMP_FILE
+  ssh "$SSH_HOST" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null 'dokku postgres:export malheatmap' | pv >$DUMP_FILE
 
   if [ ! -f $DUMP_FILE ]; then
     echo "Dump was not created, something must have gone wrong."
@@ -28,6 +28,6 @@ echo "Loading ${DUMP_FILE} into the database..."
 NUM_PROCESSES=$( (command -v nproc >/dev/null 2>&1 && nproc) || (command -v sysctl >/dev/null 2>&1 && sysctl -n hw.logicalcpu) || (echo 4))
 
 bin/rails db:drop db:create
-pg_restore --verbose --clean --no-acl --no-owner -j ${NUM_PROCESSES} -d malheatmap_development $DUMP_FILE
+pg_restore --verbose --clean --no-acl --no-owner -j "${NUM_PROCESSES}" -d malheatmap_development ${DUMP_FILE}
 
 bin/rails db:environment:set db:migrate db:schema:cache:dump

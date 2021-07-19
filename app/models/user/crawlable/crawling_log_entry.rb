@@ -36,14 +36,19 @@ class User
         return if new_history_entries.empty?
 
         destroy_recent_history_entries(new_history_entries)
+        cached_items = {}
 
         new_history_entries.map do |entry_data|
           history_entry = user.entries.build(amount: entry_data["amount"], timestamp: entry_data["timestamp"])
 
-          history_entry.item = Item.find_or_initialize_by(mal_id: entry_data["item_id"], kind: entry_data["item_kind"])
+          history_entry.item = fetch_item(cached_items, mal_id: entry_data["item_id"], kind: entry_data["item_kind"])
           history_entry.item.name = entry_data["item_name"]
           history_entry.save!
         end
+      end
+
+      def fetch_item(cache, mal_id:, kind:)
+        cache["#{mal_id}:#{kind}"] ||= Item.find_or_initialize_by(mal_id: mal_id, kind: kind)
       end
 
       # Destroys the current recent entries from the oldest crawled entry date to not duplicate history

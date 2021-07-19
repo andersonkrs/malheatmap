@@ -19,9 +19,7 @@ require_relative "../../lib/browser_session"
 Sidekiq.configure_server do |config|
   config.log_formatter = Sidekiq::Logger::Formatters::WithoutTimestamp.new
 
-  config.redis = {
-    url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" }
-  }
+  config.redis = Rails.cache.redis
 
   Sidekiq.logger.level = Rails.configuration.log_level
   Rails.logger = Sidekiq.logger
