@@ -62,7 +62,8 @@ So, when the user subscribes to its profile to be tracked, a job will be trigger
 
 Requirements:
 
-* PostgreSQL 12.4+
+* PostgreSQL 13.3+
+* Redis 6.2+ 
 * Ruby 3.0.2
 * Node 14.17.0
 * [ImageMagick](https://imagemagick.org/index.php)
@@ -108,7 +109,6 @@ Auxiliary tools:
 * [Honeybadger](https://rollbar.com/) for error tracking and uptime monitoring
 * [Matomo](https://matomo.org) for analytics
 * [Amazon S3](https://aws.amazon.com/s3) as storage service
-* [Amazon Cloud Watch](https://aws.amazon.com/cloudwatch) for log management
 * [Sidekiq](https://sidekiq.org/) as background job adapter
 
 #### Other Inspirations
