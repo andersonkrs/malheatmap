@@ -50,6 +50,4 @@ Rails.application.configure do
   config.hosts |= hosts
   config.action_cable.allowed_request_origins |= hosts
   config.web_console.whiny_requests = false
-
-  config.active_storage.service = :local
 end
