@@ -48,6 +48,8 @@ module MalHeatmap
     config.geocoder = config_for(:geocoder)
 
     config.skylight.probes += %w[redis]
+
+    config.active_storage.service = :local
   end
 end
 
