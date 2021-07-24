@@ -106,7 +106,7 @@ This app is deployed with [Dokku](http://dokku.viewdocs.io/dokku/) hosted on a V
 
 Auxiliary tools:
 
-* [Honeybadger](https://rollbar.com/) for error tracking and uptime monitoring
+* [Rollbar](https://rollbar.com/) for error tracking and uptime monitoring
 * [Matomo](https://matomo.org) for analytics
 * [Amazon S3](https://aws.amazon.com/s3) as storage service
 * [Sidekiq](https://sidekiq.org/) as background job adapter
