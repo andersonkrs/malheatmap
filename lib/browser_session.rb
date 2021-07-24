@@ -11,7 +11,7 @@ class BrowserSession
   # performing the given block work on the func #fetch_page
 
   def self.fetch_page(&block)
-    if current.present?
+    if current.present? && current.default_context.present?
       with_new_page do |page|
         block.call(page)
       end
