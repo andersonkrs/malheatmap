@@ -8,7 +8,7 @@ class User
       return if user.crawl_data
 
       user.errors[:base].each do |error_message|
-        ErrorNotifier.capture(error_message, user: { id: user.id })
+        Rails.logger.warn("#{error_message} - ID: #{user.id}")
       end
     end
   end
