@@ -23,9 +23,9 @@ class User
       end
     end
 
-    test "forwards the error message to the error notifier when the crawling fails" do
+    test "logs the error message when the crawling fails" do
       MAL::UserCrawler.any_instance.stubs(:crawl).raises(MAL::Errors::CrawlError.new("Something went wrong"))
-      ErrorNotifier.expects(:capture).with("Something went wrong", user: { id: @user.id }).once
+      Rails.logger.expects(:warn).with(regexp_matches(/Something went wrong/)).once
 
       User::CrawlDataJob.perform_now(@user)
     end
