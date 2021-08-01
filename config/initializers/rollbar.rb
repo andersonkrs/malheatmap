@@ -20,7 +20,8 @@ Rollbar.configure do |config|
                                           "ActionController::BadRequest" => "ignore",
                                           "ActionController::ParameterMissing" => "ignore",
                                           "ActiveRecord::RecordNotFound" => "ignore",
-                                          "ActionController::UnknownAction" => "ignore"
+                                          "ActionController::UnknownAction" => "ignore",
+                                          "ActionDispatch::Http::MimeNegotiation::InvalidType" => "ignore"
                                         })
 
   # By default, Rollbar will try to call the `current_user` controller method
