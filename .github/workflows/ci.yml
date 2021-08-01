@@ -8,8 +8,12 @@ jobs:
 
     services:
       postgres:
-        image: postgres:12.1-alpine
+        image: postgres:13.3-alpine
         ports: ["5432:5432"]
+
+      redis:
+        image: redis:6.2.5-alpine
+        ports: [ "6379:6379" ]
 
     env:
       BUNDLE_JOBS: 4
