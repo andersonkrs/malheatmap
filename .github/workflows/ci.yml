@@ -8,6 +8,9 @@ jobs:
 
     services:
       postgres:
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         image: postgres:13.3-alpine
         ports: ["5432:5432"]
 
