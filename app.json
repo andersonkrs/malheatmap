@@ -16,5 +16,11 @@
   "addons": [
     "dokku-postgres",
     "dokku-redis"
+  ],
+  "cron": [
+    {
+      "command": "psql $DATABASE_URL -e -c 'VACUUM FULL'",
+      "schedule": "@daily"
+    }
   ]
 }
