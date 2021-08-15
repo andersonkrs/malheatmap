@@ -3,6 +3,12 @@ class BrowserSession
 
   attr_accessor :current
 
+  RETRYABLE_ERRORS = [
+    Ferrum::TimeoutError,
+    Ferrum::ProcessTimeoutError,
+    NoMethodError
+  ].freeze
+
   # Reuses the same browser that is on the thread instead of spawning a browser process each time
   # Ideally the browser process is spawned once by the threads manager process like Rails/Sidekiq and then it is
   # reused everytime just create new tabs
@@ -26,7 +32,7 @@ class BrowserSession
   end
 
   def self.new_browser
-    Ferrum.with_attempts(errors: [Ferrum::TimeoutError, Ferrum::ProcessTimeoutError], max: 3, wait: 3.seconds) do
+    Ferrum.with_attempts(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
       Ferrum::Browser.new(
         headless: !ENV["HEADLESS"].in?(%w[n 0 no false]),
         browser_options: {
@@ -42,7 +48,7 @@ class BrowserSession
   end
 
   def self.with_new_page(&block)
-    Ferrum.with_attempts(errors: [Ferrum::TimeoutError, Ferrum::ProcessTimeoutError], max: 3, wait: 3.seconds) do
+    Ferrum.with_attempts(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
       page = current.create_page
       begin
         block.call(page)

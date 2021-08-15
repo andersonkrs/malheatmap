@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: c3664b0c2b509fc0a47929f42afbd716959c8f4c
-  ref: c3664b0
+  revision: cd22ecbfc267b162eab147971e1ffbc4644756d7
+  ref: cd22ecbfc267b162eab147971e1ffbc4644756d7
   specs:
     actioncable (7.0.0.alpha)
       actionpack (= 7.0.0.alpha)
@@ -61,7 +61,7 @@ GIT
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-      zeitwerk (~> 2.3)
+      zeitwerk (~> 2.5.0.beta)
     rails (7.0.0.alpha)
       actioncable (= 7.0.0.alpha)
       actionmailbox (= 7.0.0.alpha)
@@ -137,7 +137,7 @@ GEM
     geocoder (1.6.7)
     gitlab-chronic (0.10.6)
       numerizer (~> 0.2)
-    globalid (0.5.1)
+    globalid (0.5.2)
       activesupport (>= 5.0)
     hashdiff (1.0.1)
     http-cookie (1.0.4)
@@ -163,7 +163,7 @@ GEM
       activesupport (>= 4)
       railties (>= 4)
       request_store (~> 1.0)
-    loofah (2.10.0)
+    loofah (2.12.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -340,7 +340,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yard (0.9.26)
-    zeitwerk (2.4.2)
+    zeitwerk (2.5.0.beta)
 
 PLATFORMS
   x86_64-linux
