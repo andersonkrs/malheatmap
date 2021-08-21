@@ -9,7 +9,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@rails/actioncable": "^6.1.4",
     "@rails/ujs": "^6.1.4",
-    "@rails/webpacker": "5.4.0",
+    "@rails/webpacker": "5.4.2",
     "bulma": "^0.9.3",
     "bulma-timeline": "^3.0.4",
     "rails-erb-loader": "^5.5.2",
