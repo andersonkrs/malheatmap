@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: cd22ecbfc267b162eab147971e1ffbc4644756d7
-  ref: cd22ecbfc267b162eab147971e1ffbc4644756d7
+  revision: fc9a1790333c1f7530f45e8716543148521f668b
+  ref: fc9a1790333c1f7530f45e8716543148521f668b
   specs:
     actioncable (7.0.0.alpha)
       actionpack (= 7.0.0.alpha)
@@ -61,7 +61,7 @@ GIT
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-      zeitwerk (~> 2.5.0.beta)
+      zeitwerk (~> 2.5.0.beta2)
     rails (7.0.0.alpha)
       actioncable (= 7.0.0.alpha)
       actionmailbox (= 7.0.0.alpha)
@@ -221,7 +221,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.3.0)
+    rails-html-sanitizer (1.4.1)
       loofah (~> 2.3)
     rainbow (3.0.0)
     rake (13.0.6)
@@ -287,10 +287,6 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 5.0)
-    spring (2.1.1)
-    spring-watcher-listen (2.0.1)
-      listen (>= 2.7, < 4.0)
-      spring (>= 1.2, < 3.0)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -340,7 +336,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yard (0.9.26)
-    zeitwerk (2.5.0.beta)
+    zeitwerk (2.5.0.beta2)
 
 PLATFORMS
   x86_64-linux
@@ -372,8 +368,6 @@ DEPENDENCIES
   simplecov (~> 0.17.1)
   skylight (~> 5.1.1)
   slim-rails
-  spring
-  spring-watcher-listen
   turbolinks
   vcr
   view_component

@@ -12,7 +12,7 @@ gem "lograge"
 gem "mechanize"
 gem "pg"
 gem "puma"
-gem "rails", github: "rails/rails", ref: "cd22ecbfc267b162eab147971e1ffbc4644756d7"
+gem "rails", github: "rails/rails", ref: "fc9a1790333c1f7530f45e8716543148521f668b"
 gem "rollbar"
 gem "sidekiq"
 gem "sidekiq-scheduler"
@@ -32,8 +32,6 @@ group :development do
   gem "listen"
   gem "rubocop"
   gem "rubocop-rails", require: false
-  gem "spring"
-  gem "spring-watcher-listen"
   gem "web-console"
   gem "yard"
 end

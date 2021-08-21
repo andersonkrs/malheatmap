@@ -50,6 +50,7 @@ module MalHeatmap
     config.skylight.probes += %w[redis]
 
     config.active_storage.service = :local
+    config.legacy_connection_handling = false
   end
 end
 
