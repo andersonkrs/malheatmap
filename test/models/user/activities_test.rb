@@ -69,17 +69,21 @@ class User
       assert_equal first_activity.date, second_activity.date
     end
 
-    test "creates negative activity when user fall back the current position" do
+    test "computes re-watches as a one activity on the history" do
       @user.entries.create!([
                               { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 1), amount: 10 },
                               { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 2), amount: 5 },
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 2), amount: 6 }
+                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 2), amount: 6 },
+                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 3), amount: 9 },
+                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 4), amount: 10 }
                             ])
 
       @user.activities.generate_from_history
 
       assert_equal 10, activities.first.amount
-      assert_equal(-4, activities.second.amount)
+      assert_equal(2, activities.second.amount)
+      assert_equal(3, activities.third.amount)
+      assert_equal(1, activities.fourth.amount)
     end
 
     test "creates just one activity per day when there are multiple entries of same item on date" do

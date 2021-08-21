@@ -54,6 +54,8 @@ class User
 
       if last_amount.blank?
         current_entry.amount
+      elsif current_entry.amount < last_amount
+        1
       else
         current_entry.amount - last_amount
       end
