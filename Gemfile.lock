@@ -233,7 +233,7 @@ GEM
     request_store (1.5.0)
       rack (>= 1.4)
     rexml (3.2.5)
-    rollbar (3.2.0)
+    rollbar (3.3.0)
     rubocop (1.22.3)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
