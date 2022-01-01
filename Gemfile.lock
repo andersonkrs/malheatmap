@@ -188,7 +188,7 @@ GEM
     mime-types-data (3.2021.0901)
     mini_magick (4.11.0)
     mini_mime (1.1.2)
-    minitest (5.14.4)
+    minitest (5.15.0)
     mocha (1.13.0)
     msgpack (1.4.2)
     net-http-digest_auth (1.4.1)
@@ -247,7 +247,7 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.15.1)
       parser (>= 3.0.1.1)
-    rubocop-rails (2.12.4)
+    rubocop-rails (2.13.0)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
@@ -338,7 +338,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yard (0.9.26)
-    zeitwerk (2.5.1)
+    zeitwerk (2.5.3)
 
 PLATFORMS
   x86_64-linux
