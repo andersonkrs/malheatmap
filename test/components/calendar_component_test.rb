@@ -76,14 +76,14 @@ class CalendarComponentTest < ViewComponent::TestCase
     component = render_inline(CalendarComponent.new(activities_amount_per_day: activities))
 
     component.css(".calendar > .months > .month").then do |elements|
-      assert_equal %w[Jun Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr May], elements.map(&:text).reject(&:blank?)
+      assert_equal %w[Jun Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr May], elements.map(&:text).compact_blank
     end
 
     activities = group_activities(dates: Date.new(2019, 4, 28)..Date.new(2020, 4, 29))
     component = render_inline(CalendarComponent.new(activities_amount_per_day: activities))
 
     component.css(".calendar > .months > .month").then do |elements|
-      assert_equal %w[May Jun Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr], elements.map(&:text).reject(&:blank?)
+      assert_equal %w[May Jun Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr], elements.map(&:text).compact_blank
     end
   end
 

@@ -23,9 +23,11 @@
     "webpack-dev-server": "^4.7.2"
   },
   "resolutions": {
+    "ansi-regex": "^5.0.1",
     "dot-prop": "^5.1.1",
     "minimist": "^1.2.3",
     "node-forge": "^0.10.0",
+    "nth-check": "^2.0.1",
     "ssri": "^8.0.1",
     "is-svg": "^4.2.2",
     "normalize-url": "^4.5.1",

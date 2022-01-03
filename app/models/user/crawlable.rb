@@ -5,7 +5,8 @@ class User
     included do
       has_many :crawling_log_entries,
                class_name: "User::Crawlable::CrawlingLogEntry",
-               inverse_of: :user, foreign_key: "user_id",
+               inverse_of: :user,
+               foreign_key: "user_id",
                dependent: :destroy
     end
 
@@ -21,12 +22,6 @@ class User
 
     def crawl_data_later(wait: 5.seconds)
       CrawlDataJob.set(wait: wait).perform_later(self)
-    end
-
-    private
-
-    def crawler
-      @crawler ||= MAL::UserCrawler.new(username)
     end
   end
 end
