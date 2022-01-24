@@ -4,5 +4,13 @@ pull_request_rules:
       - author~=^dependabot(|-preview)\[bot\]$
       - check-success=qa
     actions:
-      merge:
-        method: squash
+      # This merges by rebasing without strict merge, which means that mergify will *attempt*
+      # to rebase a matching PR directly on to the `master` branch, even if the PR is out of date.
+      # However, our GitHub branch protection rules require that PRs must be up-to-date before merging,
+      # and mergify respects these rules, so the expected behaviour here is that mergify will only
+      # merge when it can cleanly put the exact commits of the PR directly on top of `master`
+      # (and thus avoid having to re-write any commits or create merge commits of its own).
+      queue:
+        method: rebase
+        name: default
+        rebase_fallback: none
