@@ -20,7 +20,7 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "standard": "^16.0.4",
-    "webpack-dev-server": "^4.7.3"
+    "webpack-dev-server": "^4.7.4"
   },
   "resolutions": {
     "ansi-regex": "^5.0.1",
