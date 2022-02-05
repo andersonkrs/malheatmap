@@ -236,7 +236,7 @@ GEM
       rack (>= 1.4)
     rexml (3.2.5)
     rollbar (3.3.0)
-    rubocop (1.25.0)
+    rubocop (1.25.1)
       parallel (~> 1.10)
       parser (>= 3.1.0.0)
       rainbow (>= 2.2.2, < 4.0)
