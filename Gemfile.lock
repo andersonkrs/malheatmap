@@ -124,7 +124,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     e2mmap (0.1.0)
     erubi (1.10.0)
-    et-orbi (1.2.6)
+    et-orbi (1.2.7)
       tzinfo
     ferrum (0.11)
       addressable (~> 2.5)
@@ -132,8 +132,8 @@ GEM
       concurrent-ruby (~> 1.1)
       websocket-driver (>= 0.6, < 0.8)
     ffi (1.15.5)
-    fugit (1.5.2)
-      et-orbi (~> 1.1, >= 1.1.8)
+    fugit (1.5.3)
+      et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     geocoder (1.7.5)
     gitlab-chronic (0.10.6)
@@ -268,7 +268,7 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sidekiq-scheduler (3.1.1)
+    sidekiq-scheduler (3.2.0)
       e2mmap
       redis (>= 3, < 5)
       rufus-scheduler (~> 3.2)
