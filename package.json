@@ -10,7 +10,7 @@
     "@rails/actioncable": "^7.0.2",
     "@rails/ujs": "^7.0.2",
     "@rails/webpacker": "5.4.3",
-    "bulma": "^0.9.3",
+    "bulma": "^0.9.4",
     "bulma-timeline": "^3.0.5",
     "rails-erb-loader": "^5.5.2",
     "turbolinks": "^5.2.0",
