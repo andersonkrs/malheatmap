@@ -17,14 +17,14 @@ en:
         profile_not_found: "Profile not found for username %{username}. Please check if you typed it correctly."
         communication_error: "A communication error with myanimelist.net has occurred. Please try again later"
   subscriptions:
-    index:
+    form:
       form_label_html: |
         Enter your <a target="_blank" rel="noopener noreferrer" href="https://myanimelist.net">MyAnimeList</a> profile:
       subscribed_users:
         zero: "No subscribed users yet"
         one: "One subscribed user!"
         other: "%{count} subscribed users!"
-    loader:
+    subscription:
       wait: "Please wait. It can take a while to prepare your data..."
   users:
     show:

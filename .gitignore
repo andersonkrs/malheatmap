@@ -28,9 +28,12 @@ yarn-debug.log*
 spec/examples.txt
 /coverage
 
-/vendor
+/vendor/bundle
 .vscode
 .idea
 .dump
 
 config/credentials/production.key
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

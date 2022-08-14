@@ -1,10 +1,15 @@
 class UsersController < ApplicationController
-  helper MAL::URLS
+  helper ::MAL::URLS
 
   around_action :set_user
-  before_action :set_selected_year
 
   def show
+    @selected_year = if @user.calendars.exists?(year_param)
+                       year_param
+                     else
+                       Time.zone.today.year
+                     end
+
     @calendar = @user.calendars[@selected_year]
   end
 
@@ -17,14 +22,6 @@ class UsersController < ApplicationController
     @user.with_time_zone(&block)
   end
   # rubocop:enable Naming/AccessorMethodName
-
-  def set_selected_year
-    @selected_year = if @user.calendars.exists?(year_param)
-                       year_param
-                     else
-                       Time.zone.today.year
-                     end
-  end
 
   def year_param
     @year_param ||= ActiveModel::Type::Integer.new.cast(params[:year])

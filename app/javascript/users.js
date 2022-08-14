@@ -1,6 +1,4 @@
-import '../../assets/stylesheets/users.scss'
-
-document.addEventListener('turbolinks:load', function () {
+document.addEventListener('turbo:load', function () {
   document.querySelector('.copy-signature').onclick = function () {
     const input = document.querySelector('input.signature-input')
     input.focus()

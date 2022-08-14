@@ -1,10 +1,14 @@
+// Sassy
 $primary: #2f54eb;
 $radius-rounded: 10px;
 $title-size: 48px;
 $title-weight: 400;
 
-@import "~bulma/bulma";
-@import "~bulma-timeline";
+@import "bulma/bulma";
+@import "bulma-timeline/dist/css/bulma-timeline";
+
+@import "calendar";
+@import "users";
 
 html {
   scroll-behavior: smooth;
@@ -18,4 +22,33 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.notification.is-danger.is-light {
+  background-color: #feecf0;
+  color: #cc0f35;
+}
+
+.notification {
+  padding: 1rem 2.25rem 1rem 1.25rem;
+}
+
+.notification button.delete {
+  top: 1.2rem;
+}
+
+button .show-when-disabled {
+  display: none;
+}
+
+button[disabled] .show-when-disabled {
+  display: initial;
+}
+
+button .show-when-enabled {
+  display: initial;
+}
+
+button[disabled] .show-when-enabled {
+  display: none;
 }

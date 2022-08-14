@@ -2,10 +2,15 @@ class Subscription
   module Processable
     extend ActiveSupport::Concern
     include Rails.application.routes.url_helpers
+    include ActionView::RecordIdentifier
 
     included do
       scope :processed, -> { where.not(processed_at: nil) }
       scope :pending, -> { where(processed_at: nil) }
+    end
+
+    def pending?
+      !processed?
     end
 
     def processed?
@@ -19,26 +24,23 @@ class Subscription
     def processed
       user = User.create_or_find_by!(username: username)
 
-      response = if user.crawl_data
-                   { status: :success, redirect: user_path(user) }
-                 else
-                   user.destroy!
-                   { status: :failure, notification: render_error_notification(user.errors[:base].first) }
-                 end
+      crawled = user.crawl_data
 
-      SubscriptionChannel.broadcast_to(self, response)
+      if crawled
+        self.redirect_path = user_path(user)
+      else
+        user.destroy!
+        self.errors.add(:base, user.errors[:base].first)
+      end
     rescue StandardError => error
+      self.redirect_path = internal_error_path
       user&.destroy
-      SubscriptionChannel.broadcast_to(self, status: :failure, redirect: internal_error_path)
       ErrorNotifier.capture(error)
     ensure
-      update!(processed_at: Time.current)
-    end
+      self.processed_at = Time.current
+      save!(validate: false)
 
-    private
-
-    def render_error_notification(message)
-      ApplicationController.render NotificationComponent.new(message: message), layout: false
+      broadcast_replace(partial: "subscriptions/subscription", target: dom_id(self), locals: { subscription: self })
     end
   end
 end

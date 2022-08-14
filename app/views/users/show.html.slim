@@ -1,12 +1,6 @@
 - page_title @user.username
 - meta_description t(".meta.description", username: @user.username)
 
-= content_for :head do
-  = javascript_pack_tag "calendar", "data-turbolinks-track": "reload"
-  = stylesheet_pack_tag "calendar", media: "all", "data-turbolinks-track": "reload"
-  = javascript_pack_tag "users", "data-turbolinks-track": "reload"
-  = stylesheet_pack_tag "users", media: "all", "data-turbolinks-track": "reload"
-
 .is-align-self-center
   .columns.is-centered
     .column.is-8-desktop
@@ -58,7 +52,7 @@
             .column.is-10.has-text-centered.mt-2
               p.subtitle = t(".user_without_activities", username: @user.username, year: @selected_year)
               .mt-2
-              = image_pack_tag "media/images/no_activity.png"
+              = image_tag "media/images/no_activity.png"
 
           .column.is-2.years-menu-container
             = render YearsMenuComponent.new(user: @user, years: @user.calendars.active_years.to_a, selected_year: @selected_year)

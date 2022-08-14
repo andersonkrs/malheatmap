@@ -1,4 +1,4 @@
-class NotificationComponent < ViewComponent::Base
+class Notification::Component < ViewComponent::Base
   def initialize(message:)
     super
     @message = message

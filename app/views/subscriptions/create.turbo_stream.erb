@@ -1,0 +1,5 @@
+<% if @subscription.persisted? %>
+  <%= turbo_stream.replace dom_class(@subscription, "form"), partial: "subscriptions/subscription", locals: { subscription: @subscription } %>
+<% else %>
+  <%= turbo_stream.replace dom_class(@subscription, "form"), partial: "subscriptions/form", locals: { subscription: @subscription } %>
+<% end %>

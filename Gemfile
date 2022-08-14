@@ -12,16 +12,32 @@ gem "lograge"
 gem "mechanize"
 gem "pg"
 gem "puma"
-gem "rails", github: "rails/rails", ref: "fc9a1790333c1f7530f45e8716543148521f668b"
+gem "rails", github: "rails/rails", branch: "main"
 gem "rollbar"
 gem "sidekiq"
 gem "sidekiq-scheduler"
 gem "skylight", "~> 5.1.1"
 gem "slim-rails"
-gem "turbolinks"
 gem "view_component"
-gem "webpacker"
 gem "wheretz"
+
+# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+gem "importmap-rails"
+
+# Use Redis for Action Cable
+gem "redis"
+
+# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem "turbo-rails"
+
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem "stimulus-rails"
+
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+gem "propshaft"
+
+# Integrate Dart Sass with the asset pipeline in Rails
+gem "dartsass-rails"
 
 group :development, :test do
   gem "jazz_fingers"
@@ -33,7 +49,6 @@ group :development do
   gem "rubocop"
   gem "rubocop-rails", require: false
   gem "web-console"
-  gem "yard"
 end
 
 group :test do

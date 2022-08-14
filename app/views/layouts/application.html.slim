@@ -19,15 +19,17 @@ html lang="#{I18n.locale}"
     = csrf_meta_tags
     = csp_meta_tag
 
-    = stylesheet_pack_tag "application", media: "all", "data-turbolinks-track": "reload"
-    = javascript_pack_tag "application", "data-turbolinks-track": "reload"
+    = stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+    = javascript_include_tag "application", "data-turbo-track": "reload"
 
     = yield :head
 
-    = javascript_pack_tag "analytics", "data-turbolinks-track": "reload"
+    = javascript_include_tag "analytics", "data-turbo-track": "reload"
   body
     section class="section #{yield(:section_class)}"
       .container
         = yield
         .columns.mt-4
           = render partial: "shared/footer"
+    script src="https://kit.fontawesome.com/210bca511f.js" crossorigin="anonymous"

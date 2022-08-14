@@ -1,7 +1,3 @@
-- content_for :head do
-  = javascript_pack_tag "notification", "data-turbolinks-track": "reload", async: true
-  = stylesheet_pack_tag "notification", media: "all", "data-turbolinks-track": "reload", async: true
-
 - section_size :medium
 
 .is-align-self-center
@@ -9,25 +5,7 @@
     = render partial: "shared/header"
 
     .column.is-full
-      .loader-container
-
       .columns.form-container.is-multiline.is-centered
         .column.is-half-desktop
-          = form_with model: @subscription, method: "post" do |form|
-            .field.has-text-centered
-              = form.label :username do
-                = t(".form_label_html")
-
-            .field.notifications-container
-
-            .field.has-addons
-              .control.is-expanded
-                = form.text_field :username, placeholder: true, class: "input"
-
-              .control
-                = form.button class: "button is-primary",
-                              data: { disable_with: "<i class='fas fa-spinner fa-spin'></i>" },
-                              onclick: "window._paq.push(['trackEvent', 'Subscription', 'Click'])"
-            .field.pt-4.has-text-centered
-              p
-                i = t(".subscribed_users", count: User.count)
+          = turbo_frame_tag dom_class(@subscription, "form") do
+            = render partial: "form", locals: { subscription: @subscription }

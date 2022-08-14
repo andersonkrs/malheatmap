@@ -8,12 +8,11 @@ class SubscriptionsController < ApplicationController
 
     if @subscription.save
       @subscription.submitted
-      render :create, status: :accepted
     elsif user_already_subscribed?
-      redirect_to_user_page
-    else
-      render :create, status: :unprocessable_entity
+      return redirect_to_user_page
     end
+
+    render :create
   end
 
   private
@@ -27,6 +26,6 @@ class SubscriptionsController < ApplicationController
   end
 
   def redirect_to_user_page
-    redirect_to(user_path(@subscription.username), turbolinks: :advance)
+    redirect_to(user_path(@subscription.username), turbo: :advance)
   end
 end
