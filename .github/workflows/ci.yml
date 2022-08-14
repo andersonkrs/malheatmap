@@ -28,16 +28,16 @@ jobs:
       run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
     - name: Checkout code
-      uses: actions/checkout@v2.4.0
+      uses: actions/checkout@v3
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
 
     - name: Setup Node
-      uses: actions/setup-node@v2.5.1
+      uses: actions/setup-node@v3
 
     - name: Cache Ruby Dependencies
-      uses: actions/cache@v2.1.7
+      uses: actions/cache@v3
       with:
         path: vendor/bundle
         key: ${{ runner.os }}-gem-v1-${{ hashFiles('Gemfile.lock') }}
@@ -45,7 +45,7 @@ jobs:
           ${{ runner.os }}-gem-v1
 
     - name: Cache Node Dependencies
-      uses: actions/cache@v2.1.7
+      uses: actions/cache@v3
       with:
         path: node_modules
         key: ${{ runner.os }}-node_modules-v1-${{ hashFiles('yarn.lock') }}
@@ -79,14 +79,14 @@ jobs:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
     - name: Upload failed tests screenshots
-      uses: actions/upload-artifact@v2.3.1
+      uses: actions/upload-artifact@v3
       if: failure()
       with:
         name: system-tests-screenshots
         path: tmp/screenshots/**/*.png
 
     - name: Upload Rails logs
-      uses: actions/upload-artifact@v2.3.1
+      uses: actions/upload-artifact@v3
       if: failure()
       with:
         name: logs
@@ -97,7 +97,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
