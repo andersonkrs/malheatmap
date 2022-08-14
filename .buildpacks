@@ -1,4 +1,4 @@
-https://github.com/DuckyTeam/heroku-buildpack-imagemagick
+https://github.com/ello/heroku-buildpack-imagemagick
 https://github.com/heroku/heroku-buildpack-google-chrome
 https://github.com/gaffneyc/heroku-buildpack-jemalloc
 https://github.com/heroku/heroku-buildpack-nodejs
