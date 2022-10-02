@@ -4,7 +4,6 @@ set -e
 echo "== Running linters =="
 bundle exec rubocop
 bundle exec brakeman --no-pager
-yarn lint
 
 echo "== Running tests =="
 bundle exec rails test -p

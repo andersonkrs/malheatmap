@@ -1,6 +1,4 @@
-class BrowserSession
-  extend ActiveSupport::PerThreadRegistry
-
+class BrowserSession < ActiveSupport::CurrentAttributes
   attr_accessor :current
 
   RETRYABLE_ERRORS = [

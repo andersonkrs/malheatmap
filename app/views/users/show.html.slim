@@ -52,7 +52,7 @@
             .column.is-10.has-text-centered.mt-2
               p.subtitle = t(".user_without_activities", username: @user.username, year: @selected_year)
               .mt-2
-              = image_tag "media/images/no_activity.png"
+              = image_tag "no_activity.png"
 
           .column.is-2.years-menu-container
             = render YearsMenuComponent.new(user: @user, years: @user.calendars.active_years.to_a, selected_year: @selected_year)

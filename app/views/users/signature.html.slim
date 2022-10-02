@@ -1,7 +1,7 @@
 html
   head
     style
-      = File.read(File.join(Rails.root, 'public', Webpacker.manifest.lookup('calendar.css'))).html_safe
+      / = File.read(File.join(Rails.root, 'public', Webpacker.manifest.lookup('calendar.css'))).html_safe
   body
     .signature style="padding: 0.75em; display: inline-grid; background-color: transparent;"
       = render CalendarComponent.new(activities_amount_per_day: activities_amount_per_day)

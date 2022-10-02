@@ -1,10 +1,12 @@
-class Notification::Component < ViewComponent::Base
-  def initialize(message:)
-    super
-    @message = message
-  end
+module Notification
+  class Component < ViewComponent::Base
+    def initialize(message:)
+      super
+      @message = message
+    end
 
-  def render?
-    @message.present?
+    def render?
+      @message.present?
+    end
   end
 end

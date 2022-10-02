@@ -9,7 +9,7 @@ namespace :deployment do
     result = Net::HTTP.post URI("https://api.rollbar.com/api/1/deploy"),
                             {
                               environment: Rails.env.to_s,
-                              revision: ENV["GIT_REV"],
+                              revision: ENV.fetch("GIT_REV"),
                               local_username: `whoami`.strip,
                               repository: app_json["repository"]
                             }.to_json,

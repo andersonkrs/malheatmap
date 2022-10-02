@@ -26,6 +26,6 @@ class SubscriptionsController < ApplicationController
   end
 
   def redirect_to_user_page
-    redirect_to(user_path(@subscription.username), turbo: :advance)
+    redirect_to(user_path(@subscription.username), turbo: :advance, format: :html)
   end
 end

@@ -1,10 +1,4 @@
-Sidekiq.configure_client do |config|
-  config.redis = Rails.cache.redis
-end
-
 class ThreadedBrowserMiddleware
-  def initialize(options = nil); end
-
   def call(_worker, _message, _queue)
     BrowserSession.current = Sidekiq.options[:browser]
     yield
@@ -15,8 +9,6 @@ require_relative "../../lib/browser_session"
 
 Sidekiq.configure_server do |config|
   config.log_formatter = Sidekiq::Logger::Formatters::WithoutTimestamp.new
-
-  config.redis = Rails.cache.redis
 
   Sidekiq.logger.level = Rails.configuration.log_level
   Rails.logger = Sidekiq.logger

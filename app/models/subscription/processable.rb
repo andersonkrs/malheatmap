@@ -30,13 +30,23 @@ class Subscription
         self.redirect_path = user_path(user)
       else
         user.destroy!
-        self.errors.add(:base, user.errors[:base].first)
+        errors.add(:base, user.errors[:base].first)
       end
     rescue StandardError => error
-      self.redirect_path = internal_error_path
       user&.destroy
-      ErrorNotifier.capture(error)
+      capture_and_redirect(error)
     ensure
+      save_and_broadcast
+    end
+
+    private
+
+    def capture_and_redirect(error)
+      self.redirect_path = internal_error_path
+      ErrorNotifier.capture(error)
+    end
+
+    def save_and_broadcast
       self.processed_at = Time.current
       save!(validate: false)
 

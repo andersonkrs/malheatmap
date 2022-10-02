@@ -1,4 +1,4 @@
-window._paq = window._paq || [];
+window._paq = window._paq || []
 
 // <%# if Rails.configuration.analytics[:enabled] %>
 //   <%# url = Rails.configuration.analytics[:url] %>

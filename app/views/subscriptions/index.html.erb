@@ -1,0 +1,15 @@
+<% section_size :medium %>
+
+<div class="is-align-self-center">
+  <div class="columns is-multiline is-centered">
+    <%= render partial: "shared/header" %>
+
+    <div class="column is-full">
+      <div class="columns form-container is-multiline is-centered">
+        <div class="column is-half-desktop">
+          <%= render partial: "form", locals: { subscription: @subscription } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>>

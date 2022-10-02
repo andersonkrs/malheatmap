@@ -17,8 +17,8 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
       }
     }, xhr: true
 
-    assert_response :accepted
-    assert_equal "text/javascript", @response.media_type
+    assert_response :success
+    assert_equal "text/vnd.turbo-stream.html", @response.media_type
     assert_equal 1, Subscription.count
 
     created_subscription = Subscription.find_by(username: username)
@@ -34,8 +34,8 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
       }
     }, xhr: true
 
-    assert_response :unprocessable_entity
-    assert_equal "text/javascript", @response.media_type
+    assert_response :success
+    assert_equal "text/vnd.turbo-stream.html", @response.media_type
     assert_equal 0, Subscription.count
     assert_no_enqueued_jobs
   end

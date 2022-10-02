@@ -15,13 +15,11 @@ class UsersController < ApplicationController
 
   private
 
-  # rubocop:disable Naming/AccessorMethodName
   def set_user(&block)
     @user = User.find_by!(username: params[:username])
 
     @user.with_time_zone(&block)
   end
-  # rubocop:enable Naming/AccessorMethodName
 
   def year_param
     @year_param ||= ActiveModel::Type::Integer.new.cast(params[:year])

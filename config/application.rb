@@ -50,7 +50,7 @@ module MalHeatmap
 
     config.active_storage.service = :local
 
-    config.assets.paths << Rails.root.join("vendor", "assets")
+    config.assets.paths << Rails.root.join("vendor/assets")
   end
 end
 
