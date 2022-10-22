@@ -279,7 +279,7 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    skylight (5.3.3)
+    skylight (5.3.4)
       activesupport (>= 5.2.0)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
@@ -368,7 +368,7 @@ DEPENDENCIES
   sidekiq
   sidekiq-scheduler
   simplecov (~> 0.17.1)
-  skylight (~> 5.3.3)
+  skylight (~> 5.3.4)
   slim-rails
   turbolinks
   vcr

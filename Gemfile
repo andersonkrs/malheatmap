@@ -16,7 +16,7 @@ gem "rails", github: "rails/rails", ref: "fc9a1790333c1f7530f45e8716543148521f66
 gem "rollbar"
 gem "sidekiq"
 gem "sidekiq-scheduler"
-gem "skylight", "~> 5.3.3"
+gem "skylight", "~> 5.3.4"
 gem "slim-rails"
 gem "turbolinks"
 gem "view_component"
