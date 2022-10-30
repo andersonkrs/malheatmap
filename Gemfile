@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "~> 3.0.2"
+ruby "~> 3.1.2"
 
 gem "bootsnap", require: false
 gem "ferrum"
@@ -41,13 +41,13 @@ gem "dartsass-rails"
 
 group :development, :test do
   gem "jazz_fingers"
+  gem "standard", "~> 1.0"
+  gem "overcommit"
 end
 
 group :development do
   gem "brakeman"
   gem "listen"
-  gem "rubocop"
-  gem "rubocop-rails", require: false
   gem "web-console"
 end
 
@@ -61,5 +61,3 @@ group :test do
   gem "vcr"
   gem "webmock"
 end
-
-gem "standard", "~> 0.0.36"
