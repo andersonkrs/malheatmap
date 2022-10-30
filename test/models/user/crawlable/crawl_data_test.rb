@@ -145,9 +145,9 @@ class User
     test "does not destroy entries older that the oldest present on the crawled data payload" do
       travel_to Time.zone.local(2020, 10, 3, 20, 0, 0)
 
-      entry_to_be_destroyed = { timestamp: Time.zone.local(2020, 10, 1, 20, 0, 0), item: items(:one_punch_man),
-                                amount: 1 }
-      entry_not_to_be_destroyed = { timestamp: Time.zone.local(2020, 9, 30), item: items(:one_punch_man), amount: 2 }
+      entry_to_be_destroyed = {timestamp: Time.zone.local(2020, 10, 1, 20, 0, 0), item: items(:one_punch_man),
+                               amount: 1}
+      entry_not_to_be_destroyed = {timestamp: Time.zone.local(2020, 9, 30), item: items(:one_punch_man), amount: 2}
       @user.entries.create!([entry_not_to_be_destroyed, entry_to_be_destroyed])
 
       @user.crawl_data
@@ -179,8 +179,8 @@ class User
       visited_pages = @user.crawling_log_entries.first.visited_pages
 
       assert_equal 2, visited_pages.size
-      assert_includes visited_pages, { "body" => "<html>profile</html>", "path" => "/myuser/profile" }
-      assert_includes visited_pages, { "body" => "<html>history</html>", "path" => "/myuser/history" }
+      assert_includes visited_pages, {"body" => "<html>profile</html>", "path" => "/myuser/profile"}
+      assert_includes visited_pages, {"body" => "<html>history</html>", "path" => "/myuser/history"}
     end
 
     test "does not update user's data when checksum did not change" do
@@ -228,9 +228,9 @@ class User
 
     test "creates a log entry with the failure message and an error occurs during the crawling" do
       MAL::UserCrawler.any_instance.stubs(:history).returns([
-                                                              stub(body: "<html>something wrong here</html>",
-                                                                   uri: URI.parse("https://dummy/myuser/profile"))
-                                                            ])
+        stub(body: "<html>something wrong here</html>",
+          uri: URI.parse("https://dummy/myuser/profile"))
+      ])
       MAL::UserCrawler.any_instance.stubs(:crawl).raises(MAL::Errors::CrawlError.new("Something wrong here"))
 
       @user.crawl_data
