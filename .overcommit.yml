@@ -19,7 +19,7 @@ PreCommit:
  StandardRB:
    enabled: true
    on_warn: fail
-   command: ['bash', '-c', "git diff --name-only --diff-filter=ACM '*.rb' '*.rake' 'Gemfile' 'Rakefile' | tr '\\n' ' ' | xargs bundle exec standardrb --fix"]
+   command: ['bash', '-c', "git diff --name-only --diff-filter=ACM --cached '*.rb' '*.rake' 'Gemfile' 'Rakefile' | tr '\\n' ' ' | xargs bundle exec standardrb --fix"]
 
  TrailingWhitespace:
    enabled: true

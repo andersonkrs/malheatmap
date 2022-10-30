@@ -7,7 +7,7 @@ class User
     end
 
     test   "generates user signature image correctly using current date"    do
-      travel_to Date.new(2020, 5, 1)
+        travel_to Date.new(2020, 5, 1)
 
       @user.activities.create!(
         [
