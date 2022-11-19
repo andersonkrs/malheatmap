@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
-    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@rails/actioncable": "^7.0.4",
     "@rails/ujs": "^7.0.4",
     "@rails/webpacker": "5.4.3",
