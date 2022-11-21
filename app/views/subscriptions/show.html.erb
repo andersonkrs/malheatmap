@@ -1,0 +1,23 @@
+<% section_size :medium %>
+
+<div class="is-align-self-center">
+  <div class="columns is-multiline is-centered">
+    <%= render partial: "shared/header" %>
+
+    <div class="column is-full">
+      <div class="columns form-container is-centered is-multiline">
+        <div class="column is-half-desktop">
+          <%= turbo_stream_from(@subscription) %>
+          <%= turbo_frame_tag dom_id(@subscription), class: "columns is-centered" do %>
+            <div class="column is-one-third has-text-centered">
+              <h1 class="subtitle"><%= t(".wait") %></h1>
+              <%= image_tag "loading.gif", class: "pr-4" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

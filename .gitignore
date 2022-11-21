@@ -29,6 +29,7 @@ spec/examples.txt
 /coverage
 
 /vendor/bundle
+/vendor/ruby
 .vscode
 .idea
 .dump

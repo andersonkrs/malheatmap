@@ -16,15 +16,21 @@
 # Uncomment the following lines to make the configuration take effect.
 
 PreCommit:
- StandardRB:
-   enabled: true
-   on_warn: fail
-   command: ['bash', '-c', "git diff --name-only --diff-filter=ACM --cached '*.rb' '*.rake' 'Gemfile' 'Rakefile' | tr '\\n' ' ' | xargs bundle exec standardrb --fix"]
+  StreeWrite:
+    enabled: true
+    on_warn: fail
+    command: [ 'bash', '-c', "git diff --name-only --diff-filter=ACM --cached '*.rb' '*.rake' 'Gemfile' 'Rakefile' | xargs bundle exec stree write" ]
 
- TrailingWhitespace:
-   enabled: true
-   exclude:
-     - '**/db/structure.sql' # Ignore trailing whitespace in generated files
+  RuboCop:
+    enabled: true
+    problem_on_unmodified_line: ignore
+    on_warn: fail
+    command: [ 'bundle', 'exec', 'rubocop', '-A' ]
+
+  TrailingWhitespace:
+    enabled: true
+    exclude:
+      - '**/db/structure.sql' # Ignore trailing whitespace in generated files
 
 #PostCheckout:
 #  ALL: # Special hook name that customizes all hooks of this type

@@ -41,8 +41,9 @@ gem "dartsass-rails"
 
 group :development, :test do
   gem "jazz_fingers"
-  gem "standard", "~> 1.0"
   gem "overcommit"
+  gem "rubocop-rails"
+  gem "syntax_tree"
 end
 
 group :development do

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <title>
+      <% if content_for?(:title) %><%= yield(:title) + " - " %><% end %> <%= t("app.title") %>
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="keywords" content="myanimelist, anime, manga, MAL"/>
+
+    <% if content_for?(:meta_description) %>
+      <meta  name="description" content="<%= yield(:meta_description) %>"/>
+    <% else %>
+      <meta name="description" content="<%= t("app.description") %>"/>
+    <% end %>
+
+    <% if Rails.configuration.analytics[:enabled] %>
+      <meta name="analytics-site-id" content="<%= Rails.configuration.analytics[:site_id] %>"/>
+      <meta name="analytics-site-url" content="<%= Rails.configuration.analytics[:url] %>"/>
+    <% end %>
+
+    <%= yield :meta %>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
+
+    <%= yield :head %>
+
+    <%= javascript_include_tag "analytics", "data-turbo-track": "reload" %>
+  </head>
+  <body>
+    <section class="section <%= yield(:section_class) %>">
+    <div class="container">
+      <%= yield %>
+      <div class="columns mt-4">
+        <%= render partial: "shared/footer" %>
+      </div>
+    </div>
+    </section>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/210bca511f.js"></script>
+  </body>
+</html>
