@@ -121,7 +121,7 @@ class User
 
       subscription.processed
 
-      refute_equal 1
+      assert_not_equal 1
       assert_not User.exists?(username: subscription.username)
       assert subscription.processed?
       assert_equal subscription.redirect_path, internal_error_path
