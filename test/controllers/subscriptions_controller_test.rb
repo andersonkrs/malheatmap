@@ -11,11 +11,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   test "enqueues the job when creating a valid subscription" do
     username = "mysuperuser"
 
-    post subscriptions_url, params: {
-      subscription: {
-        username: username
-      }
-    }, xhr: true
+    post subscriptions_url, params: { subscription: { username: username } }, xhr: true
 
     assert_response :success
     assert_equal "text/vnd.turbo-stream.html", @response.media_type
@@ -28,11 +24,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "does not enqueue anything when creating invalid subscription" do
-    post subscriptions_url, params: {
-      subscription: {
-        username: "12l,3l123./"
-      }
-    }, xhr: true
+    post subscriptions_url, params: { subscription: { username: "12l,3l123./" } }, xhr: true
 
     assert_response :success
     assert_equal "text/vnd.turbo-stream.html", @response.media_type
@@ -43,11 +35,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   test "redirects to user profile when it is already subscribed" do
     user = users(:babyoda)
 
-    post subscriptions_url, params: {
-      subscription: {
-        username: user.username
-      }
-    }
+    post subscriptions_url, params: { subscription: { username: user.username } }
 
     assert_redirected_to user_path(user)
     assert_equal 0, Subscription.count
@@ -57,11 +45,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   test "should ignore username case and redirects to user profile" do
     user = users(:babyoda)
 
-    post subscriptions_url, params: {
-      subscription: {
-        username: user.username.titleize
-      }
-    }
+    post subscriptions_url, params: { subscription: { username: user.username.titleize } }
 
     assert_redirected_to user_path(user.username.titleize)
     assert_equal 0, Subscription.count

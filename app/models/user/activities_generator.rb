@@ -23,9 +23,7 @@ class User
     attr_reader :user, :processed_entries, :processed_activities
 
     def calculate_activities_per_day_from_history
-      entries = user
-                  .entries
-                  .order(:timestamp, :item_id, :amount, :created_at)
+      entries = user.entries.order(:timestamp, :item_id, :amount, :created_at)
 
       entries.each do |entry|
         generate_activity_from_entry(entry)
@@ -42,11 +40,8 @@ class User
 
       # Some uses prefer to count their activities by entry line in their history
       # like other existing tools, MALGraph for example
-      activity.amount += if user.count_each_entry_as_an_activity?
-                           1
-                         else
-                           calculate_amount_from_last_entry_position(current_entry)
-                         end
+      activity.amount +=
+        (user.count_each_entry_as_an_activity? ? 1 : calculate_amount_from_last_entry_position(current_entry))
     end
 
     def calculate_amount_from_last_entry_position(current_entry)

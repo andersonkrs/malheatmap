@@ -53,86 +53,88 @@ class CalendarComponent < ViewComponent::Base
   end
 
   def squares
-    @squares ||= dates.map do |date|
-      Square.new(date: date, amount: activities_amount_per_day[date])
-    end
+    @squares ||= dates.map { |date| Square.new(date: date, amount: activities_amount_per_day[date]) }
   end
 
   def months
-    @months ||= begin
-      last_date = dates.last
+    @months ||=
+      begin
+        last_date = dates.last
 
-      dates.uniq(&:beginning_of_month).map do |date|
-        Month.new(
-          month: date.month,
-          year: date.year,
-          weeks: weeks_containing_month_year(date),
-          last: last_date.beginning_of_month == date
-        )
+        dates
+          .uniq(&:beginning_of_month)
+          .map do |date|
+            Month.new(
+              month: date.month,
+              year: date.year,
+              weeks: weeks_containing_month_year(date),
+              last: last_date.beginning_of_month == date
+            )
+          end
       end
-    end
   end
 
   private
 
   def weeks_containing_month_year(date)
-    weeks.select do |week|
-      week.any? { |day| day.beginning_of_month == date.beginning_of_month }
-    end
+    weeks.select { |week| week.any? { |day| day.beginning_of_month == date.beginning_of_month } }
   end
 
-  Month = Struct.new(:month, :year, :weeks, :last, keyword_init: true) do
-    def label
-      I18n.t("date.abbr_month_names")[month]
-    end
+  Month =
+    Struct.new(:month, :year, :weeks, :last, keyword_init: true) do
+      def label
+        I18n.t("date.abbr_month_names")[month]
+      end
 
-    def visible?
-      width > 1
-    end
+      def visible?
+        width > 1
+      end
 
-    def css_width
-      "calc(var(--week-width) * #{width}) /* #{label} */"
-    end
+      def css_width
+        "calc(var(--week-width) * #{width}) /* #{label} */"
+      end
 
-    def width
-      if month_ends_on_a_saturday? || last_month?
-        weeks.size
-      else
-        weeks.size - 1
+      def width
+        month_ends_on_a_saturday? || last_month? ? weeks.size : weeks.size - 1
+      end
+
+      private
+
+      def month_ends_on_a_saturday?
+        last_week = weeks.last
+        last_week_day = last_week.last
+        last_month_day = Date.new(year, month, 1).end_of_month
+
+        last_week_day.saturday? && last_week_day == last_month_day
+      end
+
+      def last_month?
+        last
       end
     end
 
-    private
+  Square =
+    Struct.new(:amount, :date, keyword_init: true) do
+      def level
+        return 0 if amount.negative?
 
-    def month_ends_on_a_saturday?
-      last_week = weeks.last
-      last_week_day = last_week.last
-      last_month_day = Date.new(year, month, 1).end_of_month
+        case amount
+        when 0
+          0
+        when (1..4)
+          1
+        when (5..8)
+          2
+        when (9..12)
+          3
+        else
+          4
+        end
+      end
 
-      last_week_day.saturday? && last_week_day == last_month_day
-    end
-
-    def last_month?
-      last
-    end
-  end
-
-  Square = Struct.new(:amount, :date, keyword_init: true) do
-    def level
-      return 0 if amount.negative?
-
-      case amount
-      when 0 then 0
-      when (1..4) then 1
-      when (5..8) then 2
-      when (9..12) then 3
-      else 4
+      def hint
+        formatted_date = I18n.l(date, format: :long)
+        I18n.t("calendar_component.activities_on", count: amount, date: formatted_date)
       end
     end
-
-    def hint
-      formatted_date = I18n.l(date, format: :long)
-      I18n.t("calendar_component.activities_on", count: amount, date: formatted_date)
-    end
-  end
 end

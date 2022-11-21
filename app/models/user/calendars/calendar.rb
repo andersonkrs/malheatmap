@@ -9,11 +9,12 @@ class User
         @year = year
         current_date = Time.zone.today
 
-        @dates = if current_date.year == year
-                   prior_sunday(1.year.ago(current_date))..current_date
-                 else
-                   prior_sunday(Date.new(year, 1, 1))..Date.new(year, 12, 31)
-                 end
+        @dates =
+          if current_date.year == year
+            prior_sunday(1.year.ago(current_date))..current_date
+          else
+            prior_sunday(Date.new(year, 1, 1))..Date.new(year, 12, 31)
+          end
       end
 
       def activities
@@ -23,9 +24,7 @@ class User
       def activities_amount_sum_per_day
         grouped_activities = activities.group(:date).sum(:amount)
 
-        dates.index_with do |date|
-          grouped_activities.fetch(date, 0)
-        end
+        dates.index_with { |date| grouped_activities.fetch(date, 0) }
       end
 
       private

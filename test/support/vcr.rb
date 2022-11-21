@@ -11,12 +11,8 @@ module VCRCassettes
   extend ActiveSupport::Concern
 
   included do
-    setup do
-      VCR.insert_cassette [class_name.underscore, name].join("/")
-    end
+    setup { VCR.insert_cassette [class_name.underscore, name].join("/") }
 
-    teardown do
-      VCR.eject_cassette
-    end
+    teardown { VCR.eject_cassette }
   end
 end

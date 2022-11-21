@@ -8,10 +8,12 @@ class PurgeableTest < ActiveSupport::TestCase
   end
 
   setup do
-    ActiveRecord::Base.connection.create_table(:buckets, id: :uuid) do |t|
-      t.column :label, :string
-      t.timestamps
-    end
+    ActiveRecord::Base
+      .connection
+      .create_table(:buckets, id: :uuid) do |t|
+        t.column :label, :string
+        t.timestamps
+      end
 
     @record = Bucket.new(label: "mine")
   end

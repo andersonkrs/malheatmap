@@ -4,11 +4,7 @@ class UsersController < ApplicationController
   around_action :set_user
 
   def show
-    @selected_year = if @user.calendars.exists?(year_param)
-                       year_param
-                     else
-                       Time.zone.today.year
-                     end
+    @selected_year = (@user.calendars.exists?(year_param) ? year_param : Time.zone.today.year)
 
     @calendar = @user.calendars[@selected_year]
   end

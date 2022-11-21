@@ -1,9 +1,7 @@
 require "test_helper"
 
 class SubscriptionTest < ActiveSupport::TestCase
-  setup do
-    @subscription = Subscription.new(username: "https://myanimelist.net/profile/juan")
-  end
+  setup { @subscription = Subscription.new(username: "https://myanimelist.net/profile/juan") }
 
   context "validations" do
     should validate_presence_of(:username)

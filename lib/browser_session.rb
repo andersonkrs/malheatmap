@@ -1,11 +1,7 @@
 class BrowserSession < ActiveSupport::CurrentAttributes
   attr_accessor :current
 
-  RETRYABLE_ERRORS = [
-    Ferrum::TimeoutError,
-    Ferrum::ProcessTimeoutError,
-    NoMethodError
-  ].freeze
+  RETRYABLE_ERRORS = [Ferrum::TimeoutError, Ferrum::ProcessTimeoutError, NoMethodError].freeze
 
   # Reuses the same browser that is on the thread instead of spawning a browser process each time
   # Ideally the browser process is spawned once by the threads manager process like Rails/Sidekiq and then it is
@@ -16,9 +12,7 @@ class BrowserSession < ActiveSupport::CurrentAttributes
 
   def self.fetch_page(&block)
     if current.present? && current.default_context.present?
-      with_new_page do |page|
-        block.call(page)
-      end
+      with_new_page { |page| block.call(page) }
     else
       temp_browser = new_browser
       begin
@@ -31,17 +25,17 @@ class BrowserSession < ActiveSupport::CurrentAttributes
 
   def self.new_browser
     Ferrum.with_attempts(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
-      Ferrum::Browser.new(
-        headless: !ENV["HEADLESS"].in?(%w[n 0 no false]),
-        browser_options: {
-          "no-sandbox": nil,
-          "disable-setuid-sandbox": nil
-        },
-        timeout: 30,
-        process_timeout: 30
-      ).tap do |browser|
-        Rails.logger.info "Browser instance created PID: #{browser.process.pid}"
-      end
+      Ferrum::Browser
+        .new(
+          headless: !ENV["HEADLESS"].in?(%w[n 0 no false]),
+          browser_options: {
+            "no-sandbox": nil,
+            "disable-setuid-sandbox": nil
+          },
+          timeout: 30,
+          process_timeout: 30
+        )
+        .tap { |browser| Rails.logger.info "Browser instance created PID: #{browser.process.pid}" }
     end
   end
 

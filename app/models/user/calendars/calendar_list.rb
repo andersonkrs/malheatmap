@@ -17,9 +17,7 @@ class User
       end
 
       def to_a
-        active_years.map do |year|
-          Calendar.new(user: user, year: year)
-        end
+        active_years.map { |year| Calendar.new(user: user, year: year) }
       end
 
       def exists?(year)
@@ -31,11 +29,12 @@ class User
       end
 
       def active_years
-        @active_years ||= begin
-          first_year = [user.created_at.year, user.activities.first_date&.year].compact.min
+        @active_years ||=
+          begin
+            first_year = [user.created_at.year, user.activities.first_date&.year].compact.min
 
-          (first_year..Time.current.year)
-        end
+            (first_year..Time.current.year)
+          end
       end
     end
   end

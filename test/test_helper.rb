@@ -32,18 +32,12 @@ module ActiveSupport
     parallelize
 
     if ENV["COVERAGE"] == "true"
-      parallelize_setup do |worker|
-        SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
-      end
+      parallelize_setup { |worker| SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}" }
 
-      parallelize_teardown do |_worker|
-        SimpleCov.result
-      end
+      parallelize_teardown { |_worker| SimpleCov.result }
     end
 
-    setup do
-      Rails.application.load_tasks
-    end
+    setup { Rails.application.load_tasks }
 
     teardown do
       Rake::Task.clear
@@ -52,6 +46,4 @@ module ActiveSupport
   end
 end
 
-Minitest.after_run do
-  FileUtils.rm_rf Rails.root.join("storage/test")
-end
+Minitest.after_run { FileUtils.rm_rf Rails.root.join("storage/test") }

@@ -26,7 +26,8 @@ class User
 
       private
 
-      class DeletingOldHistoryNotAllowed < StandardError; end
+      class DeletingOldHistoryNotAllowed < StandardError
+      end
 
       def update_profile(profile_data)
         user.update!(**profile_data, checksum: checksum)
@@ -58,11 +59,7 @@ class User
         oldest_entry_date = entries.pluck("timestamp").min
         return if oldest_entry_date.blank?
 
-        entries = user
-                    .entries
-                    .where("timestamp >= ?", oldest_entry_date)
-                    .order(timestamp: :desc)
-                    .limit(300)
+        entries = user.entries.where("timestamp >= ?", oldest_entry_date).order(timestamp: :desc).limit(300)
 
         # Sanity check, avoid deleting user history in case some date came with really old date
         if entries.any? && oldest_entry_date < 30.days.ago.at_beginning_of_day

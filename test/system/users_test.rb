@@ -1,9 +1,7 @@
 require "application_system_test_case"
 
 class UsersTest < ApplicationSystemTestCase
-  setup do
-    @user = users(:babyoda)
-  end
+  setup { @user = users(:babyoda) }
 
   test "user can navigate through active years" do
     last_year = Time.zone.today.last_year.year
