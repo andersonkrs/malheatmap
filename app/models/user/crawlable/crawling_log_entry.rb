@@ -30,7 +30,7 @@ class User
       end
 
       def update_profile(profile_data)
-        user.update!(**profile_data, checksum: checksum)
+        user.update!(**profile_data, checksum:)
       end
 
       def update_history(new_history_entries)
@@ -49,7 +49,7 @@ class User
       end
 
       def fetch_item(cache, mal_id:, kind:)
-        cache["#{mal_id}:#{kind}"] ||= Item.find_or_initialize_by(mal_id: mal_id, kind: kind)
+        cache["#{mal_id}:#{kind}"] ||= Item.find_or_initialize_by(mal_id:, kind:)
       end
 
       # Destroys the current recent entries from the oldest crawled entry date to not duplicate history

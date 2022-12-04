@@ -8,7 +8,7 @@ module MAL
       end
 
       def parse
-        { location: clean_text(location), avatar_url: avatar_url }
+        { location: clean_text(location), avatar_url: }
       end
 
       private

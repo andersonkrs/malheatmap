@@ -82,13 +82,13 @@ module MAL
     def crawl_history_kind(kind)
       page.link_with(text: "#{kind.capitalize} History").click
 
-      response[:history] += Parsers::History.new(page, kind: kind).parse
+      response[:history] += Parsers::History.new(page, kind:).parse
     end
 
     def handle_response_code_error(response_code, message)
       exception_class = (response_code == 404 ? Errors::ProfileNotFound : Errors::CommunicationError)
 
-      raise exception_class.new(message, username: username)
+      raise exception_class.new(message, username:)
     end
   end
 end

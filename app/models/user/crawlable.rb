@@ -21,7 +21,7 @@ class User
     end
 
     def crawl_data_later(wait: 5.seconds)
-      CrawlDataJob.set(wait: wait).perform_later(self)
+      CrawlDataJob.set(wait:).perform_later(self)
     end
   end
 end

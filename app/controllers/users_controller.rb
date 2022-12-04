@@ -11,10 +11,10 @@ class UsersController < ApplicationController
 
   private
 
-  def set_user(&block)
+  def set_user(&)
     @user = User.find_by!(username: params[:username])
 
-    @user.with_time_zone(&block)
+    @user.with_time_zone(&)
   end
 
   def year_param

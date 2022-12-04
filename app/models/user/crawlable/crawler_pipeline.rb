@@ -11,7 +11,7 @@ class User
 
         process_raw_data(raw_data)
       rescue StandardError => error
-        capture_failure_log_entry(error: error, raw_data: raw_data)
+        capture_failure_log_entry(error:, raw_data:)
         raise
       end
 
@@ -32,17 +32,11 @@ class User
       end
 
       def capture_failure_log_entry(error:, raw_data:)
-        create_log_entry(failure: true, failure_message: error.message, raw_data: raw_data)
+        create_log_entry(failure: true, failure_message: error.message, raw_data:)
       end
 
       def create_log_entry(raw_data:, failure: false, failure_message: nil)
-        log_entry =
-          user.crawling_log_entries.build(
-            raw_data: raw_data,
-            failure: failure,
-            failure_message: failure_message,
-            visited_pages: visited_pages
-          )
+        log_entry = user.crawling_log_entries.build(raw_data:, failure:, failure_message:, visited_pages:)
         log_entry.calculate_checksum
         log_entry.save!
         log_entry

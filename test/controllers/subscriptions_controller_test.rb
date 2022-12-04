@@ -11,13 +11,12 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   test "enqueues the job when creating a valid subscription" do
     username = "mysuperuser"
 
-    post subscriptions_url, params: { subscription: { username: username } }, xhr: true
+    post subscriptions_url, params: { subscription: { username: } }, xhr: true
 
-    assert_response :success
-    assert_equal "text/vnd.turbo-stream.html", @response.media_type
+    assert_redirected_to subscription_url(Subscription.last)
     assert_equal 1, Subscription.count
 
-    created_subscription = Subscription.find_by(username: username)
+    created_subscription = Subscription.find_by(username:)
     assert_enqueued_jobs 2
     assert_enqueued_with job: Subscription::ProcessJob, args: [created_subscription]
     assert_enqueued_with job: Purgeable::PurgeRecordJob, args: [created_subscription]

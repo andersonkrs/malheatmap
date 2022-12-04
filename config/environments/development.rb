@@ -23,9 +23,7 @@ Rails.application.configure do
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
-    config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
-    }
+    config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{2.days.to_i}" }
   else
     config.action_controller.perform_caching = false
   end
@@ -51,11 +49,10 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  config.active_job.queue_adapter = :async
+  config.active_job.queue_adapter = :sidekiq
 
   hosts = ENV.fetch("RAILS_HOSTS", "").split(";")
 
   config.hosts |= hosts
   config.action_cable.allowed_request_origins |= hosts
-  config.web_console.whiny_requests = false
 end

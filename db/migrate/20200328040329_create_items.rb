@@ -8,6 +8,6 @@ class CreateItems < ActiveRecord::Migration[6.0]
     end
 
     add_column :items, :kind, :item_kind, null: false
-    add_index :items, [:mal_id, :kind], unique: true
+    add_index :items, %i[mal_id kind], unique: true
   end
 end

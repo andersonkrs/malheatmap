@@ -21,7 +21,7 @@ Capybara.register_driver(:cuprite) do |app|
       inspector: true,
       # Allow running Chrome in a headful mode by setting HEADLESS env
       # var to a falsey value
-      headless: !ENV["HEADLESS"].in?(%w[n 0 no false])
+      headless: ENV.fetch("HEADLESS", "true").in?(%w[y Y 1 yes YES Yes true TRUE True])
     }
   )
 end
@@ -30,7 +30,7 @@ Capybara.singleton_class.prepend(
   Module.new do
     attr_accessor :last_used_session
 
-    def using_session(name, &block)
+    def using_session(name, &)
       self.last_used_session = name
       super
     ensure

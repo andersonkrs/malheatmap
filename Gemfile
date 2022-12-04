@@ -13,7 +13,6 @@ gem "mechanize"
 gem "pg"
 gem "puma"
 gem "rails", github: "rails/rails", branch: "main"
-gem "rollbar"
 gem "sidekiq"
 gem "sidekiq-scheduler"
 gem "skylight", "~> 5.3.3"
@@ -43,12 +42,11 @@ group :development, :test do
   gem "jazz_fingers"
   gem "overcommit"
   gem "rubocop-rails"
-  gem "syntax_tree"
 end
 
 group :development do
   gem "brakeman"
-  gem "listen"
+  gem "syntax_tree", require: false
   gem "web-console"
 end
 
@@ -61,4 +59,8 @@ group :test do
   gem "simplecov", "~> 0.17.1", require: false # https://github.com/codeclimate/test-reporter/issues/413
   gem "vcr"
   gem "webmock"
+end
+
+group :production do
+  gem "rollbar"
 end

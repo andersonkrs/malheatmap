@@ -22,7 +22,7 @@ class Subscription
     end
 
     def processed
-      user = User.create_or_find_by!(username: username)
+      user = User.create_or_find_by!(username:)
 
       crawled = user.crawl_data
 

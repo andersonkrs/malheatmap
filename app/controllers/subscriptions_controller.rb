@@ -3,16 +3,21 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new
   end
 
+  def show
+    @subscription = Subscription.find(params[:id])
+  end
+
   def create
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
       @subscription.submitted
+      redirect_to(@subscription, turbo: :advance)
     elsif user_already_subscribed?
-      return redirect_to_user_page
+      redirect_to_user_page
+    else
+      render(:index, status: :unprocessable_entity)
     end
-
-    render :create
   end
 
   private

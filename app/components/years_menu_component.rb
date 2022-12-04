@@ -9,6 +9,6 @@ class YearsMenuComponent < ViewComponent::Base
   end
 
   def link_for_year(year)
-    link_to(year, user_path(user, year: year), class: selected_year == year ? "is-active" : "")
+    link_to(year, user_path(user, year:), class: selected_year == year ? "is-active" : "")
   end
 end

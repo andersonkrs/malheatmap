@@ -17,7 +17,7 @@ class Subscription < ApplicationRecord
 
   def user_already_subscribed
     clean_username
-    errors.add(:username, :taken) if User.exists?(username: username)
+    errors.add(:username, :taken) if User.exists?(username:)
   end
 
   def clean_username

@@ -64,7 +64,7 @@ class User
       end
 
       def find_or_new(item, date)
-        activities["#{item.id}:#{date}"] ||= user.activities.build(item: item, date: date, amount: 0)
+        activities["#{item.id}:#{date}"] ||= user.activities.build(item:, date:, amount: 0)
       end
 
       def save!

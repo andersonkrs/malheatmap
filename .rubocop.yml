@@ -9,6 +9,7 @@ AllCops:
     - "bin/**/*"
     - "node_modules/**/*"
     - "db/**/*"
+
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true

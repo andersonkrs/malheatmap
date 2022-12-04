@@ -4,7 +4,7 @@ require "uri"
 namespace :deployment do
   desc "Sends to the error tracking tool that the app has been deployed"
   task notify: :environment do
-    app_json = JSON.parse(File.read(Rails.root.join("app.json")))
+    app_json = JSON.parse(Rails.root.join("app.json").read)
 
     result = Net::HTTP.post URI("https://api.rollbar.com/api/1/deploy"),
                             {

@@ -33,7 +33,7 @@ module Purgeable
   end
 
   def purge!
-    raise Purgeable::RecordNotPurgeable.new(created_at: created_at) unless can_be_purged?
+    raise Purgeable::RecordNotPurgeable.new(created_at:) unless can_be_purged?
 
     destroy!
   end

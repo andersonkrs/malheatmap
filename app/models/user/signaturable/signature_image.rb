@@ -41,13 +41,7 @@ class User
       def render_calendar_html
         activities_amount_per_day = user.calendars[Time.current.year].activities_amount_sum_per_day
 
-        ApplicationController.render(
-          "users/signature",
-          locals: {
-            activities_amount_per_day: activities_amount_per_day
-          },
-          layout: nil
-        )
+        ApplicationController.render("users/signature", locals: { activities_amount_per_day: }, layout: nil)
       end
 
       def capture_html_screenshot(html_file)

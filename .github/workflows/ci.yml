@@ -56,12 +56,8 @@ jobs:
       run: bin/setup
 
     - name: Run linters
-      env:
-        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        mkdir -p $HOME/bin/ && export PATH="$HOME/bin/:$PATH"
-        curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b $HOME/bin
-        reviewdog -reporter=github-check -tee -fail-on-error
+        bin/qa
 
     - name: Test assets compilation
       run: RAILS_ENV=test bin/rails assets:precompile

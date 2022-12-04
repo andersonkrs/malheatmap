@@ -24,7 +24,7 @@ class BrowserSession < ActiveSupport::CurrentAttributes
   end
 
   def self.new_browser
-    Ferrum.with_attempts(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
+    Ferrum::Utils::Attempt.with_retry(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
       Ferrum::Browser
         .new(
           headless: !ENV["HEADLESS"].in?(%w[n 0 no false]),

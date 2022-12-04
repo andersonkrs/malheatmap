@@ -53,7 +53,7 @@ class CalendarComponent < ViewComponent::Base
   end
 
   def squares
-    @squares ||= dates.map { |date| Square.new(date: date, amount: activities_amount_per_day[date]) }
+    @squares ||= dates.map { |date| Square.new(date:, amount: activities_amount_per_day[date]) }
   end
 
   def months

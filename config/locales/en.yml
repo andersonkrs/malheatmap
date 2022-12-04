@@ -24,7 +24,7 @@ en:
         zero: "No subscribed users yet"
         one: "One subscribed user!"
         other: "%{count} subscribed users!"
-    subscription:
+    show:
       wait: "Please wait. It can take a while to prepare your data..."
   users:
     show:

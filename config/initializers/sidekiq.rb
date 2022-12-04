@@ -23,13 +23,9 @@ Sidekiq.configure_server do |config|
     config.options[:browser] = BrowserSession.new_browser
   end
 
-  config.on(:quiet) do
-    config.options[:browser]&.quit
-  end
+  config.on(:quiet) { config.options[:browser]&.quit }
 
-  config.server_middleware do |chain|
-    chain.add ThreadedBrowserMiddleware
-  end
+  config.server_middleware { |chain| chain.add ThreadedBrowserMiddleware }
 end
 
 unless Sidekiq.server?
@@ -41,10 +37,11 @@ unless Sidekiq.server?
       ActiveSupport::SecurityUtils.secure_compare(
         ::Digest::SHA256.hexdigest(username),
         ::Digest::SHA256.hexdigest(Rails.application.credentials.sidekiq[:username])
-      ) & ActiveSupport::SecurityUtils.secure_compare(
-        ::Digest::SHA256.hexdigest(password),
-        ::Digest::SHA256.hexdigest(Rails.application.credentials.sidekiq[:password])
-      )
+      ) &
+        ActiveSupport::SecurityUtils.secure_compare(
+          ::Digest::SHA256.hexdigest(password),
+          ::Digest::SHA256.hexdigest(Rails.application.credentials.sidekiq[:password])
+        )
     end
   end
 end

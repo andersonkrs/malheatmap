@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+--
 -- Name: citext; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -241,7 +248,9 @@ CREATE TABLE public.subscriptions (
     username character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    processed_at timestamp without time zone
+    processed_at timestamp without time zone,
+    redirect_path text,
+    process_errors text[] DEFAULT '{}'::text[] NOT NULL
 );
 
 
@@ -527,6 +536,7 @@ ALTER TABLE ONLY public.entries
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20221106013355'),
 ('20220326024317'),
 ('20210711204405'),
 ('20210629132446'),
