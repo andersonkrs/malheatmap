@@ -37,9 +37,7 @@ module ActiveSupport
       parallelize_teardown { |_worker| SimpleCov.result }
     end
 
-    setup do
-      Kernel.silence_warnings { Rails.application.load_tasks }
-    end
+    setup { Kernel.silence_warnings { Rails.application.load_tasks } }
 
     teardown do
       Rake::Task.clear
