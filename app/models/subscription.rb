@@ -8,8 +8,6 @@ class Subscription < ApplicationRecord
     %r{\A(http?s?://(?:www\.)?myanimelist\.net/(profile|history)/[A-Za-z0-9\-_]+/?|
                       [A-Za-z0-9\-_]+)\Z}x
 
-  attr_accessor :redirect_path
-
   validates :username, presence: true, format: { with: USERNAME_REGEX }
   validate :user_already_subscribed, on: :create
 

@@ -6,7 +6,7 @@ require "active_model/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
 require "active_storage/engine"
-require "action_controller/railtie"
+require "action_controller/railtie"∑
 require "action_text/engine"
 require "action_view/railtie"
 require "action_cable/engine"
@@ -38,7 +38,7 @@ module MalHeatmap
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
 
-    config.exceptions_app = routes
+    # config.exceptions_app = routes
 
     config.cache_store = :redis_cache_store, config_for(:redis)
 
@@ -53,6 +53,5 @@ module MalHeatmap
     config.assets.paths << Rails.root.join("vendor/assets")
   end
 end
-
 ActiveSupport::Deprecation.disallowed_warnings = :all
 ActiveSupport::Deprecation.disallowed_behavior = :log

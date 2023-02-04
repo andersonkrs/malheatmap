@@ -1,14 +1,14 @@
-class User
+module User
   module Mergeable
-    extend ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
-    def merge!(old_user)
-      transaction do
-        old_user.entries.update_all(user_id: id)
-        old_user.destroy
+  def merge!(old_user)
+    transaction do
+      old_user.entries.update_all(user_id: id)
+      old_user.destroy
 
-        update!(checksum: nil)
-      end
+      update!(checksum: nil)
     end
+  end
   end
 end

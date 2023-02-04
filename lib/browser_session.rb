@@ -10,9 +10,9 @@ class BrowserSession < ActiveSupport::CurrentAttributes
   # If there's no browser assigned to the thread a new browser process will be spawned and terminated after
   # performing the given block work on the func #fetch_page
 
-  def self.fetch_page(&block)
+  def self.fetch_page(&)
     if current.present? && current.default_context.present?
-      with_new_page { |page| block.call(page) }
+      with_new_page(&)
     else
       temp_browser = new_browser
       begin
@@ -39,11 +39,11 @@ class BrowserSession < ActiveSupport::CurrentAttributes
     end
   end
 
-  def self.with_new_page(&block)
-    Ferrum.with_attempts(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
+  def self.with_new_page
+    Ferrum::Utils::Attempt.with_retry(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
       page = current.create_page
       begin
-        block.call(page)
+        yield(page)
       ensure
         page.close
       end

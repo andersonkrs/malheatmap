@@ -9,7 +9,7 @@ class Subscription
       scope :pending, -> { where(processed_at: nil) }
     end
 
-    def pending?
+    def processing?
       !processed?
     end
 
@@ -23,6 +23,7 @@ class Subscription
 
     def processed
       user = User.create_or_find_by!(username:)
+      self.process_errors = []
 
       crawled = user.crawl_data
 
@@ -30,7 +31,7 @@ class Subscription
         self.redirect_path = user_path(user)
       else
         user.destroy!
-        errors.add(:base, user.errors[:base].first)
+        self.process_errors = user.errors[:base]
       end
     rescue StandardError => error
       user&.destroy
@@ -43,6 +44,7 @@ class Subscription
 
     def capture_and_redirect(error)
       self.redirect_path = internal_error_path
+      process_errors << error.message
       ErrorNotifier.capture(error)
     end
 
@@ -50,7 +52,15 @@ class Subscription
       self.processed_at = Time.current
       save!(validate: false)
 
-      broadcast_replace(partial: "subscriptions/subscription", target: dom_id(self), locals: { subscription: self })
+      redirect_path.present? ? broadcast_redirect : broadcast_new_form
+    end
+
+    def broadcast_redirect
+      broadcast_redirect_to(path: redirect_path, action: :replace)
+    end
+
+    def broadcast_new_form
+      broadcast_replace(partial: "subscriptions/form", locals: { subscription: Subscription.new(process_errors:) })
     end
   end
 end

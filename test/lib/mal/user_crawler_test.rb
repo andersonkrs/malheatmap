@@ -127,7 +127,7 @@ class UserCrawlerTest < ActiveSupport::TestCase
   test "raises communication error when some connection error occur" do
     crawler = MAL::UserCrawler.new("someuser")
 
-    stub_request(:any, /#{MAL::HOST}/).to_return(status: 303)
+    stub_request(:any, /#{MAL::HOST}/o).to_return(status: 303)
 
     assert_raises MAL::Errors::CommunicationError, I18n.t("mal.crawler.errors.communication_error") do
       crawler.crawl
@@ -137,7 +137,7 @@ class UserCrawlerTest < ActiveSupport::TestCase
   test "raises communication error when MAL returns any 5xx error" do
     crawler = MAL::UserCrawler.new("someuser")
 
-    stub_request(:any, /#{MAL::HOST}/).to_return(status: 503)
+    stub_request(:any, /#{MAL::HOST}/o).to_return(status: 503)
 
     assert_raises MAL::Errors::CommunicationError do
       crawler.crawl

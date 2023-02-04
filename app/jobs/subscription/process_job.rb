@@ -1,17 +1,17 @@
-class Subscription
+module Subscription
   class ProcessJob < ApplicationJob
-    include NoRetryJob
+  include NoRetryJob
 
-    def self.enqueue(subscription)
-      set(wait: RESPONSE_DELAY_THRESHOLD).perform_later(subscription)
-    end
+  def self.enqueue(subscription)
+    set(wait: RESPONSE_DELAY_THRESHOLD).perform_later(subscription)
+  end
 
-    private
+  private
 
-    RESPONSE_DELAY_THRESHOLD = 5.seconds
+  RESPONSE_DELAY_THRESHOLD = 5.seconds
 
-    def perform(subscription)
-      subscription.processed
-    end
+  def perform(subscription)
+    subscription.processed
+  end
   end
 end

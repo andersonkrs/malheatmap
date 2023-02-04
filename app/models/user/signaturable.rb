@@ -1,11 +1,11 @@
-class User
+module User
   module Signaturable
-    extend ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
-    included { has_one_attached :signature }
+  included { has_one_attached :signature }
 
-    def signature_image
-      @signature_image ||= SignatureImage.new(self)
-    end
+  def signature_image
+    @signature_image ||= SignatureImage.new(self)
+  end
   end
 end

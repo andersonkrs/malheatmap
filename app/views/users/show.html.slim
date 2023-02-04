@@ -1,5 +1,7 @@
 - page_title @user.username
 - meta_description t(".meta.description", username: @user.username)
+- content_for :meta do
+  meta name="tracker-source" content="User Profile"
 
 .is-align-self-center
   .columns.is-centered

@@ -10,8 +10,8 @@
     - days_names.each do |day_name|
       li.day = day_name
 
-  ul.squares
+  ul.squares data-controller="tracker" data-tracker-event-name-value="Calendar Navigation"
     - squares.each do |square|
-      li.square data-level=square.level data-date=square.date title=square.hint
+      li.square data-action="click->tracker#sendEvent" data-level=square.level data-date=square.date title=square.hint
         / The anchor is used to scroll the user to date that contains the activities, like a details page
         a href="##{square.date}" data-turbolinks="false"

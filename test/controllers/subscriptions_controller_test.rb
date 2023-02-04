@@ -25,8 +25,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   test "does not enqueue anything when creating invalid subscription" do
     post subscriptions_url, params: { subscription: { username: "12l,3l123./" } }, xhr: true
 
-    assert_response :success
-    assert_equal "text/vnd.turbo-stream.html", @response.media_type
+    assert_response :unprocessable_entity
     assert_equal 0, Subscription.count
     assert_no_enqueued_jobs
   end

@@ -1,5 +1,13 @@
 require:
+  - rubocop-performance
   - rubocop-rails
+  - syntax_tree
+
+inherit_gem:
+  syntax_tree: config/rubocop.yml
+
+Rails:
+  Enabled: true
 
 AllCops:
   NewCops: enable
@@ -13,6 +21,9 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true
+
+Style/ClassAndModuleChildren:
+  Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false
@@ -28,12 +39,6 @@ Metrics/BlockLength:
 
 Metrics/MethodLength:
   Enabled: false
-
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
-
-Layout/MultilineMethodCallIndentation:
-  EnforcedStyle: indented_relative_to_receiver
 
 Naming/RescuedExceptionsVariableName:
   PreferredName: error

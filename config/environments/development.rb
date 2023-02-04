@@ -44,7 +44,7 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = true
 
   # Raises error for missing translations.
-  config.i18n.raise_on_missing_translations = true
+  config.i18n.raise_on_missing_translations = false
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
@@ -55,4 +55,5 @@ Rails.application.configure do
 
   config.hosts |= hosts
   config.action_cable.allowed_request_origins |= hosts
+  config.web_console.whiny_requests = false
 end

@@ -1,6 +1,6 @@
 runner:
-  rubocop:
-    cmd: bin/rubocop --parallel
+  standardrb:
+    cmd: bin/standardrb
   brakeman:
     cmd: bin/brakeman --quiet --format tabs
   standardjs:

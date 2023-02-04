@@ -5,18 +5,25 @@ class SubscriptionsController < ApplicationController
 
   def show
     @subscription = Subscription.find(params[:id])
-  end
 
+    render :show and return if @subscription.processing?
+
+    if @subscription.redirect_path.present?
+      redirect_to @subscription.redirect_path
+    else
+      redirect_to subscriptions_path
+    end
+  end
   def create
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
       @subscription.submitted
-      redirect_to(@subscription, turbo: :advance)
+      redirect_to subscription_path(@subscription)
     elsif user_already_subscribed?
       redirect_to_user_page
     else
-      render(:index, status: :unprocessable_entity)
+      render :index, status: :unprocessable_entity
     end
   end
 

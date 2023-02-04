@@ -1,4 +1,4 @@
-<%= turbo_frame_tag dom_class(subscription, "form"), target: "_top" do %>
+<%= turbo_frame_tag dom_id(subscription) do %>
   <%= form_with model: subscription, url: subscriptions_path, method: "post" do |form| %>
     <div class="field has-text-centered">
       <%= form.label :username do %>
@@ -7,17 +7,20 @@
     </div>
 
     <div class="field notifications-container">
-      <%= render Notification::Component.new(message: subscription.errors.full_messages.first) %>
+      <% messages = subscription.process_errors | subscription.errors.full_messages %>
+      <%= render Notification::Component.new(message: messages.first) %>
     </div>
 
     <div class="field has-addons">
       <div class="control is-expanded">
-        <%= form.text_field :username, placeholder: true, class: "input" %>
+        <%= form.text_field :username,
+                            value: subscription.processed? ? nil :subscription.username,
+                            placeholder: true,
+                            class: "input" %>
       </div>
 
-      <div class="control">
-        <%= form.button class: "button is-primary",
-                      onclick: "window._paq.push(['trackEvent', 'Subscription', 'Click'])" do  %>
+      <div class="control" data-controller="tracker" data-tracker-event-source-value="Subscriptions">
+        <%= form.button class: "button is-primary", data: { action: "tracker#sendEvent" } do  %>
           <span class="show-when-enabled">Subscribe</span>
           <span class="show-when-disabled">Submitting...</span>
         <% end %>

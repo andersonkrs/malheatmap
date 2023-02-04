@@ -39,8 +39,8 @@ gem "propshaft"
 gem "dartsass-rails"
 
 group :development, :test do
-  gem "jazz_fingers"
-  gem "overcommit"
+  gem "debug"
+  gem "rubocop-performance"
   gem "rubocop-rails"
 end
 

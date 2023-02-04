@@ -24,25 +24,29 @@ Dir["./test/support/**/*.rb"].each { |file| require file }
 
 module ActiveSupport
   class TestCase
-    include ActiveJob::TestHelper
-    include ActionCable::TestHelper
+  include ActiveJob::TestHelper
+  include ActionCable::TestHelper
 
-    fixtures :all
+  fixtures :all
 
-    parallelize
+  def render(...)
+    ApplicationController.renderer.render(...)
+  end
 
-    if ENV["COVERAGE"] == "true"
-      parallelize_setup { |worker| SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}" }
+  parallelize
 
-      parallelize_teardown { |_worker| SimpleCov.result }
-    end
+  if ENV["COVERAGE"] == "true"
+    parallelize_setup { |worker| SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}" }
 
-    setup { Kernel.silence_warnings { Rails.application.load_tasks } }
+    parallelize_teardown { |_worker| SimpleCov.result }
+  end
 
-    teardown do
-      Rake::Task.clear
-      Rails.cache.clear
-    end
+  setup { Kernel.silence_warnings { Rails.application.load_tasks } }
+
+  teardown do
+    Rake::Task.clear
+    Rails.cache.clear
+  end
   end
 end
 

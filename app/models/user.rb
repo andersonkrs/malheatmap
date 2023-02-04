@@ -19,8 +19,8 @@ class User < ApplicationRecord
   validates :latitude, numericality: true, allow_nil: true
   validates :longitude, numericality: true, allow_nil: true
 
-  def with_time_zone(&block)
-    Time.use_zone(time_zone) { block.call }
+  def with_time_zone(&)
+    Time.use_zone(time_zone, &)
   end
 
   def to_param

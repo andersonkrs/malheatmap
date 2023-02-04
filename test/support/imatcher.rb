@@ -2,30 +2,30 @@
 
 module Imatcher
   module Modes
-    class RGB < Base
-      def initialize(options)
-        super(**options)
-      end
-    end
+  class RGB < Imatcher::Modes::Base
+  def initialize(options)
+    super(**options)
+  end
+  end
   end
 end
 
 module Imatcher
   module Modes
-    class Grayscale < Base
-      def initialize(options)
-        super(**options)
-      end
-    end
+  class Grayscale < Imatcher::Modes::Base
+  def initialize(options)
+    super(**options)
+  end
+  end
   end
 end
 
 module Imatcher
   module Modes
-    class Delta < Base
-      def initialize(options)
-        super(**options)
-      end
-    end
+  class Delta < Imatcher::Modes::Base
+  def initialize(options)
+    super(**options)
+  end
+  end
   end
 end
