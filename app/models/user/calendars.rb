@@ -13,23 +13,23 @@
 # in 2020
 module User
   module Calendars
-  extend ActiveSupport::Concern
+    extend ActiveSupport::Concern
 
-  def calendars
-    @calendars ||= CalendarList.new(self)
-  end
+    def calendars
+      @calendars ||= CalendarList.new(self)
+    end
 
-  def reload(options = nil)
-    instance = super(options)
-    delete_cached_calendar
-    instance
-  end
+    def reload(options = nil)
+      instance = super(options)
+      delete_cached_calendar
+      instance
+    end
 
-  private
+    private
 
-  def delete_cached_calendar
-    return unless instance_variable_defined? :@calendars
-    remove_instance_variable :@calendars
-  end
+    def delete_cached_calendar
+      return unless instance_variable_defined? :@calendars
+      remove_instance_variable :@calendars
+    end
   end
 end

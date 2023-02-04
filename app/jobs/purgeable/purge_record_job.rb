@@ -1,11 +1,11 @@
 module Purgeable
   class PurgeRecordJob < ApplicationJob
-  discard_on ActiveRecord::RecordNotFound
+    discard_on ActiveRecord::RecordNotFound
 
-  retry_on Purgeable::RecordNotPurgeable, attempts: 20, wait: :exponentially_longer
+    retry_on Purgeable::RecordNotPurgeable, attempts: 20, wait: :exponentially_longer
 
-  def perform(record)
-    record.purge!
-  end
+    def perform(record)
+      record.purge!
+    end
   end
 end
