@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "~> 3.0.2"
+ruby "~> 3.2.0"
 
 gem "bootsnap", require: false
 gem "ferrum"
@@ -22,10 +22,6 @@ gem "turbolinks"
 gem "view_component"
 gem "webpacker"
 gem "wheretz"
-
-group :development, :test do
-  gem "jazz_fingers"
-end
 
 group :development do
   gem "brakeman"
