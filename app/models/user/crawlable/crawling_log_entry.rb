@@ -60,10 +60,9 @@ class User
               item_id: entry.item.id,
               amount: entry.amount,
               timestamp: entry.timestamp,
-              created_at: Time.current,
-              updated_at: Time.current,
             }
-          }
+          },
+          record_timestamps: true,
         )
 
       end

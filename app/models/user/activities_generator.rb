@@ -69,14 +69,29 @@ class User
       end
 
       def find_or_new(item, date)
-        activities["#{item.id}:#{date}"] ||= user.activities.build(item: item, date: date, amount: 0)
+        activities["#{item.id}:#{date}"] ||= Activity.new(item: item, date: date, amount: 0, user: user)
       end
 
       def save!
         user.activities.transaction do
           user.activities.delete_all
 
-          activities.each_value(&:save!)
+          if activities.present?
+            activities.each_value(&:validate!)
+
+            Activity.upsert_all(
+              activities.values.map { |activity|
+                {
+                  user_id: user.id,
+                  date: activity.date,
+                  item_id: activity.item_id,
+                  amount: activity.amount,
+                }
+              },
+              unique_by: :index_activities_on_user_id_and_item_id_and_date,
+              record_timestamps: true,
+            )
+          end
         end
       end
 
