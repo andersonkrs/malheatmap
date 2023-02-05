@@ -1,4 +1,4 @@
-module User
+class User
   class CrawlDataJob < ApplicationJob
     include NoRetryJob
 

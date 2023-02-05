@@ -1,6 +1,6 @@
 require "test_helper"
 
-module Subscription
+class Subscription
   class ProcessJobTest < ActiveSupport::TestCase
     setup { @subscription = Subscription.create!(username: "random") }
 

@@ -14,11 +14,6 @@
       <meta name="description" content="<%= t("app.description") %>"/>
     <% end %>
 
-    <% if Rails.configuration.analytics[:enabled] %>
-      <meta name="analytics-site-id" content="<%= Rails.configuration.analytics[:site_id] %>"/>
-      <meta name="analytics-site-url" content="<%= Rails.configuration.analytics[:url] %>"/>
-    <% end %>
-
     <%= yield :meta %>
 
     <%= csrf_meta_tags %>

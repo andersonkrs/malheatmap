@@ -27,7 +27,9 @@ class SubscriptionsTest < ApplicationSystemTestCase
 
     perform_enqueued_jobs
 
-    assert_current_path(subscriptions_path)
+    created_subscription = Subscription.last
+
+    assert_current_path(subscription_path(created_subscription))
     assert_text(/Profile not found for username/)
   end
 

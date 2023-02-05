@@ -1,6 +1,6 @@
 require "test_helper"
 
-module User
+class User
   class CrawlDataJobTest < ActiveJob::TestCase
     setup { @user = users(:babyoda) }
 

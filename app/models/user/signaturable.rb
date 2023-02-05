@@ -1,4 +1,4 @@
-module User
+class User
   module Signaturable
     extend ActiveSupport::Concern
 

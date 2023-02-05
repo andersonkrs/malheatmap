@@ -16,7 +16,7 @@ gem "rails", github: "rails/rails", branch: "main"
 gem "sidekiq"
 gem "sidekiq-scheduler"
 gem "skylight", "~> 5.3.4"
-gem "slim-rails"
+gem "slim-rails" # TODO: Abandon usage of slim and remove this gem
 gem "view_component"
 gem "wheretz"
 

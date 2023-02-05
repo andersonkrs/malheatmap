@@ -1,4 +1,4 @@
-module User
+class User
   class ScheduleCrawlingJob < ApplicationJob
     queue_as :default
 

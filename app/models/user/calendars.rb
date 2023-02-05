@@ -11,7 +11,7 @@
 # The available calendars are calculated based either on the date that the user subscribed on MAL Heatmap or the date
 # of the very first activity until the current year. Therefore a user subscribed in 2017 will have 3 years of calendar
 # in 2020
-module User
+class User
   module Calendars
     extend ActiveSupport::Concern
 

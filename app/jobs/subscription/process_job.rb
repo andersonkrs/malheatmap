@@ -1,4 +1,4 @@
-module Subscription
+class Subscription
   class ProcessJob < ApplicationJob
     include NoRetryJob
 

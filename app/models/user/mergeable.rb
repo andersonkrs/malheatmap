@@ -1,4 +1,4 @@
-module User
+class User
   module Mergeable
     extend ActiveSupport::Concern
 

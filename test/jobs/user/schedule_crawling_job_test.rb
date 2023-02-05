@@ -1,6 +1,6 @@
 require "test_helper"
 
-module User
+class User
   class ScheduleCrawlingJobTest < ActiveJob::TestCase
     test "schedules the crawling jobs for each user" do
       ScheduleCrawlingJob.perform_now
