@@ -47,14 +47,18 @@ class User
           history_entry
         end
 
+        persist!(new_entries)
+      end
+
+      def persist!(entries)
         return if new_entries.empty?
 
-        new_entries.each do |entry|
+        entries.each do |entry|
           entry.item.save!
         end
 
         Entry.insert_all!(
-          new_entries.map do |entry|
+          entries.map do |entry|
             {
               user_id: entry.user_id,
               item_id: entry.item.id,

@@ -13,6 +13,9 @@ AllCops:
   DisplayStyleGuide: true
   ExtraDetails: true
 
+Metrics/AbcSize:
+  Max: 20
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
