@@ -39,6 +39,8 @@ gem "propshaft"
 # Integrate Dart Sass with the asset pipeline in Rails
 gem "dartsass-rails"
 
+gem "rollbar"
+
 group :development, :test do
   gem "debug"
   gem "rubocop-performance"
@@ -60,8 +62,4 @@ group :test do
   gem "simplecov", "~> 0.17.1", require: false # https://github.com/codeclimate/test-reporter/issues/413
   gem "vcr"
   gem "webmock"
-end
-
-group :production do
-  gem "rollbar"
 end
