@@ -17,7 +17,7 @@ class Subscription
     end
 
     def processed
-      user = User.create_or_find_by!(username: username)
+      user = User.create_or_find_by!(username:)
 
       response = if user.crawl_data
                    { status: :success, redirect: user_path(user) }
@@ -38,7 +38,7 @@ class Subscription
     private
 
     def render_error_notification(message)
-      ApplicationController.render NotificationComponent.new(message: message), layout: false
+      ApplicationController.render NotificationComponent.new(message:), layout: false
     end
   end
 end

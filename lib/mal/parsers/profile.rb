@@ -10,7 +10,7 @@ module MAL
       def parse
         {
           location: clean_text(location),
-          avatar_url: avatar_url
+          avatar_url:
         }
       end
 

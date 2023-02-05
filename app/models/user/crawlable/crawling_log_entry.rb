@@ -29,7 +29,7 @@ class User
       class DeletingOldHistoryNotAllowed < StandardError; end
 
       def update_profile(profile_data)
-        user.update!(**profile_data, checksum: checksum)
+        user.update!(**profile_data, checksum:)
       end
 
       def update_history(new_history_entries)
@@ -54,21 +54,20 @@ class User
         end
 
         Entry.insert_all!(
-          new_entries.map { |entry|
+          new_entries.map do |entry|
             {
               user_id: entry.user_id,
               item_id: entry.item.id,
               amount: entry.amount,
-              timestamp: entry.timestamp,
+              timestamp: entry.timestamp
             }
-          },
-          record_timestamps: true,
+          end,
+          record_timestamps: true
         )
-
       end
 
       def fetch_item(cache, mal_id:, kind:)
-        cache["#{mal_id}:#{kind}"] ||= Item.find_or_initialize_by(mal_id: mal_id, kind: kind)
+        cache["#{mal_id}:#{kind}"] ||= Item.find_or_initialize_by(mal_id:, kind:)
       end
 
       # Destroys the current recent entries from the oldest crawled entry date to not duplicate history

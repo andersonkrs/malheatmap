@@ -11,7 +11,7 @@ class TimelineComponentTest < ViewComponent::TestCase
       Activity.new(item: items(:one_piece), amount: 1, date: Date.new(2020, 1, 1))
     ]
 
-    component = render_inline(TimelineComponent.new(activities: activities))
+    component = render_inline(TimelineComponent.new(activities:))
 
     assert_equal "October", component.css(".header-marker").text
     assert_equal "January", component.css(".footer-marker").text
@@ -25,7 +25,7 @@ class TimelineComponentTest < ViewComponent::TestCase
       Activity.new(item: items(:one_piece), amount: 1, date: Date.new(2019, 5, 1))
     ]
 
-    component = render_inline(TimelineComponent.new(activities: activities))
+    component = render_inline(TimelineComponent.new(activities:))
 
     assert_equal 2, component.css("#2019-06-01").css("p.activity").size
     assert_equal 1, component.css("#2019-05-01").css("p.activity").size

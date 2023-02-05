@@ -12,13 +12,13 @@ class User
         @user = user
       end
 
-      def each(&block)
-        to_a.each(&block)
+      def each(&)
+        to_a.each(&)
       end
 
       def to_a
         active_years.map do |year|
-          Calendar.new(user: user, year: year)
+          Calendar.new(user:, year:)
         end
       end
 

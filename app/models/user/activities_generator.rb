@@ -69,7 +69,7 @@ class User
       end
 
       def find_or_new(item, date)
-        activities["#{item.id}:#{date}"] ||= Activity.new(item: item, date: date, amount: 0, user: user)
+        activities["#{item.id}:#{date}"] ||= Activity.new(item:, date:, amount: 0, user:)
       end
 
       def save!
@@ -80,16 +80,16 @@ class User
             activities.each_value(&:validate!)
 
             Activity.upsert_all(
-              activities.values.map { |activity|
+              activities.values.map do |activity|
                 {
                   user_id: user.id,
                   date: activity.date,
                   item_id: activity.item_id,
-                  amount: activity.amount,
+                  amount: activity.amount
                 }
-              },
+              end,
               unique_by: :index_activities_on_user_id_and_item_id_and_date,
-              record_timestamps: true,
+              record_timestamps: true
             )
           end
         end

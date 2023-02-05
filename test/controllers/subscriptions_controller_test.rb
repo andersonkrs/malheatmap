@@ -13,7 +13,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     post subscriptions_url, params: {
       subscription: {
-        username: username
+        username:
       }
     }, xhr: true
 
@@ -21,7 +21,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "text/javascript", @response.media_type
     assert_equal 1, Subscription.count
 
-    created_subscription = Subscription.find_by(username: username)
+    created_subscription = Subscription.find_by(username:)
     assert_enqueued_jobs 2
     assert_enqueued_with job: Subscription::ProcessJob, args: [created_subscription]
     assert_enqueued_with job: Purgeable::PurgeRecordJob, args: [created_subscription]

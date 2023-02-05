@@ -11,10 +11,10 @@ class UsersController < ApplicationController
   private
 
   # rubocop:disable Naming/AccessorMethodName
-  def set_user(&block)
+  def set_user(&)
     @user = User.find_by!(username: params[:username])
 
-    @user.with_time_zone(&block)
+    @user.with_time_zone(&)
   end
   # rubocop:enable Naming/AccessorMethodName
 

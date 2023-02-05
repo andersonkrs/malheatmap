@@ -45,7 +45,7 @@ class User
 
         ApplicationController.render(
           "users/signature",
-          locals: { activities_amount_per_day: activities_amount_per_day },
+          locals: { activities_amount_per_day: },
           layout: nil
         )
       end
