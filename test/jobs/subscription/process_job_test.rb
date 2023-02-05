@@ -2,9 +2,7 @@ require "test_helper"
 
 class Subscription
   class ProcessJobTest < ActiveSupport::TestCase
-    setup do
-      @subscription = Subscription.create!(username: "random")
-    end
+    setup { @subscription = Subscription.create!(username: "random") }
 
     test "calls subscription processed" do
       Subscription::ProcessJob.perform_now(@subscription)

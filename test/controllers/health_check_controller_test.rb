@@ -1,12 +1,7 @@
 require "test_helper"
 
 class HealthCheckControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @authorization = ActionController::HttpAuthentication::Basic.encode_credentials(
-      "secret",
-      "secret"
-    )
-  end
+  setup { @authorization = ActionController::HttpAuthentication::Basic.encode_credentials("secret", "secret") }
 
   test "blocks unauthorized requests" do
     get health_check_path

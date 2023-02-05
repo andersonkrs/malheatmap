@@ -4,7 +4,8 @@ class Subscription < ApplicationRecord
 
   purge_after 3.days
 
-  USERNAME_REGEX = %r{\A(http?s?://(?:www\.)?myanimelist\.net/(profile|history)/[A-Za-z0-9\-_]+/?|
+  USERNAME_REGEX =
+    %r{\A(http?s?://(?:www\.)?myanimelist\.net/(profile|history)/[A-Za-z0-9\-_]+/?|
                       [A-Za-z0-9\-_]+)\Z}x
 
   validates :username, presence: true, format: { with: USERNAME_REGEX }

@@ -41,26 +41,23 @@ class UserCrawlerTest < ActiveSupport::TestCase
     crawler = MAL::UserCrawler.new("Squashbucklr")
 
     result = crawler.crawl
-    dates = result[:history]
-              .filter { |entry| entry[:item_id] == 40_870 }
-              .pluck(:timestamp)
-              .sort
-              .reverse
+    dates = result[:history].filter { |entry| entry[:item_id] == 40_870 }.pluck(:timestamp).sort.reverse
 
     Time.use_zone("America/New_York") do
-      assert_equal dates.map(&:in_time_zone), [
-        Time.zone.local(2021, 6, 15, 3, 23),
-        Time.zone.local(2021, 6, 15, 2, 58),
-        Time.zone.local(2021, 6, 15, 2, 28),
-        Time.zone.local(2021, 6, 15, 2, 4),
-        Time.zone.local(2021, 6, 15, 1, 40),
-        Time.zone.local(2021, 6, 15, 1, 13),
-        Time.zone.local(2021, 6, 14, 21, 52),
-        Time.zone.local(2021, 6, 14, 21, 28),
-        Time.zone.local(2021, 6, 14, 20, 59),
-        Time.zone.local(2021, 6, 14, 20, 34),
-        Time.zone.local(2021, 6, 14, 20, 5)
-      ]
+      assert_equal dates.map(&:in_time_zone),
+                   [
+                     Time.zone.local(2021, 6, 15, 3, 23),
+                     Time.zone.local(2021, 6, 15, 2, 58),
+                     Time.zone.local(2021, 6, 15, 2, 28),
+                     Time.zone.local(2021, 6, 15, 2, 4),
+                     Time.zone.local(2021, 6, 15, 1, 40),
+                     Time.zone.local(2021, 6, 15, 1, 13),
+                     Time.zone.local(2021, 6, 14, 21, 52),
+                     Time.zone.local(2021, 6, 14, 21, 28),
+                     Time.zone.local(2021, 6, 14, 20, 59),
+                     Time.zone.local(2021, 6, 14, 20, 34),
+                     Time.zone.local(2021, 6, 14, 20, 5)
+                   ]
     end
   end
 
@@ -130,7 +127,7 @@ class UserCrawlerTest < ActiveSupport::TestCase
   test "raises communication error when some connection error occur" do
     crawler = MAL::UserCrawler.new("someuser")
 
-    stub_request(:any, /#{MAL::HOST}/).to_return(status: 303)
+    stub_request(:any, /#{MAL::HOST}/o).to_return(status: 303)
 
     assert_raises MAL::Errors::CommunicationError, I18n.t("mal.crawler.errors.communication_error") do
       crawler.crawl
@@ -140,7 +137,7 @@ class UserCrawlerTest < ActiveSupport::TestCase
   test "raises communication error when MAL returns any 5xx error" do
     crawler = MAL::UserCrawler.new("someuser")
 
-    stub_request(:any, /#{MAL::HOST}/).to_return(status: 503)
+    stub_request(:any, /#{MAL::HOST}/o).to_return(status: 503)
 
     assert_raises MAL::Errors::CommunicationError do
       crawler.crawl

@@ -1,7 +1,8 @@
-user = User.create!(
-  username: "andersonkrs",
-  avatar_url: "https://cdn.myanimelist.net/images/userimages/7868083.jpg?t=1579970400"
-)
+user =
+  User.create!(
+    username: "andersonkrs",
+    avatar_url: "https://cdn.myanimelist.net/images/userimages/7868083.jpg?t=1579970400"
+  )
 
 items = [
   Item.create!(mal_id: 1, name: "Monster", kind: :manga),
@@ -35,9 +36,7 @@ items = [
   next if skip_date
 
   entries = rand(1..4)
-  entries.times do
-    Entry.create!(user: user, item: items.sample, timestamp: date.to_datetime, amount: rand(1..21))
-  end
+  entries.times { Entry.create!(user: user, item: items.sample, timestamp: date.to_datetime, amount: rand(1..21)) }
 end
 
 user.activities.generate_from_history

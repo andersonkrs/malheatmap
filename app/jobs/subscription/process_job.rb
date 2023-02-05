@@ -8,7 +8,7 @@ class Subscription
 
     private
 
-    RESPONSE_DELAY_THRESHOLD = 2.seconds
+    RESPONSE_DELAY_THRESHOLD = 5.seconds
 
     def perform(subscription)
       subscription.processed

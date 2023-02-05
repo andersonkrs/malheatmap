@@ -10,9 +10,7 @@ class User
 
       def generate
         Instrumentation.instrument(title: "#{self.class.name}#generate") do
-          user.with_time_zone do
-            generate_from_activities
-          end
+          user.with_time_zone { generate_from_activities }
         end
       end
 
@@ -43,11 +41,7 @@ class User
       def render_calendar_html
         activities_amount_per_day = user.calendars[Time.current.year].activities_amount_sum_per_day
 
-        ApplicationController.render(
-          "users/signature",
-          locals: { activities_amount_per_day: },
-          layout: nil
-        )
+        ApplicationController.render("users/signature", locals: { activities_amount_per_day: }, layout: nil)
       end
 
       def capture_html_screenshot(html_file)
@@ -62,10 +56,7 @@ class User
       end
 
       def resize_to_mal_max_size(screenshot_file)
-        ImageProcessing::MiniMagick
-          .source(screenshot_file)
-          .resize_to_limit(600, 150)
-          .call
+        ImageProcessing::MiniMagick.source(screenshot_file).resize_to_limit(600, 150).call
       end
 
       def with_retries(exception_class:)

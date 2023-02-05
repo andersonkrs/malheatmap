@@ -2,10 +2,15 @@ class Subscription
   module Processable
     extend ActiveSupport::Concern
     include Rails.application.routes.url_helpers
+    include ActionView::RecordIdentifier
 
     included do
       scope :processed, -> { where.not(processed_at: nil) }
       scope :pending, -> { where(processed_at: nil) }
+    end
+
+    def processing?
+      !processed?
     end
 
     def processed?
@@ -18,27 +23,44 @@ class Subscription
 
     def processed
       user = User.create_or_find_by!(username:)
+      self.process_errors = []
 
-      response = if user.crawl_data
-                   { status: :success, redirect: user_path(user) }
-                 else
-                   user.destroy!
-                   { status: :failure, notification: render_error_notification(user.errors[:base].first) }
-                 end
+      crawled = user.crawl_data
 
-      SubscriptionChannel.broadcast_to(self, response)
+      if crawled
+        self.redirect_path = user_path(user)
+      else
+        user.destroy!
+        self.process_errors = user.errors[:base]
+      end
     rescue StandardError => error
       user&.destroy
-      SubscriptionChannel.broadcast_to(self, status: :failure, redirect: internal_error_path)
-      ErrorNotifier.capture(error)
+      capture_and_redirect(error)
     ensure
-      update!(processed_at: Time.current)
+      save_and_broadcast
     end
 
     private
 
-    def render_error_notification(message)
-      ApplicationController.render NotificationComponent.new(message:), layout: false
+    def capture_and_redirect(error)
+      self.redirect_path = internal_error_path
+      process_errors << error.message
+      ErrorNotifier.capture(error)
+    end
+
+    def save_and_broadcast
+      self.processed_at = Time.current
+      save!(validate: false)
+
+      redirect_path.present? ? broadcast_redirect : broadcast_new_form
+    end
+
+    def broadcast_redirect
+      broadcast_redirect_to(path: redirect_path, action: :replace)
+    end
+
+    def broadcast_new_form
+      broadcast_replace(partial: "subscriptions/form", locals: { subscription: Subscription.new(process_errors:) })
     end
   end
 end

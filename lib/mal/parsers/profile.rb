@@ -8,17 +8,15 @@ module MAL
       end
 
       def parse
-        {
-          location: clean_text(location),
-          avatar_url:
-        }
+        { location: clean_text(location), avatar_url: }
       end
 
       private
 
       def location
-        @page
-          .at_xpath("//span[contains(@class, 'user-status-title') and text()='Location']/following::span/text()").to_s
+        @page.at_xpath(
+          "//span[contains(@class, 'user-status-title') and text()='Location']/following::span/text()"
+        ).to_s
       end
 
       def avatar_url

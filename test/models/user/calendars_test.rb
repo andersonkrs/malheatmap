@@ -36,6 +36,7 @@ class User
 
       travel_to Date.new(2017, 10, 15)
       user = User.create!(username: "random2")
+
       travel_to Date.new(2021, 1, 1)
       assert_equal 5, user.calendars.size
       assert_equal 2017, user.calendars.first.year

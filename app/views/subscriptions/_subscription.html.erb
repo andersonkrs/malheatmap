@@ -1,0 +1,19 @@
+<%= turbo_stream_from(subscription) %>
+
+<%= turbo_frame_tag dom_id(subscription) do %>
+  <% if subscription.errors.any? %>
+    <%= render partial: "subscriptions/form", locals: { subscription: subscription } %>
+  <% else %>
+    <div class="columns is-centered is-multiline has-text-centered"
+         data-controller="subscription"
+         data-subscription-url-value="<%= subscription.redirect_path %>">
+      <div class="column is-full">
+        <h1 class="subtitle"><%= t(".wait") %></h1>
+      </div>
+      <div class="column is-full">
+        <%= image_tag "loading.gif", class: "pr-4" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+

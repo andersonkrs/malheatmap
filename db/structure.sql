@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+--
 -- Name: citext; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -95,7 +102,7 @@ CREATE TABLE public.active_storage_blobs (
     content_type character varying,
     metadata text,
     byte_size bigint NOT NULL,
-    checksum character varying NOT NULL,
+    checksum character varying,
     created_at timestamp without time zone NOT NULL,
     service_name character varying NOT NULL
 );
@@ -241,7 +248,9 @@ CREATE TABLE public.subscriptions (
     username character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    processed_at timestamp without time zone
+    processed_at timestamp without time zone,
+    redirect_path text,
+    process_errors text[] DEFAULT '{}'::text[] NOT NULL
 );
 
 
@@ -527,34 +536,36 @@ ALTER TABLE ONLY public.entries
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20200201115222'),
-('20200201115644'),
-('20200201120036'),
-('20200202023458'),
-('20200229234332'),
-('20200301000733'),
-('20200306152120'),
-('20200328040329'),
-('20200328041327'),
-('20200328162236'),
-('20200328164202'),
-('20200328164518'),
-('20200329040026'),
-('20200329145233'),
-('20200404024047'),
-('20200603022918'),
-('20200619144433'),
-('20200920150238'),
-('20201002030547'),
-('20201206123608'),
-('20201210195647'),
-('20201210195648'),
-('20210214155211'),
-('20210214203654'),
-('20210307134347'),
-('20210526022315'),
-('20210622025419'),
+('20221106013355'),
+('20220326024317'),
+('20210711204405'),
 ('20210629132446'),
-('20210711204405');
+('20210622025419'),
+('20210526022315'),
+('20210307134347'),
+('20210214203654'),
+('20210214155211'),
+('20201210195648'),
+('20201210195647'),
+('20201206123608'),
+('20201002030547'),
+('20200920150238'),
+('20200619144433'),
+('20200603022918'),
+('20200404024047'),
+('20200329145233'),
+('20200329040026'),
+('20200328164518'),
+('20200328164202'),
+('20200328162236'),
+('20200328041327'),
+('20200328040329'),
+('20200306152120'),
+('20200301000733'),
+('20200229234332'),
+('20200202023458'),
+('20200201120036'),
+('20200201115644'),
+('20200201115222');
 
 

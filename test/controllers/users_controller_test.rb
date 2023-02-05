@@ -16,10 +16,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "filters activities by year" do
-      @user.activities.create!([
-                                 { item: items(:naruto), date: Date.new(2019, 1, 1), amount: 1 },
-                                 { item: items(:naruto), date: Date.new(2020, 1, 1), amount: 1 }
-                               ])
+      @user.activities.create!(
+        [
+          { item: items(:naruto), date: Date.new(2019, 1, 1), amount: 1 },
+          { item: items(:naruto), date: Date.new(2020, 1, 1), amount: 1 }
+        ]
+      )
 
       get user_url(@user, year: 2019)
 
@@ -48,14 +50,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     test "renders timeline activities dates ordered as desc" do
       travel_to Time.zone.local(2020, 12, 1)
 
-      @user.activities.create!([
-                                 { item: items(:bleach), date: Date.new(2020, 5, 1), amount: 1 },
-                                 { item: items(:bleach), date: Date.new(2020, 5, 2), amount: 1 },
-                                 { item: items(:bleach), date: Date.new(2020, 6, 1), amount: 1 },
-                                 { item: items(:bleach), date: Date.new(2020, 6, 2), amount: 1 },
-                                 { item: items(:bleach), date: Date.new(2020, 7, 1), amount: 1 },
-                                 { item: items(:bleach), date: Date.new(2020, 7, 2), amount: 1 }
-                               ])
+      @user.activities.create!(
+        [
+          { item: items(:bleach), date: Date.new(2020, 5, 1), amount: 1 },
+          { item: items(:bleach), date: Date.new(2020, 5, 2), amount: 1 },
+          { item: items(:bleach), date: Date.new(2020, 6, 1), amount: 1 },
+          { item: items(:bleach), date: Date.new(2020, 6, 2), amount: 1 },
+          { item: items(:bleach), date: Date.new(2020, 7, 1), amount: 1 },
+          { item: items(:bleach), date: Date.new(2020, 7, 2), amount: 1 }
+        ]
+      )
 
       get user_url(@user)
 

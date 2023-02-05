@@ -7,9 +7,5 @@ class Activity < ApplicationRecord
   validates :amount, presence: true, numericality: { only_integer: true }
   validates :date, presence: true
 
-  scope :ordered_as_timeline, lambda {
-    includes(:item)
-      .joins(:item)
-      .order(date: :desc, name: :asc)
-  }
+  scope :ordered_as_timeline, -> { includes(:item).joins(:item).order(date: :desc, name: :asc) }
 end

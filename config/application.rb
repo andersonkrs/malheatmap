@@ -18,7 +18,7 @@ Bundler.require(*Rails.groups)
 
 module MalHeatmap
   class Application < Rails::Application
-    config.load_defaults 6.0
+    config.load_defaults 7.0
     config.time_zone = "UTC"
     config.autoload_paths << Rails.root.join("lib")
 
@@ -38,7 +38,7 @@ module MalHeatmap
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
 
-    config.exceptions_app = routes
+    # config.exceptions_app = routes
 
     config.cache_store = :redis_cache_store, config_for(:redis)
 
@@ -49,8 +49,9 @@ module MalHeatmap
     config.skylight.probes += %w[redis]
 
     config.active_storage.service = :local
+
+    config.assets.paths << Rails.root.join("vendor/assets")
   end
 end
-
 ActiveSupport::Deprecation.disallowed_warnings = :all
 ActiveSupport::Deprecation.disallowed_behavior = :log

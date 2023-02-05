@@ -1,4 +1,4 @@
-<% if Rails.env.production? %>
+<% if Rails.configuration.analytics[:enabled] %>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9MEFFKLKJL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];

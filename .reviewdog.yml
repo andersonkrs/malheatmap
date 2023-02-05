@@ -3,5 +3,3 @@ runner:
     cmd: bin/rubocop --parallel
   brakeman:
     cmd: bin/brakeman --quiet --format tabs
-  standardjs:
-    cmd: yarn standard

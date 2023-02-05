@@ -2,9 +2,7 @@ require "test_helper"
 
 class User
   class SignaturableTest < ActiveSupport::TestCase
-    setup do
-      @user = users(:babyoda)
-    end
+    setup { @user = users(:babyoda) }
 
     test "generates user signature image correctly using current date" do
       travel_to Date.new(2020, 5, 1)

@@ -3,9 +3,7 @@ require "test_helper"
 class YearsMenuComponentTest < ViewComponent::TestCase
   include Rails.application.routes.url_helpers
 
-  setup do
-    @user = users(:babyoda)
-  end
+  setup { @user = users(:babyoda) }
 
   test "renders each year with correctly user link" do
     component = render_inline(YearsMenuComponent.new(user: @user, years: [2019, 2018, 2020], selected_year: 2019))

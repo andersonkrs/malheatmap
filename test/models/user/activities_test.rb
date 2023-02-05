@@ -2,9 +2,7 @@ require "test_helper"
 
 class User
   class ActivitiesTest < ActiveSupport::TestCase
-    setup do
-      @user = users(:babyoda)
-    end
+    setup { @user = users(:babyoda) }
 
     def activities
       @user.activities.order(:date)
@@ -23,10 +21,12 @@ class User
     end
 
     test "keeps activity's amount unmodified if there are duplicated entries same date and item" do
-      @user.entries.create!([
-                              { item: items(:naruto), timestamp: Date.new(2020, 1, 1), amount: 10 },
-                              { item: items(:naruto), timestamp: Date.new(2020, 1, 1), amount: 10 }
-                            ])
+      @user.entries.create!(
+        [
+          { item: items(:naruto), timestamp: Date.new(2020, 1, 1), amount: 10 },
+          { item: items(:naruto), timestamp: Date.new(2020, 1, 1), amount: 10 }
+        ]
+      )
 
       assert_changes -> { activities.count }, from: 0, to: 1 do
         @user.activities.generate_from_history
@@ -36,10 +36,12 @@ class User
     end
 
     test "creates subsequent activities with the difference between positions" do
-      @user.entries.create!([
-                              { item: items(:naruto), timestamp: Date.new(2020, 1, 1), amount: 10 },
-                              { item: items(:naruto), timestamp: Date.new(2020, 1, 2), amount: 15 }
-                            ])
+      @user.entries.create!(
+        [
+          { item: items(:naruto), timestamp: Date.new(2020, 1, 1), amount: 10 },
+          { item: items(:naruto), timestamp: Date.new(2020, 1, 2), amount: 15 }
+        ]
+      )
 
       assert_changes -> { activities.count }, from: 0, to: 2 do
         @user.activities.generate_from_history
@@ -50,11 +52,12 @@ class User
     end
 
     test "creates two activities when there are entries of different items on date" do
-      @user.entries.create!([
-                              { item: items(:cowboy_bebop), timestamp: Time.zone.local(2020, 1, 1, 12, 15),
-                                amount: 10 },
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 1, 13, 30), amount: 20 }
-                            ])
+      @user.entries.create!(
+        [
+          { item: items(:cowboy_bebop), timestamp: Time.zone.local(2020, 1, 1, 12, 15), amount: 10 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 1, 13, 30), amount: 20 }
+        ]
+      )
 
       assert_changes -> { activities.count }, from: 0, to: 2 do
         @user.activities.generate_from_history
@@ -70,13 +73,15 @@ class User
     end
 
     test "computes re-watches as a one activity on the history" do
-      @user.entries.create!([
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 1), amount: 10 },
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 2), amount: 5 },
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 2), amount: 6 },
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 3), amount: 9 },
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 4), amount: 10 }
-                            ])
+      @user.entries.create!(
+        [
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 1), amount: 10 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 2), amount: 5 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 2), amount: 6 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 3), amount: 9 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 4), amount: 10 }
+        ]
+      )
 
       @user.activities.generate_from_history
 
@@ -87,13 +92,15 @@ class User
     end
 
     test "creates just one activity per day when there are multiple entries of same item on date" do
-      @user.entries.create!([
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 1), amount: 10 },
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 1), amount: 12 },
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 2), amount: 15 },
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 7), amount: 21 },
-                              { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 7), amount: 26 }
-                            ])
+      @user.entries.create!(
+        [
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 1), amount: 10 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 1), amount: 12 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 2), amount: 15 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 7), amount: 21 },
+          { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 7), amount: 26 }
+        ]
+      )
 
       assert_changes -> { activities.count }, from: 0, to: 3 do
         @user.activities.generate_from_history
@@ -139,9 +146,11 @@ class User
 
     test "generates activities based on user time zone" do
       @user.time_zone = "Australia/Adelaide"
-      @user.entries.build(item: items(:naruto),
-                          timestamp: Time.find_zone(@user.time_zone).local(2020, 4, 10, 5),
-                          amount: 1)
+      @user.entries.build(
+        item: items(:naruto),
+        timestamp: Time.find_zone(@user.time_zone).local(2020, 4, 10, 5),
+        amount: 1
+      )
       @user.save!
 
       @user.activities.generate_from_history

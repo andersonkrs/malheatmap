@@ -61,11 +61,7 @@ module MAL
 
       lat, long = *coordinates
 
-      response[:profile].merge!(
-        latitude: lat,
-        longitude: long,
-        time_zone: time_zone_for(lat, long)
-      )
+      response[:profile].merge!(latitude: lat, longitude: long, time_zone: time_zone_for(lat, long))
     end
 
     def crawl_history
@@ -90,11 +86,7 @@ module MAL
     end
 
     def handle_response_code_error(response_code, message)
-      exception_class = if response_code == 404
-                          Errors::ProfileNotFound
-                        else
-                          Errors::CommunicationError
-                        end
+      exception_class = (response_code == 404 ? Errors::ProfileNotFound : Errors::CommunicationError)
 
       raise exception_class.new(message, username:)
     end

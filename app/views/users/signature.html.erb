@@ -1,0 +1,18 @@
+<html>
+<head>
+  <style type="text/css">
+    <%= Rails.application.assets.resolver.read("application.css").html_safe.force_encoding("UTF-8") %>
+
+    .signature {
+        padding: 0.75em;
+        display: inline-grid;
+        background-color: transparent;
+    }
+  </style>
+</head>
+<body>
+<div class="signature">
+  <%= render CalendarComponent.new(activities_amount_per_day: activities_amount_per_day) %>
+</div>
+</body>
+</html>

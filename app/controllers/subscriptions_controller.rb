@@ -3,16 +3,27 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new
   end
 
+  def show
+    @subscription = Subscription.find(params[:id])
+
+    render :show and return if @subscription.processing?
+
+    if @subscription.redirect_path.present?
+      redirect_to @subscription.redirect_path
+    else
+      redirect_to subscriptions_path
+    end
+  end
   def create
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
       @subscription.submitted
-      render :create, status: :accepted
+      redirect_to subscription_path(@subscription)
     elsif user_already_subscribed?
       redirect_to_user_page
     else
-      render :create, status: :unprocessable_entity
+      render :index, status: :unprocessable_entity
     end
   end
 
@@ -27,6 +38,6 @@ class SubscriptionsController < ApplicationController
   end
 
   def redirect_to_user_page
-    redirect_to(user_path(@subscription.username), turbolinks: :advance)
+    redirect_to(user_path(@subscription.username), turbo: :advance, format: :html)
   end
 end

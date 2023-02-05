@@ -1,12 +1,5 @@
 version: 2
 updates:
-- package-ecosystem: npm
-  directory: "/"
-  schedule:
-    interval: weekly
-    day: saturday
-    time: '08:00'
-  open-pull-requests-limit: 10
 - package-ecosystem: bundler
   directory: "/"
   schedule:
@@ -17,6 +10,13 @@ updates:
   labels:
   - dependency
   - ruby
+- package-ecosystem: "gitsubmodule"
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: saturday
+    time: '08:00'
+  open-pull-requests-limit: 10
 - package-ecosystem: "github-actions"
   directory: "/"
   schedule:

@@ -1,0 +1,24 @@
+<% template = "[URL=\"#{user_url(@user)}\"][IMG]#{user_signature_url(@user)}[/IMG][/URL]" %>
+
+<div class="field is-horizontal" data-controller="clipboard">
+  <div class="field-label is-normal has-text-left">
+    <%= label_tag(:bb_code, t(".label"), class: "label has-text-weight-medium") %>
+  </div>
+  <div class="field-body">
+    <div class="field has-addons">
+      <div class="control is-expanded has-icons-left">
+        <%= text_field_tag(:bb_code,
+                           template,
+                           readonly: true,
+                           class: "input signature-input",
+                           data: { "clipboard-target" => "source" }) %>
+        <span class="icon is-small is-left"><i class="fas fa-code"></i></span>
+      </div>
+      <div class="control copy-signature">
+        <button class="button" data-action="clipboard#copy">
+          <i class="fas fa-clipboard"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

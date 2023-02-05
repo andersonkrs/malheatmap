@@ -3,9 +3,7 @@ require "application_system_test_case"
 class SubscriptionsTest < ApplicationSystemTestCase
   include VCRCassettes
 
-  setup do
-    visit subscriptions_url
-  end
+  setup { visit subscriptions_url }
 
   test "shows required username notification when submitting without type username" do
     click_on "Subscribe"
@@ -29,7 +27,9 @@ class SubscriptionsTest < ApplicationSystemTestCase
 
     perform_enqueued_jobs
 
-    assert_current_path(subscriptions_path)
+    created_subscription = Subscription.last
+
+    assert_current_path(subscription_path(created_subscription))
     assert_text(/Profile not found for username/)
   end
 

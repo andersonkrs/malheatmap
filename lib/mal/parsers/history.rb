@@ -11,9 +11,7 @@ module MAL
       def parse
         return [] if private?
 
-        page.xpath("//tr[td[@class='borderClass']]").map do |row|
-          parse_entry(row)
-        end
+        page.xpath("//tr[td[@class='borderClass']]").map { |row| parse_entry(row) }
       end
 
       private
