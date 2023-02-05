@@ -60,12 +60,7 @@ class Subscription
     end
 
     def broadcast_new_form
-      broadcast_replace(
-        partial: "subscriptions/form",
-        locals: {
-          subscription: Subscription.new(process_errors:)
-        }
-      )
+      broadcast_replace(partial: "subscriptions/form", locals: { subscription: Subscription.new(process_errors:) })
     end
   end
 end

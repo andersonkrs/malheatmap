@@ -170,8 +170,8 @@ class User
       assert_equal 1, @user.entries.count
     end
 
-      test "saves the navigation history" do
-        MAL::UserCrawler
+    test "saves the navigation history" do
+      MAL::UserCrawler
         .any_instance
         .stubs(:history)
         .returns(
@@ -180,7 +180,7 @@ class User
             stub(body: "<html>history</html>", uri: URI.parse("https://dummy/myuser/history"))
           ]
         )
-        @user.crawl_data
+      @user.crawl_data
 
       visited_pages = @user.crawling_log_entries.first.visited_pages
 

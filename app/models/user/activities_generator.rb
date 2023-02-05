@@ -76,12 +76,7 @@ class User
 
             Activity.upsert_all(
               activities.values.map do |activity|
-                {
-                  user_id: user.id,
-                  date: activity.date,
-                  item_id: activity.item_id,
-                  amount: activity.amount
-                }
+                { user_id: user.id, date: activity.date, item_id: activity.item_id, amount: activity.amount }
               end,
               unique_by: :index_activities_on_user_id_and_item_id_and_date,
               record_timestamps: true

@@ -36,8 +36,7 @@ class User
       end
 
       def create_log_entry(raw_data:, failure: false, failure_message: nil)
-        log_entry = user.crawling_log_entries.build(raw_data:,
-                                                    failure:, failure_message:, visited_pages:)
+        log_entry = user.crawling_log_entries.build(raw_data:, failure:, failure_message:, visited_pages:)
         log_entry.calculate_checksum
         log_entry.save!
         log_entry
