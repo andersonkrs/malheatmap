@@ -51,7 +51,7 @@ class User
       end
 
       def persist!(entries)
-        return if new_entries.empty?
+        return if entries.empty?
 
         entries.each do |entry|
           entry.item.save!
