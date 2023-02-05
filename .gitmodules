@@ -1,6 +1,6 @@
 [submodule "vendor/assets/stylesheets/bulma-timeline"]
 	path = vendor/assets/stylesheets/bulma-timeline
-	url = git@github.com:Wikiki/bulma-timeline.git
+	url = https://github.com/Wikiki/bulma-timeline
 [submodule "vendor/assets/stylesheets/bulma"]
 	path = vendor/assets/stylesheets/bulma
-	url = git@github.com:jgthms/bulma.git
+	url = https://github.com/jgthms/bulma
