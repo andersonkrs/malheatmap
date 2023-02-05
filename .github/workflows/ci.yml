@@ -35,9 +35,6 @@ jobs:
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
 
-    - name: Setup Node
-      uses: actions/setup-node@v3
-
     - name: Cache Ruby Dependencies
       uses: actions/cache@v3
       with:
@@ -45,14 +42,6 @@ jobs:
         key: ${{ runner.os }}-gem-v1-${{ hashFiles('Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gem-v1
-
-    - name: Cache Node Dependencies
-      uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node_modules-v1-${{ hashFiles('yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-node_modules-v1
 
     - name: Setup
       run: bin/setup
