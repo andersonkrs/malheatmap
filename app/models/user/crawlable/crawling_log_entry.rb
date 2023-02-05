@@ -39,13 +39,36 @@ module User
         destroy_recent_history_entries(new_history_entries)
         cached_items = {}
 
-        new_history_entries.map do |entry_data|
-          history_entry = user.entries.build(amount: entry_data["amount"], timestamp: entry_data["timestamp"])
-
+        new_entries = new_history_entries.map do |entry_data|
+          history_entry = Entry.new(amount: entry_data["amount"], timestamp: entry_data["timestamp"])
+          history_entry.user_id = user.id
           history_entry.item = fetch_item(cached_items, mal_id: entry_data["item_id"], kind: entry_data["item_kind"])
           history_entry.item.name = entry_data["item_name"]
-          history_entry.save!
+          history_entry.validate!
+          history_entry
         end
+
+        persist!(new_entries)
+      end
+
+      def persist!(entries)
+        return if entries.empty?
+
+        entries.each do |entry|
+          entry.item.save!
+        end
+
+        Entry.insert_all!(
+          entries.map do |entry|
+            {
+              user_id: entry.user_id,
+              item_id: entry.item.id,
+              amount: entry.amount,
+              timestamp: entry.timestamp
+            }
+          end,
+          record_timestamps: true
+        )
       end
 
       def fetch_item(cache, mal_id:, kind:)

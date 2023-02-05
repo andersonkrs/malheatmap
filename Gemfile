@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "~> 3.1.2"
+ruby "~> 3.2.0"
 
 gem "bootsnap", require: false
 gem "ferrum"
@@ -15,7 +15,7 @@ gem "puma"
 gem "rails", github: "rails/rails", branch: "main"
 gem "sidekiq"
 gem "sidekiq-scheduler"
-gem "skylight", "~> 5.3.3"
+gem "skylight", "~> 5.3.4"
 gem "slim-rails"
 gem "view_component"
 gem "wheretz"

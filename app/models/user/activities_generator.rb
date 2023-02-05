@@ -1,4 +1,4 @@
-module User
+class User
   class ActivitiesGenerator
     def initialize(user)
       super()
@@ -64,14 +64,29 @@ module User
       end
 
       def find_or_new(item, date)
-        activities["#{item.id}:#{date}"] ||= user.activities.build(item:, date:, amount: 0)
+        activities["#{item.id}:#{date}"] ||= Activity.new(item:, date:, amount: 0, user:)
       end
 
       def save!
         user.activities.transaction do
           user.activities.delete_all
 
-          activities.each_value(&:save!)
+          if activities.present?
+            activities.each_value(&:validate!)
+
+            Activity.upsert_all(
+              activities.values.map do |activity|
+                {
+                  user_id: user.id,
+                  date: activity.date,
+                  item_id: activity.item_id,
+                  amount: activity.amount
+                }
+              end,
+              unique_by: :index_activities_on_user_id_and_item_id_and_date,
+              record_timestamps: true
+            )
+          end
         end
       end
 

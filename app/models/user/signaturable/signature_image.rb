@@ -1,6 +1,6 @@
 require "image_processing/mini_magick"
 
-module User
+class User
   module Signaturable
     class SignatureImage
       def initialize(user)

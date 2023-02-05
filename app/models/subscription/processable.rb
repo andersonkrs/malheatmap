@@ -42,25 +42,8 @@ class Subscription
 
     private
 
-    def capture_and_redirect(error)
-      self.redirect_path = internal_error_path
-      process_errors << error.message
-      ErrorNotifier.capture(error)
-    end
-
-    def save_and_broadcast
-      self.processed_at = Time.current
-      save!(validate: false)
-
-      redirect_path.present? ? broadcast_redirect : broadcast_new_form
-    end
-
-    def broadcast_redirect
-      broadcast_redirect_to(path: redirect_path, action: :replace)
-    end
-
-    def broadcast_new_form
-      broadcast_replace(partial: "subscriptions/form", locals: { subscription: Subscription.new(process_errors:) })
+    def render_error_notification(message)
+      ApplicationController.render NotificationComponent.new(message:), layout: false
     end
   end
 end

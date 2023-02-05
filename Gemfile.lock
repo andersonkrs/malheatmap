@@ -211,10 +211,6 @@ GEM
     nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    nokogiri (1.13.9-arm64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.13.9-x86_64-linux)
-      racc (~> 1.4)
     numerizer (0.2.0)
     parallel (1.22.1)
     parser (3.1.2.1)
@@ -294,7 +290,7 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    skylight (5.3.3)
+    skylight (5.3.4)
       activesupport (>= 5.2.0)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
@@ -378,7 +374,7 @@ DEPENDENCIES
   sidekiq
   sidekiq-scheduler
   simplecov (~> 0.17.1)
-  skylight (~> 5.3.3)
+  skylight (~> 5.3.4)
   slim-rails
   stimulus-rails
   syntax_tree
@@ -390,7 +386,7 @@ DEPENDENCIES
   wheretz
 
 RUBY VERSION
-   ruby 3.1.2p20
+   ruby 3.2.0p0
 
 BUNDLED WITH
    2.3.26

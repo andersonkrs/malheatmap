@@ -14,7 +14,7 @@ class CalendarComponent < ViewComponent::Base
   # The months' headers are calculated based on the number of weeks depending how many week columns the month is
   # present in, the same week column can contain days of following and/or previous months.
   #
-  # The number of weeks is subtracted by 1 in order to keep the month's name on the exact column that Fit starts.
+  # The number of weeks is subtracted by 1 in order to keep the month's name on the exact column that it starts.
   # Usually a month will start and at the end or in the middle of a week column,
   # sharing the same week with the previous month and next month.
   #

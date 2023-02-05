@@ -1,4 +1,4 @@
-module User
+class User
   module Calendars
     class CalendarList
       include Enumerable

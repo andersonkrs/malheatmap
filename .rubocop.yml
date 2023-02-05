@@ -25,6 +25,9 @@ AllCops:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Metrics/AbcSize:
+  Max: 20
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
