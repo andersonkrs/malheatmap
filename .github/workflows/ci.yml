@@ -93,7 +93,7 @@ jobs:
         path: log/**/*.log
   deploy:
     needs: qa
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
 
     steps:
