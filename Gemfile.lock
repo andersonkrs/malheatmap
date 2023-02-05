@@ -248,7 +248,7 @@ GEM
     request_store (1.5.1)
       rack (>= 1.4)
     rexml (3.2.5)
-    rollbar (3.3.2)
+    rollbar (3.4.0)
     rubocop (1.39.0)
       json (~> 2.3)
       parallel (~> 1.10)
