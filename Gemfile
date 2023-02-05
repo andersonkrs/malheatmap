@@ -20,7 +20,8 @@ gem "slim-rails" # TODO: Abandon usage of slim and remove this gem
 gem "view_component"
 gem "wheretz"
 
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+# Use JavaScript with ESM import maps
+# [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
 # Use Redis for Action Cable
