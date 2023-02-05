@@ -110,3 +110,4 @@ jobs:
         dokku-host:  ${{ secrets.DOKKU_HOST }}
         app-name: 'malheatmap'
         git-push-flags: --force
+        remote-branch: main
