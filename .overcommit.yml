@@ -20,7 +20,7 @@ PreCommit:
   StreeFormat:
     enabled: true
     on_warn: fail
-    command: [ 'bash', '-c', "git diff --name-only --diff-filter=ACM --cached '*.rb' '*.rake' 'Gemfile' 'Rakefile' | xargs bundle exec stree write" ]
+    command: [ 'bash', '-c', "git diff --name-only --diff-filter=ACM --cached '*.rb' '*.rake' 'Gemfile' 'Rakefile' | xargs bundle exec stree check" ]
 
   RuboCop:
     enabled: true

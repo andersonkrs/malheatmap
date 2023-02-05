@@ -46,12 +46,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
     fill_in "subscription[username]", with: "https://myanimelist.net/profile/animeisgood8"
 
     click_on "Subscribe"
-    assert_text(
-
-
-
-      /Please wait/
-    )
+    assert_text(/Please wait/)
 
     perform_enqueued_jobs
     assert_current_path user_path("animeisgood8")
