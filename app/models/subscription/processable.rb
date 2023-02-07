@@ -1,7 +1,6 @@
 class Subscription
   module Processable
     extend ActiveSupport::Concern
-    include Rails.application.routes.url_helpers
     include ActionView::RecordIdentifier
 
     included do
@@ -28,7 +27,7 @@ class Subscription
       crawled = user.crawl_data
 
       if crawled
-        self.redirect_path = user_path(user)
+        self.redirect_path = Rails.application.routes.url_helpers.user_path(user)
       else
         user.destroy!
         self.process_errors = user.errors[:base]
@@ -43,7 +42,7 @@ class Subscription
     private
 
     def capture_and_redirect(error)
-      self.redirect_path = internal_error_path
+      self.redirect_path = Rails.application.routes.url_helpers.internal_error_path
       process_errors << error.message
       ErrorNotifier.capture(error)
     end
