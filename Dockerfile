@@ -37,13 +37,14 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y wget default-mysql-client libsqlite3-0 libvips postgresql-client redis && \
+    apt-get install --no-install-recommends -y curl gnupg gnupg2 gnupg1 default-mysql-client libsqlite3-0 libvips postgresql-client redis && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install chrome for generating images
-RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN dpkg -i google-chrome-stable_current_amd64.deb || true
-RUN apt -f install -y
+RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+RUN echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get -y update && \
+    apt-get -y install google-chrome-stable
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
