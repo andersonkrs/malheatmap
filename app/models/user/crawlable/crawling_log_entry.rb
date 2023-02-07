@@ -45,7 +45,6 @@ class User
             history_entry.user_id = user.id
             history_entry.item = fetch_item(cached_items, mal_id: entry_data["item_id"], kind: entry_data["item_kind"])
             history_entry.item.name = entry_data["item_name"]
-            history_entry.validate!
             history_entry
           end
 
@@ -57,9 +56,9 @@ class User
 
         entries.each { |entry| entry.item.save! }
 
-        Entry.insert_all!(
+        user.entries.insert_all!(
           entries.map do |entry|
-            { user_id: entry.user_id, item_id: entry.item.id, amount: entry.amount, timestamp: entry.timestamp }
+            { item_id: entry.item.id, amount: entry.amount, timestamp: entry.timestamp }
           end,
           record_timestamps: true
         )

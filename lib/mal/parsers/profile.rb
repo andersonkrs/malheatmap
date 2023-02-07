@@ -14,11 +14,11 @@ module MAL
       private
 
       def location
-        @page.at_xpath("//span[contains(@class, 'user-status-title') and text()='Location']/following::span").text
+        @page.at_xpath("//span[contains(@class, 'user-status-title') and text()='Location']/following::span")&.text
       end
 
       def avatar_url
-        @page.at_xpath("//div[contains(@class, 'user-image')]/img/@data-src").text
+        @page.at_xpath("//div[contains(@class, 'user-image')]/img/@data-src")&.text
       end
     end
   end
