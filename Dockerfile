@@ -11,6 +11,7 @@ WORKDIR /rails
 ENV RAILS_ENV="production" \
     BUNDLE_WITHOUT="development:test" \
     RAILS_SERVE_STATIC_FILES="true"
+    RAILS_LOG_TO_STDOUT="true" \
 
 
 # Throw-away build stage to reduce size of final image
@@ -35,17 +36,23 @@ RUN bundle exec bootsnap precompile app/ lib/
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # Final stage for app image
-FROM base
+FROM ruby:$RUBY_VERSION-alpine
 
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y wget curl gnupg gnupg2 gnupg1 libvips imagemagick postgresql-client redis && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN apk add --no-cache \
+            --repository http://dl-3.alpinelinux.org/alpine/edge/community \
+            --repository http://dl-3.alpinelinux.org/alpine/edge/main \
+            chromium \
+            curl \
+            postgresql-dev \
+            redis \
+            vips-dev \
+            libxml2 \
+            libxslt \
+            imagemagick
 
-# Install chrome for generating images
-RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
-RUN echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get -y update -qq && \
-    apt-get -y install google-chrome-stable
+# Set chromium path for generating images
+ENV CHROME_BIN=/usr/bin/chromium-browser \
+    CHROME_PATH=/usr/lib/chromium/
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
