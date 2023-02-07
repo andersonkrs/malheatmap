@@ -9,7 +9,8 @@ WORKDIR /rails
 
 # Set production environment
 ENV RAILS_ENV="production" \
-    BUNDLE_WITHOUT="development:test"
+    BUNDLE_WITHOUT="development:test" \
+    RAILS_SERVE_STATIC_FILES="true"
 
 
 # Throw-away build stage to reduce size of final image
@@ -17,7 +18,7 @@ FROM base as build
 
 # Install packages need to build gems
 RUN apt-get update -qq && \
-    apt-get install -y build-essential default-libmysqlclient-dev git libpq-dev libvips pkg-config redis
+    apt-get install -y build-essential git libpq-dev pkg-config redis
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -37,13 +38,13 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl gnupg gnupg2 gnupg1 default-mysql-client libsqlite3-0 libvips imagemagick postgresql-client redis && \
+    apt-get install --no-install-recommends -y wget curl gnupg gnupg2 gnupg1 libvips imagemagick postgresql-client redis && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install chrome for generating images
 RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
 RUN echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get -y update && \
+    apt-get -y update -qq && \
     apt-get -y install google-chrome-stable
 
 # Copy built artifacts: gems, application
