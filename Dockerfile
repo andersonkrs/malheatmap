@@ -10,9 +10,8 @@ WORKDIR /rails
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_WITHOUT="development:test" \
-    RAILS_SERVE_STATIC_FILES="true"
-    RAILS_LOG_TO_STDOUT="true" \
-
+    RAILS_SERVE_STATIC_FILES="true" \
+    RAILS_LOG_TO_STDOUT="true"
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -25,7 +24,6 @@ RUN apt-get update -qq && \
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && bundle exec bootsnap precompile --gemfile
 
-
 # Copy application code
 COPY . .
 
@@ -36,30 +34,28 @@ RUN bundle exec bootsnap precompile app/ lib/
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # Final stage for app image
-FROM ruby:$RUBY_VERSION-alpine
+FROM base
 
-RUN apk add --no-cache \
-            --repository http://dl-3.alpinelinux.org/alpine/edge/community \
-            --repository http://dl-3.alpinelinux.org/alpine/edge/main \
-            chromium \
-            curl \
-            postgresql-dev \
-            redis \
-            vips-dev \
-            libxml2 \
-            libxslt \
-            imagemagick
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl \
+                                               gnupg \
+                                               gnupg2 \
+                                               gnupg1 \
+                                               libvips \
+                                               imagemagick \
+                                               postgresql-client \
+                                               redis && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Set chromium path for generating images
-ENV CHROME_BIN=/usr/bin/chromium-browser \
-    CHROME_PATH=/usr/lib/chromium/
+RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+RUN echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get -y update -qq && \
+    apt-get -y install google-chrome-stable && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
-
-# Entrypoint prepares the database.
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
