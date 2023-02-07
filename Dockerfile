@@ -37,7 +37,7 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl gnupg gnupg2 gnupg1 default-mysql-client libsqlite3-0 libvips postgresql-client redis && \
+    apt-get install --no-install-recommends -y curl gnupg gnupg2 gnupg1 default-mysql-client libsqlite3-0 libvips imagemagick postgresql-client redis && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install chrome for generating images
