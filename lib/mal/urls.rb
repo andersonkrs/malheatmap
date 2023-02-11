@@ -6,10 +6,6 @@ module MAL
       URI::HTTPS.build(host: HOST, path: "/profile/#{username}").to_s
     end
 
-    def history_url(username, kind)
-      URI::HTTPS.build(host: HOST, path: "/history/#{username}/#{kind}").to_s
-    end
-
     def anime_url(anime_id)
       item_url(:anime, anime_id)
     end

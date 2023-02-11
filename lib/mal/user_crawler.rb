@@ -1,38 +1,52 @@
 require "mechanize"
 
 module MAL
-  class UserCrawler
+  class UserCrawler < Mechanize
     include URLS
 
+    INTERNAL_COMMUNICATION_ERRORS = [
+      Mechanize::ResponseReadError,
+      Mechanize::RedirectLimitReachedError,
+      Net::ReadTimeout,
+      Net::OpenTimeout,
+      OpenSSL::SSL::SSLError,
+      Errno::ECONNRESET
+    ].freeze
+
     def initialize(username)
+      super
       @username = username
       @response = { profile: {}, history: [] }
-      @history = []
+
+      setup_crawler_options
     end
 
     def crawl
-      BrowserSession.fetch_page do |page|
-        @page = page
-
-        crawl_profile
-        crawl_geolocation
-        crawl_history
-      end
+      crawl_profile
+      crawl_geolocation
+      crawl_history
 
       response
-    ensure
-      @page = nil
+    rescue Mechanize::ResponseCodeError => error
+      handle_response_code_error(error.response_code.to_i, error.message)
+    rescue *INTERNAL_COMMUNICATION_ERRORS
+      raise Errors::CommunicationError
     end
-
-    attr_reader :history
 
     private
 
-    attr_reader :username, :response, :page
+    attr_reader :username, :response
+
+    def setup_crawler_options
+      config = Rails.configuration.crawler
+
+      self.history_added = proc { sleep config[:requests_interval] }
+      self.open_timeout = config[:timeout]
+      self.read_timeout = config[:timeout]
+    end
 
     def crawl_profile
-      page.goto profile_url(username)
-      check_response!
+      get(profile_url(username))
 
       response[:profile] = Parsers::Profile.new(page).parse
     end
@@ -51,6 +65,9 @@ module MAL
     end
 
     def crawl_history
+      history_link = page.link_with(text: "History")
+      raise Errors::UnableToNavigateToHistoryPage.new(body: page.body, uri: page.uri) if history_link.nil?
+
       crawl_history_kind(:anime)
       crawl_history_kind(:manga)
     end
@@ -63,22 +80,15 @@ module MAL
     end
 
     def crawl_history_kind(kind)
-      page.goto history_url(username, kind)
-      check_response!
+      page.link_with(text: "#{kind.capitalize} History").click
 
       response[:history] += Parsers::History.new(page, kind:).parse
     end
 
-    def check_response!
-      response_code = page.network.response.status
-      case response_code
-      when 404
-        raise Errors::ProfileNotFound.new(404, message: "Profile not found")
-      when (300...)
-        raise Errors::CommunicationError.new(404, message: "CommunicationError")
-      else
-        nil
-      end
+    def handle_response_code_error(response_code, message)
+      exception_class = (response_code == 404 ? Errors::ProfileNotFound : Errors::CommunicationError)
+
+      raise exception_class.new(message, username:)
     end
   end
 end
