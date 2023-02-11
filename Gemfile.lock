@@ -99,7 +99,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     bindex (0.8.1)
-    bootsnap (1.13.0)
+    bootsnap (1.16.0)
       msgpack (~> 1.2)
     brakeman (5.3.1)
     builder (3.2.4)
