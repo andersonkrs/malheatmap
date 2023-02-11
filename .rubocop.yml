@@ -17,6 +17,7 @@ AllCops:
     - "bin/**/*"
     - "node_modules/**/*"
     - "db/**/*"
+    - "public/**/*"
 
   DisplayCopNames: true
   DisplayStyleGuide: true

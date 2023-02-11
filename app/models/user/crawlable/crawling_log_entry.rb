@@ -57,9 +57,7 @@ class User
         entries.each { |entry| entry.item.save! }
 
         user.entries.insert_all!(
-          entries.map do |entry|
-            { item_id: entry.item.id, amount: entry.amount, timestamp: entry.timestamp }
-          end,
+          entries.map { |entry| { item_id: entry.item.id, amount: entry.amount, timestamp: entry.timestamp } },
           record_timestamps: true
         )
       end

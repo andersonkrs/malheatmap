@@ -35,12 +35,12 @@ unless Sidekiq.server?
   if Rails.env.production?
     Sidekiq::Web.use Rack::Auth::Basic do |username, password|
       ActiveSupport::SecurityUtils.secure_compare(
-        ::Digest::SHA256.hexdigest(username),
-        ::Digest::SHA256.hexdigest(Rails.application.credentials.sidekiq[:username])
+        Digest::SHA256.hexdigest(username),
+        Digest::SHA256.hexdigest(Rails.application.credentials.sidekiq[:username])
       ) &
         ActiveSupport::SecurityUtils.secure_compare(
-          ::Digest::SHA256.hexdigest(password),
-          ::Digest::SHA256.hexdigest(Rails.application.credentials.sidekiq[:password])
+          Digest::SHA256.hexdigest(password),
+          Digest::SHA256.hexdigest(Rails.application.credentials.sidekiq[:password])
         )
     end
   end

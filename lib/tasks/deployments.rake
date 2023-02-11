@@ -17,6 +17,6 @@ namespace :deployment do
                      "Content-Type" => "application/json",
                      "X-Rollbar-Access-Token" => Rails.application.credentials.rollbar[:token]
 
-    pp result.body
+    Rails.logger.debug result.body
   end
 end
