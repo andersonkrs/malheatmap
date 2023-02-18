@@ -215,12 +215,12 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
-    nokogiri (1.14.1)
+    nokogiri (1.14.2)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    nokogiri (1.14.1-arm64-darwin)
+    nokogiri (1.14.2-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.14.1-x86_64-linux)
+    nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
     numerizer (0.2.0)
     parallel (1.22.1)
@@ -311,10 +311,10 @@ GEM
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
-    slim-rails (3.5.1)
+    slim-rails (3.6.1)
       actionpack (>= 3.1)
       railties (>= 3.1)
-      slim (>= 3.0, < 5.0)
+      slim (>= 3.0, < 6.0, != 5.0.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     syntax_tree (4.3.0)
@@ -355,7 +355,7 @@ GEM
     wheretz (0.0.6)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.6)
+    zeitwerk (2.6.7)
 
 PLATFORMS
   arm64-darwin-21
