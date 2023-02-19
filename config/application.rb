@@ -40,6 +40,7 @@ module MalHeatmap
 
     # config.exceptions_app = routes
 
+    config.redis = config_for(:redis)
     config.cache_store = :redis_cache_store, config_for(:redis)
 
     config.crawler = config_for(:crawler)

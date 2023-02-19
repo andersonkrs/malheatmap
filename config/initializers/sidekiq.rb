@@ -1,31 +1,37 @@
 class ThreadedBrowserMiddleware
   def call(_worker, _message, _queue)
-    BrowserSession.current = Sidekiq.options[:browser]
+    BrowserSession.current = Sidekiq.default_configuration[:browser]
     yield
   end
 end
 
 require_relative "../../lib/browser_session"
 
+Sidekiq.configure_client do |config|
+  config.redis = { url: Rails.configuration.redis[:url] }
+end
+
 Sidekiq.configure_server do |config|
-  config.log_formatter = Sidekiq::Logger::Formatters::WithoutTimestamp.new
+  config.redis = { url: Rails.configuration.redis[:url] }
+
+  config.logger.formatter = Sidekiq::Logger::Formatters::WithoutTimestamp.new
 
   Sidekiq.logger.level = Rails.configuration.log_level
   Rails.logger = Sidekiq.logger
   ActiveRecord::Base.logger = Sidekiq.logger
 
   config.on(:startup) do
-    if Rails.env.production?
-      Sidekiq.schedule = YAML.load_file("config/schedule.yml")
-      SidekiqScheduler::Scheduler.instance.reload_schedule!
-    end
-
-    config.options[:browser] = BrowserSession.new_browser
+    config[:browser] = BrowserSession.new_browser
   end
 
-  config.on(:quiet) { config.options[:browser]&.quit }
+  config.on(:quiet) { config[:browser]&.quit }
 
   config.server_middleware { |chain| chain.add ThreadedBrowserMiddleware }
+
+  config.capsule("low") do |cap|
+    cap.concurrency = 2
+    cap.queues = %w[low]
+  end
 end
 
 unless Sidekiq.server?

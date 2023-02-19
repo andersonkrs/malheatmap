@@ -1,14 +1,15 @@
 default: &default
-  url: <%= ENV.fetch("REDIS_URL", "redis://localhost:6379/3") %>
-  pool_size: 10
-  pool_timeout: 5
+  url: <%= ENV.fetch("REDIS_URL", "redis://localhost:6379/5") %>
+  pool:
+    timeout: 5
+    size: 10
 
 development:
   <<: *default
 
 test:
   <<: *default
-  db: 15
+  url: <%= ENV.fetch("REDIS_URL", "redis://localhost:6379/15") %>
 
 production:
   <<: *default

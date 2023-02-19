@@ -2,3 +2,9 @@
 :queues:
   - low
   - default
+:scheduler:
+  :schedule:
+    schedule_users_update:
+      cron: "0 */12 * * *"
+      class: "User::ScheduleCrawlingJob"
+      description: "Schedule users crawling every 12 hours"
