@@ -1,0 +1,34 @@
+<% section_size :medium %>
+
+<div class="is-align-self-center">
+  <div class="columns is-multiline is-centered">
+    <%= render partial: "shared/header" %>
+
+    <div class="column is-full">
+      <div class="columns form-container is-multiline is-centered">
+        <div class="column is-half-desktop">
+          <%= form_with url: create_session_path, method: "post", data: {  turbo: false } do |form| %>
+            <div class="field pt-4 has-text-centered">
+              <%= form.label :username do %>
+                <%= _("Log in with your <a target='_blank' rel='noopener noreferrer' href='https://myanimelist.net'>MyAnimeList</a> account:").html_safe %>
+              <% end %>
+            </div>
+
+            <div class="field pt-4 has-text-centered">
+              <div class="control" data-controller="tracker" data-tracker-event-source-value="Subscriptions">
+                <%= form.button class: "button is-outline", data: { action: "tracker#sendEvent" } do  %>
+                  <%= image_tag "mal_logo.png", width: "100px", alt: _("MyAnimeList") %>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="field pt-4 has-text-centered">
+              <% user_count = User.count %>
+              <p><i><%= n_("one active user!", "%{n} active users!", user_count) % { n: user_count } %></i></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -269,7 +269,11 @@ CREATE TABLE public.users (
     time_zone character varying DEFAULT 'UTC'::character varying NOT NULL,
     latitude double precision,
     longitude double precision,
-    count_each_entry_as_an_activity boolean DEFAULT false NOT NULL
+    count_each_entry_as_an_activity boolean DEFAULT false NOT NULL,
+    mal_id integer,
+    profile_data_updated_at timestamp(6) without time zone,
+    anime_list_snapshot_updated_at timestamp(6) without time zone,
+    manga_list_snapshot_updated_at timestamp(6) without time zone
 );
 
 
@@ -467,6 +471,13 @@ CREATE UNIQUE INDEX index_items_on_mal_id_and_kind ON public.items USING btree (
 
 
 --
+-- Name: index_users_on_mal_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_mal_id ON public.users USING btree (mal_id);
+
+
+--
 -- Name: index_users_on_username; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -536,6 +547,8 @@ ALTER TABLE ONLY public.entries
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20230225172457'),
+('20230225171432'),
 ('20221106013355'),
 ('20220326024317'),
 ('20210711204405'),
@@ -567,5 +580,4 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200201120036'),
 ('20200201115644'),
 ('20200201115222');
-
 

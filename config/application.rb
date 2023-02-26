@@ -25,9 +25,9 @@ module MalHeatmap
     config.active_record.default_timezone = :utc
     config.active_record.schema_format = :sql
 
-    config.generators.orm :active_record, primary_key_type: :uuid
+    config.generators.orm :active_record, primary_key_type: :bigint
     config.generators.test_framework :test_unit, fixture: true
-    config.generators.template_engine = :slim
+    config.generators.template_engine = :erb
 
     config.action_cable.mount_path = "/cable"
 
@@ -42,6 +42,7 @@ module MalHeatmap
 
     config.redis = config_for(:redis)
     config.cache_store = :redis_cache_store, config_for(:redis)
+    config.session_store :cookie_store, expire_after: 1.week
 
     config.crawler = config_for(:crawler)
     config.analytics = config_for(:analytics)
@@ -51,6 +52,8 @@ module MalHeatmap
 
     config.active_storage.service = :local
 
+
+    config.assets.compile = true
     config.assets.paths << Rails.root.join("vendor/assets")
   end
 end
