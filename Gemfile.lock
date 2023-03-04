@@ -322,7 +322,7 @@ GEM
       slim (>= 3.0, < 6.0, != 5.0.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
-    syntax_tree (6.0.0)
+    syntax_tree (6.0.2)
       prettier_print (>= 1.2.0)
     temple (0.8.2)
     thor (1.2.1)
