@@ -229,7 +229,7 @@ GEM
       ast (~> 2.4.1)
     pg (1.4.6)
     prettier_print (1.2.0)
-    propshaft (0.6.4)
+    propshaft (0.7.0)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
       rack
