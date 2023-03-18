@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 9192027f0b8e06cd86f94bf6337823c88d6f7bfa
+  revision: e23e1718ead861ae43004f5706ddad780a440359
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -89,6 +89,7 @@ GIT
     railties (7.1.0.alpha)
       actionpack (= 7.1.0.alpha)
       activesupport (= 7.1.0.alpha)
+      irb
       rackup (>= 1.0.0)
       rake (>= 12.2)
       thor (~> 1.0)
@@ -239,10 +240,10 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.6.2)
-    rack (3.0.4.2)
+    rack (3.0.7)
     rack-session (2.0.0)
       rack (>= 3.0.0)
-    rack-test (2.0.2)
+    rack-test (2.1.0)
       rack (>= 1.3)
     rackup (2.1.0)
       rack (>= 3)
