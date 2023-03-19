@@ -47,15 +47,16 @@ module MalHeatmap
     config.crawler = config_for(:crawler)
     config.analytics = config_for(:analytics)
     config.geocoder = config_for(:geocoder)
+    config.mal_api = config_for(:mal_api)
 
     config.skylight.probes += %w[redis]
 
     config.active_storage.service = :local
 
-
     config.assets.compile = true
     config.assets.paths << Rails.root.join("vendor/assets")
   end
 end
+
 ActiveSupport::Deprecation.disallowed_warnings = :all
 ActiveSupport::Deprecation.disallowed_behavior = :log

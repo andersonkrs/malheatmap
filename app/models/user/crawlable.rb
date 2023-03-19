@@ -10,8 +10,8 @@ class User
                dependent: :destroy
     end
 
-    def crawl_data
-      pipeline = CrawlerPipeline.new(self)
+    def crawl_data(update_profile: true)
+      pipeline = CrawlerPipeline.new(self, update_profile:)
       pipeline.execute
 
       true

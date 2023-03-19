@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-19 22:59-0300\n"
-"PO-Revision-Date: 2023-02-19 22:59-0300\n"
+"POT-Creation-Date: 2023-03-19 13:52-0300\n"
+"PO-Revision-Date: 2023-03-19 13:52-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,16 +18,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-msgid "About"
+msgid "%{username} does not have any activity in %{year}."
 msgstr ""
 
-msgid "Continue with My Anime List"
+msgid "12+ episodes/chapters watched/read on date"
+msgstr ""
+
+msgid "About"
 msgstr ""
 
 msgid "Faq"
 msgstr ""
 
-msgid "one subscribed user!"
-msgid_plural "%{count} subscribed users!"
+msgid "From 1 to 4 episodes/chapters watched/read on date"
+msgstr ""
+
+msgid "From 5 to 8 episodes/chapters watched/read on date"
+msgstr ""
+
+msgid "From 9 to 12 episodes/chapters watched/read on date"
+msgstr ""
+
+msgid "How does it work?"
+msgstr ""
+
+msgid "Less"
+msgstr ""
+
+msgid "Log in with your <a target='_blank' rel='noopener noreferrer' href='https://myanimelist.net'>MyAnimeList</a> account:"
+msgstr ""
+
+msgid "More"
+msgstr ""
+
+msgid "My profile"
+msgstr ""
+
+msgid "MyAnimeList"
+msgstr ""
+
+msgid "None episodes/chapters watched/read on date"
+msgstr ""
+
+msgid "Sign out"
+msgstr ""
+
+msgid "one active user!"
+msgid_plural "%{n} active users!"
 msgstr[0] ""
 msgstr[1] ""

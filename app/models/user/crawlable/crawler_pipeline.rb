@@ -1,9 +1,10 @@
 class User
   module Crawlable
     class CrawlerPipeline
-      def initialize(user)
+      def initialize(user, update_profile: true)
         super()
         @user = user
+        @update_profile = update_profile
       end
 
       def execute
@@ -17,7 +18,7 @@ class User
 
       private
 
-      attr_reader :user
+      attr_reader :user, :update_profile
 
       def crawler
         @crawler ||= MAL::UserCrawler.new(user.username)
@@ -25,7 +26,7 @@ class User
 
       def process_raw_data(data)
         crawling_log_entry = create_log_entry(raw_data: data)
-        crawling_log_entry.apply_data_changes_to_user
+        crawling_log_entry.apply_data_changes_to_user(update_profile:)
 
         user.activities.generate_from_history if user.saved_change_to_checksum?
         user.signature_image.generate if user.signature_image.obsolete?

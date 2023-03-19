@@ -21,8 +21,8 @@ gem "view_component"
 gem "wheretz"
 
 # Make translations less brittle
-gem 'gettext_i18n_rails'
-gem 'gettext', '>=3.0.2', :require => false
+gem "gettext", ">=3.0.2", require: false
+gem "gettext_i18n_rails"
 
 # Use JavaScript with ESM import maps
 # [https://github.com/rails/importmap-rails]
@@ -43,13 +43,13 @@ gem "propshaft"
 # Integrate Dart Sass with the asset pipeline in Rails
 gem "dartsass-rails"
 
-gem "rollbar", :require => false
+gem "rollbar", require: false
 
 group :development, :test do
-  gem 'ruby_parser', :require => false
   gem "debug"
   gem "rubocop-performance"
   gem "rubocop-rails"
+  gem "ruby_parser", require: false
 end
 
 group :development do

@@ -59,6 +59,42 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: access_tokens; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.access_tokens (
+    id bigint NOT NULL,
+    token character varying,
+    refresh_token character varying,
+    token_expires_at timestamp(6) without time zone,
+    refresh_token_expires_at timestamp(6) without time zone,
+    discarded_at timestamp(6) without time zone,
+    user_id uuid,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: access_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.access_tokens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: access_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.access_tokens_id_seq OWNED BY public.access_tokens.id;
+
+
+--
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -278,6 +314,13 @@ CREATE TABLE public.users (
 
 
 --
+-- Name: access_tokens id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.access_tokens ALTER COLUMN id SET DEFAULT nextval('public.access_tokens_id_seq'::regclass);
+
+
+--
 -- Name: active_storage_attachments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -296,6 +339,14 @@ ALTER TABLE ONLY public.active_storage_blobs ALTER COLUMN id SET DEFAULT nextval
 --
 
 ALTER TABLE ONLY public.active_storage_variant_records ALTER COLUMN id SET DEFAULT nextval('public.active_storage_variant_records_id_seq'::regclass);
+
+
+--
+-- Name: access_tokens access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.access_tokens
+    ADD CONSTRAINT access_tokens_pkey PRIMARY KEY (id);
 
 
 --
@@ -384,6 +435,13 @@ ALTER TABLE ONLY public.subscriptions
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_access_tokens_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_access_tokens_on_user_id ON public.access_tokens USING btree (user_id) WHERE (discarded_at IS NULL);
 
 
 --
@@ -501,6 +559,14 @@ ALTER TABLE ONLY public.activities
 
 
 --
+-- Name: access_tokens fk_rails_96fc070778; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.access_tokens
+    ADD CONSTRAINT fk_rails_96fc070778 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: activities fk_rails_98c29480fc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -547,6 +613,7 @@ ALTER TABLE ONLY public.entries
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20230226155928'),
 ('20230225172457'),
 ('20230225171432'),
 ('20221106013355'),

@@ -6,7 +6,9 @@ class CreateAccessTokens < ActiveRecord::Migration[7.1]
       t.datetime :token_expires_at
       t.datetime :refresh_token_expires_at
 
-      t.references :user, foreign_key: true, index: true, type: :uuid
+      t.datetime :discarded_at, null: true
+
+      t.references :user, foreign_key: true, type: :uuid, index: { unique: true, where: "(discarded_at IS NULL)" }
 
       t.timestamps
     end

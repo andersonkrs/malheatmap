@@ -1,7 +1,7 @@
-require 'mal'
+require "mal"
 
 class SessionsController < ApplicationController
-  before_action :redirect_to_current_user_page, only: [:index, :create], if: -> { helpers.signed_in? }
+  before_action :redirect_to_current_user_page, only: %i[index create], if: -> { helpers.signed_in? }
 
   def index
   end
@@ -10,30 +10,24 @@ class SessionsController < ApplicationController
     state, code_challenge = generate_code_challenge
 
     redirect_to MAL::URLS.oauth_authorize_url(
-      response_type: :code,
-      client_id: "18c15be6e0b2df8179dd4eaa5cffd42b", # TODO: Move to secret
-      code_challenge: code_challenge,
-      state: state,
-      code_challenge_method: "plain",
-    ), allow_other_host: true
+                  response_type: :code,
+                  client_id: Rails.configuration.mal_api[:client_id],
+                  code_challenge:,
+                  state:,
+                  code_challenge_method: "plain"
+                ),
+                allow_other_host: true
   end
 
   def destroy
-    if helpers.signed_in?
-      session[:current_user_id] = nil
-    end
+    session[:current_user_id] = nil if helpers.signed_in?
 
     redirect_to sessions_path
   end
 
   def callback
-    @client = MAL::Api::Client.with(
-      client_id: "18c15be6e0b2df8179dd4eaa5cffd42b",
-      client_secret: "8291aa755d8d63b046eea4d84f54beda8dcd119a65d6ae303790a5c7a41c6098",
-    )
-
     code_challenge = fetch_code_challenge(params[:state])
-    token_response = @client.create_access_token(code: params[:code], code_challenge: code_challenge)
+    token_response = MAL::ApiClient.create_access_token(code: params[:code], code_challenge:)
 
     if token_response.success?
       process_user_creation(token_response.data)
@@ -49,24 +43,39 @@ class SessionsController < ApplicationController
   end
 
   def process_user_creation(token_data)
-    response = @client.user_profile(access_token: token_data["access_token"])
+    response = MAL::ApiClient.with(access_token: token_data["access_token"]).user_profile
 
-    if response.success?
-      user = find_or_initialize_mal_user(response)
-      user.mal_id ||= response.data["id"]
-      user.username = response.data["name"]
-      user.location = response.data["location"]
-      user.time_zone = response.data["time_zone"]
-      user.avatar_url = response.data["picture"]
-      user.profile_data_updated_at = Time.current
-      user.save!
-
-      session[:current_user_id] = user.id
-
-      redirect_to user_path(user)
-    else
+    if response.failure?
+      ErrorNotifier.capture(response.raw_body)
       redirect_to internal_error_path
     end
+
+    process_user_data(user_data: response.data, token_data:)
+    redirect_to user_path(Current.user)
+  end
+
+  def process_user_data(user_data:, token_data:)
+    user = find_or_initialize_mal_user(user_data)
+    user.mal_id ||= user_data["id"]
+    user.username = user_data["name"]
+    user.location = user_data["location"]
+    user.time_zone = user_data["time_zone"]
+    user.avatar_url = user_data["picture"]
+    user.profile_data_updated_at = Time.current
+
+    user.transaction do
+      user.save!
+      user.access_tokens.replace_current!(
+        token: token_data["access_token"],
+        refresh_token: token_data["refresh_token"],
+        token_expires_at: Time.zone.at(token_data["expires_in"])
+      )
+    end
+
+    user.signed_in
+
+    session[:current_user_id] = user.id
+    Current.user = user
   end
 
   def generate_code_challenge
@@ -79,9 +88,7 @@ class SessionsController < ApplicationController
   end
 
   def fetch_code_challenge(code_state)
-    Rails.cache.read(challenge_cache_key(code_state)).tap do
-      Rails.cache.delete(challenge_cache_key(code_state))
-    end
+    Rails.cache.read(challenge_cache_key(code_state)).tap { Rails.cache.delete(challenge_cache_key(code_state)) }
   end
 
   def challenge_cache_key(code_state)
@@ -90,7 +97,7 @@ class SessionsController < ApplicationController
 
   # Tries to find a profile that has not been yet associated with a MAL profile and sets the MAL id,
   # otherwise find a user that has already been associated or create a new one
-  def find_or_initialize_mal_user(response)
-    User.find_by(username: response.data["name"], mal_id: nil) || User.find_by(mal_id: response.data["id"]) || User.new
+  def find_or_initialize_mal_user(user_data)
+    User.find_by(username: user_data["name"], mal_id: nil) || User.find_by(mal_id: user_data["id"]) || User.new
   end
 end

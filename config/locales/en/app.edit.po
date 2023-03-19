@@ -17,17 +17,57 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
 
-msgid "About"
+msgid "%{username} does not have any activity in %{year}."
 msgstr ""
 
-msgid "Continue with My Anime List"
+msgid "12+ episodes/chapters watched/read on date"
+msgstr ""
+
+msgid "About"
 msgstr ""
 
 msgid "Faq"
 msgstr ""
 
-#, fuzzy
-msgid "one subscribed user!"
-msgid_plural "%{count} subscribed users!"
-msgstr[0] "user"
-msgstr[1] "users"
+msgid "From 1 to 4 episodes/chapters watched/read on date"
+msgstr ""
+
+msgid "From 5 to 8 episodes/chapters watched/read on date"
+msgstr ""
+
+msgid "From 9 to 12 episodes/chapters watched/read on date"
+msgstr ""
+
+msgid "How does it work?"
+msgstr ""
+
+msgid "Less"
+msgstr ""
+
+msgid "Log in with your <a target='_blank' rel='noopener noreferrer' href='https://myanimelist.net'>MyAnimeList</a> account:"
+msgstr ""
+
+msgid "More"
+msgstr ""
+
+msgid "My profile"
+msgstr ""
+
+msgid "MyAnimeList"
+msgstr ""
+
+msgid "None episodes/chapters watched/read on date"
+msgstr ""
+
+msgid "Sign out"
+msgstr ""
+
+msgid "one active user!"
+msgid_plural "%{n} active users!"
+msgstr[0] ""
+msgstr[1] ""
+
+#~ msgid "one subscribed user!"
+#~ msgid_plural "%{count} subscribed users!"
+#~ msgstr[0] "user"
+#~ msgstr[1] "users"

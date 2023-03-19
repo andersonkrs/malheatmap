@@ -9,13 +9,14 @@ class User
 
       scope :order_by_latest, -> { order(created_at: :desc) }
 
-      def apply_data_changes_to_user
+      def apply_data_changes_to_user(update_profile: true)
         return if user.checksum == checksum
 
         Instrumentation.instrument(title: "#{self.class.name}#apply_data_changes_to_user") do
           transaction do
             update_history(raw_data["history"])
-            update_profile(raw_data["profile"])
+            update_profile(raw_data["profile"]) if update_profile
+            user.update!(checksum:)
           end
         end
       end
@@ -30,7 +31,7 @@ class User
       end
 
       def update_profile(profile_data)
-        user.update!(**profile_data, checksum:)
+        user.update!(**profile_data)
       end
 
       def update_history(new_history_entries)

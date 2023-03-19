@@ -7,9 +7,7 @@ end
 
 require_relative "../../lib/browser_session"
 
-Sidekiq.configure_client do |config|
-  config.redis = { url: Rails.configuration.redis[:url] }
-end
+Sidekiq.configure_client { |config| config.redis = { url: Rails.configuration.redis[:url] } }
 
 Sidekiq.configure_server do |config|
   config.redis = { url: Rails.configuration.redis[:url] }
@@ -20,9 +18,7 @@ Sidekiq.configure_server do |config|
   Rails.logger = Sidekiq.logger
   ActiveRecord::Base.logger = Sidekiq.logger
 
-  config.on(:startup) do
-    config[:browser] = BrowserSession.new_browser
-  end
+  config.on(:startup) { config[:browser] = BrowserSession.new_browser }
 
   config.on(:quiet) { config[:browser]&.quit }
 
