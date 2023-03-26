@@ -5,56 +5,35 @@
 
 .is-align-self-center
   .columns.is-centered
-    .column.is-8-desktop
+    .column.is-10
       .columns.is-multiline.is-gapless
         .column.is-full.has-text-centered.mt-2
           = link_to root_path do
             span.icon.is-small
               i.fas.fa-3x.fa-fire.has-text-primary
-        .column.is-full.has-text-centered
+        .column.is-full.has-text-centered.mt-2
           h3.title.is-3
             = link_to t("app.title"), root_path, class: "has-text-black-ter"
 
-      .columns.is-multiline
-        - cache @user do
-          .column.is-full
-            article.media
-              figure.user-avatar.media-left
-                p.image.is-96x96
-                  img src=@user.avatar_url alt="User Avatar"
-              .media-content
-                p
-                  = link_to(profile_url(@user.username), target: "_blank", rel: "noopener noreferrer", class: "is-size-4") do
-                    = @user.username
-                .bb-code.pt-3
-                  = render partial: "users/bb_code"
-
-        - cache @calendar.activities do
-          .column.is-full
-            .columns.is-multiline.bordered
-              .column.is-full
-                .calendar-container.has-text-centered
-                  = render CalendarComponent.new(activities_amount_per_day: @calendar.activities_amount_sum_per_day)
+        .columns.is-horizontal.is-centered.mt-6.is-variable.is-6
+          - if signed_in?
+            .column.is-3
+              = render "side_menu"
+          .column.is-9
+            .columns.is-multiline
+              - cache @user do
+                .column.is-full
+                  article.media
+                    figure.user-avatar.media-left
+                      p.image.is-96x96
+                        img src=@user.avatar_url alt="User Avatar"
+                    .media-content
+                      p
+                        = link_to(profile_url(@user.username), target: "_blank", rel: "noopener noreferrer", class: "is-size-4") do
+                          = @user.username
+                      .bb-code.pt-3
+                        = render partial: "users/bb_code"
 
               .column.is-full
-                .columns.legend-container.is-mobile
-                  .column.has-text-left
-                    = link_to t(".faq_label"), faq_path
-                  .column.has-text-right
-                    span = t(".less")
-                    ul.legend
-                      - (0..4).each do |level|
-                        li.square data-level=level title=t(".levels.#{level}")
-                    span = t(".more")
-
-          - if @calendar.activities.any?
-            .column.is-10.timeline-container
-              = render TimelineComponent.new(activities: @calendar.activities.ordered_as_timeline)
-          - else
-            .column.is-10.has-text-centered.mt-2
-              p.subtitle = t(".user_without_activities", username: @user.username, year: @selected_year)
-              .mt-2
-              = image_tag "no_activity.png"
-
-          .column.is-2.years-menu-container
-            = render YearsMenuComponent.new(user: @user, years: @user.calendars.active_years.to_a, selected_year: @selected_year)
+                = turbo_frame_tag dom_id(@user, "activities") do
+                  = render partial: "users/activities", locals: { user: @user, calendar: @calendar, selected_year: @selected_year }

@@ -26,8 +26,11 @@ AllCops:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Naming/AccessorMethodName:
+  Enabled: false
+
 Metrics/AbcSize:
-  Max: 20
+  Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false

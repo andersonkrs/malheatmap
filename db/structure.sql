@@ -59,6 +59,42 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: access_tokens; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.access_tokens (
+    id bigint NOT NULL,
+    token character varying,
+    refresh_token character varying,
+    token_expires_at timestamp(6) without time zone,
+    refresh_token_expires_at timestamp(6) without time zone,
+    discarded_at timestamp(6) without time zone,
+    user_id uuid,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: access_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.access_tokens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: access_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.access_tokens_id_seq OWNED BY public.access_tokens.id;
+
+
+--
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -269,8 +305,19 @@ CREATE TABLE public.users (
     time_zone character varying DEFAULT 'UTC'::character varying NOT NULL,
     latitude double precision,
     longitude double precision,
-    count_each_entry_as_an_activity boolean DEFAULT false NOT NULL
+    count_each_entry_as_an_activity boolean DEFAULT false NOT NULL,
+    mal_id integer,
+    profile_data_updated_at timestamp(6) without time zone,
+    anime_list_snapshot_updated_at timestamp(6) without time zone,
+    manga_list_snapshot_updated_at timestamp(6) without time zone
 );
+
+
+--
+-- Name: access_tokens id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.access_tokens ALTER COLUMN id SET DEFAULT nextval('public.access_tokens_id_seq'::regclass);
 
 
 --
@@ -292,6 +339,14 @@ ALTER TABLE ONLY public.active_storage_blobs ALTER COLUMN id SET DEFAULT nextval
 --
 
 ALTER TABLE ONLY public.active_storage_variant_records ALTER COLUMN id SET DEFAULT nextval('public.active_storage_variant_records_id_seq'::regclass);
+
+
+--
+-- Name: access_tokens access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.access_tokens
+    ADD CONSTRAINT access_tokens_pkey PRIMARY KEY (id);
 
 
 --
@@ -383,6 +438,13 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_access_tokens_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_access_tokens_on_user_id ON public.access_tokens USING btree (user_id) WHERE (discarded_at IS NULL);
+
+
+--
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -467,6 +529,13 @@ CREATE UNIQUE INDEX index_items_on_mal_id_and_kind ON public.items USING btree (
 
 
 --
+-- Name: index_users_on_mal_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_mal_id ON public.users USING btree (mal_id);
+
+
+--
 -- Name: index_users_on_username; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -487,6 +556,14 @@ ALTER TABLE ONLY public.crawling_log_entries
 
 ALTER TABLE ONLY public.activities
     ADD CONSTRAINT fk_rails_7e11bb717f FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: access_tokens fk_rails_96fc070778; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.access_tokens
+    ADD CONSTRAINT fk_rails_96fc070778 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -536,6 +613,9 @@ ALTER TABLE ONLY public.entries
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20230226155928'),
+('20230225172457'),
+('20230225171432'),
 ('20221106013355'),
 ('20220326024317'),
 ('20210711204405'),
@@ -567,5 +647,4 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200201120036'),
 ('20200201115644'),
 ('20200201115222');
-
 

@@ -1,7 +1,12 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
-  root to: "subscriptions#index"
+  root to: "sessions#index"
+
+  get "/sessions", to: "sessions#index", as: "sessions"
+  post "/sessions", to: "sessions#create", as: "create_session"
+  delete "/sessions", to: "sessions#destroy", as: "destroy_session"
+  get "/sessions/callback", to: "sessions#callback", as: "oauth_callback"
 
   resources :subscriptions, only: %i[create index show]
   resources :users, only: :show, param: :username do

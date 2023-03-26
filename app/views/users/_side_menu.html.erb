@@ -1,0 +1,19 @@
+<nav class="panel is-primary">
+  <div class="panel-block is-flex-direction-column is-align-items-flex-start" style="row-gap: 5px">
+    <figure class="image is-64x64 is-align-self-center">
+     <img src="<%= Current.user.avatar_url %>" style="width: 100%; height: 100%; border-radius: 30px">
+    </figure>
+    <span class="is-size-5"><%= Current.user.username %></span>
+    <span class="is-size-6"><i class="fa fa-map-marker" aria-hidden="true"></i> <%= Current.user.location.presence || "Unknown" %></span>
+  </div>
+  <%= link_to user_path(Current.user), class: "panel-block" do %>
+    <span class="panel-icon">
+      <i class="fas fa-user" aria-hidden="true"></i>
+    </span>
+    <%= _("My profile") %>
+  <% end %>
+
+  <div class="panel-block">
+    <%= link_to _("Sign out"), destroy_session_path, data: { turbo_method: :delete }, class: "button is-link is-outlined is-fullwidth" %>
+  </div>
+</nav>

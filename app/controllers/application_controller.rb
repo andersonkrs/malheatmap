@@ -1,4 +1,9 @@
 class ApplicationController < ActionController::Base
+  include FastGettext::Translation
+  include Authentication
+
+  before_action :set_gettext_locale
+
   def about
     render "application/about"
   end

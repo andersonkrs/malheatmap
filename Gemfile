@@ -20,6 +20,10 @@ gem "slim-rails" # TODO: Abandon usage of slim and remove this gem
 gem "view_component"
 gem "wheretz"
 
+# Make translations less brittle
+gem "gettext", ">=3.0.2", require: false
+gem "gettext_i18n_rails"
+
 # Use JavaScript with ESM import maps
 # [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -39,12 +43,13 @@ gem "propshaft"
 # Integrate Dart Sass with the asset pipeline in Rails
 gem "dartsass-rails"
 
-gem "rollbar"
+gem "rollbar", require: false
 
 group :development, :test do
   gem "debug"
   gem "rubocop-performance"
   gem "rubocop-rails"
+  gem "ruby_parser", require: false
 end
 
 group :development do

@@ -36,6 +36,10 @@ class User
             (first_year..Time.current.year)
           end
       end
+
+      def current
+        self[Time.current.year]
+      end
     end
   end
 end
