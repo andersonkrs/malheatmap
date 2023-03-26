@@ -24,6 +24,11 @@ Sidekiq.configure_server do |config|
 
   config.server_middleware { |chain| chain.add ThreadedBrowserMiddleware }
 
+  config.capsule("default") do |cap|
+    cap.concurrency = 5
+    cap.queues = %w[default]
+  end
+
   config.capsule("low") do |cap|
     cap.concurrency = 2
     cap.queues = %w[low]

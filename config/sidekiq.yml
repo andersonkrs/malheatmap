@@ -1,4 +1,3 @@
-:concurrency: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
 :queues:
   - low
   - default
