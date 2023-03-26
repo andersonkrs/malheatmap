@@ -49,7 +49,7 @@ module MalHeatmap
     config.geocoder = config_for(:geocoder)
     config.mal_api = config_for(:mal_api)
 
-    config.skylight.probes += %w[redis]
+    # config.skylight.probes += %w[redis]
 
     config.active_storage.service = :local
 

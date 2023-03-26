@@ -11,7 +11,9 @@ WORKDIR /rails
 ENV RAILS_ENV="production" \
     BUNDLE_WITHOUT="development:test" \
     RAILS_SERVE_STATIC_FILES="true" \
-    RAILS_LOG_TO_STDOUT="true"
+    RAILS_LOG_TO_STDOUT="true" \
+    RUBY_YJIT_ENABLE="1" \
+    RUBYOPT="--yjit"
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -44,7 +46,8 @@ RUN apt-get update -qq && \
                                                libvips \
                                                imagemagick \
                                                postgresql-client \
-                                               redis && \
+                                               redis \
+                                               libjemalloc2 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
@@ -52,6 +55,9 @@ RUN echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/s
     apt-get -y update -qq && \
     apt-get -y install google-chrome-stable && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2
+ENV MALLOC_CONF=dirty_decay_ms:1000,narenas:2,background_thread:true
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle

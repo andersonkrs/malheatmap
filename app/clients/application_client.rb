@@ -1,3 +1,3 @@
 class ApplicationClient < HttpClient
-  logger Rails.logger.tagged(name)
+  logger Rails.logger
 end

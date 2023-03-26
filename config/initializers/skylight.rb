@@ -1,0 +1,1 @@
+require "skylight/railtie"
