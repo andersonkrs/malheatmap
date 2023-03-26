@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   match "/404" => "application#not_found", :via => :all, :as => "not_found"
   match "/500" => "application#internal_error", :via => :all, :as => "internal_error"
   get "/health-check" => "health_check#index", :as => "health_check"
+  get "/up" => "rails/health#show"
 
   mount Sidekiq::Web => "/sidekiq"
 end
