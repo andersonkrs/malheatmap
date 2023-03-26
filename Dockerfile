@@ -57,7 +57,6 @@ RUN echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/s
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2
-ENV MALLOC_CONF=dirty_decay_ms:1000,narenas:2,background_thread:true
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle

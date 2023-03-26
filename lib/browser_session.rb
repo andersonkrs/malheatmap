@@ -30,7 +30,8 @@ class BrowserSession < ActiveSupport::CurrentAttributes
           headless: !ENV["HEADLESS"].in?(%w[n 0 no false]),
           browser_options: {
             "no-sandbox": nil,
-            "disable-setuid-sandbox": nil
+            "disable-setuid-sandbox": nil,
+            "disable-dev-shm-usage": nil
           },
           timeout: 30,
           process_timeout: 30
