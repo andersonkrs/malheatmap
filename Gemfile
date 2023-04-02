@@ -15,7 +15,6 @@ gem "puma"
 gem "rails", github: "rails/rails", branch: "main"
 gem "sidekiq"
 gem "sidekiq-scheduler"
-gem "skylight", "~> 5.3.4", require: false
 gem "slim-rails" # TODO: Abandon usage of slim and remove this gem
 gem "view_component"
 gem "wheretz"
@@ -43,7 +42,12 @@ gem "propshaft"
 # Integrate Dart Sass with the asset pipeline in Rails
 gem "dartsass-rails"
 
+# Error monitoring
 gem "rollbar", require: false
+
+# Performance monitoring
+gem "newrelic_rpm"
+gem "skylight", "~> 5.3.4", require: false
 
 group :development, :test do
   gem "debug"
