@@ -98,7 +98,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.1)
+    addressable (2.8.3)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     bindex (0.8.1)
@@ -106,7 +106,7 @@ GEM
       msgpack (~> 1.2)
     brakeman (5.4.1)
     builder (3.2.4)
-    capybara (3.38.0)
+    capybara (3.39.0)
       addressable
       matrix
       mini_mime (>= 0.1.3)
