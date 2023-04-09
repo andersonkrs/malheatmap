@@ -30,8 +30,23 @@ class BrowserSession < ActiveSupport::CurrentAttributes
           headless: !ENV["HEADLESS"].in?(%w[n 0 no false]),
           browser_options: {
             "no-sandbox": nil,
+            "disable-gpu": nil,
+            "start-maximized": nil,
+            "no-zygote": nil,
+            "no-first-run": nil,
             "disable-setuid-sandbox": nil,
-            "disable-dev-shm-usage": nil
+            "disable-dev-shm-usage": nil,
+            "disable-accelerated-2d-canvas": nil,
+            "disable-translate": nil,
+            "disable-sync": nil,
+            "disable-infobars": nil,
+            "disable-browser-side-navigation": nil,
+            "disable-default-apps": nil,
+            "disable-permissions-api": nil,
+            "disable-logging": nil,
+            "disable-extensions": nil,
+            "disable-popup-blocking": nil,
+            "disable-notifications": nil
           },
           timeout: 30,
           process_timeout: 30
