@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 5beb0621fc42389f0000f293571bfbd4b1efe4d8
+  revision: 912096d4ce930b8e7e5d91e0c86bae2091fda0e4
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -161,7 +161,7 @@ GEM
     hashdiff (1.0.1)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
-    i18n (1.12.0)
+    i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
@@ -375,7 +375,7 @@ GEM
     wheretz (0.0.6)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.7)
+    zeitwerk (2.6.8)
 
 PLATFORMS
   ruby
