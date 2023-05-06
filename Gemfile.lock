@@ -225,7 +225,7 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    newrelic_rpm (9.2.0)
+    newrelic_rpm (9.2.2)
     nio4r (2.5.9)
     nokogiri (1.14.3)
       mini_portile2 (~> 2.8.0)
@@ -310,11 +310,11 @@ GEM
     shoulda-context (2.0.0)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
-    sidekiq (7.0.9)
+    sidekiq (7.1.0)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
-      redis-client (>= 0.11.0)
+      redis-client (>= 0.14.0)
     sidekiq-scheduler (5.0.2)
       rufus-scheduler (~> 3.2)
       sidekiq (>= 6, < 8)
