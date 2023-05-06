@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 912096d4ce930b8e7e5d91e0c86bae2091fda0e4
+  revision: 74e24aef41da2482fa896684a7b4bccc6afc9b3b
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -208,7 +208,7 @@ GEM
     mime-types-data (3.2023.0218.1)
     mini_magick (4.12.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.1)
+    mini_portile2 (2.8.2)
     minitest (5.18.0)
     mocha (2.0.2)
       ruby2_keywords (>= 0.0.5)
