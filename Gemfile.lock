@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 74e24aef41da2482fa896684a7b4bccc6afc9b3b
+  revision: bb436bcf255cbb031181690a2cd66b4255a010c2
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -91,7 +91,7 @@ GIT
       irb
       rackup (>= 1.0.0)
       rake (>= 12.2)
-      thor (~> 1.0)
+      thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
 
 GEM
@@ -181,9 +181,9 @@ GEM
       activesupport (>= 4)
       railties (>= 4)
       request_store (~> 1.0)
-    loofah (2.20.0)
+    loofah (2.21.2)
       crass (~> 1.0.2)
-      nokogiri (>= 1.5.9)
+      nokogiri (>= 1.12.0)
     mail (2.8.1)
       mini_mime (>= 0.1.1)
       net-imap
@@ -340,7 +340,7 @@ GEM
       prettier_print (>= 1.2.0)
     temple (0.10.0)
     text (1.3.1)
-    thor (1.2.1)
+    thor (1.2.2)
     tilt (2.1.0)
     timeout (0.3.2)
     turbo-rails (1.4.0)
