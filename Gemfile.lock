@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: fc9470aa973a8b6f1a5693bae4edec4c2b4e61aa
+  revision: 9d74450a0f8ae658207f1f662367381c248eb7a8
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -37,7 +37,7 @@ GIT
       rack-session (>= 1.0.1)
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
-      rails-html-sanitizer (~> 1.0, >= 1.2.0)
+      rails-html-sanitizer (~> 1.6)
     actiontext (7.1.0.alpha)
       actionpack (= 7.1.0.alpha)
       activerecord (= 7.1.0.alpha)
@@ -50,7 +50,7 @@ GIT
       builder (~> 3.1)
       erubi (~> 1.11)
       rails-dom-testing (~> 2.0)
-      rails-html-sanitizer (~> 1.1, >= 1.2.0)
+      rails-html-sanitizer (~> 1.6)
     activejob (7.1.0.alpha)
       activesupport (= 7.1.0.alpha)
       globalid (>= 0.3.6)
@@ -161,7 +161,7 @@ GEM
     hashdiff (1.0.1)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
-    i18n (1.13.0)
+    i18n (1.14.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
@@ -227,7 +227,7 @@ GEM
       net-protocol
     newrelic_rpm (9.2.2)
     nio4r (2.5.9)
-    nokogiri (1.15.1)
+    nokogiri (1.15.2)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     numerizer (0.2.0)
@@ -260,8 +260,9 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.5.0)
-      loofah (~> 2.19, >= 2.19.1)
+    rails-html-sanitizer (1.6.0)
+      loofah (~> 2.21)
+      nokogiri (~> 1.14)
     rainbow (3.1.1)
     rake (13.0.6)
     redis (5.0.6)
@@ -269,7 +270,7 @@ GEM
     redis-client (0.14.1)
       connection_pool
     regexp_parser (2.8.0)
-    reline (0.3.3)
+    reline (0.3.5)
       io-console (~> 0.5)
     request_store (1.5.1)
       rack (>= 1.4)
