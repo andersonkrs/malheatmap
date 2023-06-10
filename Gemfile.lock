@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 9d74450a0f8ae658207f1f662367381c248eb7a8
+  revision: 000df0d1c2c935b58b198db5f2c008dd5c3b8a14
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -161,7 +161,7 @@ GEM
     hashdiff (1.0.1)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
-    i18n (1.14.0)
+    i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
@@ -172,7 +172,7 @@ GEM
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.6.0)
-    irb (1.6.4)
+    irb (1.7.0)
       reline (>= 0.3.0)
     json (2.6.3)
     locale (2.1.3)
@@ -248,7 +248,7 @@ GEM
     puma (6.3.0)
       nio4r (~> 2.0)
     raabro (1.4.0)
-    racc (1.6.2)
+    racc (1.7.0)
     rack (3.0.7)
     rack-session (2.0.0)
       rack (>= 3.0.0)
