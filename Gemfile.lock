@@ -147,10 +147,11 @@ GEM
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     geocoder (1.8.1)
-    gettext (3.4.3)
+    gettext (3.4.4)
       erubi
       locale (>= 2.0.5)
       prime
+      racc
       text (>= 1.3.0)
     gettext_i18n_rails (1.11.0)
       fast_gettext (>= 0.9.0)
@@ -210,7 +211,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.2)
     minitest (5.18.0)
-    mocha (2.0.2)
+    mocha (2.0.4)
       ruby2_keywords (>= 0.0.5)
     msgpack (1.6.1)
     net-http-digest_auth (1.4.1)
