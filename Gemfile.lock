@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 5040a6f58e67be8799c761db896445aef9b5372f
+  revision: 5eccc6a165933c25742caef3d5f17ff09bcce09b
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -352,7 +352,7 @@ GEM
     text (1.3.1)
     thor (1.2.2)
     tilt (2.1.0)
-    timeout (0.3.2)
+    timeout (0.4.0)
     turbo-rails (1.4.0)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
