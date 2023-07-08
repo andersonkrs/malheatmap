@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 5ed37b35d666b833aeccb14a4cacd2926251232d
+  revision: a5fc471b3f4bbd02e6be38dae023526a49e7d049
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -175,7 +175,7 @@ GEM
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.6.0)
-    irb (1.7.0)
+    irb (1.7.1)
       reline (>= 0.3.0)
     json (2.6.3)
     language_server-protocol (3.17.0.3)
@@ -231,7 +231,7 @@ GEM
       net-protocol
     newrelic_rpm (9.3.0)
     nio4r (2.5.9)
-    nokogiri (1.15.2)
+    nokogiri (1.15.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     numerizer (0.2.0)
