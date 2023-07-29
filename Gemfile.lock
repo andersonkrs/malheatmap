@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 04c97aec8aa696165e98f46ecec2b13410629be0
+  revision: c78432b33f39f8fd1352d18725889a3467cb25dc
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -221,7 +221,7 @@ GEM
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    net-imap (0.3.6)
+    net-imap (0.3.7)
       date
       net-protocol
     net-pop (0.1.2)
@@ -381,7 +381,7 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
     webrick (1.8.1)
     webrobots (0.1.2)
-    websocket-driver (0.7.5)
+    websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     wheretz (0.0.6)
