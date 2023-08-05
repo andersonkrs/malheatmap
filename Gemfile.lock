@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: c78432b33f39f8fd1352d18725889a3467cb25dc
+  revision: 27b12e9249572d267e9ebf9f64b5bb2c21070f0d
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -28,7 +28,7 @@ GIT
       net-imap
       net-pop
       net-smtp
-      rails-dom-testing (~> 2.0)
+      rails-dom-testing (~> 2.2)
     actionpack (7.1.0.alpha)
       actionview (= 7.1.0.alpha)
       activesupport (= 7.1.0.alpha)
@@ -36,7 +36,7 @@ GIT
       rack (>= 2.2.4)
       rack-session (>= 1.0.1)
       rack-test (>= 0.6.3)
-      rails-dom-testing (~> 2.0)
+      rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
     actiontext (7.1.0.alpha)
       actionpack (= 7.1.0.alpha)
@@ -49,7 +49,7 @@ GIT
       activesupport (= 7.1.0.alpha)
       builder (~> 3.1)
       erubi (~> 1.11)
-      rails-dom-testing (~> 2.0)
+      rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
     activejob (7.1.0.alpha)
       activesupport (= 7.1.0.alpha)
@@ -263,7 +263,7 @@ GEM
     rackup (2.1.0)
       rack (>= 3)
       webrick (~> 1.8)
-    rails-dom-testing (2.1.1)
+    rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
@@ -387,7 +387,7 @@ GEM
     wheretz (0.0.6)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.9)
+    zeitwerk (2.6.11)
 
 PLATFORMS
   ruby
