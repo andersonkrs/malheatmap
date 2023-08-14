@@ -52,3 +52,5 @@ unless Sidekiq.server?
     end
   end
 end
+
+Sidekiq.strict_args!(false)
