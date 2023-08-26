@@ -10,14 +10,18 @@ class User
                dependent: :destroy
     end
 
-    def crawl_data(update_profile: true)
-      pipeline = CrawlerPipeline.new(self, update_profile:)
-      pipeline.execute
+    def crawl_data(*)
+      crawl_data!(*)
 
       true
     rescue MAL::Errors::CrawlError => error
       errors.add(:base, error.message)
       false
+    end
+
+    def crawl_data!(update_profile: true)
+      pipeline = CrawlerPipeline.new(self, update_profile:)
+      pipeline.execute
     end
 
     def crawl_data_later(wait: 5.seconds)

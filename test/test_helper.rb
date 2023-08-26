@@ -5,6 +5,7 @@ require "simplecov"
 
 if ENV["COVERAGE"] == "true"
   SimpleCov.use_merging true
+  SimpleCov.command_name("Minitest")
   SimpleCov.start do
     add_filter "config"
     add_filter "vendor"
@@ -27,6 +28,8 @@ module ActiveSupport
     include ActiveJob::TestHelper
     include ActionCable::TestHelper
 
+    parallelize threshold: 10
+
     fixtures :all
 
     def render(...)
@@ -36,7 +39,7 @@ module ActiveSupport
     parallelize
 
     if ENV["COVERAGE"] == "true"
-      parallelize_setup { |worker| SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}" }
+      parallelize_setup { |worker| SimpleCov.command_name "Minitest:#{worker}" }
 
       parallelize_teardown { |_worker| SimpleCov.result }
     end

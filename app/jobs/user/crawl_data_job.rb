@@ -5,9 +5,7 @@ class User
     queue_as :low
 
     def perform(user)
-      return if user.crawl_data
-
-      user.errors[:base].each { |error_message| Rails.logger.warn("#{error_message} - ID: #{user.id}") }
+      user.crawl_data!
     end
   end
 end

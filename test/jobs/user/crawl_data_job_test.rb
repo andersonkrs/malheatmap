@@ -25,12 +25,5 @@ class User
         User::CrawlDataJob.perform_now(@user)
       end
     end
-
-    test "logs the error message when the crawling fails" do
-      MAL::UserCrawler.any_instance.stubs(:crawl).raises(MAL::Errors::CrawlError.new("Something went wrong"))
-      Rails.logger.expects(:warn).with(regexp_matches(/Something went wrong/)).once
-
-      User::CrawlDataJob.perform_now(@user)
-    end
   end
 end

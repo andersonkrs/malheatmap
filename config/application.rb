@@ -57,6 +57,3 @@ module MalHeatmap
     config.assets.paths << Rails.root.join("vendor/assets")
   end
 end
-
-ActiveSupport::Deprecation.disallowed_warnings = :all
-ActiveSupport::Deprecation.disallowed_behavior = :log
