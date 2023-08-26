@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 5a2163440706c70dff7c8ea5863d21644126a43b
+  revision: f6b987d521b9ad3f9938b40f039fbdda78058a06
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -68,6 +68,7 @@ GIT
       marcel (~> 1.0)
     activesupport (7.1.0.alpha)
       base64
+      bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
       connection_pool (>= 2.2.5)
       drb
@@ -105,6 +106,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     base64 (0.1.1)
+    bigdecimal (3.1.4)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -284,7 +286,7 @@ GEM
     redis-client (0.15.0)
       connection_pool
     regexp_parser (2.8.1)
-    reline (0.3.7)
+    reline (0.3.8)
       io-console (~> 0.5)
     request_store (1.5.1)
       rack (>= 1.4)
