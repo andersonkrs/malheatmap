@@ -1,0 +1,25 @@
+<div class="calendar">
+  <ul class="months has-text-left" style="display: grid; grid-template-columns: <%= months_css_grid%>">
+    <% months.each do |month| %>
+      <% if month.visible? %>
+        <li class="month" data-width="<%= month.width %>"><%= month.label %></li>
+      <% else %>
+        <li class="month" data-width="<%= month.width %>"></li>
+      <% end %>
+    <% end %>
+  </ul>
+
+  <ul class="days">
+    <% day_names.each do |day_name| %>
+      <li class="day"><%= day_name %></li>
+    <% end %>
+  </ul>
+
+  <ul class="squares" data-controller="tracker" data-tracker-event-name-value="Calendar Navigation" data-turbo="false">
+    <% squares.each do |square| %>
+      <li class="square" data-action="click->tracker#sendEvent" data-level="<%= square.level %>" data-date="<%= square.date %>" title="<%= square.hint %>">
+        <a href="<%="##{square.date}" %>"></a>
+      </li>
+    <% end %>
+  </ul>
+</div>

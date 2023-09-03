@@ -1,0 +1,30 @@
+<div class="timeline">
+  <% activities_by_month_and_date.each do |month, dates| %>
+    <% formatted_month = month.strftime("%B") %>
+
+    <div class="header timeline-header">
+      <% if header?(month) %>
+        <span class="header-marker tag is-medium is-primary"><%= formatted_month %></span>
+      <% else %>
+        <span class="separator-marker tag is-primary"><%= formatted_month %></span>
+      <% end %>
+    </div>
+
+    <% dates.each do |date, activities| %>
+      <!-- ID is used here to be scrollable as an anchor from the calendar -->
+      <div class="timeline-item" id="<%= date %>">
+        <div class="timeline-item"></div>
+        <div class="timeline-content">
+          <p class="heading"><%= date.strftime("%B %-d, %Y") %></p>
+          <%= render ActivityComponent.with_collection(activities) %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if footer?(month) %>
+      <header class="timeline-header">
+        <span class="footer-marker tag is-medium is-primary"><%= formatted_month %></span>
+      </header>
+    <% end %>
+  <% end %>
+</div>

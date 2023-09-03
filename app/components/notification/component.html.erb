@@ -1,0 +1,4 @@
+<div class="notification is-danger is-light is-small" data-controller="notification">
+  <button class="delete" data-action="click->notification#close"></button>
+  <%= content_tag :p, sanitize(@message) %>
+</div>

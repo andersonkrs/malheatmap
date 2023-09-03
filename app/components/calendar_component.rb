@@ -40,7 +40,7 @@ class CalendarComponent < ViewComponent::Base
     months.map(&:css_width).join(" ")
   end
 
-  def days_names
+  def day_names
     I18n.t("date.abbr_day_names").compact
   end
 
