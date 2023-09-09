@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: fea9ad3337d15b969d3b8acb583df3296e183ada
+  revision: 234eff4cbcbff283df887928142aa5189411178b
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -167,7 +167,7 @@ GEM
       fast_gettext (>= 0.9.0)
     gitlab-chronic (0.10.6)
       numerizer (~> 0.2)
-    globalid (1.2.0)
+    globalid (1.2.1)
       activesupport (>= 6.1)
     google-protobuf (3.23.3)
     hashdiff (1.0.1)
