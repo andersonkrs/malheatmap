@@ -351,7 +351,7 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
     singleton (0.1.1)
-    skylight (5.3.4)
+    skylight (6.0.0)
       activesupport (>= 5.2.0)
     slim (5.1.0)
       temple (~> 0.10.0)
@@ -439,7 +439,7 @@ DEPENDENCIES
   sidekiq
   sidekiq-scheduler
   simplecov (~> 0.17.1)
-  skylight (~> 5.3.4)
+  skylight (~> 6.0.0)
   slim-rails
   stimulus-rails
   syntax_tree
