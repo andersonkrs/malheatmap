@@ -47,7 +47,7 @@ gem "rollbar", require: false
 
 # Performance monitoring
 gem "newrelic_rpm"
-gem "skylight", "~> 5.3.4", require: false
+gem "skylight", "~> 6.0.0", require: false
 
 group :development, :test do
   gem "debug"
