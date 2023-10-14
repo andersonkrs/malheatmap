@@ -296,7 +296,7 @@ GEM
     request_store (1.5.1)
       rack (>= 1.4)
     rexml (3.2.6)
-    rollbar (3.4.0)
+    rollbar (3.4.1)
     rubocop (1.53.0)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
