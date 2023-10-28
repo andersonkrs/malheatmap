@@ -157,7 +157,7 @@ GEM
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     geocoder (1.8.2)
-    gettext (3.4.7)
+    gettext (3.4.9)
       erubi
       locale (>= 2.0.5)
       prime
