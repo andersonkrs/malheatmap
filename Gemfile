@@ -43,7 +43,7 @@ gem "propshaft"
 gem "dartsass-rails"
 
 # Error monitoring
-gem "rollbar", require: false
+gem "rollbar"
 
 # Performance monitoring
 gem "newrelic_rpm"

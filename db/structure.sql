@@ -309,7 +309,8 @@ CREATE TABLE public.users (
     mal_id integer,
     profile_data_updated_at timestamp(6) without time zone,
     anime_list_snapshot_updated_at timestamp(6) without time zone,
-    manga_list_snapshot_updated_at timestamp(6) without time zone
+    manga_list_snapshot_updated_at timestamp(6) without time zone,
+    deactivated_at timestamp(6) without time zone
 );
 
 
@@ -613,6 +614,7 @@ ALTER TABLE ONLY public.entries
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20230924170340'),
 ('20230226155928'),
 ('20230225172457'),
 ('20230225171432'),
