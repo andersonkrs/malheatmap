@@ -10,8 +10,8 @@ class User
                dependent: :destroy
     end
 
-    def crawl_data(*)
-      crawl_data!(*)
+    def crawl_data(...)
+      crawl_data!(...)
 
       true
     rescue MAL::Errors::CrawlError => error
