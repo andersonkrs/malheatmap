@@ -43,8 +43,9 @@ class SessionsController < ApplicationController
   end
 
   def process_user_creation(token_data)
-    response = MAL::ApiClient.with(access_token: token_data["access_token"]).user_profile
+    client = MAL::ApiClient.with(access_token: token_data["access_token"])
 
+    response = client.user_profile
     if response.failure?
       ErrorNotifier.capture(response.raw_body)
       redirect_to internal_error_path
