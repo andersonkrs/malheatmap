@@ -66,9 +66,6 @@ module MAL
     end
 
     def crawl_history
-      history_link = page.link_with(text: "History")
-      raise Errors::UnableToNavigateToHistoryPage.new(body: page.body, uri: page.uri) if history_link.nil?
-
       crawl_history_kind(:anime)
       crawl_history_kind(:manga)
     end
@@ -81,9 +78,24 @@ module MAL
     end
 
     def crawl_history_kind(kind)
-      page.link_with(text: "#{kind.capitalize} History").click
+      if (kind_link = page.link_with(text: "#{kind.capitalize} History"))
+        kind_link.click
+        response[:history] += Parsers::History.new(page, kind:).parse
+        return
+      end
 
-      response[:history] += Parsers::History.new(page, kind:).parse
+      history_link = page.link_with(text: "History")
+
+      raise_private_history unless history_link
+
+      history_link.click
+      if page.xpath("//*[contains(text(),'Access to this list history has been restricted by the owner')]").present?
+        raise_private_history
+      end
+    end
+
+    def raise_private_history
+      raise Errors::UnableToNavigateToHistoryPage.new(body: page.body, uri: page.uri)
     end
 
     def handle_response_code_error(response_code, message)

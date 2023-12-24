@@ -11,7 +11,7 @@ class User
         raw_data = crawler.crawl
 
         process_raw_data(raw_data)
-      rescue MAL::Errors::ProfileNotFound => error
+      rescue MAL::Errors::ProfileNotFound, MAL::Errors::UnableToNavigateToHistoryPage => error
         user.schedule_deactivation unless user.mal_account_linked?
         capture_failure_log_entry(error:, raw_data:)
         raise

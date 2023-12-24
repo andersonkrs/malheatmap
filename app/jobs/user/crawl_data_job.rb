@@ -4,7 +4,9 @@ class User
 
     queue_as :low
 
-    discard_on MAL::Errors::ProfileNotFound, MAL::Errors::CommunicationError do |_job, exception|
+    discard_on MAL::Errors::ProfileNotFound,
+               MAL::Errors::UnableToNavigateToHistoryPage,
+               MAL::Errors::CommunicationError do |_job, exception|
       Rails.logger.error(exception)
     end
 

@@ -1,13 +1,17 @@
 require "test_helper"
 
 class UserCrawlerTest < ActiveSupport::TestCase
-  include VCRCassettes
-
   setup { travel_to Date.new(2020, 9, 22) } # Entries timestamps are relative to current date, need to freeze
 
-  teardown { Geocoder::Lookup::Test.reset }
+  teardown do
+    Geocoder::Lookup::Test.reset
+
+    VCR.eject_cassette
+  end
 
   test "returns user profile info with geolocation and history" do
+    VCR.insert_cassette("user_crawler/user_with_complete_information")
+
     Geocoder::Lookup::Test.add_stub("Sorocaba, Brazil", [{ coordinates: [-23.4961296, -47.4542266] }])
     crawler = MAL::UserCrawler.new("andersonkrs")
 
@@ -35,6 +39,7 @@ class UserCrawlerTest < ActiveSupport::TestCase
   end
 
   test "converts history timestamps correctly to UTC" do
+    VCR.insert_cassette "user_crawler/user_with_many_entries"
     travel_to Time.zone.local(2021, 6, 18, 23)
 
     Geocoder::Lookup::Test.add_stub("College/Massachusetts", [{ coordinates: [42.3788774, -72.032366] }])
@@ -62,6 +67,8 @@ class UserCrawlerTest < ActiveSupport::TestCase
   end
 
   test "does not return user geolocation if the user does not have location on the profile" do
+    VCR.insert_cassette "user_crawler/user_with_no_location"
+
     crawler = MAL::UserCrawler.new("ft_suhail")
     result = crawler.crawl
     profile = result[:profile]
@@ -73,6 +80,8 @@ class UserCrawlerTest < ActiveSupport::TestCase
   end
 
   test "returns UTC as timezone when the geolocation is not a country" do
+    VCR.insert_cassette "user_crawler/user_with_non_valid_country_location"
+
     Geocoder::Lookup::Test.add_stub("Caspian Sea", [{ coordinates: [41.7789772, 50.5607579] }])
 
     crawler = MAL::UserCrawler.new("Moruna")
@@ -83,9 +92,10 @@ class UserCrawlerTest < ActiveSupport::TestCase
   end
 
   test "does not return the timezone if the geolocation returns empty coordinates" do
+    VCR.insert_cassette("user_crawler/user_with_complete_information")
     Geocoder::Lookup::Test.add_stub("Sorocaba, Brazil", [{ coordinates: [] }])
 
-    crawler = MAL::UserCrawler.new("hacker_4chan")
+    crawler = MAL::UserCrawler.new("andersonkrs")
     result = crawler.crawl
     profile = result[:profile]
 
@@ -94,30 +104,29 @@ class UserCrawlerTest < ActiveSupport::TestCase
     assert profile[:longitude].blank?
   end
 
-  test "removes blank spaces from item name and timestamp" do
-    crawler = MAL::UserCrawler.new("ft_suhail")
-    result = crawler.crawl
-    profile = result[:profile]
-
-    assert_equal "", profile[:location]
-  end
-
   test "returns no entries when user does not have history" do
-    crawler = MAL::UserCrawler.new("Ismail_Hassan")
+    VCR.insert_cassette("user_crawler/no_history")
+
+    crawler = MAL::UserCrawler.new("ft_suhail")
     result = crawler.crawl
 
     assert_equal 0, result[:history].size
   end
 
   test "returns no entries when user sets the history as private" do
-    crawler = MAL::UserCrawler.new("-Kazami")
-    result = crawler.crawl
+    VCR.insert_cassette("user_crawler/user_restricted_history")
 
-    assert_equal 0, result[:history].size
+    crawler = MAL::UserCrawler.new("Abajur")
+
+    assert_raises MAL::Errors::UnableToNavigateToHistoryPage do
+      crawler.crawl
+    end
   end
 
   test "raises profile not found error when user does not exist" do
-    crawler = MAL::UserCrawler.new("fakeuser123")
+    VCR.insert_cassette("user_crawler/profile_not_found")
+
+    crawler = MAL::UserCrawler.new("fakeuser12312312")
 
     assert_raises MAL::Errors::ProfileNotFound, I18n.t("mal.crawler.errors.profile_not_found") do
       crawler.crawl

@@ -1,0 +1,472 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://myanimelist.net/profile/fakeuser12312312
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip,deflate,identity
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Mozilla/5.0 (Macintosh; Intel Mac OS X 13_3_1) AppleWebKit/605.1.15 (KHTML,
+        like Gecko) Version/16.4 Safari/605.1.15
+      Accept-Charset:
+      - ISO-8859-1,utf-8;q=0.7,*;q=0.7
+      Accept-Language:
+      - en-us,en;q=0.5
+      Host:
+      - myanimelist.net
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - '300'
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Type:
+      - text/html; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Sun, 24 Dec 2023 22:07:16 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - MALHLOGSESSID=47703f512eaf12cea694db654b770a55; expires=Fri, 22-Dec-2028 22:07:16
+        GMT; Max-Age=157680000; path=/
+      - MALSESSIONID=p9d4ju631i3jqbm6mbg948jfo4; expires=Wed, 21-Dec-2033 22:07:16
+        GMT; Max-Age=315360000; path=/; secure; HttpOnly
+      - is_logged_in=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/;
+        domain=.myanimelist.net; httponly
+      - is_logged_in=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/;
+        httponly
+      Cache-Control:
+      - no-cache
+      Referrer-Policy:
+      - same-origin
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      X-Cache:
+      - Error from cloudfront
+      Via:
+      - 1.1 17a6fb14bd3e36300618cc4400c1330c.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - GRU3-P5
+      X-Amz-Cf-Id:
+      - 22UdHrAsCwyBH-Pbv1CyV35AW2-S1AdtqraTtzJZaZLk9qGSmPGuFw==
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><html
+        lang=\"en\" class=\"appearance-none\"><head>  \n<link rel=\"preconnect\" href=\"//fonts.gstatic.com/\"
+        crossorigin=\"anonymous\" />\n<link rel=\"preconnect\" href=\"//fonts.googleapis.com/\"
+        crossorigin=\"anonymous\" />\n<link rel=\"preconnect\" href=\"//tags-cdn.deployads.com/\"
+        crossorigin=\"anonymous\" />\n<link rel=\"preconnect\" href=\"//www.googletagservices.com/\"
+        crossorigin=\"anonymous\" />\n<link rel=\"preconnect\" href=\"//www.googletagmanager.com/\"
+        crossorigin=\"anonymous\"/>\n<link rel=\"preconnect\" href=\"//apis.google.com/\"
+        crossorigin=\"anonymous\"/>\n<link rel=\"preconnect\" href=\"//pixel-sync.sitescout.com/\"
+        crossorigin=\"anonymous\"/>\n<link rel=\"preconnect\" href=\"//pixel.tapad.com/\"
+        crossorigin=\"anonymous\"/>\n<link rel=\"preconnect\" href=\"//c.deployads.com/\"
+        crossorigin=\"anonymous\"/>\n<link rel=\"preconnect\" href=\"//tpc.googlesyndication.com/\"
+        crossorigin=\"anonymous\"/>\n<link rel=\"preconnect\" href=\"//googleads.g.doubleclick.net/\"
+        crossorigin=\"anonymous\"/>\n<link rel=\"preconnect\" href=\"//securepubads.g.doubleclick.net/\"
+        crossorigin=\"anonymous\"/>\n<link rel=\"preconnect\" href=\"https://cdn.myanimelist.net\"
+        crossorigin=\"anonymous\"/>\n<title>404 Not Found - MyAnimeList.net\n</title>\n\n\n
+        \ \n<meta name=\"keywords\" content=\"anime, myanimelist, anime news, manga\"
+        />\n  \n\n<meta property=\"og:locale\" content=\"en_US\"><meta property=\"fb:app_id\"
+        content=\"360769957454434\"><meta property=\"og:site_name\" content=\"MyAnimeList.net\"><meta
+        name=\"twitter:card\" content=\"summary\"><meta name=\"twitter:site\" content=\"@myanimelist\"><meta
+        property=\"og:title\" content=\"404 Not Found - MyAnimeList.net \"><meta property=\"og:image\"
+        content=\"https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png\"><meta
+        name=\"twitter:image:src\" content=\"https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png\"><meta
+        property=\"og:url\" content=\"https://myanimelist.net/error/404\">\n\n<meta
+        name=\"referrer\" content=\"default\"><link rel=\"manifest\" href=\"/manifest.json\">\n\n<meta
+        name='csrf_token' content='5aa1012e57cfeb121dd498efcf7f7cdf7fb3b839'>\n<meta
+        name=\"fo-verify\" content=\"1e927243-8e02-48e3-b098-a7b78c5b4e36\"><meta
+        name=\"viewport\" content=\"initial-scale=1\" /><link rel=\"preload\" as=\"style\"
+        href=\"https://cdn.myanimelist.net/static/assets/css/pc/style-9a0d9d3b55.css\"
+        />\n<link rel=\"preload\" as=\"style\" href=\"https://cdn.myanimelist.net/static/assets/css/pc/dark-7bff924938.css\"
+        />\n<link rel=\"preload\" as=\"script\" href=\"https://cdn.myanimelist.net/static/assets/js/pc/header-4e62fe14bd.js\"
+        />\n<link rel=\"preload\" as=\"script\" href=\"https://cdn.myanimelist.net/static/assets/js/pc/all-2d3fc6190f.js\"
+        />\n\n<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.myanimelist.net/static/assets/css/pc/style-9a0d9d3b55.css\"
+        />\n<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.myanimelist.net/static/assets/css/pc/dark-7bff924938.css\"
+        />\n\n<script type=\"text/javascript\" src=\"https://cdn.myanimelist.net/static/assets/js/pc/header-4e62fe14bd.js\"></script>\n<script
+        type=\"text/javascript\" src=\"https://cdn.myanimelist.net/static/assets/js/pc/all-2d3fc6190f.js\"
+        id=\"alljs\" data-params='{&quot;origin_url&quot;:&quot;https:\\/\\/myanimelist.net&quot;}'
+        async=\"async\"></script>\n\n\n\n<link rel=\"search\" type=\"application/opensearchdescription+xml\"
+        href=\"https://myanimelist.net/plugins/myanimelist.xml\" title=\"MyAnimeList\"
+        />\n\n<link rel=\"shortcut icon\" href=\"https://cdn.myanimelist.net/images/favicon.ico\"
+        />\n\n<meta name='recaptcha_site_key' content='6Ld_1aIZAAAAAF6bNdR67ICKIaeXLKlbhE7t2Qz4'>\n<script>\nwindow.GRECAPTCHA_SITE_KEY
+        = '6Ld_1aIZAAAAAF6bNdR67ICKIaeXLKlbhE7t2Qz4';\n</script>\n<script src='https://www.google.com/recaptcha/api.js?render=6Ld_1aIZAAAAAF6bNdR67ICKIaeXLKlbhE7t2Qz4'
+        async defer></script>\n    <link href=\"https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap\"
+        rel=\"stylesheet\">\n\n<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1473193330168238\"
+        crossorigin=\"anonymous\"></script>\n<script type=\"text/javascript\" src=\"https://cdn.myanimelist.net/js/quantcast_choice.js?v=1703455636\"></script>\n<script
+        type=\"text/javascript\" src=\"https://cdn.myanimelist.net/js/cmp.js?v=1703455636\"></script>\n<script
+        defer src=\"https://cdn.unblockia.com/h.js\"></script>\n<script>\n  var clientDarkMode
+        = window.matchMedia(\"(prefers-color-scheme:dark)\").matches;\n  let darkMode
+        = false\n\n  if (clientDarkMode) {\n    if (!$('html').hasClass(\"appearance-light\"))
+        { // SystemSetting = Dark && MAL UserSettings != Light\n      darkMode = true\n
+        \   }\n  } else if ($('html').hasClass(\"appearance-dark\")) { // MAL UserSettings
+        = Dark\n    darkMode = true\n  }\n\n    if (darkMode) {\n    $('html').addClass(\"dark-mode\");\n
+        \ }\n    $(document).ready(function() {\n    if (darkMode) {\n      if($('.js-color-pc-constant').length){$('.js-color-pc-constant').addClass(\"color-pc-constant\");}\n
+        \   }\n  });\n</script>\n  <meta name=\"robots\" content=\"noindex\">\n  </head>\n\n
+        \         <body class=\"page-common christmas js-color-pc-constant \" data-ms=\"false\"
+        data-country-code=\"BR\" data-time=\"1703455636\">\n  \n      <div id=\"myanimelist\">\n
+        \ \n    <script type='text/javascript'>\n    window.MAL.SkinAd.prepareForSkin('');\n
+        \ </script>\n\n    <div id=\"ad-skin-bg-left\" class=\"ad-skin-side-outer
+        ad-skin-side-bg bg-left\">\n    <div id=\"ad-skin-left\" class=\"ad-skin-side
+        left\" style=\"display: none;\">\n      <div id=\"ad-skin-left-absolute-block\">\n
+        \       <div id=\"ad-skin-left-fixed-block\"></div>\n      </div>\n    </div>\n
+        \ </div><div class=\"wrapper christmas js-color-pc-constant\">\n        <div
+        id=\"headerSmall\" class=\"christmas js-color-pc-constant\">\n\n<script>\n
+        \   var trackOutboundLink = function(url) {\n        ga('send', 'event', 'outbound',
+        'click', url, {\n            'transport': 'beacon',\n            'hitCallback':
+        function(){return true;}\n        });\n    }\n</script><div class=\"banner-header-anime-straming
+        header-mini-banner\" style=\"right:480px;\">\n  <a href=\"https://mxj.myanimelist.net/\"
+        onclick=\"trackOutboundLink('https://mxj.myanimelist.net/')\">\n  <img src=\"/c/img/images/event/20210527_MALxJAPAN_MiniBanner/500x72_miniBanner_B.png\"
+        width=\"250\" height=\"36\" alt=\"MAL x JAPAN\" title=\"MAL x JAPAN\">\n</a>\n\n</div>\n\n\n<div
+        id=\"header-menu\" ><div class=\"header-menu-login\"><a class=\"btn-mal-service
+        ga-click ga-impression\" data-ga-click-type=\"hide-ads\" data-ga-impression-type=\"hide-ads\"\n
+        \            href=\"https://myanimelist.net/membership?_location=mal_h_u\"
+        onClick=\"ga_mal_banner()\">Hide Ads</a><a class=\"btn-login\" href=\"https://myanimelist.net/login.php?from=%2Ferror%2F404\"
+        id=\"malLogin\" onClick=\"ga_notlogin()\">Login</a><a class=\"btn-signup\"
+        href=\"https://myanimelist.net/register.php?from=%2Ferror%2F404\" onClick=\"ga_registration()\">Sign
+        Up</a></div></div><a href=\"/\" class=\"link-mal-logo\">MyAnimeList.net</a></div>\n
+        \               \n          <div id=\"menu\" class=\"christmas js-color-pc-constant\">\n
+        \   <div id=\"menu_right\"><script type=\"text/x-template\" id=\"incremental-result-item-anime\"><div
+        class=\"list anime\" :class=\"{'focus': focus}\"><a :href=\"url\" class=\"clearfix\"><div
+        class=\"on\" v-if=\"focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.image_url + ')'}\"></span><div class=\"info anime\"><div class=\"name\">${
+        item.name } <span class=\"media-type\">(${ item.payload.media_type })</span></div><div
+        class=\"extra-info\">Aired: ${ item.payload.aired }<br>Score: ${ item.payload.score
+        }<br>Status: ${ item.payload.status }</div></div></div><div class=\"off\"
+        v-if=\"!focus\"><span class=\"image\" :style=\"{'background-image': 'url('
+        + item.thumbnail_url + ')'}\"></span><div class=\"info anime\"><div class=\"name\">${
+        item.name }</div><div class=\"media-type\">(${ mediaTypeWithStartYear })</div></div></div></a></div></script><script
+        type=\"text/x-template\" id=\"incremental-result-item-manga\"><div class=\"list
+        manga\" :class=\"{'focus': focus}\"><a :href=\"url\" class=\"clearfix\"><div
+        class=\"on\" v-if=\"focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.image_url + ')'}\"></span><div class=\"info manga\"><div class=\"name\">${
+        item.name } <span class=\"media-type\">(${ item.payload.media_type })</span></div><div
+        class=\"extra-info\">Published: ${ item.payload.published }<br>Score: ${ item.payload.score
+        }<br>Status: ${ item.payload.status }</div></div></div><div class=\"off\"
+        v-if=\"!focus\"><span class=\"image\" :style=\"{'background-image': 'url('
+        + item.thumbnail_url + ')'}\"></span><div class=\"info manga\"><div class=\"name\">${
+        item.name }</div><div class=\"media-type\">(${ mediaTypeWithStartYear })</div></div></div></a></div></script><script
+        type=\"text/x-template\" id=\"incremental-result-item-character\"><div class=\"list
+        character\" :class=\"{'focus': focus}\"><a :href=\"url\" class=\"clearfix\"><div
+        class=\"on\" v-if=\"focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.image_url + ')'}\"></span><div class=\"info character\"><div
+        class=\"name\"  v-html=\"item.name\"></div><div class=\"extra-info\"><ul class=\"related-works\"><li
+        v-for=\"work in item.payload.related_works\" class=\"fs-i\">- ${ work }</li></ul>Favorites:
+        ${ item.payload.favorites }</div></div></div><div class=\"off\" v-if=\"!focus\"><span
+        class=\"image\" :style=\"{'background-image': 'url(' + item.thumbnail_url
+        + ')'}\"></span><div class=\"info character\"><div class=\"name\"  v-html=\"item.name\"></div></div></div></a></div></script><script
+        type=\"text/x-template\" id=\"incremental-result-item-person\"><div class=\"list
+        person\" :class=\"{'focus': focus}\"><a :href=\"url\" class=\"clearfix\"><div
+        class=\"on\" v-if=\"focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.image_url + ')'}\"></span><div class=\"info person\"><div class=\"name\">${
+        item.name }</div><div class=\"extra-info\"><span v-if=\"item.payload.alternative_name\">${
+        item.payload.alternative_name }<br></span>Birthday: ${ item.payload.birthday
+        }<br>Favorites: ${ item.payload.favorites }</div></div></div><div class=\"off\"
+        v-if=\"!focus\"><span class=\"image\" :style=\"{'background-image': 'url('
+        + item.thumbnail_url + ')'}\"></span><div class=\"info person\"><div class=\"name\">${
+        item.name }</div></div></div></a></div></script><script type=\"text/x-template\"
+        id=\"incremental-result-item-company\"><div class=\"list company\" :class=\"{'focus':
+        focus}\"><a :href=\"url\" class=\"clearfix\"><div class=\"on\" v-if=\"focus\"><span
+        class=\"image\" :style=\"{'background-image': 'url(' + item.image_url + ')'}\"></span><div
+        class=\"info company\"><div class=\"name\">${ item.name }</div><div class=\"extra-info\"><span
+        v-if=\"item.payload.japanese\">(${ item.payload.japanese })<br></span>\n                        Anime
+        titles: ${ item.payload.num_animes.toLocaleString() }<br>\n                        Favorites:
+        ${item.payload.favorites.toLocaleString()}\n                    </div></div></div><div
+        class=\"off\" v-if=\"!focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.thumbnail_url + ')'}\"></span><div class=\"info company\"><div
+        class=\"name\">${ item.name }</div></div></div></a></div></script><script
+        type=\"text/x-template\" id=\"incremental-result-item-store\"><div class=\"list
+        store\" :class=\"{'focus': focus}\"><a :href=\"url\" class=\"clearfix\"><div
+        class=\"on\" v-if=\"focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.image_url + ')'}\"></span><div class=\"info store\"></div></div><div
+        class=\"off\" v-if=\"!focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.thumbnail_url + ')'}\"></span><div class=\"info store\"></div></div></a></div></script><script
+        type=\"text/x-template\" id=\"incremental-result-item-club\"><div class=\"list
+        club\" :class=\"{'focus': focus}\"><a :href=\"url\" class=\"clearfix\"><div
+        class=\"on\" v-if=\"focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.image_url + ')'}\"></span><div class=\"info club\"><div class=\"name\">${
+        item.name }</div><div class=\"extra-info\">Members: ${ item.payload.members
+        }<br>Category: ${ item.payload.category }<br>Created by: ${ item.payload.created_by
+        }</div></div></div><div class=\"off\" v-if=\"!focus\"><span class=\"image\"
+        :style=\"{'background-image': 'url(' + item.thumbnail_url + ')'}\"></span><div
+        class=\"info club\"><div class=\"name\">${ item.name }</div></div></div></a></div></script><script
+        type=\"text/x-template\" id=\"incremental-result-item-user\"><div class=\"list
+        user\" :class=\"{'focus': focus}\"><a :href=\"url\" class=\"clearfix\"><div
+        class=\"on\" v-if=\"focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.image_url + ')'}\"></span><div class=\"info user\"><div class=\"name\">${
+        item.name }</div><div class=\"extra-info\"><span v-if=\"item.payload.authority\">${
+        item.payload.authority }<br></span>Joined: ${ item.payload.joined }</div></div></div><div
+        class=\"off\" v-if=\"!focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.thumbnail_url + ')'}\"></span><div class=\"info user\"><div
+        class=\"name\">${ item.name }</div></div></div></a></div></script><script
+        type=\"text/x-template\" id=\"incremental-result-item-news\"><div class=\"list
+        news\" :class=\"{'focus': focus}\"><a :href=\"url\" class=\"clearfix\"><div
+        class=\"on\" v-if=\"focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.image_url + ')'}\"></span><div class=\"info news\"><div class=\"name\">${
+        item.name }</div><div class=\"extra-info\">${ item.payload.date }</div></div></div><div
+        class=\"off\" v-if=\"!focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.thumbnail_url + ')'}\"></span><div class=\"info news\"><div
+        class=\"name\">${ item.name }</div><div class=\"media-type\">${ item.payload.date
+        }</div></div></div></a></div></script><script type=\"text/x-template\" id=\"incremental-result-item-featured\"><div
+        class=\"list featured\" :class=\"{'focus': focus}\"><a :href=\"url\" class=\"clearfix\"><div
+        class=\"on\" v-if=\"focus\"><span class=\"image\" :style=\"{'background-image':
+        'url(' + item.image_url + ')'}\"></span><div class=\"info featured\"><div
+        class=\"name\">${ item.name }</div><div class=\"extra-info\">${ item.payload.date
+        }</div></div></div><div class=\"off\" v-if=\"!focus\"><span class=\"image\"
+        :style=\"{'background-image': 'url(' + item.thumbnail_url + ')'}\"></span><div
+        class=\"info featured\"><div class=\"name\">${ item.name }</div><div class=\"media-type\">${
+        item.payload.date }</div></div></div></a></div></script><script type=\"text/x-template\"
+        id=\"incremental-result-item-forum\"><div class=\"list forum\" :class=\"{'focus':
+        focus}\"><a :href=\"url\" class=\"clearfix\"><div class=\"on\" v-if=\"focus\"><span
+        class=\"image\" :style=\"{'background-image': 'url(' + item.image_url + ')'}\"></span><div
+        class=\"info forum\"><div class=\"name\"><span v-show=\"item.payload.work_title\">${
+        item.payload.work_title}\n                      <i class=\"fa-solid fa-caret-right\"></i></span>
+        ${ item.name }</div><div class=\"extra-info\">${ item.payload.date }<br><span>in
+        ${ item.payload.category }</span></div></div></div><div class=\"off\" v-if=\"!focus\"><span
+        class=\"image\" :style=\"{'background-image': 'url(' + item.thumbnail_url
+        + ')'}\"></span><div class=\"info forum\"><div class=\"name\"><span v-show=\"item.payload.work_title\">${
+        item.payload.work_title}\n                      <i class=\"fa-solid fa-caret-right\"></i></span>
+        ${ item.name }</div><div class=\"media-type\">${ item.payload.date }</div></div></div></a></div></script><script
+        type=\"text/x-template\" id=\"incremental-result-item-separator\"><div class=\"list
+        separator\"><div class=\"separator\"><span v-show=\"item.name == 'anime'\">Anime</span><span
+        v-show=\"item.name == 'manga'\">Manga</span><span v-show=\"item.name == 'character'\">Characters</span><span
+        v-show=\"item.name == 'person'\">People</span><span v-show=\"item.name ==
+        'company'\">Companies</span></div></div></script><div id=\"top-search-bar\"
+        class=\"js-color-pc-constant\"><form id=\"searchBar\" method=\"get\" class=\"searchBar\"
+        @submit.prevent=\"jump()\"><div class=\"form-select-outer fl-l\"><select name=\"type\"
+        id=\"topSearchValue\" class=\"inputtext\" v-model=\"type\"><option value=\"all\">All</option><option
+        value=\"anime\">Anime</option><option value=\"manga\">Manga</option><option
+        value=\"character\">Characters</option><option value=\"person\">People</option><option
+        value=\"company\">Companies</option><option value=\"store\">Manga Store</option><option
+        value=\"news\">News</option><option value=\"featured\">Featured Articles</option><option
+        value=\"forum\">Forum</option><option value=\"club\">Clubs</option><option
+        value=\"user\">Users</option></select></div><input v-model=\"keyword\" id=\"topSearchText\"
+        type=\"text\"\n            name=\"keyword\" class=\"inputtext fl-l\" placeholder=\"Search
+        Anime, Manga, and more...\"\n            size=\"30\" autocomplete=\"off\"\n
+        \           @keydown.up.prevent=\"moveSelection(-1)\" @keydown.down.prevent=\"moveSelection(1)\"\n
+        \           @focus=\"isFocused = true\" @blur=\"isFocused = false\"><button
+        id=\"topSearchButon\" class=\"fl-l\" :class=\"{'notActive': (keyword.length
+        < 3)}\" type=\"submit\"><i class=\"fa-solid fa-magnifying-glass\"></i></button></form><div
+        id=\"topSearchResultList\" class=\"incrementalSearchResultList\" :style=\"{display:
+        (showResult ? 'block' : 'none')}\" @mousedown.prevent=\"\"><div v-for=\"(item,
+        i) in items\" @mouseover=\"selection=i\"><component :is=\"resolveComponent(item)\"
+        :item=\"item\" :focus=\"selection == i\" :url=\"generateItemPageUrl(item)\"></component></div><div
+        class=\"list list-bottom\" :class=\"{'focus': selection == -1}\" @mouseover=\"selection
+        = -1\"\n               :style=\"{display: (showViewAllLink ? 'block' : 'none')}\"><a
+        :href=\"resultPageUrl\">\n              View all results for <span class=\"fw-b\">${
+        keyword }</span><i v-show=\"isRequesting\" class=\"fa-solid fa-spinner fa-spin
+        ml4\"></i></a></div></div></div></div><div id=\"menu_left\">\n      <ul id=\"nav\"
+        class=\"js-color-pc-constant\">\n        <li class=\"small\"><a href=\"#\"
+        class=\"non-link\">Anime</a>\n          <ul class=\"x-wider\">\n            <li><a
+        href=\"https://myanimelist.net/anime.php?_location=mal_h_m\">Anime Search</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/topanime.php?_location=mal_h_m\">Top
+        Anime</a></li>\n            <li><a href=\"https://myanimelist.net/anime/season?_location=mal_h_m\">Seasonal
+        Anime</a></li>\n                        <li><a href=\"https://myanimelist.net/watch/episode?_location=mal_h_m_a\">Videos</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/reviews.php?t=anime&amp;_location=mal_h_m\">Reviews</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/recommendations.php?s=recentrecs&amp;t=anime&amp;_location=mal_h_m\">Recommendations</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/forum?topicid=2067484&amp;_location=mal_h_m\">2023
+        Challenge</a></li><li><a href=\"https://fal.myanimelist.net/?utm_source=MAL&amp;utm_medium=headermenu&amp;utm_campaign=fal&amp;utm_content=falhome&amp;_location=mal_h_m\">Fantasy
+        Anime League</a></li></ul>\n        </li>\n        <li class=\"small\"><a
+        href=\"#\" class=\"non-link\">Manga</a>\n          <ul class=\"x-wider\">\n
+        \           <li><a href=\"https://myanimelist.net/manga.php?_location=mal_h_m\">Manga
+        Search</a></li>\n            <li><a href=\"https://myanimelist.net/topmanga.php?_location=mal_h_m\">Top
+        Manga</a></li>\n            <li><a href=\"https://myanimelist.net/store?_location=mal_h_m\">Manga
+        Store</a></li>\n            <li><a href=\"https://myanimelist.net/reviews.php?t=manga&amp;_location=mal_h_m\">Reviews</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/recommendations.php?s=recentrecs&amp;t=manga&amp;_location=mal_h_m\">Recommendations</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/forum?topicid=2070198&amp;_location=mal_h_m\">2023
+        Challenge</a></li>\n          </ul>\n        </li>\n        <li><a href=\"#\"
+        class=\"non-link\">Community</a>\n          <ul>\n            <li><a href=\"https://myanimelist.net/stacks?_location=mal_h_m\">Interest
+        Stacks</a></li>\n            <li><a href=\"https://myanimelist.net/forum/?_location=mal_h_m\">Forums</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/clubs.php?_location=mal_h_m\">Clubs</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/blog.php?_location=mal_h_m\">Blogs</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/users.php?_location=mal_h_m\">Users</a></li>\n
+        \         </ul>\n        </li>\n        <li class=\"small2\"><a href=\"#\"
+        class=\"non-link\">Industry</a>\n          <ul class=\"wider\">\n            <li><a
+        href=\"https://myanimelist.net/news?_location=mal_h_m\">News</a></li>\n            <li><a
+        href=\"https://myanimelist.net/featured?_location=mal_h_m\">Featured Articles</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/people.php?_location=mal_h_m\">People</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/character.php?_location=mal_h_m\">Characters</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/company?_location=mal_h_m\">Companies</a></li>\n
+        \           <li><a href=\"https://mxj.myanimelist.net/?_location=mal_h_m\">MAL×Japan</a></li>\n
+        \         </ul>\n        </li>\n        <li class=\"small\"><a href=\"#\"
+        class=\"non-link\">Watch</a>\n          <ul class=\"wider\">\n            <li><a
+        href=\"https://myanimelist.net/watch/episode?_location=mal_h_m\">Episode Videos</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/watch/promotion?_location=mal_h_m\">Anime
+        Trailers</a></li>\n          </ul>\n        </li>\n        <li class=\"smaller\"><a
+        href=\"#\" class=\"non-link\">Read</a>\n          <ul class=\"wider\">\n            <li><a
+        href=\"https://myanimelist.net/store?_location=mal_h_m\">Manga Store</a></li>\n
+        \         </ul>\n        </li>\n        <li class=\"smaller\"><a href=\"#\"
+        class=\"non-link\">Help</a>\n          <ul class=\"wide\">\n            <li><a
+        href=\"https://myanimelist.net/about.php?_location=mal_h_m\">About</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/about.php?go=support&amp;_location=mal_h_m\">Support</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/advertising?_location=mal_h_m\">Advertising</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/forum/?topicid=515949&amp;_location=mal_h_m\">FAQ</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/modules.php?go=report&amp;_location=mal_h_m\">Report</a></li>\n
+        \           <li><a href=\"https://myanimelist.net/staff?_location=mal_h_m\">Staff</a></li>\n
+        \           <li><a class=\"ga-click ga-impression\" data-ga-click-type=\"supporter-lp-menu\"
+        data-ga-impression-type=\"supporter-lp-menu\"\n              href=\"https://myanimelist.net/membership?_location=mal_h_m\">MAL
+        Supporter</a></li>\n          </ul>\n        </li>\n        \n            \n
+        \     </ul>\n    </div>  </div>                                                <div
+        id=\"contentWrapper\" >\n          <div>\n            <h1 class=\"h1\">404
+        Not Found</h1>          </div>\n          <div id=\"content\">\n\n  <div class=\"error404\"
+        title=\"This page doesn't exist.\">\n    <a href=\"https://myanimelist.net/\"
+        class=\"btn-home\">\n      <img class=\"inverse-if-dark\" src=\"https://cdn.myanimelist.net/images/error/404_image_transparent.png?v=170126\"
+        srcset=\"https://cdn.myanimelist.net/images/error/404_image_transparent_@2x.png?v=170126
+        2x\">\n    </a>\n    <p class=\"message\">This page doesn't exist.</p>\n  </div>\n\n</div>\n
+        \                                             </div>            <!--  control
+        container height -->\n            <div style=\"clear:both;\"></div>\n            <!--
+        end rightbody -->\n          \n                      \n\n                </div>\n
+        \   <div id=\"ad-skin-bg-right\" class=\"ad-skin-side-outer ad-skin-side-bg
+        bg-right\">\n    <div id=\"ad-skin-right\" class=\"ad-skin-side right\" style=\"display:
+        none;\">\n      <div id=\"ad-skin-right-absolute-block\">\n        <div id=\"ad-skin-right-fixed-block\"></div>\n
+        \     </div>\n    </div>\n  </div></div>\n                  \n<div class=\"footer-ranking\">\n
+        \ <div class=\"ranking-container\">\n          <div class=\"ranking-unit\">\n
+        \       <h3 class=\"title\"><a href=\"https://myanimelist.net/topanime.php\"
+        class=\"view_more fl-r\">More</a>Top Anime\n        </h3>\n        <ol>\n
+        \                     <li>\n              <span class=\"rank\">1</span>\n
+        \             <a href=\"https://myanimelist.net/anime/52991/Sousou_no_Frieren\">Sousou
+        no Frieren</a>\n            </li>\n                      <li>\n              <span
+        class=\"rank\">2</span>\n              <a href=\"https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood\">Fullmetal
+        Alchemist: Brotherhood</a>\n            </li>\n                      <li>\n
+        \             <span class=\"rank\">3</span>\n              <a href=\"https://myanimelist.net/anime/9253/Steins_Gate\">Steins;Gate</a>\n
+        \           </li>\n                      <li>\n              <span class=\"rank\">4</span>\n
+        \             <a href=\"https://myanimelist.net/anime/28977/Gintama°\">Gintama°</a>\n
+        \           </li>\n                      <li>\n              <span class=\"rank\">5</span>\n
+        \             <a href=\"https://myanimelist.net/anime/38524/Shingeki_no_Kyojin_Season_3_Part_2\">Shingeki
+        no Kyojin Season 3 Part 2</a>\n            </li>\n                  </ol>\n
+        \     </div>\n          <div class=\"ranking-unit\">\n        <h3 class=\"title\"><a
+        href=\"https://myanimelist.net/topanime.php?type=airing\" class=\"view_more
+        fl-r\">More</a>Top Airing Anime\n        </h3>\n        <ol>\n                      <li>\n
+        \             <span class=\"rank\">1</span>\n              <a href=\"https://myanimelist.net/anime/52991/Sousou_no_Frieren\">Sousou
+        no Frieren</a>\n            </li>\n                      <li>\n              <span
+        class=\"rank\">2</span>\n              <a href=\"https://myanimelist.net/anime/51009/Jujutsu_Kaisen_2nd_Season\">Jujutsu
+        Kaisen 2nd Season</a>\n            </li>\n                      <li>\n              <span
+        class=\"rank\">3</span>\n              <a href=\"https://myanimelist.net/anime/54492/Kusuriya_no_Hitorigoto\">Kusuriya
+        no Hitorigoto</a>\n            </li>\n                      <li>\n              <span
+        class=\"rank\">4</span>\n              <a href=\"https://myanimelist.net/anime/50399/Tian_Guan_Cifu_Er\">Tian
+        Guan Cifu Er</a>\n            </li>\n                      <li>\n              <span
+        class=\"rank\">5</span>\n              <a href=\"https://myanimelist.net/anime/21/One_Piece\">One
+        Piece</a>\n            </li>\n                  </ol>\n      </div>\n          <div
+        class=\"ranking-unit\">\n        <h3 class=\"title\"><a href=\"https://myanimelist.net/character.php\"
+        class=\"view_more fl-r\">More</a>Most Popular Characters\n        </h3>\n
+        \       <ol>\n                      <li>\n              <span class=\"rank\">1</span>\n
+        \             <a href=\"https://myanimelist.net/character/417/Lelouch_Lamperouge\">Lamperouge,
+        Lelouch</a>\n            </li>\n                      <li>\n              <span
+        class=\"rank\">2</span>\n              <a href=\"https://myanimelist.net/character/45627/Levi\">Levi</a>\n
+        \           </li>\n                      <li>\n              <span class=\"rank\">3</span>\n
+        \             <a href=\"https://myanimelist.net/character/40/Luffy_Monkey_D\">Monkey
+        D., Luffy</a>\n            </li>\n                      <li>\n              <span
+        class=\"rank\">4</span>\n              <a href=\"https://myanimelist.net/character/71/L_Lawliet\">Lawliet,
+        L</a>\n            </li>\n                      <li>\n              <span
+        class=\"rank\">5</span>\n              <a href=\"https://myanimelist.net/character/62/Zoro_Roronoa\">Roronoa,
+        Zoro</a>\n            </li>\n                  </ol>\n      </div>\n      </div>\n</div>\n
+        \         \n          \n\n<style>\n  .bottom-bar {\n  font-size: 1.2em;\n}\n</style>\n\n<script>\n
+        \ $(function(){\n    var headerHeight = $('#headerSmall').outerHeight();\n
+        \   const signup = $('.top_signup .signup');\n    if ( signup.exists() ) {\n
+        \     headerHeight =  $('.top_signup').position().top + $('.top_signup').height();\n
+        \   }\n    $('.bottom-bar').css({'height': '0'});\n\n          $(window).scroll(function(){\n
+        \       if ($(this).scrollTop() > headerHeight\n          & !$('#gdpr-modal-bottom').is(':visible')\n
+        \         & $(window).height() > 672\n        ) {\n          $('.bottom-bar').css({'height':
+        '73px'});\n          $('#tbl-next-up').css({'bottom': '73px'});\n        }
+        else {\n          $('.bottom-bar').css({'height': '0'});\n          $('#tbl-next-up').css({'bottom':
+        '0'});\n        }\n      });\n      });\n</script>\n\n<div class=\"bottom-bar
+        ga-impression\" data-ga-impression-type=\"bottom_bar\">\n  <div class=\"inner\">\n
+        \   <div><strong>It’s time to ditch the text file.</strong><br>\nKeep track
+        of your anime easily by creating your own list.</div>\n          <div>\n                              <a
+        class=\"btn primary ga-click\" href=\"https://myanimelist.net/register.php?from=%2Ferror%2F404\"
+        data-ga-click-type=\"bottom_bar_signup_button\">Sign Up</a>\n                                                <a
+        class=\"btn secondary ga-click\" href=\"https://myanimelist.net/login.php?from=%2Ferror%2F404\"
+        data-ga-click-type=\"bottom_bar_login_button\">Login</a>\n                        </div>\n
+        \     </div>\n  <div class=\"border\"></div>\n</div>\n\n\n<footer>\n  <div
+        id=\"footer-block\">\n\n    <div class=\"footer-link-icon-block\">\n            <div
+        class=\"footer-social-media ac\">\n        <a target=\"_blank\" class=\"icon-footer-sns\"
+        title=\"Follow @myanimelist on Facebook\" href=\"https://www.facebook.com/OfficialMyAnimeList\"
+        rel=\"noreferrer\"><i class=\"fa-brands fa-fw fa-facebook-square\"></i></a>\n
+        \       <a target=\"_blank\" class=\"icon-footer-sns\" title=\"Follow @myanimelist
+        on Twitter\" href=\"https://twitter.com/myanimelist\" rel=\"noreferrer\"><i
+        class=\"fa-brands fa-fw fa-twitter-square\"></i></a>\n        <a target=\"_blank\"
+        class=\"icon-footer-sns\" title=\"Follow @myanimelist on Instagram\" href=\"https://www.instagram.com/myanimelistofficial/\"
+        rel=\"noreferrer\"><i class=\"fa-brands fa-fw fa-instagram-square\"></i></a>\n
+        \       <a target=\"_blank\" class=\"icon-footer-sns\" title=\"Join Discord
+        Chat\" href=\"https://discord.gg/myanimelist\" rel=\"noreferrer\"><i class=\"fa-brands
+        fa-fw fa-discord\"></i></a>\n      </div>\n\n            <div class=\"footer-app
+        ac\"><a target=\"_blank\" class=\"app-button appstore-button\" href=\"https://apps.apple.com/us/app/myanimelist-official/id1469330778?md=8&amp;ct=pc_footer\"
+        rel=\"noreferrer\">\n          <img src=\"https://cdn.myanimelist.net/images/appli/badge_iOS.png\"
+        alt=\"App Store\">\n        </a><a target=\"_blank\" class=\"app-button googleplay-button\"
+        href=\"https://play.google.com/store/apps/details?utm_campaign=pc_footer&amp;id=net.myanimelist.app&amp;utm_source=mal\"
+        rel=\"noreferrer\">\n          <img src=\"https://cdn.myanimelist.net/images/appli/badge_googleplay.png\"
+        alt=\"Google Play\">\n        </a>\n      </div>\n\n    </div>\n\n    <div
+        class=\"footer-link-block\">\n      <p class=\"footer-link home di-ib\">\n
+        \       <a href=\"https://myanimelist.net/\">Home</a>\n      </p>\n      <p
+        class=\"footer-link di-ib\">\n        <a href=\"https://myanimelist.net/about.php\">About</a>\n
+        \       <a href=\"https://myanimelist.net/pressroom\">Press Room</a>\n        <a
+        href=\"https://myanimelist.net/about.php?go=contact\">Support</a>\n        <a
+        href=\"https://myanimelist.net/advertising\">Advertising</a>\n        <a href=\"https://myanimelist.net/forum/?topicid=515949\">FAQ</a>\n
+        \       <a href=\"https://myanimelist.net/about/terms_of_use\">Terms</a>\n
+        \       <a href=\"https://myanimelist.net/about/privacy_policy\">Privacy</a>\n
+        \       <a href=\"#/\" class=\"cmp-gdpr-only\">Privacy Settings</a>\n        <a
+        href=\"#/\" class=\"cmp-ccpa-only\">Do Not Sell My Personal Information</a>\n
+        \       <a href=\"https://myanimelist.net/about/cookie_policy\">Cookie</a>\n
+        \       <a href=\"https://myanimelist.net/about/notice_at_collection\">Notice
+        at Collection</a>\n        <a href=\"https://myanimelist.net/about/sitemap\">Sitemap</a>\n
+        \     </p>\n            <p class=\"footer-link login di-ib\">\n        <a
+        href=\"https://myanimelist.net/login.php?from=%2Ferror%2F404\" id=\"malLogin\"
+        rel=\"nofollow\">Login</a>\n        <a href=\"https://myanimelist.net/register.php?from=%2Ferror%2F404\">Sign
+        Up</a>\n      </p>\n          </div>\n\n    <div class=\"footer-link-icon-block\">\n
+        \           <div class=\"footer-recommended ac\">\n        <a target=\"_blank\"
+        class=\"icon-recommended icon-tokyo-otaku-mode\" href=\"http://otakumode.com/fb/5aO\"
+        rel=\"noopener\">Tokyo Otaku Mode</a>\n        <a target=\"_blank\" class=\"icon-recommended
+        icon-honeyfeed\" href=\"https://www.honeyfeed.fm/\" rel=\"noopener\">Honeyfeed</a>\n
+        \       <a target=\"_blank\" class=\"icon-recommended icon-manga-store\" href=\"https://myanimelist.net/store?_location=mal_f_m\">Manga
+        Store</a>\n        <a target=\"_blank\" class=\"icon-recommended icon-otsukai\"
+        href=\"https://otsukai.com/\">Otsukai</a>\n      </div>\n    </div>\n\n        \n
+        \   <div id=\"copyright\">\n      MyAnimeList.net is a property of MyAnimeList
+        Co.,Ltd. &copy;2023 All Rights Reserved.\n    </div>\n    <div id=\"recaptcha-terms\">\n
+        \     This site is protected by reCAPTCHA and the Google <a href=\"https://policies.google.com/privacy\"
+        target=\"_blank\" rel=\"noopener noreferrer\">Privacy Policy</a> and <a href=\"https://policies.google.com/terms\"
+        target=\"_blank\" rel=\"noopener noreferrer\">Terms of Service</a> apply.\n
+        \   </div>\n  </div>\n</footer>\n    \n        <script src='//www.googletagservices.com/tag/js/gpt.js'
+        async=\"async\"></script>\n<script>\n    var googletag = googletag || {};\n
+        \   googletag.cmd = googletag.cmd || [];\n</script>\n\n<script async>\n  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n
+        \ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n
+        \ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n
+        \ })(window,document,'script','//www.google-analytics.com/analytics.js','ga')\n\n
+        \ ga('create', 'UA-369102-1', 'auto')\n  ga('set', 'anonymizeIp', true)\n
+        \ ga('require', 'linkid') // Enhanced Link Attribution\n    ga('set', 'dimension1',
+        'guest')\n    ga('send', 'pageview')\n</script> <script>\n    let appearanceModeString
+        = '';\n  var clientDarkMode = window.matchMedia(\"(prefers-color-scheme:dark)\").matches;\n
+        \ const appearanceMal = 'none';\n  const appearanceClient = clientDarkMode
+        ? 'dark' : 'light';\n  appearanceModeString = `${appearanceMal}-${appearanceClient}`;\n</script>\n<script>\n
+        \ window.dataLayer = window.dataLayer || [];\n  dataLayer.push({\n    'anime_temporary_list_num':
+        0,\n    'manga_temporary_list_num': 0,\n    'is_banned': 0,\n    'banned_type':
+        '',\n    'banned_reason': '',\n    'appearance': appearanceModeString\n  });\n</script>\n<script
+        type=\"text/javascript\">\n  window.MAL.SLVK = \"g4OvMLVOmEI3J8u7dt8f8+mAuualsqCo\";\n
+        \ window.MAL.CDN_URL = \"https://cdn.myanimelist.net\";\n\n  window.MAL.CURRENT_TUTORIAL_STEP_ID
+        = null;\n  window.MAL.USER_NAME = \"\"\n  window.MAL.FACEBOOK.APP_ID = \"360769957454434\"\n
+        \ window.MAL.FACEBOOK.API_VERSION = \"v2.12\"\n  \n  window.MAL.GTM_ID = \"WL4QW3G\"\n\n
+        \ window.MAL.GDPR_COOKIE_KEY = \"m_gdpr_mdl_20230227\"\n</script>\n\n<noscript><iframe
+        src=\"https://www.googletagmanager.com/ns.html?id=GTM-WL4QW3G\" height=\"0\"
+        width=\"0\" style=\"display:none;visibility:hidden\"></iframe></noscript>\n\n
+        \   </body>\n</html>\n"
+  recorded_at: Tue, 22 Sep 2020 00:00:00 GMT
+recorded_with: VCR 6.2.0
