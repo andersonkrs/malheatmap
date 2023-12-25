@@ -1,7 +1,7 @@
 module Instrumentation
   module_function
 
-  def instrument(**options, &)
-    Skylight.instrument(**options, &)
+  def instrument(**, &)
+    Skylight.instrument(**, &)
   end
 end

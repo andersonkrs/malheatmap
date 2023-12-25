@@ -131,7 +131,7 @@ class CalendarComponentTest < ViewComponent::TestCase
 
     loop do
       component = render_inline(CalendarComponent.new(activities_amount_per_day: group_activities(dates: range)))
-      widths = component.css(".calendar > .months > .month/@data-width").map(&:value).map(&:to_i)
+      widths = component.css(".calendar > .months > .month/@data-width").map { |x| x.value.to_i }
       weeks_size = (range.count / 7.0).ceil
 
       assert_equal weeks_size, widths.sum
