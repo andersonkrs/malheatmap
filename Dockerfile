@@ -23,7 +23,7 @@ RUN apt-get update -qq && \
     apt-get install -y build-essential git libpq-dev pkg-config redis
 
 # Install application gems
-COPY Gemfile Gemfile.lock ./
+COPY .ruby-version Gemfile Gemfile.lock ./
 RUN bundle install && bundle exec bootsnap precompile --gemfile
 
 # Copy application code
