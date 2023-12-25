@@ -1,44 +1,36 @@
+postgres_defaults: &postgres_defaults
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 7) %>
+  host: <%= ENV.fetch("PGHOST", "localhost") %>
+  port: <%= ENV.fetch("PGPORT", 5432) %>
+  username: <%= ENV.fetch("PGUSER", "postgres") %>
+  password: <%= ENV.fetch("PGPASSWORD", "postgres") %>
+  migrations_paths: "db/primary/migrate"
+
+sqlite_defaults: &sqlite_defaults
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
+  migrations_paths: "db/cache/migrate"
+
 development:
   primary:
-    adapter: postgresql
-    encoding: unicode
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS", 7) %>
-    host: <%= ENV.fetch("PGHOST", "localhost") %>
-    port: <%= ENV.fetch("PGPORT", 5432) %>
-    username: <%= ENV.fetch("PGUSER", "postgres") %>
-    password: <%= ENV.fetch("PGPASSWORD", "postgres") %>
+    <<: *postgres_defaults
     database: malheatmap_development
-    migrations_paths: "db/primary/migrate"
-
   cache:
-    adapter: sqlite3
-    database: "db/cache/development.sqlite3"
-    pool: 5
-    timeout: 5000
-    migrations_paths: "db/cache/migrate"
+    <<: *sqlite_defaults
+    database: "storage/cache_development.sqlite3"
 
 test:
   primary:
-    adapter: postgresql
-    encoding: unicode
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS", 7) %>
-    host: <%= ENV.fetch("PGHOST", "localhost") %>
-    port: <%= ENV.fetch("PGPORT", 5432) %>
-    username: <%= ENV.fetch("PGUSER", "postgres") %>
-    password: <%= ENV.fetch("PGPASSWORD", "postgres") %>
+    <<: *postgres_defaults
     database: malheatmap_test
-    migrations_paths: "db/primary/migrate"
 
 production:
   primary:
-    adapter: postgresql
-    encoding: unicode
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS", 7) %>
+    <<: *postgres_defaults
     url: <%= ENV["DATABASE_URL"] %>
-    migrations_paths: "db/primary/migrate"
   cache:
-    adapter: sqlite3
-    database: "db/cache/production.sqlite3"
-    pool: 5
-    timeout: 5000
-    migrations_paths: "db/cache/migrate"
+    <<: *sqlite_defaults
+    database: "storage/cache_production.sqlite3"
