@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-19 13:52-0300\n"
-"PO-Revision-Date: 2023-03-19 13:52-0300\n"
+"POT-Creation-Date: 2023-12-25 10:47-0300\n"
+"PO-Revision-Date: 2023-12-25 10:47-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -25,6 +25,9 @@ msgid "12+ episodes/chapters watched/read on date"
 msgstr ""
 
 msgid "About"
+msgstr ""
+
+msgid "Check out %{username}'s profile on MAL Heatmap"
 msgstr ""
 
 msgid "Faq"
@@ -48,6 +51,9 @@ msgstr ""
 msgid "Log in with your <a target='_blank' rel='noopener noreferrer' href='https://myanimelist.net'>MyAnimeList</a> account:"
 msgstr ""
 
+msgid "MAL Heatmap"
+msgstr ""
+
 msgid "More"
 msgstr ""
 
@@ -61,6 +67,9 @@ msgid "None episodes/chapters watched/read on date"
 msgstr ""
 
 msgid "Sign out"
+msgstr ""
+
+msgid "User Avatar"
 msgstr ""
 
 msgid "one active user!"

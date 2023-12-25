@@ -26,6 +26,9 @@ msgstr ""
 msgid "About"
 msgstr ""
 
+msgid "Check out %{username}'s profile on MAL Heatmap"
+msgstr ""
+
 msgid "Faq"
 msgstr ""
 
@@ -47,6 +50,9 @@ msgstr ""
 msgid "Log in with your <a target='_blank' rel='noopener noreferrer' href='https://myanimelist.net'>MyAnimeList</a> account:"
 msgstr ""
 
+msgid "MAL Heatmap"
+msgstr ""
+
 msgid "More"
 msgstr ""
 
@@ -60,6 +66,9 @@ msgid "None episodes/chapters watched/read on date"
 msgstr ""
 
 msgid "Sign out"
+msgstr ""
+
+msgid "User Avatar"
 msgstr ""
 
 msgid "one active user!"

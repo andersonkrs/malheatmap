@@ -15,7 +15,6 @@ gem "puma"
 gem "rails", github: "rails/rails", branch: "main"
 gem "sidekiq"
 gem "sidekiq-scheduler"
-gem "slim-rails" # TODO: Abandon usage of slim and remove this gem
 gem "view_component"
 gem "wheretz"
 
@@ -53,7 +52,6 @@ group :development, :test do
   gem "debug"
   gem "rubocop-performance"
   gem "rubocop-rails"
-  gem "ruby_parser", require: false
 end
 
 group :development do
