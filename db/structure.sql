@@ -198,7 +198,7 @@ ALTER SEQUENCE public.active_storage_variant_records_id_seq OWNED BY public.acti
 --
 
 CREATE TABLE public.activities (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     user_id uuid NOT NULL,
     item_id uuid NOT NULL,
     date date NOT NULL,
@@ -225,7 +225,7 @@ CREATE TABLE public.ar_internal_metadata (
 --
 
 CREATE TABLE public.crawling_log_entries (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     raw_data jsonb,
     checksum character varying,
     failure_message character varying,
@@ -242,7 +242,7 @@ CREATE TABLE public.crawling_log_entries (
 --
 
 CREATE TABLE public.entries (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     "timestamp" timestamp without time zone NOT NULL,
     amount integer NOT NULL,
     user_id uuid NOT NULL,
@@ -257,7 +257,7 @@ CREATE TABLE public.entries (
 --
 
 CREATE TABLE public.items (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     mal_id integer NOT NULL,
     name character varying NOT NULL,
     created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -280,7 +280,7 @@ CREATE TABLE public.schema_migrations (
 --
 
 CREATE TABLE public.subscriptions (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     username character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -295,7 +295,7 @@ CREATE TABLE public.subscriptions (
 --
 
 CREATE TABLE public.users (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     username public.citext NOT NULL,
     avatar_url character varying,
     checksum character varying,

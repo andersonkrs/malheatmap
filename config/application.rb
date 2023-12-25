@@ -41,7 +41,7 @@ module MalHeatmap
     # config.exceptions_app = routes
 
     config.redis = config_for(:redis)
-    config.cache_store = :redis_cache_store, config_for(:redis)
+    config.cache_store = :solid_cache_store
     config.session_store :cookie_store, expire_after: 1.week
 
     config.crawler = config_for(:crawler)
@@ -55,5 +55,8 @@ module MalHeatmap
 
     config.assets.compile = true
     config.assets.paths << Rails.root.join("vendor/assets")
+
+    config.solid_cache.connects_to = { database: { writing: :cache } }
+    config.solid_cache.max_age = 30.days.to_i
   end
 end
