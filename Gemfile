@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby file: ".ruby-version"
+ruby file: ".tool-versions"
 
 gem "rails", github: "rails/rails", branch: "main"
 
