@@ -23,7 +23,7 @@ module MalHeatmap
     config.autoload_paths << Rails.root.join("lib")
 
     config.active_record.default_timezone = :utc
-    config.active_record.schema_format = :sql
+    config.active_record.schema_format = :ruby
 
     config.generators.orm :active_record, primary_key_type: :bigint
     config.generators.test_framework :test_unit, fixture: true
@@ -38,25 +38,18 @@ module MalHeatmap
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
 
-    # config.exceptions_app = routes
-
-    config.redis = config_for(:redis)
+    config.redis = config_for("redis/shared")
     config.cache_store = :solid_cache_store
-    config.session_store :cookie_store, expire_after: 1.week
+    config.session_store :cookie_store, expire_after: 1.week, key: "_malheatmap_session_v1"
 
     config.crawler = config_for(:crawler)
     config.analytics = config_for(:analytics)
     config.geocoder = config_for(:geocoder)
     config.mal_api = config_for(:mal_api)
 
-    # config.skylight.probes += %w[redis]
-
     config.active_storage.service = :local
 
     config.assets.compile = true
     config.assets.paths << Rails.root.join("vendor/assets")
-
-    config.solid_cache.connects_to = { database: { writing: :cache } }
-    config.solid_cache.max_age = 30.days.to_i
   end
 end

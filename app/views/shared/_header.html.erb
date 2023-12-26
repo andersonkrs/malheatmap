@@ -1,10 +1,17 @@
-<div class="column is-full has-text-centered">
+<%# locals: (size: "lg") -%>
+
+<div class="column is-full has-text-centered <%= class_names("mt-2": size == "sm") %>">
   <%= link_to root_path do %>
-    <span class="icon is-large">
-      <i class="fas fa-4x fa-fire has-text-primary"></i>
+    <span class="icon <%= class_names("is-large": size == "lg", "is-small": size == "sm") %>">
+      <i class="fas fa-fire has-text-primary <%= class_names("fa-4x": size == "lg", "fa-3x": size == "sm") %>"></i>
     </span>
   <% end %>
-  <h1 class="title has-text-centered">
-    <%= link_to t("app.title"), root_path, class: "has-text-black-ter" %>
-  </h1>
+</div>
+<div class="column is-full has-text-centered <%= class_names("mt-2": size == "sm") %>">
+  <% case size
+     when "sm" %>
+    <h3 class="title is-3"><%= link_to _("MAL Heatmap"), root_path, class: "has-text-black-ter" %></h3>
+  <% when "lg" %>
+    <h1 class="title"><%= link_to _("MAL Heatmap"), root_path, class: "has-text-black-ter" %></h1>
+  <% end %>
 </div>

@@ -1,0 +1,31 @@
+<%# locals: (user:, calendar:) -%>
+
+<%= turbo_frame_tag(dom_id(user, :calendar), class: "column is-full") do %>
+  <% cache [user, calendar.year, calendar.activities] do %>
+    <div class="columns is-multiline bordered" style="height: 200px !important;">
+      <div class="column is-full">
+        <div class="calendar-container has-text-centered">
+          <%= render CalendarComponent.new(activities_amount_per_day: calendar.activities_amount_sum_per_day) %>
+        </div>
+      </div>
+      <div class="column is-full">
+        <div class="columns legend-container is-mobile">
+          <div class="column has-text-left">
+            <%= link_to _("How does it work?"), faq_path %>
+          </div>
+          <div class="column has-text-right">
+            <span><%= _("Less") %></span>
+            <ul class="legend">
+              <li class="square" data-level="0" title="<%= _("None episodes/chapters watched/read on date") %>"></li>
+              <li class="square" data-level="1" title="<%= _("From 1 to 4 episodes/chapters watched/read on date") %>"></li>
+              <li class="square" data-level="2" title="<%= _("From 5 to 8 episodes/chapters watched/read on date") %>"></li>
+              <li class="square" data-level="3" title="<%= _("From 9 to 12 episodes/chapters watched/read on date") %>"></li>
+              <li class="square" data-level="4" title="<%= _("12+ episodes/chapters watched/read on date") %>"></li>
+            </ul>
+            <span><%= _("More") %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

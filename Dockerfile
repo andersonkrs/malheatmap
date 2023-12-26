@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1
 
-# Make sure it matches the Ruby version in .ruby-version and Gemfile
+# Make sure it matches the Ruby version in .tool-versions and Gemfile
 ARG RUBY_VERSION=3.3.0
 FROM ruby:$RUBY_VERSION-slim as base
 
@@ -12,15 +12,15 @@ ENV RAILS_ENV="production" \
     BUNDLE_WITHOUT="development:test" \
     RAILS_SERVE_STATIC_FILES="true" \
     RAILS_LOG_TO_STDOUT="true" \
-    RUBY_YJIT_ENABLE="1" \
-    RUBYOPT="--yjit"
+    FERRUM_DEFAULT_TIMEOUT="15" \
+    FERRUM_PROCESS_TIMEOUT="30"
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
 # Install packages need to build gems
 RUN apt-get update -qq && \
-    apt-get install -y build-essential git libpq-dev pkg-config redis
+    apt-get install -y build-essential git pkg-config redis
 
 # Install application gems
 COPY .tool-versions Gemfile Gemfile.lock ./
@@ -40,23 +40,22 @@ FROM base
 
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl \
+                                               wget \
+                                               iputils-ping \
                                                gnupg \
                                                gnupg2 \
                                                gnupg1 \
                                                libvips \
                                                imagemagick \
-                                               postgresql-client \
-                                               redis \
-                                               libjemalloc2 && \
+                                               redis && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
-RUN echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get -y update -qq && \
-    apt-get -y install google-chrome-stable && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+ENV CHROME_VERSION="119.0.6045.199-1"
 
-ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2
+RUN wget --no-check-certificate https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb && \
+    (dpkg -i google-chrome-stable_${CHROME_VERSION}_amd64.deb || true) && \
+    apt-get update -qq && \
+    apt-get -y -f install
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle

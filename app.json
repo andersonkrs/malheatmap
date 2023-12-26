@@ -14,7 +14,7 @@
   },
   "cron": [
     {
-      "command": "psql $DATABASE_URL -e -c 'VACUUM FULL'",
+      "command": "sqlite3 storage/malheatmap_primary_production.sqlite3 'VACUUM;'",
       "schedule": "@daily"
     }
   ]

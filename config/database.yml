@@ -1,36 +1,30 @@
-postgres_defaults: &postgres_defaults
-  adapter: postgresql
-  encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 7) %>
-  host: <%= ENV.fetch("PGHOST", "localhost") %>
-  port: <%= ENV.fetch("PGPORT", 5432) %>
-  username: <%= ENV.fetch("PGUSER", "postgres") %>
-  password: <%= ENV.fetch("PGPASSWORD", "postgres") %>
-  migrations_paths: "db/primary/migrate"
-
 sqlite_defaults: &sqlite_defaults
   adapter: sqlite3
   pool: 5
   timeout: 5000
-  migrations_paths: "db/cache/migrate"
 
 development:
   primary:
-    <<: *postgres_defaults
-    database: malheatmap_development
+    <<: *sqlite_defaults
+    database: "storage/malheatmap_primary_development.sqlite3"
+    migrations_paths: "db/migrate"
   cache:
     <<: *sqlite_defaults
-    database: "storage/cache_development.sqlite3"
+    database: "storage/malheatmap_cache_development.sqlite3"
+    migrations_paths: "db/cache/migrate"
 
 test:
   primary:
-    <<: *postgres_defaults
-    database: malheatmap_test
+    <<: *sqlite_defaults
+    database: "storage/malheatmap_primary_test.sqlite3"
+    migrations_paths: "db/migrate"
 
 production:
   primary:
-    <<: *postgres_defaults
-    url: <%= ENV["DATABASE_URL"] %>
+    <<: *sqlite_defaults
+    database: "storage/malheatmap_primary_production.sqlite3"
+    migrations_paths: "db/migrate"
   cache:
     <<: *sqlite_defaults
-    database: "storage/cache_production.sqlite3"
+    database: "storage/malheatmap_cache_production.sqlite3"
+    migrations_paths: "db/cache/migrate"

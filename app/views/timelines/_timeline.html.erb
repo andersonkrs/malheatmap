@@ -1,0 +1,22 @@
+<%# locals: (user:, calendar:) -%>
+
+<%= turbo_frame_tag(dom_id(user, :timeline), class: "column is-10") do %>
+  <% cache [user, calendar.activities] do %>
+    <% if calendar.activities.any? %>
+      <div class="timeline-container">
+        <%= render TimelineComponent.new(activities: calendar.activities.ordered_as_timeline) %>
+      </div>
+    <% else %>
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <article class="message is-warning">
+            <div class="message-body">
+              <%= sanitize(_("<strong>%{username}</strong> does not have any activity in <strong>%{year}</strong>.") % { username: user.username, year: calendar.year }) %>
+            </div>
+          </article>
+          <%= image_tag "no_activity.png", style: "height: 200px", class: "mt-4" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

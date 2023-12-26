@@ -1,0 +1,13 @@
+<%# locals: (user:, selected_year:) -%>
+
+<%- years = user.calendars.active_years.to_a.sort.reverse %>
+
+<div class="aside menu years-menu">
+  <ul class="menu-list">
+    <% years.each do |year| %>
+      <li class="has-text-centered">
+        <%= link_to year, user_path(user, year: year), class: class_names("is-active": selected_year == year), data: { turbo_frame: dom_id(user) } %>
+      </li>
+    <% end %>
+  </ul>
+</div>

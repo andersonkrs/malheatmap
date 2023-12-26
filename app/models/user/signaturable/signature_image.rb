@@ -14,11 +14,23 @@ class User
         end
       end
 
+      def generate_later
+        User::Signaturable::SignatureImage::GenerateJob.perform_later(user)
+      end
+
       def obsolete?
         return true unless user.signature.attached?
         return true if user.saved_change_to_checksum?
 
         user.signature.blob.created_at.in_time_zone.to_date != Time.zone.today
+      end
+
+      class GenerateJob < ApplicationJob
+        queue_as :default
+
+        def perform(user)
+          user.signature_image.generate
+        end
       end
 
       private
@@ -28,18 +40,17 @@ class User
       def generate_from_activities
         calendar_html = render_calendar_html
 
-        html_file = Tempfile.new(%w[signature .html])
-        html_file.write(calendar_html)
-        html_file.close
+        Tempfile.open(%w[signature .html]) do |html_file|
+          html_file.write(calendar_html)
 
-        screenshot_file = capture_html_screenshot(html_file)
-        screenshot_file = resize_to_mal_max_size(screenshot_file)
-
-        user.signature.attach(io: screenshot_file, filename: "#{user.username}.png")
+          capture_html_screenshot(html_file)
+            .then { |screenshot| resize_to_mal_max_size(screenshot) }
+            .then { |screenshot| user.signature.attach(io: screenshot, filename: "#{user.username}.png") }
+        end
       end
 
       def render_calendar_html
-        activities_amount_per_day = user.calendars[Time.current.year].activities_amount_sum_per_day
+        activities_amount_per_day = user.calendars.current_year.activities_amount_sum_per_day
 
         ApplicationController.render("users/signature", locals: { activities_amount_per_day: }, layout: nil)
       end
@@ -57,19 +68,6 @@ class User
 
       def resize_to_mal_max_size(screenshot_file)
         ImageProcessing::MiniMagick.source(screenshot_file).resize_to_limit(600, 150).call
-      end
-
-      def with_retries(exception_class:)
-        attempts = 0
-        begin
-          yield
-        rescue StandardError => error
-          raise error if !error.is_a?(exception_class) || attempts == 3
-
-          sleep(1)
-          attempts += 1
-          retry
-        end
       end
     end
   end

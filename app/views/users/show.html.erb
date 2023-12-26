@@ -1,26 +1,18 @@
 <% page_title @user.username %>
 <% meta_description _("Check out %{username}'s profile on MAL Heatmap") % { username: @user.username } %>
 <% content_for :meta do %>
-  <meta name="tracker-source" content="User Profile" />
+  <meta name="tracker-source" content="User Profile"/>
 <% end %>
 
-<div class="is-align-self-center">
-  <div class="columns is-centered">
-    <div class="column is-10">
-      <div class="columns is-multiline is-gapless">
-        <div class="column is-full has-text-centered mt-2">
-          <%= link_to(root_path) do %>
-            <span class="icon is-small">
-              <i class="fas fa-3x fa-fire has-text-primary"></i>
-            </span>
-          <% end %>
-        </div>
-        <div class="column is-full has-text-centered mt-2">
-          <h3 class="title is-3">
-            <%= link_to _("MAL Heatmap"), root_path, class: "has-text-black-ter" %>
-          </h3>
-        </div>
-        <div class="columns is-horizontal is-centered mt-6 is-variable is-6">
+<%= turbo_stream_from @user %>
+
+<div class="columns is-centered">
+  <div class="column is-12">
+    <div class="columns is-multiline is-gapless">
+      <%= render partial: "shared/header", locals: { size: "sm" } %>
+
+      <div class="column is-full">
+        <div class="columns is-horizontal is-centered mt-6 is-variable">
           <% if signed_in? %>
             <div class="column is-3">
               <%= render partial: "users/side_menu" %>
@@ -28,34 +20,13 @@
           <% end %>
 
           <div class="column is-9">
-            <div class="columns is-multiline">
-              <% cache @user do %>
-                <div class="column is-full">
-                  <article class="media">
-                    <figure class="user-avatar media-left">
-                      <p class="image is-96x96">
-                        <img src="<%= @user.avatar_url %>" alt="<%= _("User Avatar") %>">
-                      </p>
-                    </figure>
-                    <div class="media-content">
-                      <p>
-                        <%= link_to(profile_url(@user.username), target: "_blank", rel: "noopener noreferrer", class: "is-size-4") do %>
-                          <%= @user.username %>
-                        <% end %>
-                      </p>
-                      <div class="bb-code pt-3">
-                        <%= render partial: "users/bb_code" %>
-                      </div>
-                    </div>
-                  </article>
-                </div>
+            <%= turbo_frame_tag dom_id(@user) do %>
+              <% if show_waiting_mal_sync? %>
+                <%= render partial: "users/waiting_mal_sync", locals: { user: @user } %>
+              <% else %>
+                <%= render partial: "users/user", locals: { user: @user, selected_year: selected_year } %>
               <% end %>
-              <div class="column is-full">
-                <%= turbo_frame_tag dom_id(@user, "activities") do %>
-                  <%= render partial: "users/activities", locals: { user: @user, calendar: @calendar, selected_year: @selected_year } %>
-                <% end %>
-              </div>
-            </div>
+            <% end %>
           </div>
         </div>
       </div>

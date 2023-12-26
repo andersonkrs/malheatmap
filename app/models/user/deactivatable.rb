@@ -10,6 +10,8 @@ class User
       deactivated_at.present?
     end
 
+    def active? = !deactivated?
+
     def schedule_deactivation
       User::Deactivatable::DeactivationJob.set(wait_until: DEACTIVATION_BUFFER.from_now.noon).perform_later(
         id,

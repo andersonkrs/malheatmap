@@ -8,9 +8,10 @@ Rails.application.routes.draw do
   delete "/sessions", to: "sessions#destroy", as: "destroy_session"
   get "/sessions/callback", to: "sessions#callback", as: "oauth_callback"
 
-  resources :subscriptions, only: %i[create index show]
   resources :users, only: :show, param: :username do
     resource :signature, only: :show, on: :member
+    resources :calendars, only: :show, on: :member, param: "year"
+    resources :timelines, only: :show, on: :member, param: "year"
   end
 
   get "/about", to: "application#about", as: "about"

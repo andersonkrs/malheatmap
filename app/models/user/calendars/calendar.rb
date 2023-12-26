@@ -17,6 +17,10 @@ class User
           end
       end
 
+      def to_param
+        year.to_s
+      end
+
       def activities
         user.activities.where(date: dates)
       end

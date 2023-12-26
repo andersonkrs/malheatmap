@@ -7,7 +7,7 @@
     <div class="column is-full">
       <div class="columns form-container is-multiline is-centered">
         <div class="column is-half-desktop">
-          <%= form_with url: create_session_path, method: "post", data: {  turbo: false } do |form| %>
+          <%= form_with url: create_session_path, method: "post", data: { turbo: false } do |form| %>
             <div class="field pt-4 has-text-centered">
               <%= form.label :username do %>
                 <%= _("Log in with your <a target='_blank' rel='noopener noreferrer' href='https://myanimelist.net'>MyAnimeList</a> account:").html_safe %>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="field pt-4 has-text-centered">
-              <% user_count = User.count %>
+              <% user_count = User.active.count %>
               <p><i><%= n_("one active user!", "%{n} active users!", user_count) % { n: user_count } %></i></p>
             </div>
           <% end %>

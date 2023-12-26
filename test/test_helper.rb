@@ -28,15 +28,13 @@ module ActiveSupport
     include ActiveJob::TestHelper
     include ActionCable::TestHelper
 
-    parallelize threshold: 10
-
     fixtures :all
 
     def render(...)
       ApplicationController.renderer.render(...)
     end
 
-    parallelize
+    parallelize(workers: 4)
 
     if ENV["COVERAGE"] == "true"
       parallelize_setup { |worker| SimpleCov.command_name "Minitest:#{worker}" }

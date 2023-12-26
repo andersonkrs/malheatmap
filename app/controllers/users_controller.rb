@@ -1,23 +1,15 @@
 class UsersController < ApplicationController
-  helper ::MAL::URLS
-
-  around_action :set_user
-
   def show
-    @selected_year = (@user.calendars.exists?(year_param) ? year_param : Time.zone.today.year)
+    @user = User.find_by!(username: params[:username])
 
-    @calendar = @user.calendars[@selected_year]
+    render locals: { selected_year: params[:year] }
   end
 
   private
 
-  def set_user(&)
-    @user = User.find_by!(username: params[:username])
-
-    @user.with_time_zone(&)
+  def show_waiting_mal_sync?
+    @user == Current.user && @user.never_synced_mal?
   end
 
-  def year_param
-    @year_param ||= ActiveModel::Type::Integer.new.cast(params[:year])
-  end
+  helper_method :show_waiting_mal_sync?
 end

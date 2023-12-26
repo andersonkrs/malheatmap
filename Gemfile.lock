@@ -1,6 +1,24 @@
 GIT
+  remote: https://github.com/hotwired/stimulus-rails.git
+  revision: 3e168f07ba73248740f9dee2a49463893fd5be57
+  branch: main
+  specs:
+    stimulus-rails (1.3.0)
+      railties (>= 6.0.0)
+
+GIT
+  remote: https://github.com/hotwired/turbo-rails.git
+  revision: 3f769d61ba8137ce8d792e354ba7d06c677c19df
+  branch: main
+  specs:
+    turbo-rails (2.0.0.pre.beta.2)
+      actionpack (>= 6.0.0)
+      activejob (>= 6.0.0)
+      railties (>= 6.0.0)
+
+GIT
   remote: https://github.com/rails/rails.git
-  revision: 16ff9afb2e78346e51b8969b76fc6afcba69d860
+  revision: 354d1c42b45a380f201a24d060a3d1bc71010327
   branch: main
   specs:
     actioncable (7.2.0.alpha)
@@ -189,6 +207,10 @@ GEM
       rdoc
       reline (>= 0.3.8)
     json (2.7.1)
+    kredis (1.7.0)
+      activemodel (>= 6.0.0)
+      activesupport (>= 6.0.0)
+      redis (>= 4.2, < 6)
     language_server-protocol (3.17.0.3)
     locale (2.1.3)
     lograge (0.14.0)
@@ -243,7 +265,7 @@ GEM
     newrelic_rpm (9.6.0)
       base64
     nio4r (2.7.0)
-    nokogiri (1.15.5)
+    nokogiri (1.16.0)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     numerizer (0.2.0)
@@ -251,7 +273,6 @@ GEM
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
-    pg (1.5.4)
     prettier_print (1.2.1)
     prime (0.1.2)
       forwardable
@@ -296,6 +317,8 @@ GEM
       io-console (~> 0.5)
     request_store (1.5.1)
       rack (>= 1.4)
+    requestjs-rails (0.0.11)
+      railties (>= 6.1.0)
     rexml (3.2.6)
     rollbar (3.4.2)
     rubocop (1.59.0)
@@ -328,12 +351,6 @@ GEM
     sass-embedded (1.63.6)
       google-protobuf (~> 3.23)
       rake (>= 13.0.0)
-    shoulda (4.0.0)
-      shoulda-context (~> 2.0)
-      shoulda-matchers (~> 4.0)
-    shoulda-context (2.0.0)
-    shoulda-matchers (4.5.1)
-      activesupport (>= 4.2.0)
     sidekiq (7.2.0)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
@@ -355,8 +372,6 @@ GEM
       rails (>= 7)
     sqlite3 (1.6.9)
       mini_portile2 (~> 2.8.0)
-    stimulus-rails (1.3.0)
-      railties (>= 6.0.0)
     stringio (3.1.0)
     syntax_tree (6.2.0)
       prettier_print (>= 1.2.0)
@@ -364,10 +379,6 @@ GEM
     thor (1.3.0)
     tilt (2.3.0)
     timeout (0.4.1)
-    turbo-rails (1.5.0)
-      actionpack (>= 6.0.0)
-      activejob (>= 6.0.0)
-      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
@@ -416,28 +427,28 @@ DEPENDENCIES
   image_processing
   imatcher
   importmap-rails
+  kredis
   lograge
   mechanize
   mocha
   newrelic_rpm
-  pg
   propshaft
   puma
   rails!
   redis
+  requestjs-rails
   rollbar
   rubocop-performance
   rubocop-rails
-  shoulda
   sidekiq
   sidekiq-scheduler
   simplecov (~> 0.17.1)
   skylight (~> 6.0.1)
   solid_cache
   sqlite3
-  stimulus-rails
+  stimulus-rails!
   syntax_tree
-  turbo-rails
+  turbo-rails!
   vcr
   view_component
   web-console

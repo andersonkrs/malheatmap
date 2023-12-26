@@ -1,63 +1,34 @@
 class BrowserSession < ActiveSupport::CurrentAttributes
-  attr_accessor :current
+  attribute :browser
 
   RETRYABLE_ERRORS = [Ferrum::TimeoutError, Ferrum::ProcessTimeoutError, NoMethodError].freeze
 
+  before_reset { browser&.quit }
+
   # Reuses the same browser that is on the thread instead of spawning a browser process each time
-  # Ideally the browser process is spawned once by the threads manager process like Rails/Sidekiq and then it is
-  # reused everytime just create new tabs
+  # Ideally the browser process is spawned once and reused during the thread session
   #
   # If there's no browser assigned to the thread a new browser process will be spawned and terminated after
   # performing the given block work on the func #fetch_page
 
   def self.fetch_page(&)
-    if current.present? && current.default_context.present?
-      with_new_page(&)
-    else
-      temp_browser = new_browser
-      begin
-        yield(temp_browser.page)
-      ensure
-        temp_browser.quit
-      end
-    end
+    spawn_new_browser unless browser.present? && browser.default_context.present?
+
+    with_new_page(&)
   end
 
-  def self.new_browser
-    Ferrum::Utils::Attempt.with_retry(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
-      Ferrum::Browser
-        .new(
-          headless: !ENV["HEADLESS"].in?(%w[n 0 no false]),
-          browser_options: {
-            "no-sandbox": nil,
-            "disable-gpu": nil,
-            "start-maximized": nil,
-            "no-zygote": nil,
-            "no-first-run": nil,
-            "disable-setuid-sandbox": nil,
-            "disable-dev-shm-usage": nil,
-            "disable-accelerated-2d-canvas": nil,
-            "disable-translate": nil,
-            "disable-sync": nil,
-            "disable-infobars": nil,
-            "disable-browser-side-navigation": nil,
-            "disable-default-apps": nil,
-            "disable-permissions-api": nil,
-            "disable-logging": nil,
-            "disable-extensions": nil,
-            "disable-popup-blocking": nil,
-            "disable-notifications": nil
-          },
-          timeout: 30,
-          process_timeout: 30
-        )
-        .tap { |browser| Rails.logger.info "Browser instance created PID: #{browser.process.pid}" }
-    end
+  def self.spawn_new_browser
+    self.browser =
+      Ferrum::Utils::Attempt.with_retry(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
+        Ferrum::Browser
+          .new(headless: "new", browser_options: { "no-sandbox": nil, "disable-setuid-sandbox": nil })
+          .tap { |browser| Rails.logger.info "Browser instance created PID: #{browser.process.pid}" }
+      end
   end
 
   def self.with_new_page
     Ferrum::Utils::Attempt.with_retry(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
-      page = current.create_page
+      page = browser.create_page
       begin
         yield(page)
       ensure

@@ -25,7 +25,19 @@ class User
       end
 
       def [](year)
-        find { |calendar| calendar.year == year }
+        return if year.blank?
+
+        find { |calendar| calendar.year.to_s == year.to_s }
+      end
+
+      def fetch(year, fallback = nil)
+        result = self[year]
+
+        return result if result.present?
+
+        raise KeyError, key: year if fallback.blank?
+
+        self[fallback]
       end
 
       def active_years
@@ -40,6 +52,8 @@ class User
       def current
         self[Time.current.year]
       end
+
+      alias current_year current
     end
   end
 end

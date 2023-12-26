@@ -1,10 +1,13 @@
 class User < ApplicationRecord
-  include Crawlable
+  include Authenticatable
+  include MALSyncable
   include Mergeable
   include Calendars
   include Signaturable
-  include Authenticatable
   include Deactivatable
+  include Geolocatable
+
+  after_update_commit -> { broadcast_replace_later(partial: "users/user", locals: { user: self }) }
 
   has_many :entries, -> { preload(:item) }, inverse_of: :user, dependent: :delete_all
   has_many :activities, -> { preload(:item) }, inverse_of: :user, dependent: :delete_all do
@@ -16,10 +19,6 @@ class User < ApplicationRecord
       order(date: :asc).limit(1).pick(:date)
     end
   end
-
-  validates :time_zone, presence: true
-  validates :latitude, numericality: true, allow_nil: true
-  validates :longitude, numericality: true, allow_nil: true
 
   def with_time_zone(&)
     Time.use_zone(time_zone, &)

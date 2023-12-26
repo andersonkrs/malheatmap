@@ -1,11 +1,6 @@
 require "test_helper"
 
 class ActivityTest < ActiveSupport::TestCase
-  context "validations" do
-    should validate_numericality_of(:amount).only_integer
-    should validate_presence_of(:date)
-  end
-
   class OrderedAsTimelineTest < ActiveSupport::TestCase
     setup do
       @user = users(:babyoda)

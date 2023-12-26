@@ -5,7 +5,7 @@ development:
 
 production:
   lookup: :opencagedata
-  api_key: <%= Rails.application.credentials.opencage&.[](:api_key) %>
+  api_key: <%= Rails.application.credentials.dig(:opencage, :api_key) %>
 
 test:
   lookup: :test

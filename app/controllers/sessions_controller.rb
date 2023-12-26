@@ -47,7 +47,7 @@ class SessionsController < ApplicationController
 
     response = client.user_profile
     if response.failure?
-      ErrorNotifier.capture(response.raw_body)
+      Rails.error.report(response.raw_body)
       redirect_to internal_error_path
     end
 
@@ -64,19 +64,19 @@ class SessionsController < ApplicationController
     user.avatar_url = user_data["picture"]
     user.profile_data_updated_at = Time.current
 
-    user.transaction do
-      user.save!
-      user.access_tokens.replace_current!(
-        token: token_data["access_token"],
-        refresh_token: token_data["refresh_token"],
-        token_expires_at: Time.zone.at(token_data["expires_in"])
-      )
+    user.run_callbacks(:authentication) do
+      user.transaction do
+        user.save!
+        user.access_tokens.replace_current!(
+          token: token_data["access_token"],
+          refresh_token: token_data["refresh_token"],
+          token_expires_at: Time.zone.at(token_data["expires_in"])
+        )
+      end
+
+      session[:current_user_id] = user.id
+      Current.user = user
     end
-
-    user.signed_in
-
-    session[:current_user_id] = user.id
-    Current.user = user
   end
 
   def generate_code_challenge
@@ -99,6 +99,6 @@ class SessionsController < ApplicationController
   # Tries to find a profile that has not been yet associated with a MAL profile and sets the MAL id,
   # otherwise find a user that has already been associated or create a new one
   def find_or_initialize_mal_user(user_data)
-    User.find_by(username: user_data["name"], mal_id: nil) || User.find_by(mal_id: user_data["id"]) || User.new
+    User.find_by(username: user_data["name"], mal_id: nil) || User.find_or_initialize_by(mal_id: user_data["id"])
   end
 end

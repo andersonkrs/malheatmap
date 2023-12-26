@@ -1,0 +1,44 @@
+<%# locals: (user:, selected_year: Time.current.year) -%>
+
+<%- calendar = user.calendars.fetch(selected_year, Time.current.year) %>
+
+<% cache [user, calendar.year] do %>
+  <div class="columns is-multiline">
+    <div class="column is-full">
+      <article class="media">
+        <figure class="user-avatar media-left">
+          <p class="image is-96x96">
+            <img src="<%= user.avatar_url %>" alt="<%= _("User Avatar") %>">
+          </p>
+        </figure>
+        <div class="media-content">
+          <p>
+            <%= link_to(MAL::URLS.profile_url(user.username), target: "_blank", rel: "noopener noreferrer", class: "is-size-4") do %>
+              <%= user.username %>
+            <% end %>
+          </p>
+          <div class="bb-code pt-3">
+            <%= render partial: "users/bb_code", locals: { user: user } %>
+          </div>
+        </div>
+      </article>
+    </div>
+    <%= turbo_frame_tag dom_id(user, :activities), class: "column is-full" do %>
+      <div class="columns is-multiline">
+        <div class="column is-full">
+          <%= turbo_frame_tag(dom_id(user, :calendar), src: user_calendar_path(user, calendar), loading: :lazy) do %>
+            <%= render partial: "calendars/loading" %>
+          <% end %>
+        </div>
+
+        <%= turbo_frame_tag(dom_id(user, :timeline), class: "column is-10", src: user_timeline_path(user, calendar), loading: :lazy) do %>
+          <%= render partial: "timelines/loading" %>
+        <% end %>
+
+        <div class="column is-2">
+          <%= render partial: "users/years_side_menu", locals: { user: user, selected_year: calendar.year } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

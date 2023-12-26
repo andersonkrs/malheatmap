@@ -1,16 +1,9 @@
-class ThreadedBrowserMiddleware
-  def call(_worker, _message, _queue)
-    BrowserSession.current = Sidekiq.default_configuration[:browser]
-    yield
-  end
-end
+redis_config = Rails.configuration.redis.slice(:url, :timeout)
 
-require_relative "../../lib/browser_session"
-
-Sidekiq.configure_client { |config| config.redis = { url: Rails.configuration.redis[:url] } }
+Sidekiq.configure_client { |config| config.redis = redis_config }
 
 Sidekiq.configure_server do |config|
-  config.redis = { url: Rails.configuration.redis[:url] }
+  config.redis = redis_config
 
   config.logger.formatter = Sidekiq::Logger::Formatters::WithoutTimestamp.new
 
@@ -18,11 +11,12 @@ Sidekiq.configure_server do |config|
   Rails.logger = Sidekiq.logger
   ActiveRecord::Base.logger = Sidekiq.logger
 
-  config.on(:startup) { config[:browser] = BrowserSession.new_browser }
-
-  config.on(:quiet) { config[:browser]&.quit }
-
-  config.server_middleware { |chain| chain.add ThreadedBrowserMiddleware }
+  config.on(:startup) do
+    if Rails.env.production?
+      Sidekiq.schedule = YAML.load_file(Rails.root.join("config/sidekiq_scheduler.yml"))
+      SidekiqScheduler::Scheduler.instance.reload_schedule!
+    end
+  end
 
   config.capsule("default") do |cap|
     cap.concurrency = 5

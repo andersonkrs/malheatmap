@@ -1,4 +1,6 @@
-<% template = "[URL=\"#{user_url(@user)}\"][IMG]#{user_signature_url(@user)}[/IMG][/URL]" %>
+<%# locals: (user:) -%>
+
+<% template = "[URL=\"#{user_url(user)}\"][IMG]#{user_signature_url(user)}[/IMG][/URL]" %>
 
 <div class="field is-horizontal" data-controller="clipboard">
   <div class="field-label is-normal has-text-left">

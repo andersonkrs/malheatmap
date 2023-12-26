@@ -1,8 +1,11 @@
 class User
   module Authenticatable
     extend ActiveSupport::Concern
+    extend ActiveModel::Callbacks
 
     included do
+      define_model_callbacks :authentication, only: %i[after before]
+
       has_many :access_tokens, inverse_of: :user, dependent: :delete_all do
         def replace_current!(**attributes)
           transaction(requires_new: true) do
@@ -25,9 +28,6 @@ class User
       mal_id.present?
     end
 
-    def signed_in
-      User::UpdateGeolocationJob.perform_later(self) if saved_change_to_location?
-      User::SignedInJob.set(wait: 5.seconds).perform_later(self)
-    end
+    def legacy_account? = !mal_account_linked?
   end
 end

@@ -10,7 +10,7 @@ class PurgeableTest < ActiveSupport::TestCase
   setup do
     ActiveRecord::Base
       .connection
-      .create_table(:buckets, id: :uuid) do |t|
+      .create_table(:buckets) do |t|
         t.column :label, :string
         t.timestamps
       end

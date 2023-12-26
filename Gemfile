@@ -6,26 +6,25 @@ ruby file: ".tool-versions"
 gem "rails", github: "rails/rails", branch: "main"
 
 gem "bootsnap", require: false
-gem "ferrum"
-gem "geocoder"
-gem "gitlab-chronic"
-gem "lograge"
-gem "mechanize"
+
 gem "puma"
-gem "sidekiq"
-gem "sidekiq-scheduler"
-gem "view_component"
-gem "wheretz"
 
 # Drivers
-gem "pg"
-gem "redis" # Use Redis for Action Cable
-gem "sqlite3" # Cache, queueing
+gem "redis" # Action Cable
+gem "sqlite3"
+
+# Queuing
+gem "sidekiq"
+gem "sidekiq-scheduler"
 
 # Cache
 gem "solid_cache"
 
-# Make translations less brittle
+# Hotwire
+gem "stimulus-rails", github: "hotwired/stimulus-rails", branch: "main"
+gem "turbo-rails", github: "hotwired/turbo-rails", branch: "main"
+
+# Better i18n
 gem "gettext", ">=3.0.2", require: false
 gem "gettext_i18n_rails"
 
@@ -37,14 +36,23 @@ gem "propshaft"
 # Media handler
 gem "image_processing"
 
-# Hotwire
-gem "stimulus-rails"
-gem "turbo-rails"
-
 # Visibility
+gem "lograge"
 gem "newrelic_rpm"
 gem "rollbar"
 gem "skylight", "~> 6.0.1", require: false
+
+# Web Crawling
+gem "ferrum"
+gem "mechanize"
+
+# Misc
+gem "geocoder"
+gem "gitlab-chronic"
+gem "requestjs-rails"
+gem "view_component"
+gem "wheretz"
+gem "kredis"
 
 group :development, :test do
   gem "debug"
@@ -63,7 +71,6 @@ group :test do
   gem "cuprite"
   gem "imatcher"
   gem "mocha"
-  gem "shoulda"
   gem "simplecov", "~> 0.17.1", require: false # https://github.com/codeclimate/test-reporter/issues/413
   gem "vcr"
   gem "webmock"
