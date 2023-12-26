@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
 # Make sure it matches the Ruby version in .ruby-version and Gemfile
-ARG RUBY_VERSION=3.2.0
+ARG RUBY_VERSION=3.3.0
 FROM ruby:$RUBY_VERSION-slim as base
 
 # Rails app lives here
@@ -23,7 +23,7 @@ RUN apt-get update -qq && \
     apt-get install -y build-essential git libpq-dev pkg-config redis
 
 # Install application gems
-COPY .ruby-version Gemfile Gemfile.lock ./
+COPY .tool-versions Gemfile Gemfile.lock ./
 RUN bundle install && bundle exec bootsnap precompile --gemfile
 
 # Copy application code
