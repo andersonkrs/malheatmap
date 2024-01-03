@@ -86,17 +86,19 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
     assert_equal "One Punch Man", entry.name
     assert_equal "anime", entry.kind
 
+    assert_equal 3, @user.activities.count
+
+    assert_enqueued_with job: User::Signaturable::SignatureImage::GenerateJob, args: [@user]
+
+    perform_enqueued_jobs only: CrawlingLogEntry::SaveAsyncJob
+
     assert_equal 1, @user.crawling_log_entries.count
     crawling_log_entry = @user.crawling_log_entries.first
     assert_equal crawling_log_entry.checksum, @user.checksum
     assert_equal false, crawling_log_entry.failure?
+    assert crawling_log_entry.purge_with_deletion?
     assert_nil crawling_log_entry.failure_message
     assert_equal @crawler_response, crawling_log_entry.raw_data.deep_symbolize_keys
-    assert_enqueued_with job: Purgeable::PurgeRecordJob, args: [crawling_log_entry]
-
-    assert_equal 3, @user.activities.count
-
-    assert_enqueued_with job: User::Signaturable::SignatureImage::GenerateJob, args: [@user]
   end
 
   test "updates item name if it has changed" do
@@ -129,7 +131,8 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
       @user.reload
     end
 
-    assert_equal 2, @user.crawling_log_entries.size
+    perform_enqueued_jobs only: CrawlingLogEntry::SaveAsyncJob
+    assert_equal 2, @user.crawling_log_entries.count
 
     crawling_log_entries = @user.crawling_log_entries.order(:created_at)
     previous_crawling_log = crawling_log_entries.first
@@ -162,7 +165,7 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
     @user.entries.create!([timestamp: Time.zone.now, item: items(:one_punch_man), amount: 2])
     @crawler_response[:history].first[:timestamp] = 30.days.ago.in_time_zone
 
-    assert_raises User::MALSyncable::CrawlingLogEntry::DeletingOldHistoryNotAllowed do
+    assert_raises User::MALSyncable::ScrapedData::DeletingOldHistoryNotAllowed do
       @user.crawler_pipeline.execute!
     end
 
@@ -180,6 +183,8 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
         ]
       )
     @user.crawler_pipeline.execute!
+
+    perform_enqueued_jobs only: CrawlingLogEntry::SaveAsyncJob
 
     visited_pages = @user.crawling_log_entries.first.visited_pages
 
@@ -245,6 +250,8 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
     assert_raises MAL::Errors::CrawlError do
       @user.crawler_pipeline.execute!
     end
+
+    perform_enqueued_jobs only: CrawlingLogEntry::SaveAsyncJob
 
     assert_equal 1, @user.crawling_log_entries.size
     log_entry = @user.crawling_log_entries.first

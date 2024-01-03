@@ -365,12 +365,10 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    singleton (0.1.1)
-    skylight (6.0.1)
-      activesupport (>= 5.2.0)
+    singleton (0.2.0)
     solid_cache (0.2.0)
       rails (>= 7)
-    sqlite3 (1.6.9)
+    sqlite3 (1.7.0)
       mini_portile2 (~> 2.8.0)
     stringio (3.1.0)
     syntax_tree (6.2.0)
@@ -443,7 +441,6 @@ DEPENDENCIES
   sidekiq
   sidekiq-scheduler
   simplecov (~> 0.17.1)
-  skylight (~> 6.0.1)
   solid_cache
   sqlite3
   stimulus-rails!

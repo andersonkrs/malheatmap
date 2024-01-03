@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_01_01_050110) do
+ActiveRecord::Schema[7.2].define(version: 2024_01_03_020927) do
   create_table "access_tokens", force: :cascade do |t|
     t.string "token"
     t.string "refresh_token"
@@ -61,18 +61,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_01_01_050110) do
     t.index ["user_id", "item_id", "date"], name: "index_activities_on_user_id_and_item_id_and_date", unique: true
   end
 
-  create_table "crawling_log_entries", force: :cascade do |t|
-    t.json "raw_data"
-    t.string "checksum"
-    t.string "failure_message"
-    t.boolean "failure", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.json "visited_pages"
-    t.index ["user_id"], name: "index_crawling_log_entries_on_user_id"
-  end
-
   create_table "entries", force: :cascade do |t|
     t.datetime "timestamp", precision: nil, null: false
     t.integer "amount", null: false
@@ -120,7 +108,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_01_01_050110) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "items"
   add_foreign_key "activities", "users"
-  add_foreign_key "crawling_log_entries", "users"
   add_foreign_key "entries", "items"
   add_foreign_key "entries", "users"
 end

@@ -1,46 +1,29 @@
 module Purgeable
   # Manages the lifecycle of a disposable object in the app
-  #
-  # After the record is created a job is scheduled in the future to try to purge the object and its dependencies from
-  # the database automatically
-  #
-  # If the job fails by the exception RecordNotPurgeable, the job will be rescheduled with the exponential interval
   extend ActiveSupport::Concern
-
-  class RecordNotPurgeable < StandardError
-    attr_reader :created_at
-
-    def initialize(msg = nil, created_at:)
-      @created_at = created_at
-      super(msg)
-    end
-  end
 
   included do
     class_attribute :_purgeable_after, default: nil
+    class_attribute :_purgeable_method, default: nil
 
-    after_commit :purge_later, on: :create, if: -> { self.class._purgeable_after.present? }
+    attribute :purge_after, :datetime, default: -> { _purgeable_after }
+    attribute :purge_method, :string, default: -> { _purgeable_method }
+
+    enum purge_method: { deletion: "deletion", destruction: "destruction" }, _prefix: "purge_with"
+
+    scope :due_for_purging, -> { where(purge_after: (..Time.current)) }
   end
 
   class_methods do
-    def purge_after(period)
-      self._purgeable_after = period
+    def purge(after:, method:)
+      self._purgeable_after = after.from_now
+      self._purgeable_method = method
     end
-  end
 
-  def purge_later(after: self.class._purgeable_after)
-    PurgeRecordJob.set(wait: after).perform_later(self)
-  end
+    def purge_due(batch_size: 500)
+      destroyed_records = limit(batch_size).due_for_purging.purge_with_destruction.destroy_all
 
-  def purge!
-    raise Purgeable::RecordNotPurgeable.new(created_at:) unless can_be_purged?
-
-    destroy!
-  end
-
-  private
-
-  def can_be_purged?
-    (Time.current - created_at) >= self.class._purgeable_after
+      limit(batch_size - destroyed_records.size).due_for_purging.purge_with_deletion.delete_all
+    end
   end
 end

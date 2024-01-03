@@ -1,3 +1,6 @@
 enqueue_periodic_mal_sync:
   class: User::SchedulePeriodicMALSyncJob
   cron: '0 */5 * * * *' # Runs when second = 0, every 5 minutes
+periodic_bulk_purge_records:
+  class: Purgeable::BulkPurgeRecordsJob
+  cron: '0 */5 * * * *' # Runs when second = 0, every 5 minutes

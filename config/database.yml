@@ -1,6 +1,6 @@
 sqlite_defaults: &sqlite_defaults
   adapter: sqlite3
-  pool: 5
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
 development:
@@ -8,6 +8,10 @@ development:
     <<: *sqlite_defaults
     database: "storage/malheatmap_primary_development.sqlite3"
     migrations_paths: "db/migrate"
+  ops:
+    <<: *sqlite_defaults
+    database: "storage/malheatmap_ops_development.sqlite3"
+    migrations_paths: "db/ops/migrate"
   cache:
     <<: *sqlite_defaults
     database: "storage/malheatmap_cache_development.sqlite3"
@@ -18,6 +22,10 @@ test:
     <<: *sqlite_defaults
     database: "storage/malheatmap_primary_test.sqlite3"
     migrations_paths: "db/migrate"
+  ops:
+    <<: *sqlite_defaults
+    database: "storage/malheatmap_ops_test.sqlite3"
+    migrations_paths: "db/ops/migrate"
 
 production:
   primary:
@@ -28,3 +36,7 @@ production:
     <<: *sqlite_defaults
     database: "storage/malheatmap_cache_production.sqlite3"
     migrations_paths: "db/cache/migrate"
+  ops:
+    <<: *sqlite_defaults
+    database: "storage/malheatmap_ops_production.sqlite3"
+    migrations_paths: "db/ops/migrate"

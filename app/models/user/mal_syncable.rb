@@ -5,15 +5,7 @@ class User
     INTERVAL_BETWEEN_SYNCS = 8.hours
 
     included do
-      has_many :crawling_log_entries,
-               class_name: "User::MALSyncable::CrawlingLogEntry",
-               inverse_of: :user,
-               foreign_key: "user_id",
-               dependent: :destroy do
-        def capture_failure!(exception:, **data)
-          create!(failure: true, failure_message: exception.try(:message) || exception, **data)
-        end
-      end
+      has_many :crawling_log_entries, inverse_of: :user, dependent: :destroy
 
       scope :eligible_for_mal_sync,
             -> do

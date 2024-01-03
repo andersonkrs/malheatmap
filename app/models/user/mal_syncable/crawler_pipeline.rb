@@ -1,43 +1,38 @@
-class User
-  module MALSyncable
-    class CrawlerPipeline
-      def initialize(user)
-        super()
-        @user = user
-      end
+class User::MALSyncable::CrawlerPipeline
+  def initialize(user)
+    super()
+    @user = user
+  end
 
-      def execute!
-        @raw_data = crawler.crawl
+  def execute!
+    user.crawling_log_entries.record do |crawler_entry|
+      crawler_entry.raw_data = crawler.crawl
 
-        process_success_crawling!
-      rescue StandardError => error
-        capture_failure!(error)
-        raise
-      end
+      data = User::MALSyncable::ScrapedData.new(user:, raw_data: crawler_entry.raw_data)
+      data.process!
 
-      def execute_later(**)
-        User::CrawlerPipelineJob.set(**).perform_later(user)
-      end
+      user.mal_synced_at = Time.current
+      user.save!
 
-      private
-
-      attr_reader :user, :raw_data
-
-      def crawler
-        @crawler ||= MAL::UserCrawler.new(user.username)
-      end
-
-      def process_success_crawling!
-        user.crawling_log_entries.create!(raw_data:, visited_pages:)
-      end
-
-      def capture_failure!(error)
-        user.crawling_log_entries.capture_failure!(exception: error, raw_data:, visited_pages:)
-      end
-
-      def visited_pages
-        crawler.history.map { |page| { body: page.body.force_encoding("UTF-8"), path: page.uri.path } }
-      end
+      crawler_entry.checksum = data.checksum
+    ensure
+      crawler_entry.visited_pages = visited_pages
     end
+  end
+
+  def execute_later(**)
+    User::CrawlerPipelineJob.set(**).perform_later(user)
+  end
+
+  private
+
+  attr_reader :user, :raw_data, :crawler_log_entry
+
+  def crawler
+    @crawler ||= MAL::UserCrawler.new(user.username)
+  end
+
+  def visited_pages
+    crawler.history.map { |page| { body: page.body.force_encoding("UTF-8"), path: page.uri.path } }
   end
 end

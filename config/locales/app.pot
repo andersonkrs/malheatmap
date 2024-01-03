@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-25 10:47-0300\n"
-"PO-Revision-Date: 2023-12-25 10:47-0300\n"
+"POT-Creation-Date: 2024-01-03 10:51-0300\n"
+"PO-Revision-Date: 2024-01-03 10:51-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,10 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-msgid "%{username} does not have any activity in %{year}."
+msgid "12+ episodes/chapters watched/read on date"
 msgstr ""
 
-msgid "12+ episodes/chapters watched/read on date"
+msgid "<strong>%{username}</strong> does not have any activity in <strong>%{year}</strong>."
 msgstr ""
 
 msgid "About"
@@ -66,10 +66,22 @@ msgstr ""
 msgid "None episodes/chapters watched/read on date"
 msgstr ""
 
+msgid "Please wait"
+msgstr ""
+
 msgid "Sign out"
 msgstr ""
 
+msgid "This page will be refreshed automatically!"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
 msgid "User Avatar"
+msgstr ""
+
+msgid "We are fetching your data from MyAnimeList and preparing it for you."
 msgstr ""
 
 msgid "one active user!"

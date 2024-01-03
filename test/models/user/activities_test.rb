@@ -81,7 +81,6 @@ class User::ActivitiesTest < ActiveSupport::TestCase
         { item: items(:naruto), timestamp: Time.zone.local(2020, 1, 4), amount: 10 }
       ]
     )
-
     @user.activities.generate_from_history
 
     assert_equal 10, activities.first.amount

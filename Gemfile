@@ -40,7 +40,6 @@ gem "image_processing"
 gem "lograge"
 gem "newrelic_rpm"
 gem "rollbar"
-gem "skylight", "~> 6.0.1", require: false
 
 # Web Crawling
 gem "ferrum"
@@ -49,10 +48,10 @@ gem "mechanize"
 # Misc
 gem "geocoder"
 gem "gitlab-chronic"
+gem "kredis"
 gem "requestjs-rails"
 gem "view_component"
 gem "wheretz"
-gem "kredis"
 
 group :development, :test do
   gem "debug"

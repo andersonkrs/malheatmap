@@ -72,8 +72,6 @@ class User
           user.activities.delete_all
 
           if activities.present?
-            activities.each_value(&:validate!)
-
             Activity.upsert_all(
               activities.values.map do |activity|
                 { user_id: user.id, date: activity.date, item_id: activity.item_id, amount: activity.amount }

@@ -85,4 +85,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.active_job.queue_adapter = :sidekiq
+
+  config.hosts = ["malheatmap.com"]
 end
