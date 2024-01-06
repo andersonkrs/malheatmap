@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-echo "== Checking formatting =="
-bundle exec stree check "{app,lib,test,bin,config,db}/**/*.rb"
-
 echo "== Running linters =="
 bundle exec rubocop
 bundle exec brakeman --no-pager

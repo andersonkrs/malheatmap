@@ -1,54 +1,5 @@
-require:
-  - rubocop-performance
-  - rubocop-rails
-  - syntax_tree
-
 inherit_gem:
-  syntax_tree: config/rubocop.yml
+  rubocop-rails-omakase: rubocop.yml
 
-Rails:
-  Enabled: true
-
-AllCops:
-  NewCops: enable
-  Exclude:
-    - "tmp/**/*"
-    - "vendor/**/*"
-    - "bin/**/*"
-    - "node_modules/**/*"
-    - "db/**/*"
-    - "public/**/*"
-
-  DisplayCopNames: true
-  DisplayStyleGuide: true
-  ExtraDetails: true
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Naming/AccessorMethodName:
-  Enabled: false
-
-Metrics/AbcSize:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Metrics/ClassLength:
-  Enabled: false
-
-Metrics/BlockLength:
-  Enabled: false
-
-Metrics/MethodLength:
-  Enabled: false
-
-Naming/RescuedExceptionsVariableName:
-  PreferredName: error
-
-Rails/SkipsModelValidations:
+Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false

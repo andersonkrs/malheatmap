@@ -55,8 +55,7 @@ gem "wheretz"
 
 group :development, :test do
   gem "debug"
-  gem "rubocop-performance"
-  gem "rubocop-rails"
+  gem "rubocop-rails-omakase"
 end
 
 group :development do
