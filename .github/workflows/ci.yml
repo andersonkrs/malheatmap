@@ -1,93 +1,113 @@
-name: ci
+name: CI
+
 on:
   push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  qa:
+  scan_ruby:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Scan for security vulnerabilities in Ruby dependencies
+        run: bin/brakeman
+
+  scan_js:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Scan for security vulnerabilities in JavaScript dependencies
+        run: bin/importmap audit
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Lint code for consistent style
+        run: bin/rubocop -f github
+
+  test:
+    runs-on: ubuntu-latest
     services:
       redis:
-        image: redis:6.2.5-alpine
-        ports: [ "6379:6379" ]
-
-    env:
-      BUNDLE_JOBS: 4
-      BUNDLE_RETRY: 3
-      BUNDLE_PATH: vendor/bundle
-
+        image: redis
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-    - name: Increase max fs watches
-      run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      - name: Install packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libsqlite3-0 libvips
 
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        submodules: 'true'
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: 'true'
 
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
 
-    - name: Cache Ruby Dependencies
-      uses: actions/cache@v3
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gem-v1-${{ hashFiles('Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gem-v1
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          REDIS_URL: redis://localhost:6379/0
+        run: bin/rails db:create db:schema:load db:fixtures:load test test:system
 
-    - name: Setup
-      run: bin/setup
+      - name: Keep screenshots from failed system tests
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: screenshots
+          path: ${{ github.workspace }}/tmp/screenshots
+          if-no-files-found: ignore
 
-    - name: Run linters
-      run: |
-        bin/qa
-
-    - name: Test assets compilation
-      run: RAILS_ENV=test bin/rails assets:precompile
-
-    - name: Run unit tests
-      run: bin/rails test
-
-    - name: Run E2E tests
-      run: bin/rails test:system
-
-    - name: Publish code coverage
-      uses: paambaati/codeclimate-action@v5.0.0
-      continue-on-error: true
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-
-    - name: Upload failed tests screenshots
-      uses: actions/upload-artifact@v4
-      if: failure()
-      with:
-        name: system-tests-screenshots
-        path: tmp/screenshots/**/*.png
-
-    - name: Upload Rails logs
-      uses: actions/upload-artifact@v4
-      if: failure()
-      with:
-        name: logs
-        path: log/**/*.log
+      - name: Keep Rails logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: logs
+          path: log/**/*.log
   deploy:
-    needs: qa
+    needs: test
     if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - id: deploy
-      name: Deploy to dokku
-      continue-on-error: true
-      uses: idoberko2/dokku-deploy-github-action@v1
-      with:
-        ssh-private-key: ${{ secrets.DOKKU_SSH_KEY }}
-        dokku-host:  ${{ secrets.DOKKU_HOST }}
-        app-name: 'malheatmap'
-        git-push-flags: --force
-        remote-branch: main
+      - id: deploy
+        name: Deploy to dokku
+        continue-on-error: true
+        uses: idoberko2/dokku-deploy-github-action@v1
+        with:
+          ssh-private-key: ${{ secrets.DOKKU_SSH_KEY }}
+          dokku-host: ${{ secrets.DOKKU_HOST }}
+          app-name: 'malheatmap'
+          git-push-flags: --force
+          remote-branch: main
