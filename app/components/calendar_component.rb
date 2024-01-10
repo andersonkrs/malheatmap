@@ -77,7 +77,9 @@ class CalendarComponent < ViewComponent::Base
   private
 
   def weeks_containing_month_year(date)
-    weeks.select { |week| week.any? { |day| day.beginning_of_month == date.beginning_of_month } }
+    weeks.select do |week|
+      week.any? { |day| day.beginning_of_month == date.beginning_of_month }
+    end
   end
 
   Month =
@@ -134,7 +136,11 @@ class CalendarComponent < ViewComponent::Base
 
       def hint
         formatted_date = I18n.l(date, format: :long)
-        I18n.t("calendar_component.activities_on", count: amount, date: formatted_date)
+        I18n.t(
+          "calendar_component.activities_on",
+          count: amount,
+          date: formatted_date
+        )
       end
     end
 end

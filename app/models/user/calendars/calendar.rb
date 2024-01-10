@@ -31,6 +31,22 @@ class User
         dates.index_with { |date| grouped_activities.fetch(date, 0) }
       end
 
+      def cache_key
+        "calendars/#{year}/#{first_day}:#{last_day}"
+      end
+
+      def cache_key_with_version
+        "#{cache_key}/#{activities.cache_version}"
+      end
+
+      def first_day = dates.first
+
+      def last_day = dates.last
+
+      def updated_at
+        @updated_at ||= activities.maximum(:updated_at) || last_day.to_datetime
+      end
+
       private
 
       def prior_sunday(date)

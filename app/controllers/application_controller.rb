@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
 
   before_action :set_gettext_locale
 
+  etag { session.try(:id) }
+
   def about
     render "application/about"
   end

@@ -1,8 +1,8 @@
-<%# locals: (user:, selected_year: Time.current.year) -%>
+<%# locals: (user:, calendar: nil) -%>
 
-<%- calendar = user.calendars.fetch(selected_year, Time.current.year) %>
+<%- calendar ||= user.calendars.current %>
 
-<% cache [user, calendar.year] do %>
+<% cache [user, calendar] do %>
   <div class="columns is-multiline">
     <div class="column is-full">
       <article class="media">

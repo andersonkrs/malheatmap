@@ -21,6 +21,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:current_user_id] = nil if helpers.signed_in?
+    reset_session
 
     redirect_to sessions_path
   end
@@ -74,6 +75,7 @@ class SessionsController < ApplicationController
         )
       end
 
+      reset_session
       session[:current_user_id] = user.id
       Current.user = user
     end

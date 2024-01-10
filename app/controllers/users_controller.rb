@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   def show
     @user = User.find_by!(username: params[:username])
+    @calendar = @user.calendars.fetch(params[:year], Time.current.year)
 
-    render locals: { selected_year: params[:year] }
+    fresh_when [@user, @calendar]
   end
 
   private

@@ -14,10 +14,6 @@ class User < ApplicationRecord
     def generate_from_history
       ActivitiesGenerator.new(proxy_association.owner).run
     end
-
-    def first_date
-      order(date: :asc).limit(1).pick(:date)
-    end
   end
 
   def with_time_zone(&)

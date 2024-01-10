@@ -24,7 +24,7 @@
               <% if show_waiting_mal_sync? %>
                 <%= render partial: "users/waiting_mal_sync", locals: { user: @user } %>
               <% else %>
-                <%= render partial: "users/user", locals: { user: @user, selected_year: selected_year } %>
+                <%= render partial: "users/user", locals: { user: @user, calendar: @calendar } %>
               <% end %>
             <% end %>
           </div>
