@@ -51,5 +51,9 @@ module MalHeatmap
 
     config.assets.compile = true
     config.assets.paths << Rails.root.join("vendor/assets")
+
+    config.assets.configure do |env|
+      env.export_concurrent = false
+    end
   end
 end

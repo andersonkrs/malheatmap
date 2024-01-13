@@ -9,6 +9,9 @@ gem "bootsnap", require: false
 
 gem "puma"
 
+# Deployment
+gem "kamal"
+
 # Drivers
 gem "redis" # Action Cable
 gem "sqlite3"
