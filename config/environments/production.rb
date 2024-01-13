@@ -87,6 +87,5 @@ Rails.application.configure do
 
   config.active_job.queue_adapter = :sidekiq
 
-  config.hosts = %w[malheatmap.com cdn.malheatmap.com]
-  config.asset_host = "cdn.malheatmap.com"
+  config.hosts = %w[malheatmap.com]
 end
