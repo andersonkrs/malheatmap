@@ -12,3 +12,9 @@
 # KAMAL_RUNTIME
 
 echo "$KAMAL_PERFORMER deployed $KAMAL_VERSION to $KAMAL_DESTINATION in $KAMAL_RUNTIME seconds"
+
+echo "Running migrations...."
+bin/kamal app exec --skip-hooks --reuse --roles=web 'bin/rails db:migrate'
+
+echo "Publishing deployment..."
+bin/kamal app exec --skip-hooks --reuse --roles=web 'bin/rails deployment:notify'

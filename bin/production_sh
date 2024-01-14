@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+bin/kamal app exec --skip-hooks --reuse --roles=web -i 'sh'

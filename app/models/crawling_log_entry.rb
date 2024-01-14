@@ -1,7 +1,7 @@
 class CrawlingLogEntry < OpsRecord
   include Purgeable
 
-  purge after: 10.days, method: :deletion
+  purge after: 5.days, method: :deletion
 
   module AssociationRecordable
     def record
@@ -29,6 +29,8 @@ class CrawlingLogEntry < OpsRecord
   end
 
   class SaveAsyncJob < ApplicationJob
+    queue_as :logging
+
     discard_on ActiveSupport::JSON.parse_error
 
     retry_on ActiveRecord::StatementInvalid, wait: :polynomially_longer, attempts: 5

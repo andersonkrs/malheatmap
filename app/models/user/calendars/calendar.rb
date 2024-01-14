@@ -17,20 +17,6 @@ class User
           end
       end
 
-      def to_param
-        year.to_s
-      end
-
-      def activities
-        user.activities.where(date: dates)
-      end
-
-      def activities_amount_sum_per_day
-        grouped_activities = activities.group(:date).sum(:amount)
-
-        dates.index_with { |date| grouped_activities.fetch(date, 0) }
-      end
-
       def cache_key
         "calendars/#{year}/#{first_day}:#{last_day}"
       end
@@ -45,6 +31,20 @@ class User
 
       def updated_at
         @updated_at ||= activities.maximum(:updated_at) || last_day.to_datetime
+      end
+
+      def to_param
+        year.to_s
+      end
+
+      def activities
+        user.activities.where(date: dates)
+      end
+
+      def activities_amount_sum_per_day
+        grouped_activities = activities.group(:date).sum(:amount)
+
+        dates.index_with { |date| grouped_activities.fetch(date, 0) }
       end
 
       private

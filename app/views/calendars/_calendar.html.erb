@@ -1,7 +1,7 @@
 <%# locals: (user:, calendar:) -%>
 
 <%= turbo_frame_tag(dom_id(user, :calendar), class: "column is-full") do %>
-  <% cache [user, calendar.year, calendar.activities] do %>
+  <% cache [user, calendar] do %>
     <div class="columns is-multiline bordered" style="height: 200px !important;">
       <div class="column is-full">
         <div class="calendar-container has-text-centered">

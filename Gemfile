@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby file: ".tool-versions"
+ruby file: ".ruby-version"
 
 gem "rails", github: "rails/rails", branch: "main"
 
@@ -10,7 +10,7 @@ gem "bootsnap", require: false
 gem "puma"
 
 # Deployment
-gem "kamal"
+gem "kamal", github: "basecamp/kamal", branch: "main"
 
 # Drivers
 gem "redis" # Action Cable

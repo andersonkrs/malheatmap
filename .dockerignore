@@ -24,6 +24,16 @@
  /tmp/storage/*
  !/tmp/storage/
  !/tmp/storage/.keep
- /public/assets
+ /public/assets/*
 
 /.env*
+
+/vendor/ruby
+/vendor/assets/stylesheets/bulma/docs
+/.git
+/.kamal
+/.idea
+
+
+/coverage
+/test

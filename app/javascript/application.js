@@ -1,12 +1,10 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import * as ActionCable from '@rails/actioncable'
 import { Turbo } from '@hotwired/turbo-rails'
+import '@rails/actioncable'
 import "@rails/request.js"
 import 'controllers'
 
 const { StreamActions } = Turbo
-
-ActionCable.logger.enabled = false
 
 StreamActions.redirect = function() {
   const href = this.getAttribute("path")

@@ -48,6 +48,9 @@ module MalHeatmap
     config.mal_api = config_for(:mal_api)
 
     config.active_storage.service = :local
+    config.active_storage.queues.analysis = :active_storage
+    config.active_storage.queues.purge = :active_storage
+    config.active_storage.queues.mirror = :active_storage
 
     config.assets.compile = true
     config.assets.paths << Rails.root.join("vendor/assets")

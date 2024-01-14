@@ -57,7 +57,7 @@ class User
 
       def capture_html_screenshot(html_file)
         Tempfile.open(%w[screenshot .png]) do |screenshot_file|
-          BrowserSession.fetch_page do |page|
+          BrowserSession.instance.fetch_page do |page|
             page.go_to("file:#{html_file.path}")
             page.screenshot(selector: ".signature", path: screenshot_file.path, format: :png)
           end

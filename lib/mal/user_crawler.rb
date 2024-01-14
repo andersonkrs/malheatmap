@@ -10,7 +10,8 @@ module MAL
       Net::ReadTimeout,
       Net::OpenTimeout,
       OpenSSL::SSL::SSLError,
-      Errno::ECONNRESET
+      Errno::ECONNRESET,
+      SocketError
     ].freeze
 
     def initialize(username)

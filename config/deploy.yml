@@ -8,15 +8,21 @@ image: andersonskm/malheatmap
 servers:
   web:
     hosts:
-      - 84.247.130.199
-    cmd: bundle exec rails server
+      - 84.247.163.243
+    cmd: bin/rails server
+    options:
+      network: "private"
+      cpus: 2
   jobs:
     hosts:
-      - 84.247.130.199
-    cmd: bundle exec sidekiq
+      - 84.247.163.243
+    cmd: bin/sidekiq
+    options:
+      network: "private"
+      cpus: 1
 
 volumes:
-  - "/storage:/rails/storage"
+  - "/storage/malheatmap:/rails/storage"
 
 # Credentials for your image host.
 registry:
@@ -24,9 +30,18 @@ registry:
   password:
     - KAMAL_REGISTRY_PASSWORD
 
+# Only builds for linux based hosts, skip arm
+builder:
+  local:
+    arch: amd64
+
 # Inject ENV variables into containers (secrets come from .env).
 # Remember to run `kamal env push` after making changes!
 env:
+  clear:
+    WEB_CONCURRENCY: 2
+    RAILS_MAX_THREADS: 8
+    REDIS_URL: "redis://malheatmap-redis:6379/0"
   secret:
     - RAILS_MASTER_KEY
 
@@ -40,14 +55,17 @@ accessories:
     roles:
       - web
       - jobs
-    image: redis:7.0
-    port: 6379
+    image: redis:7.2.4-alpine
+    port: 6379:6379
+    options:
+      memory: 2048m
+      network: "private"
 
-# Configure custom arguments for Traefik
-# traefik:
-#   args:
-#     accesslog: true
-#     accesslog.format: json
+traefik:
+  options:
+    publish:
+      - "443:443"
+    network: "private"
 
 # Configure a custom healthcheck (default is /up on port 3000)
 # healthcheck:

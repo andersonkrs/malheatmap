@@ -1,8 +1,8 @@
 # syntax = docker/dockerfile:1
 
 # Make sure it matches the Ruby version in .tool-versions and Gemfile
-ARG RUBY_VERSION=3.3.0
-FROM ruby:$RUBY_VERSION-slim as base
+ARG RUBY_VERSION=3.2.2
+FROM ruby:$RUBY_VERSION-alpine3.18 as base
 
 # Rails app lives here
 WORKDIR /rails
@@ -18,12 +18,15 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
-# Install packages need to build gems
-RUN apt-get update -qq && \
-    apt-get install -y build-essential git pkg-config redis
+RUN apk add --update --no-cache \
+  build-base \
+  git \
+  curl \
+  tzdata \
+  sqlite-dev
 
 # Install application gems
-COPY .tool-versions Gemfile Gemfile.lock ./
+COPY .ruby-version Gemfile Gemfile.lock ./
 RUN bundle install && bundle exec bootsnap precompile --gemfile
 
 # Copy application code
@@ -38,24 +41,18 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # Final stage for app image
 FROM base
 
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl \
-                                               wget \
-                                               iputils-ping \
-                                               gnupg \
-                                               gnupg2 \
-                                               gnupg1 \
-                                               libvips \
-                                               imagemagick \
-                                               redis && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-ENV CHROME_VERSION="119.0.6045.199-1"
-
-RUN wget --no-check-certificate https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb && \
-    (dpkg -i google-chrome-stable_${CHROME_VERSION}_amd64.deb || true) && \
-    apt-get update -qq && \
-    apt-get -y -f install
+# Install dependencies:
+# - tzdata: Timezones
+# - libxml2 libxslt1 gcompat: Nokogiri
+# - imagemagick: ActiveStorage
+RUN apk add --update --no-cache \
+  curl \
+  tzdata \
+  sqlite-dev \
+  chromium \
+  redis \
+  libxml2 libxslt gcompat \
+  imagemagick
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
