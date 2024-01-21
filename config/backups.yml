@@ -1,0 +1,9 @@
+development:
+  aws_bucket: <%= ENV["BACKUPS_AWS_BUCKET"] %>
+  aws_access_key_id: <%= ENV["BACKUPS_AWS_ACCESS_KEY_ID"] %>
+  aws_secret_access_key: <%= ENV["BACKUPS_AWS_SECRET_ACCESS_KEY"] %>
+
+production:
+  aws_bucket: <%= Rails.application.credentials.dig(:backups, :aws_bucket) %>
+  aws_access_key_id: <%= Rails.application.credentials.dig(:backups, :aws_access_key_id) %>
+  aws_secret_access_key: <%= Rails.application.credentials.dig(:backups, :aws_secret_access_key) %>

@@ -46,6 +46,7 @@ module MalHeatmap
     config.analytics = config_for(:analytics)
     config.geocoder = config_for(:geocoder)
     config.mal_api = config_for(:mal_api)
+    config.backups = config_for(:backups)
 
     config.active_storage.service = :local
     config.active_storage.queues.analysis = :active_storage
