@@ -96,18 +96,29 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
 
+    env:
+      DOCKER_BUILDKIT: 1
+      RAILS_ENV: production
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - id: deploy
-        name: Deploy to dokku
-        continue-on-error: true
-        uses: idoberko2/dokku-deploy-github-action@v1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          ssh-private-key: ${{ secrets.DOKKU_SSH_KEY }}
-          dokku-host: ${{ secrets.DOKKU_HOST }}
-          app-name: 'malheatmap'
-          git-push-flags: --force
-          remote-branch: main
+          bundler-cache: true
+
+      - uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Run deploy command
+        run: bin/kamal deploy

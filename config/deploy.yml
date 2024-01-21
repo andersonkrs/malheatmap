@@ -19,7 +19,8 @@ servers:
     cmd: bin/sidekiq
     options:
       network: "private"
-      cpus: 1
+      cpus: 2
+      memory: 2048m
 
 volumes:
   - "/storage/malheatmap:/rails/storage"
