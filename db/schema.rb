@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_01_03_020927) do
+ActiveRecord::Schema[7.2].define(version: 2024_01_21_113321) do
   create_table "access_tokens", force: :cascade do |t|
     t.string "token"
     t.string "refresh_token"
@@ -68,7 +68,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_01_03_020927) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "item_id", null: false
-    t.index ["user_id", "item_id", "timestamp"], name: "index_entries_on_user_id_and_item_id_and_date"
+    t.index ["user_id", "timestamp", "item_id", "amount", "created_at"], name: "idx_on_user_id_timestamp_item_id_amount_created_at_2f13770dbb"
     t.check_constraint "amount > 0"
   end
 
