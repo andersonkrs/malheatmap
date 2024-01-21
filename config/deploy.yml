@@ -61,6 +61,8 @@ accessories:
     options:
       memory: 2048m
       network: "private"
+    volumes:
+      - /var/lib/redis:/data
 
 traefik:
   options:
