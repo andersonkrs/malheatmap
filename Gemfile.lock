@@ -243,13 +243,15 @@ GEM
       net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
-    mechanize (2.9.1)
+    mechanize (2.10.0)
       addressable (~> 2.8)
+      base64
       domain_name (~> 0.5, >= 0.5.20190701)
       http-cookie (~> 1.0, >= 1.0.3)
       mime-types (~> 3.0)
       net-http-digest_auth (~> 1.4, >= 1.4.1)
       net-http-persistent (>= 2.5.2, < 5.0.dev)
+      nkf
       nokogiri (~> 1.11, >= 1.11.2)
       rubyntlm (~> 0.6, >= 0.6.3)
       webrick (~> 1.7)
@@ -285,6 +287,7 @@ GEM
     net-ssh (7.2.1)
     newrelic_rpm (9.7.0)
     nio4r (2.7.0)
+    nkf (0.2.0)
     nokogiri (1.16.0)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
