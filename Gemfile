@@ -51,7 +51,6 @@ gem "mechanize"
 # Misc
 gem "geocoder"
 gem "gitlab-chronic"
-gem "kredis"
 gem "requestjs-rails"
 gem "view_component"
 gem "wheretz"
