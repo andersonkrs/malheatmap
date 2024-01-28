@@ -56,4 +56,6 @@ Rails.application.configure do
   config.hosts |= hosts
   config.action_cable.allowed_request_origins |= hosts
   config.web_console.whiny_requests = false
+
+  config.action_controller.default_url_options = { host: "malheatmap.localhost" }
 end

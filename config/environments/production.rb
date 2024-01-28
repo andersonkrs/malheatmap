@@ -91,4 +91,6 @@ Rails.application.configure do
 
   config.hosts = %w[malheatmap.com]
   config.host_authorization = { exclude: ->(request) { request.path =~ /up/ } }
+
+  config.action_controller.default_url_options = { host: "malheatmap.com" }
 end
