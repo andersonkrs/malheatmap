@@ -253,7 +253,7 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
 
     perform_enqueued_jobs only: CrawlingLogEntry::SaveAsyncJob
 
-    assert_equal 1, @user.crawling_log_entries.size
+    assert_equal 1, @user.crawling_log_entries.count
     log_entry = @user.crawling_log_entries.first
     assert_equal true, log_entry.failure?
     assert_equal "Something wrong here", log_entry.failure_message

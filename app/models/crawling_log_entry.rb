@@ -3,9 +3,9 @@ class CrawlingLogEntry < OpsRecord
 
   purge after: 5.days, method: :deletion
 
-  module AssociationRecordable
+  module Recordable
     def record
-      instance = proxy_association.klass.new(user: proxy_association.owner)
+      instance = proxy_association.klass.new(user_id: proxy_association.owner.id)
       begin
         yield(instance)
       rescue StandardError => error
@@ -20,26 +20,21 @@ class CrawlingLogEntry < OpsRecord
 
   belongs_to :user
 
-  default_scope { extending(AssociationRecordable) }
+  default_scope { extending(Recordable) }
 
   def success? = !failure?
 
   def save_later
-    SaveAsyncJob.set(wait: 5.seconds).perform_later(attributes.to_json)
+    SaveAsyncJob.set(wait: 5.seconds).perform_later(attributes.except("id"))
   end
 
   class SaveAsyncJob < ApplicationJob
     queue_as :logging
 
-    discard_on ActiveSupport::JSON.parse_error
-
     retry_on ActiveRecord::StatementInvalid, wait: :polynomially_longer, attempts: 5
 
-    def perform(json_attrs)
-      arguments = ActiveSupport::JSON.decode(json_attrs)
-
-      record = CrawlingLogEntry.new(**arguments)
-      record.save!(validate: false)
+    def perform(attributes)
+      CrawlingLogEntry.create!(**attributes)
     end
   end
 end
