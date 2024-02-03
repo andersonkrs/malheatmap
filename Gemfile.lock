@@ -35,7 +35,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 351a8d9bc99e69cc8d1ced86dc1d523e2dc51985
+  revision: 3d132b855541c35236e93b3a676a3ee80d02a38a
   branch: main
   specs:
     actioncable (7.2.0.alpha)
@@ -308,7 +308,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.7.3)
-    rack (3.0.8)
+    rack (3.0.9)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
