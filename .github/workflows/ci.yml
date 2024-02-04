@@ -91,10 +91,15 @@ jobs:
         with:
           name: logs
           path: log/**/*.log
+
   deploy:
     needs: test
     if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
+
+    concurrency:
+      group: deploy
+      cancel-in-progress: true
 
     env:
       DOCKER_BUILDKIT: 1
