@@ -12,6 +12,8 @@ class User::PeriodicMALSyncJob < ApplicationJob
     Rails.logger.error(exception)
   end
 
+  retry_on ActiveRecord::StatementInvalid, wait: :polynomially_longer, attempts: 3
+
   retry_on MAL::Errors::ProfileNotFound,
            MAL::Errors::UnableToNavigateToHistoryPage,
            wait: :polynomially_longer,
