@@ -15,6 +15,7 @@ gem "kamal", github: "basecamp/kamal", branch: "main"
 # Drivers
 gem "redis" # Action Cable
 gem "sqlite3"
+gem "activerecord-enhancedsqlite3-adapter"
 
 # Queuing
 gem "sidekiq"
@@ -62,7 +63,6 @@ end
 
 group :development do
   gem "brakeman"
-  gem "syntax_tree", require: false
   gem "web-console"
 end
 
