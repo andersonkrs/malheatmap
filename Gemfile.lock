@@ -400,7 +400,7 @@ GEM
       activejob (>= 7)
       activerecord (>= 7)
       railties (>= 7)
-    sqlite3 (1.7.1)
+    sqlite3 (1.7.2)
       mini_portile2 (~> 2.8.0)
     sshkit (1.22.0)
       mutex_m
