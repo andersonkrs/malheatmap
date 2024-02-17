@@ -13,7 +13,7 @@ servers:
     options:
       network: "private"
       cpus: 2
-    memory: 3096m
+      memory: 3096m
   jobs:
     hosts:
       - 84.247.163.243
@@ -21,7 +21,7 @@ servers:
     options:
       network: "private"
       cpus: 1
-      add-host: "host.docker.internal:host-gateway"
+      memory: 2096m
 
 volumes:
   - "/storage/malheatmap:/rails/storage"

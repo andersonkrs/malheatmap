@@ -3,7 +3,7 @@
      - polling_interval: 1
        batch_size: 500
    workers:
-     - queues: "*"
+     - queues: [default, active_storage]
        threads: 2
        processes: 1
        polling_interval: 0.1
