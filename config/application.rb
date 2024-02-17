@@ -43,8 +43,6 @@ module MalHeatmap
     config.active_storage.queues.purge = :active_storage
     config.active_storage.queues.mirror = :active_storage
 
-    config.solid_queue.silence_polling = true
-
     config.mission_control.jobs.base_controller_class = "AdminController"
 
     config.assets.compile = true
