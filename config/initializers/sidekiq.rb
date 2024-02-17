@@ -17,21 +17,6 @@ Sidekiq.configure_server do |config|
       SidekiqScheduler::Scheduler.instance.reload_schedule!
     end
   end
-
-  config.capsule("default") do |cap|
-    cap.concurrency = 5
-    cap.queues = %w[default]
-  end
-
-  config.capsule("low") do |cap|
-    cap.concurrency = 2
-    cap.queues = %w[low]
-  end
-
-  config.capsule("single_thread") do |cap|
-    cap.concurrency = 1
-    cap.queues = %w[logging active_storage]
-  end
 end
 
 unless Sidekiq.server?

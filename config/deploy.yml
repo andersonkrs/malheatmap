@@ -40,8 +40,8 @@ builder:
 # Remember to run `kamal env push` after making changes!
 env:
   clear:
-    WEB_CONCURRENCY: 2
-    RAILS_MAX_THREADS: 8
+    WEB_CONCURRENCY: 0
+    RAILS_MAX_THREADS: 2
     REDIS_URL: "redis://malheatmap-redis:6379/0"
   secret:
     - RAILS_MASTER_KEY
