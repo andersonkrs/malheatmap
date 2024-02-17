@@ -21,6 +21,7 @@ servers:
     options:
       network: "private"
       cpus: 1
+      add-host: "host.docker.internal:host-gateway"
 
 volumes:
   - "/storage/malheatmap:/rails/storage"
