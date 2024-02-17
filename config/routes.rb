@@ -22,4 +22,5 @@ Rails.application.routes.draw do
   get "/up" => "rails/health#show"
 
   mount Sidekiq::Web => "/sidekiq"
+  mount MissionControl::Jobs::Engine, at: "/jobs"
 end

@@ -1,6 +1,7 @@
 sqlite_defaults: &sqlite_defaults
   adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 2 } %>
+  # Solid queue takes two queries by default + number of queue threads
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 6 } %>
   timeout: 5000
   default_transaction_mode: immediate
   pragmas:
@@ -19,6 +20,10 @@ development:
     <<: *sqlite_defaults
     database: "storage/malheatmap_cache_development.sqlite3"
     migrations_paths: "db/cache/migrate"
+  queues:
+    <<: *sqlite_defaults
+    database: "storage/malheatmap_queues_development.sqlite3"
+    migrations_paths: "db/queues/migrate"
 
 test:
   primary:
@@ -29,6 +34,10 @@ test:
     <<: *sqlite_defaults
     database: "storage/malheatmap_ops_test.sqlite3"
     migrations_paths: "db/ops/migrate"
+  queues:
+    <<: *sqlite_defaults
+    database: "storage/malheatmap_queues_test.sqlite3"
+    migrations_paths: "db/queues/migrate"
 
 production:
   primary:
@@ -43,3 +52,7 @@ production:
     <<: *sqlite_defaults
     database: "storage/malheatmap_ops_production.sqlite3"
     migrations_paths: "db/ops/migrate"
+  queues:
+    <<: *sqlite_defaults
+    database: "storage/malheatmap_queues_production.sqlite3"
+    migrations_paths: "db/queues/migrate"

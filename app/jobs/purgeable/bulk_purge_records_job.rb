@@ -1,5 +1,8 @@
 module Purgeable
   class BulkPurgeRecordsJob < ApplicationJob
+    self.queue_adapter = :sidekiq
+    queue_as :default
+
     retry_on ActiveRecord::StatementInvalid, wait: :polynomially_longer, attempts: 3
 
     def perform

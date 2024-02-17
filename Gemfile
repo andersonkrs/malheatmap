@@ -21,6 +21,9 @@ gem "activerecord-enhancedsqlite3-adapter"
 gem "sidekiq"
 gem "sidekiq-scheduler"
 
+gem "solid_queue"
+gem "mission_control-jobs"
+
 # Cache
 gem "solid_cache"
 

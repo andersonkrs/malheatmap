@@ -1,6 +1,3 @@
 :concurrency: 2
 :queues:
-  - low
   - default
-  - logging
-  - active_storage

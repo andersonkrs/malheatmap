@@ -263,6 +263,11 @@ GEM
     mini_mime (1.1.5)
     mini_portile2 (2.8.5)
     minitest (5.22.2)
+    mission_control-jobs (0.1.1)
+      importmap-rails
+      rails (~> 7.1)
+      stimulus-rails
+      turbo-rails
     mocha (2.1.0)
       ruby2_keywords (>= 0.0.5)
     msgpack (1.7.2)
@@ -400,6 +405,8 @@ GEM
       activejob (>= 7)
       activerecord (>= 7)
       railties (>= 7)
+    solid_queue (0.2.1)
+      rails (~> 7.1)
     sqlite3 (1.7.2)
       mini_portile2 (~> 2.8.0)
     sshkit (1.22.0)
@@ -462,6 +469,7 @@ DEPENDENCIES
   kamal!
   lograge
   mechanize
+  mission_control-jobs
   mocha
   newrelic_rpm
   propshaft
@@ -475,6 +483,7 @@ DEPENDENCIES
   sidekiq-scheduler
   simplecov (~> 0.17.1)
   solid_cache
+  solid_queue
   sqlite3
   stimulus-rails!
   turbo-rails!

@@ -60,7 +60,7 @@ Rails.application.configure do
   config.log_tags = [:request_id]
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
-  # config.active_job.queue_adapter     = :resque
+  config.active_job.queue_adapter = :solid_queue
   # config.active_job.queue_name_prefix = "mal_heatmap_production"
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
@@ -87,7 +87,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.active_job.queue_adapter = :sidekiq
+  config.active_job.queue_adapter = :solid_queue
 
   config.hosts = %w[malheatmap.com]
   config.host_authorization = { exclude: ->(request) { request.path =~ /up/ } }
