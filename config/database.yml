@@ -1,7 +1,7 @@
 sqlite_defaults: &sqlite_defaults
   adapter: sqlite3
   # Solid queue takes two queries by default + number of queue threads
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 6 } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 7 } %>
   timeout: 5000
   default_transaction_mode: immediate
   pragmas:

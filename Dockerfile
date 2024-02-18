@@ -60,6 +60,8 @@ RUN apk add --update --no-cache \
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
+COPY --from=build /rails/bin/run_crawler /etc/periodic/15min/
+
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 CMD ["./bin/rails", "server"]

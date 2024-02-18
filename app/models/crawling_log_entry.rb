@@ -31,8 +31,6 @@ class CrawlingLogEntry < OpsRecord
   class SaveAsyncJob < ApplicationJob
     queue_as :logging
 
-    retry_on ActiveRecord::StatementInvalid, wait: :polynomially_longer, attempts: 5
-
     def perform(attributes)
       CrawlingLogEntry.create!(**attributes)
     end
