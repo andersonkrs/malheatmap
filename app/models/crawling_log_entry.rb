@@ -13,7 +13,7 @@ class CrawlingLogEntry < OpsRecord
         instance.failure_message = error.message
         raise
       ensure
-        instance.save_later
+        instance.save!(validate: false)
       end
     end
   end
@@ -23,16 +23,4 @@ class CrawlingLogEntry < OpsRecord
   default_scope { extending(Recordable) }
 
   def success? = !failure?
-
-  def save_later
-    SaveAsyncJob.set(wait: 5.seconds).perform_later(attributes.except("id"))
-  end
-
-  class SaveAsyncJob < ApplicationJob
-    queue_as :logging
-
-    def perform(attributes)
-      CrawlingLogEntry.create!(**attributes)
-    end
-  end
 end

@@ -90,8 +90,6 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
 
     assert_enqueued_with job: User::Signaturable::SignatureImage::GenerateJob, args: [@user]
 
-    perform_enqueued_jobs only: CrawlingLogEntry::SaveAsyncJob
-
     assert_equal 1, @user.crawling_log_entries.count
     crawling_log_entry = @user.crawling_log_entries.first
     assert_equal crawling_log_entry.checksum, @user.checksum
@@ -131,7 +129,6 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
       @user.reload
     end
 
-    perform_enqueued_jobs only: CrawlingLogEntry::SaveAsyncJob
     assert_equal 2, @user.crawling_log_entries.count
 
     crawling_log_entries = @user.crawling_log_entries.order(:created_at)
@@ -183,8 +180,6 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
         ]
       )
     @user.crawler_pipeline.execute!
-
-    perform_enqueued_jobs only: CrawlingLogEntry::SaveAsyncJob
 
     visited_pages = @user.crawling_log_entries.first.visited_pages
 
@@ -250,8 +245,6 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
     assert_raises MAL::Errors::CrawlError do
       @user.crawler_pipeline.execute!
     end
-
-    perform_enqueued_jobs only: CrawlingLogEntry::SaveAsyncJob
 
     assert_equal 1, @user.crawling_log_entries.count
     log_entry = @user.crawling_log_entries.first
