@@ -44,6 +44,21 @@ traefik:
       - "443:443"
     network: "private"
 
+accessories:
+  redis:
+    roles:
+      - web
+    image: redis/redis-stack:latest
+    port: 6379:6379
+    options:
+      memory: 512m
+      network: "private"
+    env:
+      clear:
+        REDIS_ARGS: "--save 60 1000 --appendonly yes"
+    volumes:
+      - /storage/malheatmap:/data
+
 # Use a different ssh user than root
 # ssh:
 #   user: app
