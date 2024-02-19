@@ -1,5 +1,3 @@
-require "sidekiq/web"
-
 Rails.application.routes.draw do
   root to: "sessions#index"
 
@@ -21,6 +19,5 @@ Rails.application.routes.draw do
   get "/health-check" => "health_check#index", :as => "health_check"
   get "/up" => "rails/health#show"
 
-  mount Sidekiq::Web => "/sidekiq"
   mount MissionControl::Jobs::Engine, at: "/jobs"
 end

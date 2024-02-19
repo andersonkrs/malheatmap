@@ -156,6 +156,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    chronic (0.10.2)
     chunky_png (1.3.15)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
@@ -179,8 +180,6 @@ GEM
       ruby2_keywords
     ed25519 (1.3.0)
     erubi (1.12.0)
-    et-orbi (1.2.7)
-      tzinfo
     fast_gettext (2.3.0)
     ferrum (0.14)
       addressable (~> 2.5)
@@ -189,9 +188,6 @@ GEM
       websocket-driver (>= 0.6, < 0.8)
     ffi (1.16.3)
     forwardable (1.3.3)
-    fugit (1.9.0)
-      et-orbi (~> 1, >= 1.2.7)
-      raabro (~> 1.4)
     geocoder (1.8.2)
     gettext (3.4.9)
       erubi
@@ -313,7 +309,6 @@ GEM
     public_suffix (5.0.4)
     puma (6.4.2)
       nio4r (~> 2.0)
-    raabro (1.4.0)
     racc (1.7.3)
     rack (3.0.9)
     rack-session (2.0.0)
@@ -381,20 +376,9 @@ GEM
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyntlm (0.6.3)
-    rufus-scheduler (3.9.1)
-      fugit (~> 1.1, >= 1.1.6)
     sass-embedded (1.69.7)
       google-protobuf (~> 3.25)
       rake (>= 13.0.0)
-    sidekiq (7.2.1)
-      concurrent-ruby (< 2)
-      connection_pool (>= 2.3.0)
-      rack (>= 2.2.4)
-      redis-client (>= 0.19.0)
-    sidekiq-scheduler (5.0.3)
-      rufus-scheduler (~> 3.2)
-      sidekiq (>= 6, < 8)
-      tilt (>= 1.4.0)
     simplecov (0.17.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -417,7 +401,6 @@ GEM
     stringio (3.1.0)
     text (1.3.1)
     thor (1.3.0)
-    tilt (2.3.0)
     timeout (0.4.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -442,6 +425,8 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
     wheretz (0.0.6)
     xpath (3.2.0)
       nokogiri (~> 1.8)
@@ -479,8 +464,6 @@ DEPENDENCIES
   requestjs-rails
   rollbar
   rubocop-rails-omakase
-  sidekiq
-  sidekiq-scheduler
   simplecov (~> 0.17.1)
   solid_cache
   solid_queue
@@ -491,6 +474,7 @@ DEPENDENCIES
   view_component
   web-console
   webmock
+  whenever
   wheretz
 
 RUBY VERSION

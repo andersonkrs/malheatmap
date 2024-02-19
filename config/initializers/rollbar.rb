@@ -25,7 +25,6 @@ Rollbar.configure do |config|
       "ActiveRecord::RecordNotFound" => "ignore",
       "ActionController::UnknownAction" => "ignore",
       "ActionDispatch::Http::MimeNegotiation::InvalidType" => "ignore",
-      "Sidekiq::JobRetry::Skip" => "ignore",
       "ActiveRecord::StatementInvalid" => -> { _1.to_s.include?("SQLite3::BusyException") ? "warning" : "critical" }
     }
   )

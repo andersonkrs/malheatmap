@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-set -e
-
-cd /rails
-
-bin/rails r "Rails.logger.info 'Hello from crond'"
-bin/rails r "Rollbar.info 'Hello from crond'"

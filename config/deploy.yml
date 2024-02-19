@@ -9,19 +9,11 @@ servers:
   web:
     hosts:
       - 84.247.163.243
-    cmd: bin/rails server
+    cmd: sh -c "crond -b && bin/rails server"
     options:
       network: "private"
       cpus: 2
       memory: 3096m
-  jobs:
-    hosts:
-      - 84.247.163.243
-    cmd: bin/sidekiq
-    options:
-      network: "private"
-      cpus: 1
-      memory: 2096m
 
 volumes:
   - "/storage/malheatmap:/rails/storage"
@@ -46,29 +38,29 @@ env:
   secret:
     - RAILS_MASTER_KEY
 
-# Use a different ssh user than root
-# ssh:
-#   user: app
-
-# Use accessory services (secrets come from .env).
-accessories:
-  redis:
-    roles:
-      - web
-      - jobs
-    image: redis:7.2.4-alpine
-    port: 6379:6379
-    options:
-      memory: 2048m
-      network: "private"
-    volumes:
-      - /var/lib/redis:/data
-
 traefik:
   options:
     publish:
       - "443:443"
     network: "private"
+
+# Use a different ssh user than root
+# ssh:
+#   user: app
+
+# Use accessory services (secrets come from .env).
+#accessories:
+#  redis:
+#    roles:
+#      - web
+#      - jobs
+#    image: redis:7.2.4-alpine
+#    port: 6379:6379
+#    options:
+#      memory: 2048m
+#      network: "private"
+#    volumes:
+#      - /var/lib/redis:/data
 
 # Configure a custom healthcheck (default is /up on port 3000)
 # healthcheck:

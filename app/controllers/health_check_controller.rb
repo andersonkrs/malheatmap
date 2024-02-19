@@ -4,8 +4,10 @@ class HealthCheckController < ApplicationController
     password: Rails.application.credentials.health_check[:password]
   )
 
+  QUEUE_LAST_HEARTBEAT_INTERVAL = 2.minutes
+
   def index
-    if sidekiq_online?
+    if solid_queue_online?
       head :ok
     else
       head :service_unavailable
@@ -14,7 +16,7 @@ class HealthCheckController < ApplicationController
 
   private
 
-  def sidekiq_online?
-    Sidekiq::ProcessSet.new.size.positive?
+  def solid_queue_online?
+    SolidQueue::Process.where("last_heartbeat_at >= ?", QUEUE_LAST_HEARTBEAT_INTERVAL.ago).exists?
   end
 end
