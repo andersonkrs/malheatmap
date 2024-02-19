@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-set -e
-
-cd /rails
-bin/rails r "User::SchedulePeriodicMALSyncJob.perform_later"

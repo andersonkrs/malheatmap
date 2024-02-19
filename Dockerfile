@@ -47,7 +47,7 @@ FROM base
 # - imagemagick: ActiveStorage
 # - aws-cli zip Backups
 RUN apk add --update --no-cache \
-  curl \
+  bash curl \
   tzdata \
   sqlite-dev \
   chromium \

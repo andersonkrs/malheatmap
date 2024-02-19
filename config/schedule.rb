@@ -12,9 +12,6 @@
 #   runner "MyModel.some_method"
 #   rake "some:great:rake:task"
 # end
-every 1.minute do
-  runner "Rollbar.info('Hello from cron')"
-end
 
 every 15.minutes do
   runner "User::SchedulePeriodicMALSyncJob.perform_later"
