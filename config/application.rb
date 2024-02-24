@@ -51,5 +51,7 @@ module MalHeatmap
     config.assets.configure do |env|
       env.export_concurrent = false
     end
+
+    config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
   end
 end
