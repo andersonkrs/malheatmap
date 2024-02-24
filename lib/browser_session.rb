@@ -1,5 +1,11 @@
 class BrowserSession
-  RETRYABLE_ERRORS = [Ferrum::TimeoutError, Ferrum::ProcessTimeoutError, NoMethodError].freeze
+  RETRYABLE_ERRORS = [
+    Ferrum::TimeoutError,
+    Ferrum::ProcessTimeoutError,
+    Ferrum::PendingConnectionsError,
+    Ferrum::JavaScriptError,
+    NoMethodError
+  ].freeze
 
   def self.fetch_page(&)
     instance = new

@@ -16,7 +16,8 @@ class User::MALSyncable::CrawlerPipeline
 
       crawler_entry.checksum = data.checksum
     ensure
-      crawler_entry.visited_pages = visited_pages
+
+      crawler_entry.visited_pages.build(visited_pages)
     end
   end
 
@@ -33,6 +34,6 @@ class User::MALSyncable::CrawlerPipeline
   end
 
   def visited_pages
-    crawler.history.map { |page| { body: page.body.force_encoding("UTF-8"), path: page.uri.path } }
+    crawler.history.map { |page| { body: page.body, url: page.uri.path } }
   end
 end

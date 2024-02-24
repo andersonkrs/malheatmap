@@ -1,7 +1,14 @@
 class CrawlingLogEntry < OpsRecord
   include Purgeable
 
-  purge after: 5.days, method: :deletion
+  purge after: 3.days
+
+  belongs_to :user
+
+  has_many :visited_pages,
+           class_name: "CrawlingLogEntryVisitedPage",
+           dependent: :delete_all,
+           inverse_of: :crawling_log_entry
 
   module Recordable
     def record
@@ -13,14 +20,24 @@ class CrawlingLogEntry < OpsRecord
         instance.failure_message = error.message
         raise
       ensure
-        instance.save!(validate: false)
+        instance.save_async
       end
     end
   end
 
-  belongs_to :user
-
   default_scope { extending(Recordable) }
 
   def success? = !failure?
+
+  def save_async
+    instance = self
+
+    promise = Concurrent::Promise.execute do
+      Rails.application.executor.wrap do
+        instance.save!(validate: false)
+      end
+    end
+
+    promise.wait! if Rails.env.test?
+  end
 end

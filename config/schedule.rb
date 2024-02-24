@@ -21,4 +21,8 @@ every :day, at: "18:00pm" do
   rake "backups:perform"
 end
 
+every 2.hours do
+  runner "SolidQueue::Job.clear_finished_in_batches"
+end
+
 # Learn more: http://github.com/javan/whenever

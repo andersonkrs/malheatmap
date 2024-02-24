@@ -94,7 +94,6 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
     crawling_log_entry = @user.crawling_log_entries.first
     assert_equal crawling_log_entry.checksum, @user.checksum
     assert_equal false, crawling_log_entry.failure?
-    assert crawling_log_entry.purge_with_deletion?
     assert_nil crawling_log_entry.failure_message
     assert_equal @crawler_response, crawling_log_entry.raw_data.deep_symbolize_keys
   end
@@ -181,11 +180,14 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
       )
     @user.crawler_pipeline.execute!
 
-    visited_pages = @user.crawling_log_entries.first.visited_pages
+    visited_pages = @user.crawling_log_entries.reload.first.visited_pages
 
     assert_equal 2, visited_pages.size
-    assert_includes visited_pages, { "body" => "<html>profile</html>", "path" => "/myuser/profile" }
-    assert_includes visited_pages, { "body" => "<html>history</html>", "path" => "/myuser/history" }
+    assert_equal "<html>profile</html>", visited_pages.first.body
+    assert_equal "/myuser/profile", visited_pages.first.url
+
+    assert_equal "<html>history</html>", visited_pages.second.body
+    assert_equal "/myuser/history", visited_pages.second.url
   end
 
   test "does not update user's data when checksum did not change" do
@@ -254,7 +256,7 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
     visited_pages = log_entry.visited_pages
 
     assert_equal 1, visited_pages.size
-    assert_equal "/myuser/profile", visited_pages.first["path"]
+    assert_equal "/myuser/profile", visited_pages.first["url"]
     assert_equal "<html>something wrong here</html>", visited_pages.first["body"]
   end
 end
