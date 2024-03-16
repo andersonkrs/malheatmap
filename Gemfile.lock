@@ -25,10 +25,10 @@ GIT
 
 GIT
   remote: https://github.com/hotwired/turbo-rails.git
-  revision: 07d3488c12774b59c6c8eb94836019557d5e2160
+  revision: 102a491754d46f7dd924201fcfaf879a0f04b11c
   branch: main
   specs:
-    turbo-rails (2.0.2)
+    turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
@@ -140,7 +140,7 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     bcrypt_pbkdf (1.1.0)
-    bigdecimal (3.1.6)
+    bigdecimal (3.1.7)
     bindex (0.8.1)
     bootsnap (1.17.1)
       msgpack (~> 1.2)
@@ -176,8 +176,7 @@ GEM
     docile (1.4.0)
     domain_name (0.6.20240107)
     dotenv (2.8.1)
-    drb (2.2.0)
-      ruby2_keywords
+    drb (2.2.1)
     ed25519 (1.3.0)
     erubi (1.12.0)
     fast_gettext (2.3.0)
@@ -205,7 +204,7 @@ GEM
     hashdiff (1.1.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
-    i18n (1.14.1)
+    i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
@@ -217,7 +216,7 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.7.2)
-    irb (1.11.2)
+    irb (1.12.0)
       rdoc
       reline (>= 0.4.2)
     json (2.7.1)
@@ -258,7 +257,7 @@ GEM
     mini_magick (4.12.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.5)
-    minitest (5.22.2)
+    minitest (5.22.3)
     mission_control-jobs (0.1.1)
       importmap-rails
       rails (~> 7.1)
@@ -288,7 +287,7 @@ GEM
     newrelic_rpm (9.7.1)
     nio4r (2.7.0)
     nkf (0.2.0)
-    nokogiri (1.16.2)
+    nokogiri (1.16.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     numerizer (0.2.0)
@@ -310,7 +309,7 @@ GEM
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.7.3)
-    rack (3.0.9)
+    rack (3.0.9.1)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -334,7 +333,7 @@ GEM
     redis-client (0.19.1)
       connection_pool
     regexp_parser (2.9.0)
-    reline (0.4.2)
+    reline (0.4.3)
       io-console (~> 0.5)
     request_store (1.5.1)
       rack (>= 1.4)
@@ -400,7 +399,7 @@ GEM
       net-ssh (>= 2.8.0)
     stringio (3.1.0)
     text (1.3.1)
-    thor (1.3.0)
+    thor (1.3.1)
     timeout (0.4.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
