@@ -299,6 +299,7 @@ GEM
     prime (0.1.2)
       forwardable
       singleton
+    prism (0.24.0)
     propshaft (0.8.0)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
@@ -371,6 +372,10 @@ GEM
       rubocop-minitest
       rubocop-performance
       rubocop-rails
+    ruby-lsp (0.14.5)
+      language_server-protocol (~> 3.17.0)
+      prism (>= 0.22.0, < 0.25)
+      sorbet-runtime (>= 0.5.10782)
     ruby-progressbar (1.13.0)
     ruby-vips (2.2.0)
       ffi (~> 1.12)
@@ -391,6 +396,7 @@ GEM
       railties (>= 7)
     solid_queue (0.2.1)
       rails (~> 7.1)
+    sorbet-runtime (0.5.11293)
     sqlite3 (1.7.2)
       mini_portile2 (~> 2.8.0)
     sshkit (1.22.0)
@@ -464,6 +470,7 @@ DEPENDENCIES
   requestjs-rails
   rollbar
   rubocop-rails-omakase
+  ruby-lsp
   simplecov (~> 0.17.1)
   solid_cache
   solid_queue

@@ -66,6 +66,7 @@ end
 
 group :development do
   gem "brakeman"
+  gem "ruby-lsp", require: false
   gem "web-console"
 end
 
