@@ -5,10 +5,7 @@
 </h1>
 
 <h4 align="center">
-  <a href="https://github.com/andersonkrs/malheatmap"><img src="https://github.com/andersonkrs/malheatmap/workflows/ci/badge.svg"/></a>
-  <a href="https://codeclimate.com/github/andersonkrs/malheatmap/maintainability"><img src="https://api.codeclimate.com/v1/badges/46216781798a6f8f02f9/maintainability" /></a>
-  <a href="https://codeclimate.com/github/andersonkrs/malheatmap/test_coverage"><img src="https://api.codeclimate.com/v1/badges/46216781798a6f8f02f9/test_coverage" /></a>
-  <a href="https://oss.skylight.io/app/applications/J8hCjPhY5lKe"><img src="https://badges.skylight.io/status/J8hCjPhY5lKe.svg" /></a>
+  <a href="https://github.com/andersonkrs/malheatmap/actions/workflows/ci.yml"><img src="https://github.com/andersonkrs/malheatmap/actions/workflows/ci.yml/badge.svg"/></a>
 </h4>
 
 <p align="center">
@@ -28,24 +25,17 @@
 
 ![Demo](.github/app-demo.png?raw=true "Demo")
 
-#### Built with
-
-* [Ruby on Rails](https://rubyonrails.org/)
-* [PostgreSQL](https://www.postgresql.org/)
-* [Redis](https://redis.io/)
-* [Bulma CSS](https://bulma.io/)
-
 #### Motivation
 
-I've made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). Also, I want to try web scrapping with ruby and learn a little bit more about it.
+I've made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). Also, I want to try web scrapping with Ruby and learn more about it.
 
-Also, this allowed me to test some gems, like [ViewComponent](https://github.com/github/view_component).
+Over the years I've made several upgrades, adding Turbo, SolidQueue, better caching with Russian Doll caching + HTTP Caching, etc.
 
 #### How it works
 
-The web app just displays the processed data and a set of jobs do the hard and dirty work of crawling, process, save data.
+The web app displays the processed data and a set of jobs do the hard and dirty work of crawling, processing, and saving data.
 
-So, when the user subscribes to its profile to be tracked, a job will be triggered to check if the user exists on MAL and then crawl and process the data. While that, the UI will be connected to a channel awaiting a response from the job, once the job is completed, the user will be redirected to his page. After subscribing, a recurring job will repeat the crawling process daily to keep the user's data updated.
+So, when the user subscribes
 
 <table>
   <tr>
@@ -58,58 +48,32 @@ So, when the user subscribes to its profile to be tracked, a job will be trigger
   </tr>
 </table>
 
+### Future
+
+The plan is to consume data solely from MAL's API and drop the web crawling. That will require some deep reorganization of the code and how the activities are calculated since MAL does not have an API for history usage and they don't seem to have that in their roadmap.
+
+#### Main Tools
+
+* Ruby on Rails
+* SQLite
+* Bulma CSS
+
 #### Developing
 
-Requirements:
+Dependencies:
 
-* PostgreSQL 13.3+
-* Redis 6.2+ 
-* Ruby 3.0.2
-* Node 14.17.0
+* SQLite
+* Redis for action cable 
+* Ruby
 * [ImageMagick](https://imagemagick.org/index.php)
 
-Since this app is a classical Rails project, there is nothing special here, to setup project:
-
-```sh
-bin/setup
-```
-
-This script will create the database and install all dependencies.
-
-To run the app:
-
-```sh
-bin/rails server
-```
-
-To run unit tests:
-
-```sh
-bin/rails test
-```
-
-Integration tests:
-
-```sh
-bin/rails test:system
-```
-
-To run all linters and test suites:
-
-```sh
-bin/qa
-```
+Since this app is a classical Rails project, there is nothing special here to either set up the project or run it.
 
 ### Deployment
 
-This app is deployed with [Dokku](http://dokku.viewdocs.io/dokku/) hosted on a VPS.
+This app is gloriously deployed with [Kamal](https://kamal-deploy.org/).
 
-Auxiliary tools:
-
-* [Rollbar](https://rollbar.com/) for error tracking and uptime monitoring
-* [Matomo](https://matomo.org) for analytics
-* [Amazon S3](https://aws.amazon.com/s3) as storage service
-* [Sidekiq](https://sidekiq.org/) as background job adapter
+Since I keep this app running from my pocket, I use some space to run this app on my tiny VPS, to keep costs low, we use the VPS storage to host the ActiveStorage files.
 
 #### Other Inspirations
 
