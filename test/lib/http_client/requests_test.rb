@@ -20,6 +20,10 @@ class HttpClient::RequestsTest < ActiveSupport::TestCase
     end
   end
 
+  setup do
+    HttpClient::Base.adapter = HttpClient::Adapters::NetHttpAdapter.new
+  end
+
   test "can execute a GET request and return a response" do
     VCR.use_cassette("json_placeholder_fetch_todo_1") do
       response = ApiClient.fetch_post(id: 1)
