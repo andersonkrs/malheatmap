@@ -25,9 +25,20 @@
 
 ![Demo](.github/app-demo.png?raw=true "Demo")
 
+#### Profile examples
+
+Here are some real users profiles to give you an idea of how it looks like in case you don't have a MAL account:
+
+* [KanchiMoe](https://malheatmap.com/users/KanchiMoe)
+* [RudeRedis](https://malheatmap.com/users/RudeRedis)
+* [GDjkhp](https://malheatmap.com/users/GDjkhp)
+
 #### Motivation
 
-I've made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). Also, I want to try web scrapping with Ruby and learn more about it.
+At first, I've made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). 
+Also, an opportunity want to try web scrapping with Ruby and have a pretty much vanila Rails experience which is very different from the apps that I have been working on.
+
+It has been a great experience to build an app from zero to deploy and maintain it. It's been making me learn a lot about sysadmin tasks, servers, docker, deployment, and so on.
 
 Over the years I've made several upgrades, adding Turbo, SolidQueue, better caching with Russian Doll caching + HTTP Caching, etc.
 
@@ -35,7 +46,8 @@ Over the years I've made several upgrades, adding Turbo, SolidQueue, better cach
 
 The web app displays the processed data and a set of jobs do the hard and dirty work of crawling, processing, and saving data.
 
-So, when the user subscribes
+When users subscribe via OAuth we capture some information based on the token and then we start to crawl the user's history. We periodically run the web crawler to keep the user's history up to date.
+
 
 <table>
   <tr>
@@ -47,6 +59,8 @@ So, when the user subscribes
     </td> 
   </tr>
 </table>
+
+The users get calendar image that they can embed on their MAL profile or forum signature, that's generated in background by taking a screenshot of their profiles using a headless chrome controled by [Ferrum](https://github.com/rubycdp/ferrum).
 
 ### Future
 
