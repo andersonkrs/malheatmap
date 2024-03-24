@@ -48,7 +48,6 @@ The web app displays the processed data and a set of jobs do the hard and dirty 
 
 When users subscribe via OAuth we capture some information based on the token and then we start to crawl the user's history. We periodically run the web crawler to keep the user's history up to date.
 
-
 <table>
   <tr>
     <th>Demo</th>
@@ -70,11 +69,12 @@ The plan is to consume data solely from MAL's API and drop the web crawling. Tha
 
 * Ruby on Rails
 * SQLite
+* SolidQueue
+* SolidCache
+* Hotwire
 * Bulma CSS
 
-#### Developing
-
-Dependencies:
+#### Dependencies:
 
 * SQLite
 * Redis for action cable 
