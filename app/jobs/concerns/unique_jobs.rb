@@ -33,11 +33,11 @@ module UniqueJobs
     normalized_key = [key].flatten.compact.join(":")
     counter_key = "active-job-uniqueness:#{self.class.name}:#{normalized_key}"
 
-    count = Rails.cache.increment(counter_key, 1, expires_in: expires_in)
-
-    if count && count > 1
+    if Rails.cache.read(counter_key)
       Rails.logger.warn("[Active Job] Unique job discarded #{job}")
       throw :abort
     end
+
+    Rails.cache.write(counter_key, true, expires_in: expires_in)
   end
 end

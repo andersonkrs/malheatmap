@@ -51,7 +51,7 @@ Here are some real user profiles to give you an idea of how it looks like in cas
 At first, I made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). 
 Also, I want to take this opportunity to try web scrapping with Ruby and have a pretty much vanilla Rails experience, which is very different from the apps that I have been working on.
 
-Building an app from zero to deployment has been a great experience, and I feel all its pain standing up and up from the ground. It's taught me a lot about sysadmin tasks, servers, docker, deployment, etc.
+Building an app from zero to deployment has been a great experience, and I feel all its pain standing up from the ground. It's taught me a lot about sysadmin tasks, servers, docker, deployment, etc.
 
 Over the years, I've made several upgrades, adding Turbo, SolidQueue, better caching with Russian Doll caching + HTTP Caching, etc.
 
@@ -61,7 +61,7 @@ The web app displays the processed data, and jobs do the hard and dirty work of 
 
 When users subscribe via OAuth, we capture some information based on the token and then start crawling their history. We periodically run the web crawler to keep the user's history current.
 
-The users get a calendar image that they can embed on their MAL profile or forum signature. The image is generated in the background by taking a screenshot of their profiles using a headless Chrome controlled by [Ferrum](https://github.com/rubycdp/ferrum).
+The users get a calendar image that can be embedded on their MAL profile or forum signature. The image is generated in the background by taking a screenshot of their profiles using a headless Chrome controlled by [Ferrum](https://github.com/rubycdp/ferrum).
 
 ### Future
 
