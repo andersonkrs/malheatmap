@@ -1,6 +1,9 @@
 class User::PeriodicMALSyncJob < ApplicationJob
   queue_as :low
 
+  # Make sure we don't enqueue synching unecessarily
+  uniqueness_control key: ->(user) { "#{user.id}:#{user.mal_synced_at&.iso8601}" }, expires_in: 4.hours
+
   discard_on ActiveRecord::RecordNotFound do |_job, exception|
     Rails.logger.error(exception)
   end

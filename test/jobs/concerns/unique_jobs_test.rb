@@ -67,4 +67,23 @@ class UniqueJobsTest < ActiveJob::TestCase
 
     assert_enqueued_jobs 1, only: [BucketJob]
   end
+
+  test "multiple attempts should not extend the lock expiration" do
+    record_a = Bucket.create(id: 1)
+    BucketJob.perform_later(record_a)
+    clear_enqueued_jobs
+
+    travel_to 10.minutes.from_now
+    BucketJob.perform_later(record_a)
+
+    travel_to 10.minutes.from_now
+    BucketJob.perform_later(record_a)
+
+    assert_no_enqueued_jobs
+
+    travel_to 15.minutes.from_now
+    BucketJob.perform_later(record_a)
+
+    assert_enqueued_jobs 1, only: [BucketJob]
+  end
 end
