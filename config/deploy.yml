@@ -12,7 +12,7 @@ servers:
     cmd: sh -c "crond -b && bin/rails server"
     options:
       network: "private"
-      cpus: 1
+      cpus: 2
       memory: 3096m
 
 volumes:
