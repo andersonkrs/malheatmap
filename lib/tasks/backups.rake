@@ -8,13 +8,17 @@ namespace :backups do
     puts "Creating Backup under: #{backup_file}"
 
     puts "Zipping storage files..."
-    puts system "zip -ur #{backup_file} #{"storage/#{Rails.env}/**/*"}"
+    FileList["storage/#{Rails.env}/**/*"].each do |file|
+      puts system "zip -ur #{backup_file} #{file}"
+    end
     puts "Zipping storage files complete!"
 
     # Exclude logging database
     FileList["storage/*#{Rails.env}.sqlite3"].exclude(/malheatmap_ops/).each do |file|
-      puts "Zipping database #{file}"
-      puts system "zip -ur #{backup_file} #{file}"
+      puts "Dumping database #{file}"
+      puts system "sqlite3 #{file} .dump > #{file.ext("sql")}"
+      puts "Zipping database #{file.ext("sql")}..."
+      puts system "zip -ur #{backup_file} #{file.ext("sql")}.sql"
     end
     puts "Zipping databases complete!"
 
