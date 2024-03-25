@@ -42,6 +42,7 @@ config/credentials/production.key
 /config/master.key
 
 *.sqlite3
+*.zip
 
 .env
 .env.*
