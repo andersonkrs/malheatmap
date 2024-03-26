@@ -5,7 +5,7 @@ sqlite_defaults: &sqlite_defaults
   timeout: 5000
   default_transaction_mode: immediate
   pragmas:
-    mmap_size: <%= 256.megabytes %>
+    mmap_size: <%= 64.megabytes %>
 
 development:
   primary:
@@ -44,6 +44,8 @@ production:
     <<: *sqlite_defaults
     database: "storage/malheatmap_primary_production.sqlite3"
     migrations_paths: "db/migrate"
+    pragmas:
+      mmap_size: <%= 256.megabytes %>
   cache:
     <<: *sqlite_defaults
     database: "storage/malheatmap_cache_production.sqlite3"
