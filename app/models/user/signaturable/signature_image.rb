@@ -26,7 +26,7 @@ class User
       end
 
       class GenerateJob < ApplicationJob
-        queue_as :default
+        queue_as :logging
 
         def perform(user)
           user.signature_image.generate

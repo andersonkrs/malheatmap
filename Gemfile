@@ -21,9 +21,6 @@ gem "activerecord-enhancedsqlite3-adapter"
 gem "solid_queue"
 gem "mission_control-jobs"
 
-# Manage cron
-gem "whenever", require: false
-
 # Cache
 gem "solid_cache"
 

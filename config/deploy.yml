@@ -9,7 +9,7 @@ servers:
   web:
     hosts:
       - 213.199.60.22
-    cmd: sh -c "crond -b && bin/rails server"
+    cmd: sh -c "bin/rails server"
     options:
       network: "private"
       cpus: 2
@@ -43,6 +43,8 @@ traefik:
     publish:
       - "443:443"
     network: "private"
+    memory: 512m
+    cpus: 1
 
 accessories:
   redis:

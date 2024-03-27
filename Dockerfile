@@ -60,8 +60,6 @@ RUN apk add --update --no-cache \
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
-RUN bundle exec whenever --update-crontab
-
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 CMD ["./bin/rails", "server"]

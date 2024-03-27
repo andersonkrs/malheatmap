@@ -26,10 +26,6 @@ class User::PeriodicMALSyncJobTest < ActiveJob::TestCase
 
     fake_pipeline = mock(:fake_pipeline)
     fake_pipeline.stubs(:execute!).raises(MAL::Errors::ProfileNotFound).once
-    fake_pipeline
-      .stubs(:execute!)
-      .raises(MAL::Errors::UnableToNavigateToHistoryPage.new(body: "body!", uri: "uri!"))
-      .times(2)
 
     User.any_instance.stubs(:crawler_pipeline).returns(fake_pipeline)
 

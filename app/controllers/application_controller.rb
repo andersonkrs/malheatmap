@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_gettext_locale
 
-  etag { session.try(:id) }
+  etag { ["v1", session.try(:id)].compact }
 
   def about
     render "application/about"

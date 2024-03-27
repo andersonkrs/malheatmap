@@ -30,7 +30,8 @@ module MAL
       response
     rescue Mechanize::ResponseCodeError => error
       handle_response_code_error(error.response_code.to_i, error.message)
-    rescue *INTERNAL_COMMUNICATION_ERRORS
+    rescue *INTERNAL_COMMUNICATION_ERRORS => e
+      Rails.logger.error(e)
       raise Errors::CommunicationError
     end
 
