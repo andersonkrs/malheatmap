@@ -1,0 +1,6 @@
+development:
+  database: cache
+production:
+  database: cache
+test:
+  database: cache
