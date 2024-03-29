@@ -1,5 +1,5 @@
 default: &default
-  requests_interval: <%= 2.seconds %>
+  requests_interval: <%= 3.seconds %>
   max_timeout: <%= 10.seconds %>
 
 development:

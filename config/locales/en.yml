@@ -15,7 +15,7 @@ en:
     crawler:
       errors:
         profile_not_found: "Profile not found for username %{username}. Please check if you typed it correctly."
-        communication_error: "A communication error with myanimelist.net has occurred. Please try again later"
+        communication_error: "A communication error with myanimelist.net has occurred. Code: %{response_code}. Please try again later"
   subscriptions:
     form:
       form_label_html: |

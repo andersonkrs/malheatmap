@@ -138,7 +138,7 @@ class UserCrawlerTest < ActiveSupport::TestCase
 
     stub_request(:any, /#{MAL::HOST}/o).to_return(status: 303)
 
-    assert_raises MAL::Errors::CommunicationError, I18n.t("mal.crawler.errors.communication_error") do
+    assert_raises MAL::Errors::CommunicationError, match: /A communication error with myanimelist\.net has occurred/ do
       crawler.crawl
     end
   end
@@ -148,7 +148,7 @@ class UserCrawlerTest < ActiveSupport::TestCase
 
     stub_request(:any, /#{MAL::HOST}/o).to_return(status: 503)
 
-    assert_raises MAL::Errors::CommunicationError do
+    assert_raises MAL::Errors::CommunicationError, match: /Code\: 503/ do
       crawler.crawl
     end
   end

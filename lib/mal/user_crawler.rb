@@ -31,8 +31,7 @@ module MAL
     rescue Mechanize::ResponseCodeError => error
       handle_response_code_error(error.response_code.to_i, error.message)
     rescue *INTERNAL_COMMUNICATION_ERRORS => e
-      Rails.logger.error(e)
-      raise Errors::CommunicationError
+      raise Errors::CommunicationError, username: username
     end
 
     private
@@ -46,6 +45,7 @@ module MAL
       self.history_added = proc { sleep config[:requests_interval] }
       self.open_timeout = config[:timeout]
       self.read_timeout = config[:timeout]
+      self.log = Rails.logger
     end
 
     def crawl_profile
@@ -103,7 +103,7 @@ module MAL
     def handle_response_code_error(response_code, message)
       exception_class = (response_code == 404 ? Errors::ProfileNotFound : Errors::CommunicationError)
 
-      raise exception_class.new(message, username:)
+      raise exception_class.new(message, username:, response_code:)
     end
   end
 end

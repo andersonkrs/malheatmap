@@ -9,11 +9,9 @@ module MAL
       end
     end
 
-    class ProfileNotFound < CrawlError
-    end
+    class ProfileNotFound < CrawlError; end
 
-    class CommunicationError < CrawlError
-    end
+    class CommunicationError < CrawlError; end
 
     class UnableToNavigateToHistoryPage < CrawlError
       def initialize(body:, uri:)
