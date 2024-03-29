@@ -1,21 +1,4 @@
 GIT
-  remote: https://github.com/basecamp/kamal.git
-  revision: 5f58575b62f5b7aacabb90e2a4b4ef0574284e6f
-  branch: main
-  specs:
-    kamal (1.4.0)
-      activesupport (>= 7.0)
-      base64 (~> 0.2)
-      bcrypt_pbkdf (~> 1.0)
-      concurrent-ruby (~> 1.2)
-      dotenv (~> 2.8)
-      ed25519 (~> 1.2)
-      net-ssh (~> 7.0)
-      sshkit (~> 1.21)
-      thor (~> 1.2)
-      zeitwerk (~> 2.5)
-
-GIT
   remote: https://github.com/hotwired/stimulus-rails.git
   revision: ae4b675473b71fdf01530c8a6a3bb277d3388ee2
   branch: main
@@ -224,6 +207,17 @@ GEM
       rdoc
       reline (>= 0.4.2)
     json (2.7.1)
+    kamal (1.4.0)
+      activesupport (>= 7.0)
+      base64 (~> 0.2)
+      bcrypt_pbkdf (~> 1.0)
+      concurrent-ruby (~> 1.2)
+      dotenv (~> 2.8)
+      ed25519 (~> 1.2)
+      net-ssh (~> 7.0)
+      sshkit (~> 1.21)
+      thor (~> 1.2)
+      zeitwerk (~> 2.5)
     language_server-protocol (3.17.0.3)
     locale (2.1.3)
     lograge (0.14.0)
@@ -409,6 +403,7 @@ GEM
     stringio (3.1.0)
     text (1.3.1)
     thor (1.3.1)
+    thruster (0.1.3)
     timeout (0.4.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -457,7 +452,7 @@ DEPENDENCIES
   image_processing
   imatcher
   importmap-rails
-  kamal!
+  kamal
   lograge
   mechanize
   mission_control-jobs
@@ -475,6 +470,7 @@ DEPENDENCIES
   solid_queue
   sqlite3
   stimulus-rails!
+  thruster
   turbo-rails!
   vcr
   view_component

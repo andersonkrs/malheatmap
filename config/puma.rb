@@ -4,7 +4,11 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-max_threads_count = ENV.fetch("PUMA_MAX_THREADS", 2) || ENV.fetch("RAILS_MAX_THREADS", 7)
+#
+
+rails_env = ENV.fetch("RAILS_ENV", "development").inquiry
+
+max_threads_count = ENV.fetch("PUMA_MAX_THREADS", 2)
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS", max_threads_count)
 threads min_threads_count, max_threads_count
 
@@ -14,7 +18,7 @@ port ENV.fetch("PORT", 3000)
 
 # Specifies the `environment` that Puma will run in.
 #
-environment ENV.fetch("RAILS_ENV") { "development" }
+environment rails_env
 
 # Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
@@ -38,6 +42,4 @@ preload_app!
 plugin :tmp_restart
 
 # Run solid  queue
-plugin :solid_queue
-
-wait_for_less_busy_worker
+plugin :solid_queue if rails_env.development?
