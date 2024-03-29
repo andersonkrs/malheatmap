@@ -1,9 +1,6 @@
 class User::PeriodicMALSyncJob < ApplicationJob
   queue_as :low
 
-  # Make sure we don't enqueue synching unecessarily
-  uniqueness_control key: ->(user) { "#{user.id}:#{user.mal_synced_at&.to_fs(:number)}" }, expires_in: 12.hours
-
   discard_on ActiveRecord::RecordNotFound do |_job, exception|
     Rails.logger.error(exception)
   end
@@ -16,13 +13,15 @@ class User::PeriodicMALSyncJob < ApplicationJob
     user.schedule_deactivation if user.legacy_account?
   end
 
-  retry_on MAL::Errors::CommunicationError, wait: 1.hour, attempts: 3 do |_job, exception|
+  retry_on MAL::Errors::CommunicationError, wait: 1.minute, attempts: 3 do |_job, exception|
     Rails.logger.error(exception)
   end
 
-
   def perform(user)
-    return unless user.eligible_for_mal_sync?
+    unless user.eligible_for_mal_sync?
+      Rails.logger.info("User #{user.username} is not eligible for sync: #{user.mal_synced_at}")
+      return
+    end
 
     user.crawler_pipeline.execute!
   end

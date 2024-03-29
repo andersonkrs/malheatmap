@@ -9,8 +9,8 @@ class User::SchedulePeriodicMALSyncTest < ActiveJob::TestCase
     assert_enqueued_with job: User::PeriodicMALSyncJob, args: [user]
   end
 
-  test "schedules if the user had synced more than 8 hours ago" do
-    user = User.create!(username: "Robson", mal_synced_at: 9.hours.ago)
+  test "schedules if the user had synced more than 12 hours ago" do
+    user = User.create!(username: "Robson", mal_synced_at: 13.hours.ago)
 
     User::SchedulePeriodicMALSyncJob.perform_now
 
@@ -21,7 +21,7 @@ class User::SchedulePeriodicMALSyncTest < ActiveJob::TestCase
     User.delete_all
 
     _user_a = User.create!(username: "Paul", mal_synced_at: 2.hours.ago)
-    user_b = User.create!(username: "Robson", mal_synced_at: 9.hours.ago)
+    user_b = User.create!(username: "Robson", mal_synced_at: 15.hours.ago)
 
     User::SchedulePeriodicMALSyncJob.perform_now
 

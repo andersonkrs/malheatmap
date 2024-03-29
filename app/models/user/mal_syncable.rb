@@ -2,7 +2,7 @@ class User
   module MALSyncable
     extend ActiveSupport::Concern
 
-    INTERVAL_BETWEEN_SYNCS = 8.hours
+    INTERVAL_BETWEEN_SYNCS = 12.hours
 
     included do
       has_many :crawling_log_entries, inverse_of: :user, dependent: :destroy
