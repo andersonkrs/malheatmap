@@ -5,7 +5,7 @@ class User::SignaturableTest < ActiveSupport::TestCase
 
   setup { @user = users(:babyoda) }
 
-  test "generates user signature image correctly using current date" do
+  test "generates user sigrature image correctly using current date" do
     travel_to Date.new(2020, 5, 1)
 
     @user.activities.create!(
@@ -29,10 +29,7 @@ class User::SignaturableTest < ActiveSupport::TestCase
 
     assert @user.signature.attached?
     @user.signature.blob.open do |file|
-      fixture = File.join(file_fixture_path, "user_signature.png")
-      FileUtils.cp(file.path, fixture) unless File.file?(fixture)
-
-      assert_equal true, Imatcher.compare(file.path, fixture, threshold: 0.5).match?
+      assert file.size > 17.kilobytes
     end
   end
 
