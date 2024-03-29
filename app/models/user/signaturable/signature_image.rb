@@ -1,4 +1,4 @@
-require "image_processing/mini_magick"
+require "image_processing/vips"
 
 class User
   module Signaturable
@@ -26,7 +26,7 @@ class User
       end
 
       class GenerateJob < ApplicationJob
-        queue_as :logging
+        queue_as :chrome
 
         def perform(user)
           user.signature_image.generate
@@ -67,7 +67,7 @@ class User
       end
 
       def resize_to_mal_max_size(screenshot_file)
-        ImageProcessing::MiniMagick.source(screenshot_file).resize_to_limit(600, 150).call
+        ImageProcessing::Vips.source(screenshot_file).resize_to_limit(600, 150).call
       end
     end
   end

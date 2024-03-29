@@ -44,7 +44,7 @@ FROM base
 # Install dependencies:
 # - tzdata: Timezones
 # - libxml2 libxslt1 gcompat: Nokogiri
-# - imagemagick: ActiveStorage
+# - vips: ActiveStorage
 # - aws-cli zip Backups
 RUN apk add --update --no-cache \
   bash curl \
@@ -53,7 +53,7 @@ RUN apk add --update --no-cache \
   chromium \
   redis \
   libxml2 libxslt gcompat \
-  imagemagick \
+  vips \
   aws-cli zip
 
 # Copy built artifacts: gems, application

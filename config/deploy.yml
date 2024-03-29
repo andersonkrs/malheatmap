@@ -9,11 +9,19 @@ servers:
   web:
     hosts:
       - 213.199.60.22
-    cmd: sh -c "bin/rails server"
+    cmd: sh -c "bin/thrust bin/rails server"
+    options:
+      network: "private"
+      cpus: 1
+      memory: 1024m
+  worker:
+    hosts:
+      - 213.199.60.22
+    cmd: sh -c "bin/rails solid_queue:start"
     options:
       network: "private"
       cpus: 2
-      memory: 4128m
+      memory: 2048m
 
 volumes:
   - "/storage/malheatmap:/rails/storage"
@@ -43,17 +51,18 @@ traefik:
     publish:
       - "443:443"
     network: "private"
-    memory: 512m
+    memory: 256m
     cpus: 1
 
 accessories:
   redis:
     roles:
       - web
+      - worker
     image: redis/redis-stack:latest
     port: 6379:6379
     options:
-      memory: 512m
+      memory: 128m
       network: "private"
     env:
       clear:

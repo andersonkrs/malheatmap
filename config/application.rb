@@ -21,10 +21,6 @@ module MalHeatmap
 
     config.action_cable.mount_path = "/cable"
 
-    config.active_storage.queues.analysis = nil
-    config.active_storage.queues.purge = nil
-    config.active_storage.queues.mirror = nil
-
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
 
@@ -39,6 +35,7 @@ module MalHeatmap
     config.backups = config_for(:backups)
 
     config.active_storage.service = :local
+    config.active_storage.variant_processor = :vips
     config.active_storage.queues.analysis = :active_storage
     config.active_storage.queues.purge = :active_storage
     config.active_storage.queues.mirror = :active_storage
