@@ -14,7 +14,7 @@ class User::PeriodicMALSyncJob < ApplicationJob
   end
 
   retry_on MAL::Errors::CommunicationError, wait: 1.minute, attempts: 3 do |_job, exception|
-    Rails.logger.error(exception)
+    Rails.error.report(exception)
   end
 
   def perform(user)
