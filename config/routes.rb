@@ -20,4 +20,5 @@ Rails.application.routes.draw do
   get "/up" => "rails/health#show"
 
   mount MissionControl::Jobs::Engine, at: "/jobs"
+  mount SolidErrors::Engine, at: "/errors"
 end

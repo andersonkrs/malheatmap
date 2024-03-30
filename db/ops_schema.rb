@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_02_21_120624) do
+ActiveRecord::Schema[7.2].define(version: 2024_03_30_211559) do
   create_table "crawling_log_entries", force: :cascade do |t|
     t.json "raw_data"
     t.string "checksum"
@@ -32,4 +32,27 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_21_120624) do
     t.text "body"
     t.index ["crawling_log_entry_id"], name: "idx_on_crawling_log_entry_id_252ef8fe22"
   end
+
+  create_table "solid_errors", force: :cascade do |t|
+    t.string "exception_class", limit: 200, null: false
+    t.string "message", null: false
+    t.string "severity", limit: 25, null: false
+    t.string "source"
+    t.datetime "resolved_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exception_class", "message", "severity", "source"], name: "solid_error_uniqueness_index", unique: true
+    t.index ["resolved_at"], name: "index_solid_errors_on_resolved_at"
+  end
+
+  create_table "solid_errors_occurrences", force: :cascade do |t|
+    t.integer "error_id", null: false
+    t.text "backtrace"
+    t.json "context"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["error_id"], name: "index_solid_errors_occurrences_on_error_id"
+  end
+
+  add_foreign_key "solid_errors_occurrences", "solid_errors", column: "error_id"
 end

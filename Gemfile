@@ -46,7 +46,7 @@ gem "image_processing"
 # Visibility
 gem "lograge"
 gem "newrelic_rpm"
-gem "rollbar"
+gem "solid_errors"
 
 # Web Crawling
 gem "ferrum"
