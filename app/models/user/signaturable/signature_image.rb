@@ -26,6 +26,8 @@ class User
       end
 
       class GenerateJob < ApplicationJob
+        limits_concurrency to: 1, key: :signature_image_generation
+
         queue_as :chrome
 
         def perform(user)
