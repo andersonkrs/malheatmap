@@ -6,6 +6,7 @@
 
 <h4 align="center">
   <a href="https://github.com/andersonkrs/malheatmap/actions/workflows/ci.yml"><img src="https://github.com/andersonkrs/malheatmap/actions/workflows/ci.yml/badge.svg"/></a>
+  <a href="https://uptime.betterstack.com/?utm_source=status_badge"><img src="https://uptime.betterstack.com/status-badges/v1/monitor/14ang.svg"/></a>
 </h4>
 
 <p align="center">
@@ -81,15 +82,15 @@ The plan is to consume data solely from MAL's API and drop the web crawling. Tha
 * SQLite
 * Redis for action cable 
 * Ruby
-* [ImageMagick](https://imagemagick.org/index.php)
+* LibVips for ActiveStorage
 
-Since this app is a classical Rails project, there is nothing special here to either set up the project or run it.
+Since this app is a classical Rails project, there is nothing special here to set up or run the project.
 
 ### Deployment
 
 This app is gloriously deployed with [Kamal](https://kamal-deploy.org/).
 
-Since I keep this app running from my pocket, I use some space to run this app on my tiny VPS, to keep costs low, we use the VPS storage to host the ActiveStorage files.
+Since I keep this app running from my pocket, I use some space to run it on my tiny VPS. To keep costs low, we use the VPS storage to host the ActiveStorage files.
 
 #### Other Inspirations
 
