@@ -13,8 +13,9 @@ class User::PeriodicMALSyncJob < ApplicationJob
     user.schedule_deactivation if user.legacy_account?
   end
 
-  retry_on MAL::Errors::CommunicationError, wait: 1.minute, attempts: 3 do |_job, exception|
+  rescue_from MAL::Errors::CommunicationError do |exception|
     Rails.error.report(exception)
+    retry_job(wait: 5.minutes)
   end
 
   def perform(user)

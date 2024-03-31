@@ -20,7 +20,9 @@ class CrawlingLogEntry < OpsRecord
         instance.failure_message = error.message
         raise
       ensure
-        instance.save_async
+        Rails.error.handle do
+          instance.save!(validate: false)
+        end
       end
     end
   end
@@ -28,16 +30,4 @@ class CrawlingLogEntry < OpsRecord
   default_scope { extending(Recordable) }
 
   def success? = !failure?
-
-  def save_async
-    instance = self
-
-    promise = Concurrent::Promise.execute do
-      Rails.application.executor.wrap do
-        instance.save!(validate: false)
-      end
-    end
-
-    promise.wait! if Rails.env.test?
-  end
 end

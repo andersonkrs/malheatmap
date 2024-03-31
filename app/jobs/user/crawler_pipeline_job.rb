@@ -1,7 +1,7 @@
 class User::CrawlerPipelineJob < ApplicationJob
   queue_as :default
 
-  retry_on MAL::Errors::CommunicationError, wait: :polynomially_longer, attempts: 3
+  retry_on MAL::Errors::CommunicationError, wait: 1.minute, attempts: 3
 
   discard_on MAL::Errors::ProfileNotFound, MAL::Errors::UnableToNavigateToHistoryPage do |_job, exception|
     Rails.logger.error(exception)

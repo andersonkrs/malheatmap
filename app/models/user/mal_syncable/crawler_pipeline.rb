@@ -16,7 +16,6 @@ class User::MALSyncable::CrawlerPipeline
 
       crawler_entry.checksum = data.checksum
     ensure
-
       crawler_entry.visited_pages.build(visited_pages)
     end
   end
