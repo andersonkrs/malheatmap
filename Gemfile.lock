@@ -204,7 +204,7 @@ GEM
       rdoc
       reline (>= 0.4.2)
     json (2.7.1)
-    kamal (1.4.0)
+    kamal (1.5.1)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
@@ -278,7 +278,7 @@ GEM
       net-ssh (>= 5.0.0, < 8.0.0)
     net-smtp (0.5.0)
       net-protocol
-    net-ssh (7.2.1)
+    net-ssh (7.2.3)
     newrelic_rpm (9.7.1)
     nio4r (2.7.1)
     nkf (0.2.0)
@@ -393,7 +393,8 @@ GEM
       railties (>= 7.1)
     sqlite3 (1.7.3)
       mini_portile2 (~> 2.8.0)
-    sshkit (1.22.0)
+    sshkit (1.22.1)
+      base64
       mutex_m
       net-scp (>= 1.1.2)
       net-sftp (>= 2.1.2)
