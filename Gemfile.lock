@@ -18,7 +18,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: e9b61852343c83365aa73db6abcfae1e5b31272f
+  revision: be0cb4e8f9aa0b105ddd035061202a5d23491b5a
   branch: main
   specs:
     actioncable (7.2.0.alpha)
@@ -106,7 +106,7 @@ GIT
     railties (7.2.0.alpha)
       actionpack (= 7.2.0.alpha)
       activesupport (= 7.2.0.alpha)
-      irb
+      irb (~> 1.13)
       rackup (>= 1.0.0)
       rake (>= 12.2)
       thor (~> 1.0, >= 1.2.2)
@@ -273,7 +273,7 @@ GEM
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    net-imap (0.4.10)
+    net-imap (0.4.11)
       date
       net-protocol
     net-pop (0.1.2)
@@ -288,7 +288,7 @@ GEM
       net-protocol
     net-ssh (7.2.1)
     newrelic_rpm (9.7.1)
-    nio4r (2.7.1)
+    nio4r (2.7.3)
     nkf (0.2.0)
     nokogiri (1.16.4)
       mini_portile2 (~> 2.8.2)
