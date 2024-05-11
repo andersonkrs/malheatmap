@@ -52,6 +52,9 @@ gem "solid_errors"
 gem "ferrum"
 gem "mechanize"
 
+# BI
+gem "blazer"
+
 # Misc
 gem "geocoder"
 gem "gitlab-chronic"

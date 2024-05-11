@@ -21,4 +21,5 @@ Rails.application.routes.draw do
 
   mount MissionControl::Jobs::Engine, at: "/jobs"
   mount SolidErrors::Engine, at: "/errors"
+  mount Blazer::Engine, at: "/blazer"
 end
