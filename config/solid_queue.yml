@@ -1,6 +1,6 @@
 default: &default
   dispatchers:
-    - polling_interval: 1
+    - polling_interval: 10
       batch_size: 500
       recurring_tasks:
         periodic_sync:
