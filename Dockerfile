@@ -45,7 +45,7 @@ FROM base
 # - tzdata: Timezones
 # - libxml2 libxslt1 gcompat: Nokogiri
 # - vips: ActiveStorage
-# - aws-cli zip Backups
+# - zip Backups
 RUN apk add --update --no-cache \
   bash curl \
   tzdata \
@@ -54,7 +54,7 @@ RUN apk add --update --no-cache \
   redis \
   libxml2 libxslt gcompat \
   vips \
-  aws-cli zip
+  zip
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle

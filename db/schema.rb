@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_05_11_112449) do
+ActiveRecord::Schema[7.2].define(version: 2024_05_11_191733) do
+  create_table "_litestream_lock", id: false, force: :cascade do |t|
+    t.integer "id"
+  end
+
+  create_table "_litestream_seq", force: :cascade do |t|
+    t.integer "seq"
+  end
+
   create_table "access_tokens", force: :cascade do |t|
     t.string "token"
     t.string "refresh_token"
@@ -59,6 +67,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_11_112449) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "item_id", "date"], name: "index_activities_on_user_id_and_item_id_and_date", unique: true
+  end
+
+  create_table "backups", force: :cascade do |t|
+    t.datetime "started_at"
+    t.string "key", null: false
+    t.string "failure_message"
+    t.datetime "finished_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_backups_on_key", unique: true
   end
 
   create_table "blazer_audits", force: :cascade do |t|
@@ -116,6 +134,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_11_112449) do
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
   end
+
   create_table "entries", force: :cascade do |t|
     t.datetime "timestamp", precision: nil, null: false
     t.integer "amount", null: false
@@ -124,6 +143,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_11_112449) do
     t.datetime "updated_at", null: false
     t.bigint "item_id", null: false
     t.index ["user_id", "timestamp", "item_id", "amount", "created_at"], name: "idx_on_user_id_timestamp_item_id_amount_created_at_2f13770dbb"
+    t.index ["user_id", "timestamp"], name: "index_entries_on_user_id_and_date"
     t.check_constraint "amount > 0"
   end
 

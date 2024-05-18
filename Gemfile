@@ -55,6 +55,9 @@ gem "mechanize"
 # BI
 gem "blazer"
 
+# Storage
+gem "aws-sdk-s3", require: false
+
 # Misc
 gem "geocoder"
 gem "gitlab-chronic"
