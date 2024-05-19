@@ -1,3 +1,4 @@
+require "zip"
 
 class Backup
   module Executable
@@ -14,77 +15,57 @@ class Backup
         ensure
           backup.finished_at = Time.current
           backup.save!
-          backup.cleanup!
         end
       end
     end
 
     def execute!
-      Rails.logger.info "Creating Backup under: #{temp_zip_file}"
-      Rails.logger.info "Zipping databases ..."
+      Tempfile.open(["backup_#{Rails.env}_", ".zip"], binmode: true) do |tmp_zip|
+        self.key = File.basename(tmp_zip.path)
 
-      ["storage/malheatmap_primary_#{Rails.env}.sqlite3"].each do |database_file|
-        Tempfile.open([File.basename(database_file), ".sql"]) do |sql_file|
-          dump_database(database_file, sql_file)
+        Rails.logger.info "Creating Backup under: #{tmp_zip.path}"
 
-          Rails.logger.info "Zipping database #{sql_file.path}..."
+        ::Zip::File.open(tmp_zip.path, create: false) do |zip|
+          Tempfile.open(["primary_", "sqlite3.sql"]) do |sql_file|
+            dump_database("storage/malheatmap_primary_#{Rails.env}.sqlite3", sql_file)
+            Rails.logger.info "Zipping database #{sql_file.path}..."
 
-          zip_database_dump(sql_file)
+            zip.add(File.basename(sql_file), sql_file.path)
+            zip.commit
+            Rails.logger.info "Database zipped!"
+          end
+
+          Rails.logger.info "Zipping storage files ..."
+
+          directory = Rails.root.join("storage/#{Rails.env}")
+          Dir[File.join("storage/#{Rails.env}", "**", "**")].each do |file|
+            Rails.logger.info "Adding #{file} to zip..."
+            zip.add(file, file)
+          end
+          zip.commit
+          Rails.logger.info "Storage files zipped!"
         end
+
+        attach(tmp_zip)
+
+        Rails.logger.info "Backup complete!"
       end
-
-      Rails.logger.info "Zipping databases complete!"
-
-      zip_active_storage_files
-
-      Rails.logger.info "Uploading zip file..."
-      upload!
-      Rails.logger.info "Backup complete!"
-    end
-
-    def cleanup!
-      FileUtils.rm_f(temp_zip_file)
     end
 
     private
 
-    def temp_zip_file
-      @temp_zip_file ||= Rails.root.join("tmp", "#{key}.zip")
-    end
-
     def dump_database(database_file, sql_file)
       Rails.logger.info "Dumping database #{database_file} into #{sql_file.path}..."
-      stdout, status = Open3.capture2("sqlite3 #{database_file} .dump > #{sql_file.path}")
-
-      unless status.success?
-        Rails.logger.error(stdout)
-        raise "Failed to dump database #{database_file}!"
-      end
+      system("sqlite3 #{database_file} .dump > #{sql_file.path}") || raise("Failed to dump database")
     end
 
-    def zip_database_dump(sql_file)
-      stdout, status = Open3.capture2("zip -ur #{temp_zip_file} #{sql_file.path}")
-      unless status.success?
-        Rails.logger.error(stdout)
-        raise "Failed to zip database #{sql_file.path}!"
-      end
-    end
-
-    def zip_active_storage_files
-      Rails.logger.info "Zipping ActiveStorage files..."
-      stdout, status = Open3.capture2("zip -ur #{temp_zip_file} storage/#{Rails.env}")
-      unless status.success?
-        Rails.logger.error(stdout)
-        raise "Failed to zip ActiveStorage files!"
-      end
-    end
-
-    def upload!
+    def attach(tmp_zip)
+      Rails.logger.info "Attaching zip file..."
       file.attach(
-        io: File.open(temp_zip_file),
-        filename: File.basename(temp_zip_file),
+        io: File.open(tmp_zip.path),
+        filename: key,
         content_type: "application/zip",
-        key: File.basename(temp_zip_file),
+        key: key,
       )
     end
   end
