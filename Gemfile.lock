@@ -395,6 +395,7 @@ GEM
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyntlm (0.6.3)
+    rubyzip (2.3.2)
     safely_block (0.4.0)
     sass-embedded (1.69.7)
       google-protobuf (~> 3.25)
@@ -489,6 +490,7 @@ DEPENDENCIES
   redis
   requestjs-rails
   rubocop-rails-omakase
+  rubyzip
   simplecov (~> 0.17.1)
   solid_cache
   solid_errors
