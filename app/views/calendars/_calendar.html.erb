@@ -11,7 +11,7 @@
       <div class="column is-full">
         <div class="columns legend-container is-mobile">
           <div class="column has-text-left">
-            <%= link_to _("How does it work?"), faq_path %>
+            <%= link_to _("How does it work?"), faq_path, { data: { turbo_frame: "_top" } } %>
           </div>
           <div class="column has-text-right">
             <span><%= _("Less") %></span>
