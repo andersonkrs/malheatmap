@@ -37,17 +37,15 @@ class Backup
 
           Rails.logger.info "Zipping storage files ..."
 
-          directory = Rails.root.join("storage/#{Rails.env}")
           Dir[File.join("storage/#{Rails.env}", "**", "**")].each do |file|
             Rails.logger.info "Adding #{file} to zip..."
             zip.add(file, file)
+            zip.commit
           end
-          zip.commit
           Rails.logger.info "Storage files zipped!"
         end
-
+      ensure
         attach(tmp_zip)
-
         Rails.logger.info "Backup complete!"
       end
     end
