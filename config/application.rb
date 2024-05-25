@@ -49,5 +49,7 @@ module MalHeatmap
     end
 
     config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
+
+    config.action_mailer.default_options = { from: "no-reply@malheatmap.com" }
   end
 end
