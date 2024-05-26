@@ -57,7 +57,6 @@ gem "blazer"
 
 # Backups
 gem "aws-sdk-s3", require: false
-gem "rubyzip"
 
 # Misc
 gem "geocoder"
