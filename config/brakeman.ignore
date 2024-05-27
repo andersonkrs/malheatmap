@@ -3,6 +3,29 @@
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
+      "fingerprint": "11256f5e4e28017bef9c863865dc2907fbb5ee242c200a12ba36ed2c912f64e2",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/models/backup/executable.rb",
+      "line": 30,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"zip #{Dir::Tmpname.create([\"#{key}_\", \".zip\"]) do\n \n end} #{Tempfile.new.path}\", :exception => true)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Backup",
+        "method": "execute!"
+      },
+      "user_input": "Dir::Tmpname.create([\"#{key}_\", \".zip\"]) do\n \n end",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
       "fingerprint": "c8116497a4c5812bad573673000b7c4cd8edfc54dd933d29042eeac0930a3680",
       "check_name": "Execute",
       "message": "Possible command injection",
@@ -22,8 +45,31 @@
         77
       ],
       "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "ffc363e8441d2c3aea405b6ebf24e9e16fd6ea7d9d2e7fb772f6a7aaf5fb113e",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/models/backup/executable.rb",
+      "line": 36,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"zip -r #{Dir::Tmpname.create([\"#{key}_\", \".zip\"]) do\n \n end} storage/#{Rails.env}/\", :exception => true)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Backup",
+        "method": "execute!"
+      },
+      "user_input": "Dir::Tmpname.create([\"#{key}_\", \".zip\"]) do\n \n end",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
     }
   ],
-  "updated": "2024-05-19 18:46:05 -0300",
+  "updated": "2024-05-27 09:07:35 -0300",
   "brakeman_version": "6.1.1"
 }

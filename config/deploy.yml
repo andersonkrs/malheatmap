@@ -21,7 +21,7 @@ servers:
     options:
       network: "private"
       cpus: 2
-      memory: 1024m
+      memory: 2048m
 
 volumes:
   - "/storage/malheatmap:/rails/storage"
