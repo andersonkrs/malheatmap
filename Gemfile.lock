@@ -278,7 +278,7 @@ GEM
     mini_mime (1.1.5)
     mini_portile2 (2.8.6)
     minitest (5.21.2)
-    mission_control-jobs (0.2.0)
+    mission_control-jobs (0.2.1)
       importmap-rails
       rails (~> 7.1)
       stimulus-rails
@@ -290,7 +290,7 @@ GEM
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    net-imap (0.4.10)
+    net-imap (0.4.11)
       date
       net-protocol
     net-pop (0.1.2)
@@ -305,7 +305,7 @@ GEM
       net-protocol
     net-ssh (7.2.1)
     newrelic_rpm (9.7.1)
-    nio4r (2.7.1)
+    nio4r (2.7.3)
     nkf (0.2.0)
     nokogiri (1.16.5)
       mini_portile2 (~> 2.8.2)
@@ -354,7 +354,7 @@ GEM
     redis-client (0.19.1)
       connection_pool
     regexp_parser (2.9.0)
-    reline (0.5.7)
+    reline (0.5.8)
       io-console (~> 0.5)
     request_store (1.5.1)
       rack (>= 1.4)
@@ -455,7 +455,7 @@ GEM
     wheretz (0.0.6)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.14)
+    zeitwerk (2.6.15)
 
 PLATFORMS
   ruby
