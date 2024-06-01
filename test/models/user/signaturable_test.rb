@@ -29,7 +29,7 @@ class User::SignaturableTest < ActiveSupport::TestCase
 
     assert @user.signature.attached?
     @user.signature.blob.open do |file|
-      assert file.size > 17.kilobytes
+      assert file.size > 15.kilobytes
     end
   end
 

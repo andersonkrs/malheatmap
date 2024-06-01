@@ -1,15 +1,31 @@
 default: &default
   dispatchers:
-    - polling_interval: 10
+    - polling_interval: 1
       batch_size: 500
       recurring_tasks:
         periodic_sync:
           class: "User::SchedulePeriodicMALSyncJob"
           schedule: "every day at 6:00 and 18:00 on UTC"
         backups_job:
-          class: "RakeJob"
+          class: "CronJob"
           schedule: "every day at 12 pm on America/Sao_Paulo"
-          args: [ "backups:perform" ]
+          args: [ "Backup.execute!" ]
+        blazer_5_min_check:
+          class: "CronJob"
+          schedule: "every 5 minutes"
+          args: [ "Blazer.run_checks(schedule: '5 minutes')" ]
+        blazer_hourly_check:
+          class: "CronJob"
+          schedule: "every hour"
+          args: [ "Blazer.run_checks(schedule: '1 hour')" ]
+        blazer_daily_check:
+          class: "CronJob"
+          schedule: "every day at 12 am on America/Sao_Paulo"
+          args: [ "Blazer.run_checks(schedule: '1 day')" ]
+        blazer_send_failing_checks:
+          class: "CronJob"
+          schedule: "every 12 hours"
+          args: [ "Blazer.send_failing_checks" ]
         clean_up_job:
           class: "CronJob"
           schedule: "every day at 12 am on America/Sao_Paulo"

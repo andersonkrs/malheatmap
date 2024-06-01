@@ -29,13 +29,15 @@ class User::PeriodicMALSyncJobTest < ActiveJob::TestCase
 
     User.any_instance.stubs(:crawler_pipeline).returns(fake_pipeline)
 
-    perform_enqueued_jobs only: User::PeriodicMALSyncJob do
-      User::PeriodicMALSyncJob.perform_later(user)
-    end
+    User::PeriodicMALSyncJob.perform_now(user)
 
     assert_enqueued_with(
       job: User::Deactivatable::DeactivationJob,
-      args: [user.id, user.updated_at],
+      args: [
+        user.id,
+        user.updated_at,
+        "Profile not found for username %{username}. Please check if you typed it correctly."
+      ],
       at: User::Deactivatable::DEACTIVATION_BUFFER.from_now.noon
     )
 

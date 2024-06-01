@@ -20,7 +20,7 @@ class CrawlingLogEntry < OpsRecord
         instance.failure_message = error.message
         raise
       ensure
-        Rails.error.handle do
+        Rails.error.handle(StandardError) do
           instance.save!(validate: false)
         end
       end

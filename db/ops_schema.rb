@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_03_30_211559) do
+ActiveRecord::Schema[7.2].define(version: 2024_05_31_100527) do
   create_table "crawling_log_entries", force: :cascade do |t|
     t.json "raw_data"
     t.string "checksum"
@@ -34,14 +34,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_03_30_211559) do
   end
 
   create_table "solid_errors", force: :cascade do |t|
-    t.string "exception_class", limit: 200, null: false
-    t.string "message", null: false
-    t.string "severity", limit: 25, null: false
-    t.string "source"
+    t.text "exception_class", null: false
+    t.text "message", null: false
+    t.text "severity", null: false
+    t.text "source"
     t.datetime "resolved_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["exception_class", "message", "severity", "source"], name: "solid_error_uniqueness_index", unique: true
+    t.datetime "purge_after", null: false
+    t.string "fingerprint", limit: 64
+    t.index ["fingerprint"], name: "index_solid_errors_on_fingerprint", unique: true
+    t.index ["purge_after"], name: "index_solid_errors_on_purge_after"
     t.index ["resolved_at"], name: "index_solid_errors_on_resolved_at"
   end
 
@@ -51,7 +54,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_03_30_211559) do
     t.json "context"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "purge_after", null: false
     t.index ["error_id"], name: "index_solid_errors_occurrences_on_error_id"
+    t.index ["purge_after"], name: "index_solid_errors_occurrences_on_purge_after"
   end
 
   add_foreign_key "solid_errors_occurrences", "solid_errors", column: "error_id"

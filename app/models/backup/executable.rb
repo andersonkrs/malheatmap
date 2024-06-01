@@ -4,6 +4,11 @@ class Backup
 
     class_methods do
       def execute!
+        if (record = where("started_at > ?", 12.hours.ago).take)
+          Rails.logger.warn "Backup already started in the last window: #{record.key}"
+          return
+        end
+
         backup = create!(started_at: Time.current)
         begin
           backup.execute!

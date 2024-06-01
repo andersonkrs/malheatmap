@@ -32,6 +32,7 @@ module Purgeable
   end
 
   class PurgeDueLaterJob < ApplicationJob
+    limits_concurrency to: 1, key: ->(klass) { klass }
     queue_as :logging
 
     def perform(klass)
