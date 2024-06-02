@@ -8,42 +8,50 @@ GIT
 
 GIT
   remote: https://github.com/hotwired/turbo-rails.git
-  revision: 07d3488c12774b59c6c8eb94836019557d5e2160
+  revision: e376852bfb273f69f4ebb54cf516b99fcbaa7acb
   branch: main
   specs:
-    turbo-rails (2.0.2)
+    turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
 
 GIT
-  remote: https://github.com/rails/rails.git
-  revision: e9b61852343c83365aa73db6abcfae1e5b31272f
+  remote: https://github.com/npezza93/solid_cache.git
+  revision: e4e583b2aebf4939bb5c2fd8179c8451d92782b2
   branch: main
   specs:
-    actioncable (7.2.0.alpha)
-      actionpack (= 7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
+    solid_cache (0.6.0)
+      activejob (>= 7)
+      activerecord (>= 7)
+      railties (>= 7)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    actioncable (7.2.0.beta1)
+      actionpack (= 7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
       nio4r (~> 2.0)
       websocket-driver (>= 0.6.1)
       zeitwerk (~> 2.6)
-    actionmailbox (7.2.0.alpha)
-      actionpack (= 7.2.0.alpha)
-      activejob (= 7.2.0.alpha)
-      activerecord (= 7.2.0.alpha)
-      activestorage (= 7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
+    actionmailbox (7.2.0.beta1)
+      actionpack (= 7.2.0.beta1)
+      activejob (= 7.2.0.beta1)
+      activerecord (= 7.2.0.beta1)
+      activestorage (= 7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
       mail (>= 2.8.0)
-    actionmailer (7.2.0.alpha)
-      actionpack (= 7.2.0.alpha)
-      actionview (= 7.2.0.alpha)
-      activejob (= 7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
+    actionmailer (7.2.0.beta1)
+      actionpack (= 7.2.0.beta1)
+      actionview (= 7.2.0.beta1)
+      activejob (= 7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
       mail (>= 2.8.0)
       rails-dom-testing (~> 2.2)
-    actionpack (7.2.0.alpha)
-      actionview (= 7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
+    actionpack (7.2.0.beta1)
+      actionview (= 7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
       nokogiri (>= 1.8.5)
       racc
       rack (>= 2.2.4)
@@ -52,72 +60,46 @@ GIT
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
       useragent (~> 0.16)
-    actiontext (7.2.0.alpha)
-      actionpack (= 7.2.0.alpha)
-      activerecord (= 7.2.0.alpha)
-      activestorage (= 7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
+    actiontext (7.2.0.beta1)
+      actionpack (= 7.2.0.beta1)
+      activerecord (= 7.2.0.beta1)
+      activestorage (= 7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
       globalid (>= 0.6.0)
       nokogiri (>= 1.8.5)
-    actionview (7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
+    actionview (7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
       builder (~> 3.1)
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
-    activejob (7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
+    activejob (7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
       globalid (>= 0.3.6)
-    activemodel (7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
-    activerecord (7.2.0.alpha)
-      activemodel (= 7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
+    activemodel (7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
+    activerecord (7.2.0.beta1)
+      activemodel (= 7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
       timeout (>= 0.4.0)
-    activestorage (7.2.0.alpha)
-      actionpack (= 7.2.0.alpha)
-      activejob (= 7.2.0.alpha)
-      activerecord (= 7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
+    activerecord-enhancedsqlite3-adapter (0.8.0)
+      activerecord (>= 7.1)
+      sqlite3 (>= 1.6)
+    activestorage (7.2.0.beta1)
+      actionpack (= 7.2.0.beta1)
+      activejob (= 7.2.0.beta1)
+      activerecord (= 7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
       marcel (~> 1.0)
-    activesupport (7.2.0.alpha)
+    activesupport (7.2.0.beta1)
       base64
       bigdecimal
-      concurrent-ruby (~> 1.0, >= 1.0.2)
+      concurrent-ruby (~> 1.0, >= 1.3.1)
       connection_pool (>= 2.2.5)
       drb
       i18n (>= 1.6, < 2)
-      minitest (>= 5.1, < 5.22.0)
+      minitest (>= 5.1)
       tzinfo (~> 2.0, >= 2.0.5)
-    rails (7.2.0.alpha)
-      actioncable (= 7.2.0.alpha)
-      actionmailbox (= 7.2.0.alpha)
-      actionmailer (= 7.2.0.alpha)
-      actionpack (= 7.2.0.alpha)
-      actiontext (= 7.2.0.alpha)
-      actionview (= 7.2.0.alpha)
-      activejob (= 7.2.0.alpha)
-      activemodel (= 7.2.0.alpha)
-      activerecord (= 7.2.0.alpha)
-      activestorage (= 7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
-      bundler (>= 1.15.0)
-      railties (= 7.2.0.alpha)
-    railties (7.2.0.alpha)
-      actionpack (= 7.2.0.alpha)
-      activesupport (= 7.2.0.alpha)
-      irb
-      rackup (>= 1.0.0)
-      rake (>= 12.2)
-      thor (~> 1.0, >= 1.2.2)
-      zeitwerk (~> 2.6)
-
-GEM
-  remote: https://rubygems.org/
-  specs:
-    activerecord-enhancedsqlite3-adapter (0.6.0)
-      activerecord (>= 7.1)
-      sqlite3 (~> 1.6)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
@@ -162,7 +144,7 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     chartkick (5.0.6)
-    concurrent-ruby (1.2.3)
+    concurrent-ruby (1.3.1)
     connection_pool (2.4.1)
     crack (0.4.5)
       rexml
@@ -194,8 +176,8 @@ GEM
       websocket-driver (>= 0.6, < 0.8)
     ffi (1.16.3)
     forwardable (1.3.3)
-    fugit (1.10.1)
-      et-orbi (~> 1, >= 1.2.7)
+    fugit (1.11.0)
+      et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
     geocoder (1.8.2)
     gettext (3.4.9)
@@ -276,9 +258,9 @@ GEM
     mime-types-data (3.2023.1205)
     mini_magick (4.12.0)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.6)
-    minitest (5.21.2)
-    mission_control-jobs (0.2.0)
+    mini_portile2 (2.8.7)
+    minitest (5.23.1)
+    mission_control-jobs (0.2.1)
       importmap-rails
       rails (~> 7.1)
       stimulus-rails
@@ -290,7 +272,7 @@ GEM
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    net-imap (0.4.10)
+    net-imap (0.4.12)
       date
       net-protocol
     net-pop (0.1.2)
@@ -305,7 +287,7 @@ GEM
       net-protocol
     net-ssh (7.2.1)
     newrelic_rpm (9.7.1)
-    nio4r (2.7.1)
+    nio4r (2.7.3)
     nkf (0.2.0)
     nokogiri (1.16.5)
       mini_portile2 (~> 2.8.2)
@@ -338,6 +320,20 @@ GEM
     rackup (2.1.0)
       rack (>= 3)
       webrick (~> 1.8)
+    rails (7.2.0.beta1)
+      actioncable (= 7.2.0.beta1)
+      actionmailbox (= 7.2.0.beta1)
+      actionmailer (= 7.2.0.beta1)
+      actionpack (= 7.2.0.beta1)
+      actiontext (= 7.2.0.beta1)
+      actionview (= 7.2.0.beta1)
+      activejob (= 7.2.0.beta1)
+      activemodel (= 7.2.0.beta1)
+      activerecord (= 7.2.0.beta1)
+      activestorage (= 7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
+      bundler (>= 1.15.0)
+      railties (= 7.2.0.beta1)
     rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
@@ -345,6 +341,14 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
+    railties (7.2.0.beta1)
+      actionpack (= 7.2.0.beta1)
+      activesupport (= 7.2.0.beta1)
+      irb (~> 1.13)
+      rackup (>= 1.0.0)
+      rake (>= 12.2)
+      thor (~> 1.0, >= 1.2.2)
+      zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
     rdoc (6.7.0)
@@ -354,7 +358,7 @@ GEM
     redis-client (0.19.1)
       connection_pool
     regexp_parser (2.9.0)
-    reline (0.5.7)
+    reline (0.5.8)
       io-console (~> 0.5)
     request_store (1.5.1)
       rack (>= 1.4)
@@ -405,19 +409,20 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
     singleton (0.2.0)
-    solid_cache (0.6.0)
-      activejob (>= 7)
-      activerecord (>= 7)
-      railties (>= 7)
-    solid_errors (0.3.5)
-      rails (~> 7.0)
-    solid_queue (0.3.1)
+    solid_errors (0.4.2)
+      actionmailer (~> 7.0)
+      actionpack (~> 7.0)
+      actionview (~> 7.0)
+      activerecord (~> 7.0)
+      activesupport (~> 7.0)
+      railties (~> 7.0)
+    solid_queue (0.3.2)
       activejob (>= 7.1)
       activerecord (>= 7.1)
-      concurrent-ruby (~> 1.2.2)
-      fugit (~> 1.10.1)
+      concurrent-ruby (>= 1.3.1)
+      fugit (~> 1.11.0)
       railties (>= 7.1)
-    sqlite3 (1.7.3)
+    sqlite3 (2.0.2)
       mini_portile2 (~> 2.8.0)
     sshkit (1.22.0)
       mutex_m
@@ -455,7 +460,7 @@ GEM
     wheretz (0.0.6)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.14)
+    zeitwerk (2.6.15)
 
 PLATFORMS
   ruby
@@ -485,12 +490,12 @@ DEPENDENCIES
   newrelic_rpm
   propshaft
   puma
-  rails!
+  rails (~> 7.2.0.beta1)
   redis
   requestjs-rails
   rubocop-rails-omakase
   simplecov (~> 0.17.1)
-  solid_cache
+  solid_cache!
   solid_errors
   solid_queue
   sqlite3

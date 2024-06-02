@@ -12,3 +12,9 @@ ActiveSupport.on_load(:solid_errors_record) do
 
   purge after: 7.days
 end
+
+Rails.application.config.after_initialize do
+  if Rails.env.test?
+    Rails.error.unsubscribe(SolidErrors::Subscriber)
+  end
+end

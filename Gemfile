@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby file: ".ruby-version"
 
-gem "rails", github: "rails/rails", branch: "main"
+gem "rails", "~> 7.2.0.beta1"
 
 gem "bootsnap", require: false
 
@@ -25,7 +25,8 @@ gem "solid_queue"
 gem "mission_control-jobs"
 
 # Cache
-gem "solid_cache"
+# Rails 7.2 hotfix
+gem "solid_cache", github: "npezza93/solid_cache", branch: "main"
 
 # Hotwire
 gem "stimulus-rails", github: "hotwired/stimulus-rails", branch: "main"
