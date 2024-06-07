@@ -26,9 +26,9 @@
 
 /.env*
 
+!/vendor/assets/sylesheets
 /vendor/ruby
 /vendor/assets/stylesheets/bulma/docs
-/.git
 /.kamal
 /.idea
 
