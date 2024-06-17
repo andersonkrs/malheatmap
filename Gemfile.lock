@@ -265,7 +265,7 @@ GEM
       rails (~> 7.1)
       stimulus-rails
       turbo-rails
-    mocha (2.1.0)
+    mocha (2.4.0)
       ruby2_keywords (>= 0.0.5)
     msgpack (1.7.2)
     mutex_m (0.2.0)
@@ -513,4 +513,4 @@ RUBY VERSION
    ruby 3.3.0p0
 
 BUNDLED WITH
-   2.5.7
+   2.5.13

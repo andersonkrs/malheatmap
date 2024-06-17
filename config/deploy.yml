@@ -16,10 +16,9 @@ servers:
       memory: 512m
       "add-host": host.docker.internal:host-gateway
     labels:
-      traefik.http.routers.malheatmap.entrypoints: websecure
-      traefik.http.routers.malheatmap.rule: Host(`malheatmap.com`)
-      traefik.http.routers.malheatmap.tls.certresolver: letsencrypt
+      traefik.http.routers.malheatmap-production.rule: Host(`malheatmap.com`)
   worker:
+    traefik: false
     hosts:
       - 213.199.60.22
     cmd: sh -c "bin/rails solid_queue:start"
@@ -39,6 +38,7 @@ registry:
 
 # Only builds for linux based hosts, skip arm
 builder:
+  context: .
   local:
     arch: amd64
 
@@ -58,24 +58,13 @@ traefik:
     network: "private"
     memory: 256m
     cpus: 1
-    volume:
-      - "/letsencrypt/acme.json:/letsencrypt/acme.json"
   args:
     api: true
-    entryPoints.web.address: ":80"
-    entryPoints.websecure.address: ":443"
-    entryPoints.web.http.redirections.entryPoint.to: websecure
-    entryPoints.web.http.redirections.entryPoint.scheme: https
-    entryPoints.web.http.redirections.entrypoint.permanent: true
-    certificatesResolvers.letsencrypt.acme.email: "anderson.m@hey.com"
-    certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
-    certificatesResolvers.letsencrypt.acme.httpchallenge: true
-    certificatesResolvers.letsencrypt.acme.httpchallenge.entrypoint: web
   labels:
-    traefik.http.routers.dashboard.rule: Host(`traefik.andersonmacedo.me`)
-    traefik.http.routers.dashboard.service: api@internal
-    traefik.http.routers.dashboard.middlewares: auth
-    traefik.http.middlewares.auth.basicauth.users: admin:$apr1$bycr6jqU$cYQKNsNNmdT3lI6iUIAI41
+    traefik.http.routers.dashboard-production.rule: Host(`traefik.andersonmacedo.me`)
+    traefik.http.routers.dashboard-production.service: api@internal
+    traefik.http.routers.dashboard-production.middlewares: auth
+    traefik.http.middlewares.auth.basicauth.users: admin:$apr1$cDtEj4dQ$rTyaKJFE7Y6VFdSc.mn6N0
 
 accessories:
   redis:

@@ -25,8 +25,6 @@ RUN apk add --update --no-cache \
   tzdata \
   sqlite-dev
 
-RUN git submodule update
-
 # Install application gems
 COPY .ruby-version Gemfile Gemfile.lock ./
 RUN bundle install && bundle exec bootsnap precompile --gemfile
