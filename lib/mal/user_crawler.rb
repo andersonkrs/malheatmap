@@ -27,6 +27,7 @@ module MAL
       crawl_geolocation
       crawl_history
 
+
       response
     rescue Mechanize::ResponseCodeError => error
       handle_response_code_error(error.response_code.to_i, error.message)
@@ -68,8 +69,20 @@ module MAL
     end
 
     def crawl_history
-      crawl_history_kind(:anime)
-      crawl_history_kind(:manga)
+      history_link = page.link_with(text: /History/)
+      history_link.click
+
+      if (kind_link = page.link_with(text: /Anime History/))
+        kind_link.click
+
+        response[:history] += Parsers::History.new(page, kind: :anime).parse if public_history?
+      end
+
+      if (kind_link = page.link_with(text: /Manga History/))
+        kind_link.click
+
+        response[:history] += Parsers::History.new(page, kind: :manga).parse if public_history?
+      end
     end
 
     def time_zone_for(lat, long)
@@ -79,21 +92,8 @@ module MAL
       "UTC"
     end
 
-    def crawl_history_kind(kind)
-      if (kind_link = page.link_with(text: "#{kind.capitalize} History"))
-        kind_link.click
-        response[:history] += Parsers::History.new(page, kind:).parse
-        return
-      end
-
-      history_link = page.link_with(text: "History")
-
-      raise_private_history unless history_link
-
-      history_link.click
-      if page.xpath("//*[contains(text(),'Access to this list history has been restricted by the owner')]").present?
-        raise_private_history
-      end
+    def public_history?
+      page.xpath("//*[contains(text(),'Access to this list history has been restricted by the owner')]").blank?
     end
 
     def raise_private_history

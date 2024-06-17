@@ -113,16 +113,6 @@ class UserCrawlerTest < ActiveSupport::TestCase
     assert_equal 0, result[:history].size
   end
 
-  test "returns no entries when user sets the history as private" do
-    VCR.insert_cassette("user_crawler/user_restricted_history")
-
-    crawler = MAL::UserCrawler.new("Abajur")
-
-    assert_raises MAL::Errors::UnableToNavigateToHistoryPage do
-      crawler.crawl
-    end
-  end
-
   test "raises profile not found error when user does not exist" do
     VCR.insert_cassette("user_crawler/profile_not_found")
 

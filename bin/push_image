@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+GIT_COMMIT=$(git rev-parse --short HEAD);
+
+echo "Pushing tags: latest,${GIT_COMMIT}"
+
+docker buildx build -t andersonskm/malheatmap:latest \
+  -t andersonskm/malheatmap:$GIT_COMMIT \
+  --platform=linux/amd64 --push .;
+

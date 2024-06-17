@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+echo "Triggering deployment"
+
+curl --verbose --request GET \
+  --url "${COOLIFY_DEPLOYMENT_URL}" \
+  -H "Authorization: Berer ${COOLIFY_TOKEN}"
+
