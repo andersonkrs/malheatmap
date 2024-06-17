@@ -1,8 +1,8 @@
 # syntax = docker/dockerfile:1
 
 # Make sure it matches the Ruby version in .tool-versions and Gemfile
-ARG RUBY_VERSION=3.3.0
-FROM ruby:$RUBY_VERSION-alpine3.18 as base
+ARG RUBY_VERSION=3.3.3
+FROM ruby:$RUBY_VERSION-alpine AS base
 
 # Rails app lives here
 WORKDIR /rails
@@ -16,7 +16,7 @@ ENV RAILS_ENV="production" \
     FERRUM_PROCESS_TIMEOUT="30"
 
 # Throw-away build stage to reduce size of final image
-FROM base as build
+FROM base AS build
 
 RUN apk add --update --no-cache \
   build-base \
@@ -24,8 +24,6 @@ RUN apk add --update --no-cache \
   curl \
   tzdata \
   sqlite-dev
-
-RUN git submodule update
 
 # Install application gems
 COPY .ruby-version Gemfile Gemfile.lock ./
@@ -61,6 +59,9 @@ RUN apk add --update --no-cache \
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
+
+# Entrypoint prepares the database.
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000

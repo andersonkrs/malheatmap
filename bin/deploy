@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+set -e
+
+echo "Deploying...."
+
+source ./bin/push_image
+source ./bin/trigger_deployment

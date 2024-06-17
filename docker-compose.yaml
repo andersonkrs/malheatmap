@@ -1,0 +1,39 @@
+services:
+  web:
+    image: andersonskm/malheatmap:latest
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WEB_CPUS:-0.5}"
+          memory: "${DOCKER_WEB_MEMORY:-512mb}"
+    healthcheck:
+      test: "${DOCKER_WEB_HEALTHCHECK_TEST:-curl localhost:3000/up}"
+      interval: "60s"
+      timeout: "3s"
+      start_period: "5s"
+      retries: 3
+    volumes:
+      - malheatmap_storage:/rails/storage
+    environment:
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+
+  worker:
+    image: andersonskm/malheatmap:latest
+    command: "bin/rails solid_queue:start"
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WORKER_CPUS:-2}"
+          memory: "${DOCKER_WORKER_MEMORY:-2gb}"
+    volumes:
+      - malheatmap_storage:/rails/storage
+    environment:
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+
+volumes:
+  malheatmap_storage:
+    driver: local
+    driver_opts:
+      type: none
+      device: /storage/malheatmap
+      o: bind

@@ -9,12 +9,6 @@ gem "bootsnap", require: false
 
 gem "puma"
 
-# Deployment
-gem "kamal"
-
-# HTTP2, SSL, Caching
-gem "thruster"
-
 # Drivers
 gem "redis" # Action Cable
 gem "sqlite3"
