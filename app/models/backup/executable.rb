@@ -20,6 +20,10 @@ class Backup
           backup.save!
         end
       end
+
+      def excute_later
+        Backup::Executable::Job.perform_later
+      end
     end
 
     def execute!
@@ -45,6 +49,12 @@ class Backup
       attach(tmp_zip)
       Rails.logger.info "Backup complete!"
       FileUtils.rm(tmp_zip)
+    end
+
+    class Job < ApplicationJob
+      retry_on StandardError, wait: 1.hour, attempts: 3
+
+      def perform = Backup.execute!
     end
 
     private

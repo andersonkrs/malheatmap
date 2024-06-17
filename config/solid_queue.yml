@@ -9,7 +9,7 @@ default: &default
         backups_job:
           class: "CronJob"
           schedule: "every day at 12 pm on America/Sao_Paulo"
-          args: [ "Backup.execute!" ]
+          args: [ "Backup.execute_later" ]
         blazer_5_min_check:
           class: "CronJob"
           schedule: "every 5 minutes"
