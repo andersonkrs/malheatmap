@@ -32,6 +32,19 @@ services:
     environment:
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
 
+  redis:
+    image: redis/redis-stack:latest
+    port: 6379:6379
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "64mb"
+    environment:
+      REDIS_ARGS: "--save 60 1000 --appendonly yes"
+    volumes:
+      - malheatmap_storage:/data
+
 volumes:
   malheatmap_storage:
     driver: local
