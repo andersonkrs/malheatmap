@@ -17,6 +17,7 @@ services:
       - malheatmap_storage:/rails/storage
     environment:
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      REDIS_URL: ${REDIS_URL}
 
   worker:
     image: andersonskm/malheatmap:latest
@@ -31,6 +32,7 @@ services:
       - malheatmap_storage:/rails/storage
     environment:
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      REDIS_URL: ${REDIS_URL}
 
 volumes:
   malheatmap_storage:
