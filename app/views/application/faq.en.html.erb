@@ -63,40 +63,29 @@
       <p class="has-text-weight-bold mt-3"><%= "What happens if I change my username on MAL?" %>
       </p>
       <p>
-
-        We use your username to locate your profile on MAL, therefore, if you change it, we are not able to fetch your
-        new data and your profile won't be updated anymore.<br>
-
-        You can subscribe your new username, but your previous data won't appear on it, because MAL does not offer a way
-        to identify the users excepting by their username.<br>
-
-        In short, <em>avoid changing your username</em>.
+        If you have signed in with your MAL account, we will create a link between your heatmap and MAL account.
+        <br />
+        <p class="mt-2">
+          Currently we only sync profile information when you sign in. To force your profile on MAL Heatmap please sign out and then sign in back. That will pull the recent username, profile picture, ect.
+        </p>
+        <p class="mt-2">
+          Previously, the accounts were not linked therefore renaming a user used to be discouraged. Since OAuth with MAL account has been introduced that's no longer an issue, just make sure to sign in first if your profile is 2+ years old.
+        </p>
       </p>
       <p class="has-text-weight-bold mt-3"><%= "What is the time zone used?" %>
       </p>
       <p class="mt-2">
-        Currently, we use the user's location through the <a href="https://www.openstreetmap.org/">OpenStreetMap</a>
-        database to determine its time zone. Whether the location is not set or invalid,
-
-        we are going to use UTC as default.
+        When you sign in we will store the same timezone set on your MAL account and use that as reference for the current date when capturing your MAL entries.
+        To force updating your timezone, sign out from MAL Heatmap and sign in back.
       </p>
-      <p class="mt-1">
-        If you want to have your activities dates 100% correct, make sure that you have a valid location in your
-        profile.
-
-        Unfortunately, there's no way for MAL Heatmap to get the user's time zone through the public data on its
-        profile, this information is private,
-
-        only accessible by the user itself.
-      </p>
-      <p class="mt-1">
-        All this is to ensure consistency between your MAL history and your activities on MAL Heatmap since MAL displays
+      <p class="mt-2">
+        This is important to ensure consistency between your MAL history and your activities on MAL Heatmap since MAL displays
         history dates relative to the user's time zone.<br>
 
         So, when you have some entry in your MAL history like: <strong>5 hours ago</strong>, we will use the current
         time on the user's time zone to calculate the corresponding date.
       </p>
-      <p class="mt-1">
+      <p class="mt-2">
 
         The calendar range is also calculated using the time zone.
       </p>

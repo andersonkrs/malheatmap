@@ -100,8 +100,6 @@ jobs:
 
     env:
       DOCKER_BUILDKIT: 1
-      RAILS_ENV: production
-      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
 
     steps:
