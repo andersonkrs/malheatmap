@@ -1,43 +1,44 @@
 services:
   web:
-    image: andersonskm/malheatmap:latest
-    build: .
+    image: 'andersonskm/malheatmap:latest'
     deploy:
       resources:
         limits:
-          cpus: "${DOCKER_WEB_CPUS:-0.5}"
-          memory: "${DOCKER_WEB_MEMORY:-512mb}"
+          cpus: '${DOCKER_WEB_CPUS:-0.5}'
+          memory: '${DOCKER_WEB_MEMORY:-512mb}'
     healthcheck:
-      test: "${DOCKER_WEB_HEALTHCHECK_TEST:-curl localhost:3000/up}"
-      interval: "60s"
-      timeout: "5s"
-      start_period: "5s"
+      test: '${DOCKER_WEB_HEALTHCHECK_TEST:-curl localhost:3000/up}'
+      interval: 60s
+      timeout: 5s
+      start_period: 5s
       retries: 3
-    volumes:
-      - malheatmap_storage:/rails/storage
     environment:
-      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-      REDIS_URL: ${REDIS_URL}
-
+      RAILS_MASTER_KEY: '${RAILS_MASTER_KEY}'
+      REDIS_URL: '${REDIS_URL}'
+    networks:
+      coolify: null
+    volumes:
+      - '/storage/malheatmap:/rails/storage'
+    restart: unless-stopped
+    container_name: malheatmap-web
   worker:
-    image: andersonskm/malheatmap:latest
-    build: .
-    command: "bin/rails solid_queue:start"
+    image: 'andersonskm/malheatmap:latest'
+    command: 'bin/rails solid_queue:start'
     deploy:
       resources:
         limits:
-          cpus: "${DOCKER_WORKER_CPUS:-2}"
-          memory: "${DOCKER_WORKER_MEMORY:-2gb}"
-    volumes:
-      - malheatmap_storage:/rails/storage
+          cpus: '${DOCKER_WORKER_CPUS:-2}'
+          memory: '${DOCKER_WORKER_MEMORY:-2gb}'
     environment:
-      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-      REDIS_URL: ${REDIS_URL}
-
-volumes:
-  malheatmap_storage:
-    driver: local
-    driver_opts:
-      type: none
-      device: /storage/malheatmap
-      o: bind
+      RAILS_MASTER_KEY: '${RAILS_MASTER_KEY}'
+      REDIS_URL: '${REDIS_URL}'
+    volumes:
+      - '/storage/malheatmap:/rails/storage'
+    networks:
+      coolify: null
+    restart: unless-stopped
+    container_name: malheatmap-worker
+networks:
+  coolify:
+    name: coolify
+    external: true

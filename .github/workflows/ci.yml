@@ -146,5 +146,5 @@ jobs:
           cache-to: type=gha,mode=max
           labels: ${{ steps.meta.outputs.labels }}
 
-      # - name: Run deploy command
-      #   run: bin/kamal deploy -v --skip_push
+      - name: Run deploy command
+        run: bin/deploy
