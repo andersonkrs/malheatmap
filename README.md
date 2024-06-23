@@ -1,5 +1,3 @@
-
-
 <h1 align="center">
   MAL Heatmap
 </h1>
@@ -14,14 +12,14 @@
 </p>
 
 <table>
-<tr>
-<td>
-  MAL Heatmap is a tool for tracking your anime/manga consumption based on your <a href='https://myanimelist.net'>myanimelist.net</a> recent history.<br>
-  This app crawls the recent user history daily and generates a full visualization of all activities like <a href='https://github.blog/2013-01-07-introducing-contributions/'>Github contributions calendar</a>.
-  <br><br>
-  It also generates an image of your activities calendar that you can embed into your <a href='https://myanimelist.net'>myanimelist.net</a> profile or forum signature extending your MAL experience. 
-</td>
-</tr>
+    <tr>
+        <td>
+          MAL Heatmap is a tool for tracking your anime/manga consumption based on your <a href='https://myanimelist.net'>myanimelist.net</a> recent history.<br>
+          This app crawls the recent user history daily and generates a full visualization of all activities like <a href='https://github.blog/2013-01-07-introducing-contributions/'>Github contributions calendar</a>.k
+          <br><br>
+          It also generates an image of your activities calendar that you can embed into your <a href='https://myanimelist.net'>myanimelist.net</a> profile or forum signature extending your MAL experience.
+        </td>
+    </tr>
 </table>
 
 <table>
@@ -88,7 +86,7 @@ Since this app is a classical Rails project, there is nothing special here to se
 
 ### Deployment
 
-This app is gloriously deployed with [Kamal](https://kamal-deploy.org/).
+This app is gloriously self-hosted with [Coolify](https://coolify.io/).
 
 Since I keep this app running from my pocket, I use some space to run it on my tiny VPS. To keep costs low, we use the VPS storage to host the ActiveStorage files.
 
