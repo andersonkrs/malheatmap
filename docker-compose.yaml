@@ -9,7 +9,7 @@ services:
     healthcheck:
       test: "${DOCKER_WEB_HEALTHCHECK_TEST:-curl localhost:3000/up}"
       interval: "60s"
-      timeout: "3s"
+      timeout: "5s"
       start_period: "5s"
       retries: 3
     volumes:
