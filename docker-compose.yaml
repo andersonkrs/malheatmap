@@ -1,6 +1,7 @@
 services:
   web:
     image: andersonskm/malheatmap:latest
+    build: .
     deploy:
       resources:
         limits:
@@ -19,6 +20,7 @@ services:
 
   worker:
     image: andersonskm/malheatmap:latest
+    build: .
     command: "bin/rails solid_queue:start"
     deploy:
       resources:
