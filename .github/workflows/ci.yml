@@ -100,7 +100,7 @@ jobs:
 
     env:
       DOCKER_BUILDKIT: 1
-      KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
+      DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
       COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
       COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
 
@@ -126,7 +126,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: andersonskm
-          password: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
+          password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
       - name: Docker meta
         id: meta
