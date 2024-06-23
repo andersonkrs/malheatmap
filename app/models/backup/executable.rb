@@ -21,7 +21,7 @@ class Backup
         end
       end
 
-      def excute_later
+      def execute_later
         Backup::Executable::Job.perform_later
       end
     end
