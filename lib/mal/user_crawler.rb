@@ -70,6 +70,8 @@ module MAL
 
     def crawl_history
       history_link = page.link_with(text: /History/)
+      return if history_link.blank?
+
       history_link.click
 
       if (kind_link = page.link_with(text: /Anime History/))
