@@ -6,6 +6,10 @@ module UniqueJobs
       before_enqueue ->(job) do
         validate_uniqueness(job, key: key.call(*job.arguments), expires_in:)
       end
+
+      after_perform do |job|
+        release_uniqueness_lock(job, key: key.call(*job.arguments))
+      end
     end
 
     def uniqueness_suppressor_registry
@@ -30,14 +34,23 @@ module UniqueJobs
   def validate_uniqueness(job, key:, expires_in:)
     return if self.class.uniqueness_suppressor_registry[self.class.name]
 
-    normalized_key = [key].flatten.compact.join(":")
-    counter_key = "active-job-uniqueness:#{self.class.name}:#{normalized_key}"
+    lock_key = uniqueness_lock(key)
 
-    if Rails.cache.read(counter_key)
-      Rails.logger.warn("[Active Job] Unique job discarded #{job}")
+    if Rails.cache.read(lock_key)
+      Rails.logger.warn("[Active Job] Job Discarded #{job}. Unique Lock Held by #{lock_key}")
       throw :abort
     end
 
-    Rails.cache.write(counter_key, true, expires_in: expires_in)
+    Rails.cache.write(lock_key, true, expires_in: expires_in)
+  end
+
+  def release_uniqueness_lock(job, key:)
+    lock_key = uniqueness_lock(key)
+    Rails.cache.delete(lock_key)
+  end
+
+  def uniqueness_lock(key)
+    normalized_key = [key].flatten.compact.join(":")
+    "active-job-uniqueness:#{self.class.name}:#{normalized_key}"
   end
 end

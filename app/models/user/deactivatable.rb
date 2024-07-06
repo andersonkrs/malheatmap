@@ -27,6 +27,8 @@ class User
     class DeactivationJob < ApplicationJob
       discard_on ActiveRecord::RecordNotFound
 
+      uniqueness_control key: ->(user_id, _, _) { [user_id] }, expires_in: DEACTIVATION_BUFFER
+
       def perform(user_id, updated_at, reason)
         ::User.find_by!(id: user_id, updated_at:).deactivate!
         Rails.logger.info "User #{user_id} deactivated for #{reason}"
