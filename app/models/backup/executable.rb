@@ -5,9 +5,15 @@ class Backup
     class_methods do
       def take_now!
         create!(started_at: Time.current).tap do |backup|
-          backup.execute!
+          Rails.logger.tagged(backup.to_s) do
+            backup.execute!
+          end
         end
       end
+    end
+
+    def to_s
+      "Backup:#{key}"
     end
 
     def execute!
