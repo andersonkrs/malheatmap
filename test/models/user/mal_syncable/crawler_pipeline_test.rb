@@ -89,13 +89,6 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
     assert_equal 3, @user.activities.count
 
     assert_enqueued_with job: User::Signaturable::SignatureImage::GenerateJob, args: [@user]
-
-    assert_equal 1, @user.crawling_log_entries.count
-    crawling_log_entry = @user.crawling_log_entries.first
-    assert_equal crawling_log_entry.checksum, @user.checksum
-    assert_equal false, crawling_log_entry.failure?
-    assert_nil crawling_log_entry.failure_message
-    assert_equal @crawler_response, crawling_log_entry.raw_data.deep_symbolize_keys
   end
 
   test "updates item name if it has changed" do
@@ -128,16 +121,7 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
       @user.reload
     end
 
-    assert_equal 2, @user.crawling_log_entries.count
-
-    crawling_log_entries = @user.crawling_log_entries.order(:created_at)
-    previous_crawling_log = crawling_log_entries.first
-    current_crawling_log = crawling_log_entries.second
-
-    assert_equal "https://dummy/new_avatar", @user.avatar_url
-    assert_not_equal previous_crawling_log.checksum, current_crawling_log.checksum
-    assert_not_equal @user.checksum, previous_crawling_log.checksum
-    assert_equal @user.checksum, current_crawling_log.checksum
+    assert_equal 0, @user.crawling_log_entries.count
   end
 
   test "does not destroy entries older that the oldest present on the crawled data payload" do
@@ -168,7 +152,7 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
     assert_equal 1, @user.entries.count
   end
 
-  test "saves the navigation history" do
+  test "does not save the navigation history when successfully executing" do
     MAL::UserCrawler
       .any_instance
       .stubs(:history)
@@ -178,16 +162,10 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
           stub(body: "<html>history</html>", uri: URI.parse("https://dummy/myuser/history"))
         ]
       )
-    @user.crawler_pipeline.execute!
 
-    visited_pages = @user.crawling_log_entries.reload.first.visited_pages
-
-    assert_equal 2, visited_pages.size
-    assert_equal "<html>profile</html>", visited_pages.first.body
-    assert_equal "/myuser/profile", visited_pages.first.url
-
-    assert_equal "<html>history</html>", visited_pages.second.body
-    assert_equal "/myuser/history", visited_pages.second.url
+    assert_no_changes -> { @user.crawling_log_entries.count } do
+      @user.crawler_pipeline.execute!
+    end
   end
 
   test "does not update user's data when checksum did not change" do

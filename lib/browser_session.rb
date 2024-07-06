@@ -24,13 +24,11 @@ class BrowserSession
   def with_new_page
     spawn_new_browser
 
-    Ferrum::Utils::Attempt.with_retry(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
-      page = browser.create_page
-      begin
-        yield(page)
-      ensure
-        page.close
-      end
+    page = browser.create_page
+    begin
+      yield(page)
+    ensure
+      page.close
     end
   end
 
@@ -39,13 +37,10 @@ class BrowserSession
   attr_reader :browser
 
   def spawn_new_browser
-    @browser =
-      Ferrum::Utils::Attempt.with_retry(errors: RETRYABLE_ERRORS, max: 3, wait: 3.seconds) do
-        Ferrum::Browser
-          .new(headless: "new", browser_options: { "no-sandbox": nil, "disable-setuid-sandbox": nil, "js-flags": "--max-old-space-size=1024" })
-          .tap do |browser|
-            Rails.logger.info "Browser instance created PID: #{browser.process.pid}"
-          end
+    @browser = Ferrum::Browser
+      .new(headless: "new", browser_options: { "no-sandbox": nil, "disable-setuid-sandbox": nil, "js-flags": "--max-old-space-size=1024" })
+      .tap do |browser|
+        Rails.logger.info "Browser instance created PID: #{browser.process.pid}"
       end
   end
 end
