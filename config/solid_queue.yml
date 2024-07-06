@@ -6,10 +6,6 @@ default: &default
         periodic_sync:
           class: "User::SchedulePeriodicMALSyncJob"
           schedule: "every day at 6:00 and 18:00 on UTC"
-        backups_job:
-          class: "CronJob"
-          schedule: "every day at 12 pm on America/Sao_Paulo"
-          args: [ "Backup.execute_later" ]
         blazer_5_min_check:
           class: "CronJob"
           schedule: "every 5 minutes"
@@ -31,11 +27,15 @@ default: &default
           schedule: "every day at 12 am on America/Sao_Paulo"
           args: [ "SolidQueue::Job.clear_finished_in_batches" ]
   workers:
-    - queues: [default, chrome, active_storage, logging]
-      threads: 3
+    - queues: [default, active_storage, logging]
+      threads: 2
       processes: 1
       polling_interval: 1
     - queues: [low]
+      threads: 1
+      processes: 1
+      polling_interval: 5
+    - queues: [chrome]
       threads: 1
       processes: 1
       polling_interval: 5

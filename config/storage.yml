@@ -2,9 +2,10 @@ local:
   service: Disk
   root: <%= ENV["RAILS_STORAGE_PATH"].present? ? File.join(ENV["RAILS_STORAGE_PATH"], Rails.env) : Rails.root.join("storage", Rails.env) %>
 
-amazon_backups:
+cloud_backups:
   service: s3
-  bucket: <%= ENV["BACKUPS_AWS_BUCKET"] || Rails.application.credentials.dig(:backups, :aws_bucket) %>
-  access_key_id: <%= ENV["BACKUPS_AWS_ACCESS_KEY_ID"] || Rails.application.credentials.dig(:backups, :aws_access_key_id) %>
-  secret_access_key: <%= ENV["BACKUPS_AWS_SECRET_ACCESS_KEY"] || Rails.application.credentials.dig(:backups, :aws_secret_access_key) %>
-  region: <%= ENV["BACKUPS_AWS_REGION"] || Rails.application.credentials.dig(:backups, :aws_region) %>
+  endpoint: https://s3.us-east-005.backblazeb2.com
+  bucket: <%= ENV["BACKUPS_S3_BUCKET"] || Rails.application.credentials.dig(:backups, :s3_bucket) %>
+  access_key_id: <%= ENV["BACKUPS_S3_ACCESS_KEY_ID"] || Rails.application.credentials.dig(:backups, :s3_access_key_id) %>
+  secret_access_key: <%= ENV["BACKUPS_S3_SECRET_ACCESS_KEY"] || Rails.application.credentials.dig(:backups, :s3_secret_access_key) %>
+  region: us-east-005
