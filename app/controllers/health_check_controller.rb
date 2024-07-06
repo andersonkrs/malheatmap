@@ -4,19 +4,21 @@ class HealthCheckController < ApplicationController
     password: Rails.application.credentials.health_check[:password]
   )
 
-  QUEUE_LAST_HEARTBEAT_INTERVAL = 2.minutes
-
   def index
-    if solid_queue_online?
-      head :ok
-    else
-      head :service_unavailable
+    queues = SolidQueue::Helper.queues_from_config
+
+    queues.each do |queue|
+      unless SolidQueue::Helper.active_processes_for_queue?(queue_name: queue)
+        render json: { message: "No workers active for queue #{queue}" }, status: :service_unavailable
+        return
+      end
+
+      if SolidQueue::Helper.stuck_executions_for_queue?(queue_name: queue, threshold: 3.hours)
+        render json: { message: "Stuck executions on #{queue}" }, status: :service_unavailable
+        return
+      end
     end
-  end
 
-  private
-
-  def solid_queue_online?
-    SolidQueue::Process.where("last_heartbeat_at >= ?", QUEUE_LAST_HEARTBEAT_INTERVAL.ago).exists?
+    head :ok
   end
 end
