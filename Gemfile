@@ -15,7 +15,7 @@ gem "sqlite3"
 gem "activerecord-enhancedsqlite3-adapter"
 
 # Queuing
-gem "solid_queue", github: "rails/solid_queue", branch: "main"
+gem "solid_queue"
 gem "mission_control-jobs"
 
 # Cache

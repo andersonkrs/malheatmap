@@ -12,10 +12,6 @@ class Backup
       end
     end
 
-    def to_s
-      "Backup:#{key}"
-    end
-
     def execute!
       if finished_at.present?
         self.failure_message = "Backup already finished at: #{finished_at}"

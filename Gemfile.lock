@@ -26,18 +26,6 @@ GIT
       activerecord (>= 7)
       railties (>= 7)
 
-GIT
-  remote: https://github.com/rails/solid_queue.git
-  revision: 664931da38548e5a3845952fe24b24f5285950ee
-  branch: main
-  specs:
-    solid_queue (0.3.3)
-      activejob (>= 7.1)
-      activerecord (>= 7.1)
-      concurrent-ruby (>= 1.3.1)
-      fugit (~> 1.11.0)
-      railties (>= 7.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -408,6 +396,12 @@ GEM
       activerecord (~> 7.0)
       activesupport (~> 7.0)
       railties (~> 7.0)
+    solid_queue (0.3.3)
+      activejob (>= 7.1)
+      activerecord (>= 7.1)
+      concurrent-ruby (>= 1.3.1)
+      fugit (~> 1.11.0)
+      railties (>= 7.1)
     sqlite3 (2.0.2)
       mini_portile2 (~> 2.8.0)
     stringio (3.1.1)
@@ -476,7 +470,7 @@ DEPENDENCIES
   simplecov (~> 0.17.1)
   solid_cache!
   solid_errors
-  solid_queue!
+  solid_queue
   sqlite3
   stimulus-rails!
   turbo-rails!

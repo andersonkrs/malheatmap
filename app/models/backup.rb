@@ -4,4 +4,8 @@ class Backup < ApplicationRecord
   has_one_attached :file, service: :cloud_backups
 
   include Executable
+
+  def to_s
+    "Backup:#{key}"
+  end
 end
