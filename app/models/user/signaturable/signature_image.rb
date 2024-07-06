@@ -26,7 +26,7 @@ class User
       end
 
       class GenerateJob < ApplicationJob
-        limits_concurrency to: 1, key: :signature_image_generation
+        retry_on(*BrowserSession::RETRYABLE_ERRORS, wait: :polynomially_longer)
 
         queue_as :chrome
 

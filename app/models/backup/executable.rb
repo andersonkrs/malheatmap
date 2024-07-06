@@ -33,17 +33,22 @@ class Backup
 
       Rails.logger.info "Creating Backup under: #{tmp_zip}"
 
-      Tempfile.open(["primary_", "sqlite3.sql"]) do |sql_file|
-        Rails.logger.info "Dumping database into #{sql_file.path}..."
-        system("sqlite3 #{primary_db_path} .dump > #{sql_file.path}", exception: true)
+      Tempfile.open([File.basename(primary_db_name, ".sqlite3"), ".sqlite3"]) do |dump_file|
+        Rails.logger.info "Dumping database into #{dump_file.path}..."
+        dest = SQLite3::Database.new(dump_file)
+        backup = SQLite3::Backup.new(dest, "main", ApplicationRecord.connection.raw_connection, "main")
+        backup.step(-1)
+        backup.finish
+        dest.close
+        Rails.logger.info "Database dump completed!"
 
         Rails.logger.info "Zipping files ..."
-        system("tar -czvf #{tmp_zip} #{sql_file.path} storage/#{Rails.env}", exception: true)
-        Rails.logger.info "Storage zipped!"
+        system("tar -czvf #{tmp_zip} #{dump_file.path} storage/#{Rails.env}", exception: true)
+        Rails.logger.info "Files zipped!"
       end
 
       attach(tmp_zip)
-      Rails.logger.info "Backup complete!"
+      Rails.logger.info "Backup completed!"
     ensure
       FileUtils.rm(tmp_zip)
       Rails.logger.info("#{tmp_zip} removed")
@@ -55,10 +60,14 @@ class Backup
       Rails.logger.info "Attaching backup file..."
       file.attach(
         io: File.open(tmp_zip),
-        filename: key,
+        filename: File.basename(tmp_zip),
         content_type: "application/x-tgz",
-        key: key,
+        key: File.basename(tmp_zip),
       )
+    end
+
+    def primary_db_name
+      File.basename(primary_db_path)
     end
 
     def primary_db_path
