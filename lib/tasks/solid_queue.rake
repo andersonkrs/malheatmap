@@ -9,7 +9,7 @@ namespace :solid_queue do
         abort()
       end
 
-      if SolidQueue::Helper.stuck_executions_for_queue?(queue_name: queue, threshold: 60.minutes)
+      if SolidQueue::Helper.stuck_executions_for_queue?(queue_name: queue, threshold: 20.minutes)
         puts("Stuck executions on queue #{queue}. Exiting 1")
         abort()
       end

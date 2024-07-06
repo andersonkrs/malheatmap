@@ -45,7 +45,7 @@ class Backup
         Rails.logger.info "Database dump completed!"
 
         Rails.logger.info "Zipping files ..."
-        system("tar -czvf #{tmp_zip} #{dump_file.path} storage/#{Rails.env}", exception: true)
+        system({ "GZIP" => "-9" }, "tar -czvf #{tmp_zip} #{dump_file.path} storage/#{Rails.env}", exception: true)
         Rails.logger.info "Files zipped!"
       end
 

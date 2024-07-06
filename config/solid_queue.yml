@@ -29,8 +29,8 @@ default: &default
   workers:
     - queues: [default, active_storage, logging]
       threads: 2
-      processes: 1
-      polling_interval: 1
+      processes: 2
+      polling_interval: 2
     - queues: [low]
       threads: 1
       processes: 1
