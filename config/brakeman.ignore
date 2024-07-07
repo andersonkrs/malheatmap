@@ -3,20 +3,20 @@
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
-      "fingerprint": "f76e16e101050ace65cca291d38b8993dac3576a0fc52210e0c041623c1edb3a",
+      "fingerprint": "0b6203f66bca10ea9c6d9f0dac86cc0e5be03b893d0726f273d697e5070735ce",
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "app/models/backup/executable.rb",
-      "line": 46,
+      "line": 48,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "system(\"tar -czvf #{Dir::Tmpname.create([\"#{key}_\", \".tar.gz\"]) do\n \n end} #{Tempfile.new.path} storage/#{Rails.env}\", :exception => true)",
+      "code": "system(\"tar -cavf #{Dir::Tmpname.create([\"#{key}_\", \".tar.xz\"]) do\n \n end} #{Tempfile.new.path} storage/#{Rails.env}\", :exception => true)",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "Backup",
         "method": "backup_files!"
       },
-      "user_input": "Dir::Tmpname.create([\"#{key}_\", \".tar.gz\"]) do\n \n end",
+      "user_input": "Dir::Tmpname.create([\"#{key}_\", \".tar.xz\"]) do\n \n end",
       "confidence": "Medium",
       "cwe_id": [
         77
@@ -24,6 +24,6 @@
       "note": ""
     }
   ],
-  "updated": "2024-07-06 12:32:18 -0300",
+  "updated": "2024-07-07 10:09:24 -0300",
   "brakeman_version": "6.1.1"
 }

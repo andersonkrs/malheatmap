@@ -31,7 +31,7 @@ class Backup
     private
 
     def backup_files!
-      tmp_zip = Dir::Tmpname.create(["#{key}_", ".tar.gz"]) { }
+      tmp_zip = Dir::Tmpname.create(["#{key}_", ".tar.xz"]) { }
 
       Rails.logger.info "Creating Backup under: #{tmp_zip}"
 
@@ -45,7 +45,7 @@ class Backup
         Rails.logger.info "Database dump completed!"
 
         Rails.logger.info "Zipping files ..."
-        system({ "GZIP" => "-9" }, "tar -czvf #{tmp_zip} #{dump_file.path} storage/#{Rails.env}", exception: true)
+        system("tar -cavf #{tmp_zip} #{dump_file.path} storage/#{Rails.env}", exception: true)
         Rails.logger.info "Files zipped!"
       end
 
