@@ -31,7 +31,7 @@ class Backup
     private
 
     def backup_files!
-      tmp_zip = Dir::Tmpname.create(["#{key}_", ".tar.xz"]) { }
+      tmp_zip = Dir::Tmpname.create(["#{key}_", ".tar.gz"]) { }
 
       Rails.logger.info "Creating Backup under: #{tmp_zip}"
 

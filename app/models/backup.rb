@@ -1,5 +1,8 @@
 class Backup < ApplicationRecord
-  attribute :key, :string, default: -> { "backup_#{Rails.env}_#{Time.current.to_fs(:number)}" }
+  attribute :key, :string, default: -> {
+    app_name =  Rails.application.class.module_parent_name.underscore
+    "backup_#{app_name}_#{Rails.env}_#{Time.zone.today.to_fs(:number)}"
+  }
 
   has_one_attached :file, service: :cloud_backups
 
