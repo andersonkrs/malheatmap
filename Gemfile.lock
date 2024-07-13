@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/hotwired/turbo-rails.git
-  revision: e376852bfb273f69f4ebb54cf516b99fcbaa7acb
+  revision: 669ba6dc2926eb980939a2ff7aa8d7a076926c67
   branch: main
   specs:
     turbo-rails (2.0.5)
@@ -203,7 +203,7 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.7.2)
-    irb (1.13.2)
+    irb (1.14.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jmespath (1.6.2)
@@ -292,7 +292,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.0)
-    rack (3.1.6)
+    rack (3.1.7)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
