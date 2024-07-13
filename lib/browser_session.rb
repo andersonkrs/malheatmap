@@ -1,9 +1,11 @@
 class BrowserSession
   RETRYABLE_ERRORS = [
+    Ferrum::DeadBrowserError,
     Ferrum::TimeoutError,
     Ferrum::ProcessTimeoutError,
     Ferrum::PendingConnectionsError,
     Ferrum::JavaScriptError,
+    Errno::ECONNREFUSED,
     NoMethodError
   ].freeze
 
@@ -16,19 +18,17 @@ class BrowserSession
 
   def quit
     if browser
-      Rails.logger.info "Quitting browser process #{browser.process.pid}"
+      Rails.logger.info "Quitting browser process #{browser&.process&.pid}"
+      browser.reset
       browser.quit
     end
-  end
+ end
 
   def with_new_page
     spawn_new_browser
 
-    page = browser.create_page
-    begin
-      yield(page)
-    ensure
-      page.close
+    browser.create_page do
+      yield(_1)
     end
   end
 
@@ -38,7 +38,7 @@ class BrowserSession
 
   def spawn_new_browser
     @browser = Ferrum::Browser
-      .new(headless: "new", browser_options: { "no-sandbox": nil, "disable-setuid-sandbox": nil, "js-flags": "--max-old-space-size=1024" })
+      .new({ headless: true, url: ENV["FERRUM_BROWSER_URL"].presence })
       .tap do |browser|
         Rails.logger.info "Browser instance created PID: #{browser.process.pid}"
       end

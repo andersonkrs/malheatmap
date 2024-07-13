@@ -28,7 +28,9 @@ class User
       class GenerateJob < ApplicationJob
         retry_on(*BrowserSession::RETRYABLE_ERRORS, wait: :polynomially_longer)
 
-        queue_as :chrome
+        limits_concurrency to: 2, key: :screenshots, duration: 2.hours
+
+        queue_as :screenshots
 
         def perform(user)
           user.signature_image.generate
@@ -42,13 +44,9 @@ class User
       def generate_from_activities
         calendar_html = render_calendar_html
 
-        Tempfile.open(%w[signature .html]) do |html_file|
-          html_file.write(calendar_html)
-
-          capture_html_screenshot(html_file)
-            .then { |screenshot| resize_to_mal_max_size(screenshot) }
-            .then { |screenshot| user.signature.attach(io: screenshot, filename: "#{user.username}.png") }
-        end
+        capture_html_screenshot(calendar_html)
+          .then { |screenshot| resize_to_mal_max_size(screenshot) }
+          .then { |screenshot| user.signature.attach(io: screenshot, filename: "#{user.username}.png") }
       end
 
       def render_calendar_html
@@ -57,19 +55,27 @@ class User
         ApplicationController.render("users/signature", locals: { activities_amount_per_day: }, layout: nil)
       end
 
-      def capture_html_screenshot(html_file)
-        Tempfile.open(%w[screenshot .png]) do |screenshot_file|
-          BrowserSession.fetch_page do |page|
-            page.go_to("file:#{html_file.path}")
-            page.screenshot(selector: ".signature", path: screenshot_file.path, format: :png)
-          end
+      def capture_html_screenshot(html_page)
+        png_image = nil
 
-          screenshot_file
+        BrowserSession.fetch_page do |page|
+          page.go_to("data:text/html;base64,#{Base64.strict_encode64(html_page)}")
+
+          png_image = page
+            .screenshot(selector: ".signature", format: :png, encoding: :binary)
+            .then { Vips::Image.new_from_buffer(_1, "") }
         end
+
+        png_image
       end
 
       def resize_to_mal_max_size(screenshot_file)
-        ImageProcessing::Vips.source(screenshot_file).resize_to_limit(600, 150).call
+        Rails.logger.info("Resizing screenshot with libvips")
+        ImageProcessing::Vips
+          .source(screenshot_file)
+          .saver(quality: 100)
+          .resize_to_limit(600, 150)
+          .call
       end
     end
   end
