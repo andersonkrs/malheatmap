@@ -23,8 +23,8 @@ gem "mission_control-jobs"
 gem "solid_cache", github: "npezza93/solid_cache", branch: "main"
 
 # Hotwire
-gem "stimulus-rails", github: "hotwired/stimulus-rails", branch: "main"
-gem "turbo-rails", github: "hotwired/turbo-rails", branch: "main"
+gem "stimulus-rails"
+gem "turbo-rails"
 
 # Better i18n
 gem "gettext", ">=3.0.2", require: false

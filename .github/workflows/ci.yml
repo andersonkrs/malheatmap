@@ -102,7 +102,6 @@ jobs:
       DOCKER_BUILDKIT: 1
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
       COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
-      COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
