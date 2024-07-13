@@ -5,7 +5,6 @@
 # and maximum; this matches the default thread size of Active Record.
 #
 #
-
 rails_env = ENV.fetch("RAILS_ENV", "development").inquiry
 
 max_threads_count = ENV.fetch("PUMA_MAX_THREADS", 2)
@@ -42,4 +41,4 @@ preload_app!
 plugin :tmp_restart
 
 # Run solid  queue
-plugin :solid_queue if rails_env.development?
+plugin :solid_queue

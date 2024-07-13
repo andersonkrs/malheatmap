@@ -15,7 +15,7 @@ class HealthCheckControllerTest < ActionDispatch::IntegrationTest
       kind: "Worker",
       pid: 123,
       metadata: {
-        queues: "chrome,default,active_storage,low,logging"
+        queues: "screenshots,default,active_storage,low,logging"
       }
     })
 
@@ -30,7 +30,7 @@ class HealthCheckControllerTest < ActionDispatch::IntegrationTest
       kind: "Worker",
       pid: 123,
       metadata: {
-        queues: "chrome,default"
+        queues: "screenshots,default"
       }
     })
 
@@ -55,7 +55,7 @@ class HealthCheckControllerTest < ActionDispatch::IntegrationTest
       kind: "Worker",
       pid: 123,
       metadata: {
-        queues: "chrome,default,active_storage,low,logging"
+        queues: "screenshots,default,active_storage,low,logging"
       }
     })
     process.claimed_executions.create(job: job, created_at: 6.hours.ago)
@@ -72,7 +72,7 @@ class HealthCheckControllerTest < ActionDispatch::IntegrationTest
       kind: "Worker",
       pid: 123,
       metadata: {
-        queues: "chrome,default,active_storage,low,logging"
+        queues: "screenshots,default,active_storage,low,logging"
       }
     })
     process.claimed_executions.create(job: job, created_at: (2.hours + 10.minutes).ago)

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   match "/404" => "application#not_found", :via => :all, :as => "not_found"
   match "/500" => "application#internal_error", :via => :all, :as => "internal_error"
   get "/health-check" => "health_check#index", :as => "health_check"
-  get "/up" => "rails/health#show"
+  get "/up" => "monitoring#show"
 
   mount MissionControl::Jobs::Engine, at: "/jobs"
   mount SolidErrors::Engine, at: "/errors"

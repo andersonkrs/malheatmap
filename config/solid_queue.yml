@@ -1,6 +1,6 @@
 default: &default
   dispatchers:
-    - polling_interval: 1
+    - polling_interval: 5
       batch_size: 500
       recurring_tasks:
         periodic_sync:
@@ -27,15 +27,11 @@ default: &default
           schedule: "every day at 12 am on America/Sao_Paulo"
           args: [ "SolidQueue::Job.clear_finished_in_batches" ]
   workers:
-    - queues: [default, active_storage, logging]
-      threads: 2
-      processes: 2
+    - queues: [default, active_storage, logging, screenshots]
+      threads: 5
+      processes: 1
       polling_interval: 2
     - queues: [low]
-      threads: 1
-      processes: 1
-      polling_interval: 5
-    - queues: [chrome]
       threads: 1
       processes: 1
       polling_interval: 5
