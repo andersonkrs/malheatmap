@@ -24,7 +24,6 @@ module MalHeatmap
     config.action_dispatch.cookies_serializer = :json
     config.filter_parameters += [:password]
 
-    config.redis = config_for("redis/shared")
     config.cache_store = :solid_cache_store
     config.session_store :cookie_store, expire_after: 1.week, key: "_malheatmap_session_v1"
 

@@ -317,10 +317,6 @@ GEM
     rake (13.2.1)
     rdoc (6.7.0)
       psych (>= 4.0.0)
-    redis (5.0.8)
-      redis-client (>= 0.17.0)
-    redis-client (0.19.1)
-      connection_pool
     regexp_parser (2.9.0)
     reline (0.5.9)
       io-console (~> 0.5)
@@ -374,6 +370,8 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
     singleton (0.2.0)
+    solid_cable (1.0.3)
+      rails (< 9)
     solid_errors (0.4.3)
       actionmailer (~> 7.0)
       actionpack (~> 7.0)
@@ -456,10 +454,10 @@ DEPENDENCIES
   propshaft
   puma
   rails (~> 7.2.0.beta1)
-  redis
   requestjs-rails
   rubocop-rails-omakase
   simplecov (~> 0.17.1)
+  solid_cable
   solid_cache!
   solid_errors
   solid_queue

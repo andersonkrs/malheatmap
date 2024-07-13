@@ -10,17 +10,17 @@ gem "bootsnap", require: false
 gem "puma"
 
 # Drivers
-gem "redis" # Action Cable
 gem "sqlite3"
 gem "activerecord-enhancedsqlite3-adapter"
 
-# Queuing
+# Solid gems
 gem "solid_queue"
-gem "mission_control-jobs"
+gem "solid_cache", github: "npezza93/solid_cache", branch: "main" # Rails 7.2 beta fix
+gem "solid_cable"
+gem "solid_errors"
 
-# Cache
-# Rails 7.2 hotfix
-gem "solid_cache", github: "npezza93/solid_cache", branch: "main"
+# Queue management
+gem "mission_control-jobs"
 
 # Hotwire
 gem "stimulus-rails"
@@ -41,7 +41,6 @@ gem "image_processing"
 # Visibility
 gem "lograge"
 gem "newrelic_rpm"
-gem "solid_errors"
 
 # Web Crawling
 gem "ferrum"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_05_31_100527) do
+ActiveRecord::Schema[7.2].define(version: 2024_07_13_161619) do
   create_table "crawling_log_entries", force: :cascade do |t|
     t.json "raw_data"
     t.string "checksum"
@@ -31,6 +31,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_31_100527) do
     t.string "url"
     t.text "body"
     t.index ["crawling_log_entry_id"], name: "idx_on_crawling_log_entry_id_252ef8fe22"
+  end
+
+  create_table "solid_cable_messages", force: :cascade do |t|
+    t.text "channel"
+    t.text "payload"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["channel"], name: "index_solid_cable_messages_on_channel"
+    t.index ["created_at"], name: "index_solid_cable_messages_on_created_at"
   end
 
   create_table "solid_errors", force: :cascade do |t|
