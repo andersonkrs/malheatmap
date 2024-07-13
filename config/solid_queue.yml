@@ -22,10 +22,13 @@ default: &default
           class: "CronJob"
           schedule: "every 12 hours"
           args: [ "Blazer.send_failing_checks" ]
-        clean_up_job:
+        clean_up_finished_jobs:
           class: "CronJob"
-          schedule: "every day at 12 am on America/Sao_Paulo"
+          schedule: "every 24 hours"
           args: [ "SolidQueue::Job.clear_finished_in_batches" ]
+        clean_up_cable_messages:
+          class: "SolidCable::PruneJob"
+          schedule: "every 24 hours"
   workers:
     - queues: [default, active_storage, logging, screenshots]
       threads: 5
