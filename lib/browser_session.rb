@@ -5,6 +5,7 @@ class BrowserSession
     Ferrum::ProcessTimeoutError,
     Ferrum::PendingConnectionsError,
     Ferrum::JavaScriptError,
+    Socket::ResolutionError,
     Errno::ECONNREFUSED,
     NoMethodError
   ].freeze
