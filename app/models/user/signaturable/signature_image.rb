@@ -26,9 +26,9 @@ class User
       end
 
       class GenerateJob < ApplicationJob
-        retry_on(*BrowserSession::RETRYABLE_ERRORS, wait: :polynomially_longer)
+        retry_on(*BrowserSession::RETRYABLE_ERRORS, attempts: 10, wait: :polynomially_longer)
 
-        limits_concurrency to: 2, key: :screenshots, duration: 2.hours
+        limits_concurrency to: 1, key: :screenshots, duration: 2.hours
 
         queue_as :screenshots
 
