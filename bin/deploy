@@ -4,5 +4,7 @@ set -e
 
 echo "Deploying...."
 
-source ./bin/push_image
-source ./bin/trigger_deployment
+DOCKER_HOST=""
+
+source ./bin/push-image
+source ./bin/trigger-deployment

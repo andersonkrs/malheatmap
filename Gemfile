@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby file: ".ruby-version"
 
-gem "rails", "~> 7.2.0.beta1"
+gem "rails", "~> 7.2.0.beta3"
 
 gem "bootsnap", require: false
 
@@ -12,11 +12,10 @@ gem "puma"
 # Drivers
 gem "sqlite3"
 gem "activerecord-enhancedsqlite3-adapter"
+gem "redis", ">= 4.0.1"
 
 # Solid gems
 gem "solid_queue"
-gem "solid_cache", github: "npezza93/solid_cache", branch: "main" # Rails 7.2 beta fix
-gem "solid_cable"
 gem "solid_errors"
 
 # Queue management
