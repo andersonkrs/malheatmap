@@ -43,7 +43,7 @@ FROM base
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl wget libjemalloc2 libsqlite3-0 libvips && \
+    apt-get install --no-install-recommends -y curl wget libjemalloc2 libsqlite3-0 libvips redis && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 ENV TMPDIR="/rails/tmp"
@@ -66,4 +66,4 @@ EXPOSE 3000
 
 VOLUME /rails/storage
 
-CMD ["./bin/rails", "server"]
+CMD ["gem", "exec", "foreman", "start"]

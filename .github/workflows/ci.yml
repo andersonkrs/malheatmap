@@ -135,4 +135,4 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Run deploy command
-        run: ./bin/trigger_deployment
+        run: ./bin/trigger-deployment
