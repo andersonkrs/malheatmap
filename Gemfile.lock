@@ -225,7 +225,7 @@ GEM
       rails (~> 7.1)
       stimulus-rails
       turbo-rails
-    mocha (2.4.0)
+    mocha (2.4.5)
       ruby2_keywords (>= 0.0.5)
     msgpack (1.7.2)
     net-http-digest_auth (1.4.1)
