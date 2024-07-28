@@ -3,6 +3,7 @@ class User < ApplicationRecord
   include MALSyncable
   include Mergeable
   include Calendars
+  include CalendarImageable
   include Signaturable
   include Deactivatable
   include Geolocatable

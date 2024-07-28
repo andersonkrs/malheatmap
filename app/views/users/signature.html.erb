@@ -3,10 +3,16 @@
   <style type="text/css">
     <%= Rails.application.assets.resolver.read("application.css").html_safe.force_encoding("UTF-8") %>
 
+    html {
+      background-color: transparent !important;
+    }
+    body {
+      background-color: transparent !important;
+    }
     .signature {
-        padding: 0.75em;
-        display: inline-grid;
-        background-color: transparent;
+      padding: 0.75em;
+      display: inline-grid;
+      background-color: transparent !important;
     }
   </style>
 </head>

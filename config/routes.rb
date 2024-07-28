@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     resource :signature, only: :show, on: :member
     resources :calendars, only: :show, on: :member, param: "year"
     resources :timelines, only: :show, on: :member, param: "year"
+
+    namespace :images do
+      resource :calendar, on: :member, only: :show
+    end
   end
 
   get "/about", to: "application#about", as: "about"

@@ -1,13 +1,7 @@
 class SignaturesController < ApplicationController
-  before_action :set_user
+  include UserScoped
 
   def show
-    redirect_to url_for(@user.signature)
-  end
-
-  private
-
-  def set_user
-    @user = User.with_attached_signature.find_by!(username: params[:user_username])
+    redirect_to @user.signature
   end
 end
