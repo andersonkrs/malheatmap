@@ -1,11 +1,11 @@
 require "test_helper"
 
-class User::SignaturableTest < ActiveSupport::TestCase
+class User::CalendarImageableTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess::FixtureFile
 
   setup { @user = users(:babyoda) }
 
-  test "generates user sigrature image correctly using current date" do
+  test "generates user calendar image correctly using current date" do
     travel_to Date.new(2020, 5, 1)
 
     @user.activities.create!(
@@ -25,31 +25,31 @@ class User::SignaturableTest < ActiveSupport::TestCase
       ]
     )
 
-    @user.signature_image.generate
+    @user.calendar_images.generate
 
-    assert @user.signature.attached?
-    @user.signature.blob.open do |file|
+    assert @user.calendar_image.attached?
+    @user.calendar_image.blob.open do |file|
       assert file.size > 15.kilobytes
     end
   end
 
-  test "enqueues signature generation when updating the user checksum" do
+  test "enqueues calendar image generation when updating the user checksum" do
     @user.update!(checksum: "mynewone")
 
-    assert_enqueued_jobs 1, only: User::Signaturable::SignatureImage::GenerateJob
-    assert_enqueued_with job: User::Signaturable::SignatureImage::GenerateJob, args: [@user]
+    assert_enqueued_jobs 1, only: User::CalendarImages::GenerateJob
+    assert_enqueued_with job: User::CalendarImages::GenerateJob, args: [@user]
   end
 
-  test "enqueues signature generation when updating the user and the image is obsolete" do
-    @user.signature.attach(file_fixture_upload("user_signature.png"))
+  test "enqueues calendar image generation when updating the user and the image is obsolete" do
+    @user.calendar_image.attach(file_fixture_upload("user_signature.png"))
 
-    assert_enqueued_jobs 0, only: User::Signaturable::SignatureImage::GenerateJob
+    assert_enqueued_jobs 0, only: User::CalendarImages::GenerateJob
 
     travel_to 2.days.from_now
 
     @user.touch
 
-    assert_enqueued_jobs 1, only: User::Signaturable::SignatureImage::GenerateJob
-    assert_enqueued_with job: User::Signaturable::SignatureImage::GenerateJob, args: [@user]
+    assert_enqueued_jobs 1, only: User::CalendarImages::GenerateJob
+    assert_enqueued_with job: User::CalendarImages::GenerateJob, args: [@user]
   end
 end

@@ -4,24 +4,25 @@
 
 <% cache [user, calendar] do %>
   <div class="columns is-multiline">
-    <div class="column is-full">
-      <article class="media">
-        <figure class="user-avatar media-left">
-          <p class="image is-96x96">
-            <img src="<%= user.avatar_url %>" alt="<%= _("User Avatar") %>">
-          </p>
-        </figure>
-        <div class="media-content">
-          <p>
-            <%= link_to(MAL::URLS.profile_url(user.username), target: "_blank", rel: "noopener noreferrer", class: "is-size-4") do %>
-              <%= user.username %>
-            <% end %>
-          </p>
-          <div class="bb-code pt-3">
-            <%= render partial: "users/bb_code", locals: { user: user } %>
-          </div>
-        </div>
-      </article>
+    <div class="column is-full p-0">
+      <div class="is-flex is-flex-direction-column is-justify-content-center is-align-content-center is-flex-wrap-wrap">
+        <%= link_to(MAL::URLS.profile_url(user.username), target: "_blank", rel: "noopener noreferrer", class: "image has-text-centered", style: "max-width: 255px; max-height: 350px; color: inherit") do %>
+          <% if user.avatar_url.present? %>
+            <%= image_tag user.avatar_url, style: "object-fit: cover;" %>
+          <% else %>
+            <i class="fa fa-user-secret fa-6x" aria-hidden="true"></i>
+          <% end %>
+        <% end %>
+        <%= link_to(MAL::URLS.profile_url(user.username), target: "_blank", rel: "noopener noreferrer", class: "is-size-4 has-text-centered") do %>
+          <%= user.username %>
+        <% end %>
+      </div>
+    </div>
+    <div class="column is-half">
+      <%= render partial: "users/bb_code", locals: { user: user, label: _("Large BB Code"), help: _("Ideal for profile page") } %>
+    </div>
+    <div class="column is-half">
+      <%= render partial: "users/bb_code", locals: { user: user, label: _("Small BB Code"), help: _("Ideal for forum signature"), variant: :small } %>
     </div>
     <%= turbo_frame_tag dom_id(user, :activities), class: "column is-full" do %>
       <div class="columns is-multiline">

@@ -4,7 +4,6 @@ class User < ApplicationRecord
   include Mergeable
   include Calendars
   include CalendarImageable
-  include Signaturable
   include Deactivatable
   include Geolocatable
 
