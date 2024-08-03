@@ -88,7 +88,7 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
 
     assert_equal 3, @user.activities.count
 
-    assert_enqueued_with job: User::Signaturable::SignatureImage::GenerateJob, args: [@user]
+    assert_enqueued_with job: User::CalendarImages::GenerateJob, args: [@user]
   end
 
   test "updates item name if it has changed" do
@@ -172,7 +172,7 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
     travel_to Date.new(2020, 10, 3)
 
     @user.crawler_pipeline.execute!
-    perform_enqueued_jobs only: [User::Signaturable::SignatureImage::GenerateJob]
+    perform_enqueued_jobs only: [User::CalendarImages::GenerateJob]
 
     @user.reload
 
@@ -188,17 +188,17 @@ class User::CrawlerPipelineTest < ActiveSupport::TestCase
       @user.crawler_pipeline.execute!
     end
 
-    assert_no_enqueued_jobs(only: [User::Signaturable::SignatureImage::GenerateJob]) { @user.crawler_pipeline.execute! }
+    assert_no_enqueued_jobs(only: [User::CalendarImages::GenerateJob]) { @user.crawler_pipeline.execute! }
   end
 
-  test "updates signature if the checksum dit not change but the last signature date changed" do
+  test "updates calendar iamges if the checksum dit not change but the last image date changed" do
     travel_to Date.new(2020, 10, 3)
 
     @user.crawler_pipeline.execute!
 
     travel_to 2.days.from_now
 
-    assert_enqueued_with job: User::Signaturable::SignatureImage::GenerateJob, args: [@user] do
+    assert_enqueued_with job: User::CalendarImages::GenerateJob, args: [@user] do
       @user.crawler_pipeline.execute!
     end
   end

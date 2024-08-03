@@ -12,13 +12,12 @@
     .signature {
       padding: 0.75em;
       display: inline-grid;
-      background-color: transparent !important;
     }
   </style>
 </head>
 <body>
-<div class="signature">
-  <%= render CalendarComponent.new(activities_amount_per_day: activities_amount_per_day) %>
-</div>
+  <div class="signature">
+    <%= render CalendarComponent.new(activities_amount_per_day: activities_amount_per_day) %>
+  </div>
 </body>
 </html>

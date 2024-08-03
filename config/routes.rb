@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   get "/sessions/callback", to: "sessions#callback", as: "oauth_callback"
 
   resources :users, only: :show, param: :username do
-    resource :signature, only: :show, on: :member
+    get "/signature", to: redirect("users/%{user_username}/images/calendar?variant=small")
+
     resources :calendars, only: :show, on: :member, param: "year"
     resources :timelines, only: :show, on: :member, param: "year"
 

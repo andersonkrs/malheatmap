@@ -30,25 +30,31 @@ module ActiveSupport
 
     fixtures :all
 
-    def render(...)
-      ApplicationController.renderer.render(...)
-    end
-
     parallelize(workers: 4)
 
-    if ENV["COVERAGE"] == "true"
-      parallelize_setup { |worker| SimpleCov.command_name "Minitest:#{worker}" }
+    parallelize_setup do |worker|
+      ActiveStorage::Blob.service.root = "#{ActiveStorage::Blob.service.root}-#{worker}"
 
-      parallelize_teardown { |_worker| SimpleCov.result }
+      SimpleCov.command_name "Minitest:#{worker}" if ENV["COVERAGE"] == "true"
     end
 
-    setup { Kernel.silence_warnings { Rails.application.load_tasks } }
+    parallelize_teardown do |_worker|
+      SimpleCov.result if ENV["COVERAGE"] == "true"
+    end
+
+    setup do
+      Kernel.silence_warnings { Rails.application.load_tasks }
+    end
 
     teardown do
       Rake::Task.clear
       Rails.cache.clear
+
+      FileUtils.rm_rf(ActiveStorage::Blob.service.root)
+    end
+
+    def render(...)
+      ApplicationController.renderer.render(...)
     end
   end
 end
-
-Minitest.after_run { FileUtils.rm_rf Rails.root.join("storage/test") }

@@ -13,9 +13,10 @@ class User::PeriodicMALSyncJob < ApplicationJob
     if user.legacy_account?
       user.schedule_deactivation(reason: error.message)
       Rails.logger.warn("Scheduled deactivation for user #{user.to_global_id}, reason: #{error}")
+    else
+      Rails.logger.error(error)
+      user.touch(:mal_synced_at)
     end
-
-    Rails.error.report(error)
   end
 
   rescue_from MAL::Errors::CommunicationError do |exception|
