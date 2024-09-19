@@ -167,7 +167,7 @@ GEM
       numerizer (~> 0.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-protobuf (4.27.3)
+    google-protobuf (4.27.5)
       bigdecimal
       rake (>= 13)
     hashdiff (1.1.1)
