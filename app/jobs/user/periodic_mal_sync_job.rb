@@ -1,6 +1,8 @@
 class User::PeriodicMALSyncJob < ApplicationJob
   queue_as :low
 
+  uniqueness_control key: -> { _1.id }, expires_in: 48.hours
+
   discard_on ActiveRecord::RecordNotFound do |_job, exception|
     Rails.logger.error(exception)
   end

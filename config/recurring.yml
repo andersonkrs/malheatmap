@@ -1,0 +1,20 @@
+production:
+  periodic_sync:
+    class: "User::SchedulePeriodicMALSyncJob"
+    schedule: "every day at 6:00 and 18:00 on UTC"
+  blazer_5_min_check:
+    schedule: "every 5 minutes"
+    command: "Blazer.run_checks(schedule: '5 minutes')"
+  blazer_hourly_check:
+    schedule: "every hour"
+    command: "Blazer.run_checks(schedule: '1 hour')"
+  blazer_daily_check:
+    schedule: "every day at 12 am on America/Sao_Paulo"
+    command: "Blazer.run_checks(schedule: '1 day')"
+  blazer_send_failing_checks:
+    schedule: "every 12 hours"
+    command: "Blazer.send_failing_checks"
+  clean_up_finished_jobs:
+    schedule: "every 24 hours"
+    command: "SolidQueue::Job.clear_finished_in_batches"
+

@@ -16,10 +16,10 @@ development:
     <<: *sqlite_defaults
     database: "storage/malheatmap_ops_development.sqlite3"
     migrations_paths: "db/ops/migrate"
-  queues:
+  queue:
     <<: *sqlite_defaults
-    database: "storage/malheatmap_queues_development.sqlite3"
-    migrations_paths: "db/queues/migrate"
+    database: "storage/malheatmap_queue_development.sqlite3"
+    migrations_paths: "db/queue/migrate"
 
 test:
   primary:
@@ -30,10 +30,10 @@ test:
     <<: *sqlite_defaults
     database: "storage/malheatmap_ops_test.sqlite3"
     migrations_paths: "db/ops/migrate"
-  queues:
+  queue:
     <<: *sqlite_defaults
-    database: "storage/malheatmap_queues_test.sqlite3"
-    migrations_paths: "db/queues/migrate"
+    database: "storage/malheatmap_queue_test.sqlite3"
+    migrations_paths: "db/queue/migrate"
 
 production:
   primary:
@@ -46,7 +46,7 @@ production:
     <<: *sqlite_defaults
     database: "storage/malheatmap_ops_production.sqlite3"
     migrations_paths: "db/ops/migrate"
-  queues:
+  queue:
     <<: *sqlite_defaults
-    database: "storage/malheatmap_queues_production.sqlite3"
-    migrations_paths: "db/queues/migrate"
+    database: "storage/malheatmap_queue_production.sqlite3"
+    migrations_paths: "db/queue/migrate"

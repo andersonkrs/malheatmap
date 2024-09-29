@@ -1,0 +1,13 @@
+# syntax = docker/dockerfile:1
+
+FROM ghcr.io/browserless/chromium:latest
+
+USER root
+
+RUN apt-get update && apt-get install -y ncdu
+
+USER blessuser
+
+ENV DATA_DIR="/tmp/my-profile"
+
+VOLUME /tmp/my-profile

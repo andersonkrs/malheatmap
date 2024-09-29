@@ -2,7 +2,7 @@ module SolidQueue::Helper
   extend self
 
   def queues_from_config
-    Rails.application.config_for(:solid_queue).workers.pluck(:queues).flatten
+    Rails.application.config_for(:queue).workers.pluck(:queues).flatten
   end
 
   def stuck_executions_for_queue?(queue_name:, threshold: 3.hours)

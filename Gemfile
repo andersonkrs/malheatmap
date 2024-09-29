@@ -14,6 +14,12 @@ gem "sqlite3"
 gem "activerecord-enhancedsqlite3-adapter"
 gem "redis", ">= 4.0.1"
 
+# SSL
+gem "thruster"
+
+# Deployment
+gem "kamal"
+
 # Solid gems
 gem "solid_queue"
 gem "solid_errors"
@@ -39,7 +45,6 @@ gem "image_processing"
 
 # Visibility
 gem "lograge"
-gem "newrelic_rpm"
 
 # Web Crawling
 gem "ferrum"
