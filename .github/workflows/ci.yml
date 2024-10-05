@@ -100,9 +100,9 @@ jobs:
 
     env:
       DOCKER_BUILDKIT: 1
-      DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
-      COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
-      COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+      RAILS_ENV: production
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      KAMAL_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v4
@@ -114,6 +114,10 @@ jobs:
         with:
           bundler-cache: true
 
+      - uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v2
@@ -124,15 +128,27 @@ jobs:
           username: andersonskm
           password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: andersonskm/malheatmap
+          labels: |
+            service=malheatmap
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          platforms: linux/amd64
           tags: andersonskm/malheatmap:${{ github.sha }},andersonskm/malheatmap:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Export master key
+        run: echo "$RAILS_MASTER_KEY" > config/credentials/production.key
 
       - name: Run deploy command
-        run: ./bin/trigger-deployment
+        run: bin/kamal deploy -v --skip_push
+
