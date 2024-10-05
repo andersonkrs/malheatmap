@@ -5,17 +5,15 @@ class UniqueJobsTest < ActiveJob::TestCase
     class InvalidElement < StandardError; end
 
     def fill_with(liquid)
-      raise InvalidElement if liquid.blank?
-
       Rails.logger.debug(liquid)
     end
   end
 
   class BucketJob < ApplicationJob
-    uniqueness_control key: ->(record, _) { [record.id, record.updated_at&.to_fs(:number)] },
+    uniqueness_control key: ->(record) { [record.id, record.updated_at&.to_fs(:number)] },
                        expires_in: 30.minutes
 
-    def perform(bucket, liquid = :water)
+    def perform(bucket)
       bucket.fill_with(liquid)
     end
   end
