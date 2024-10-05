@@ -35,6 +35,7 @@ module MalHeatmap
     config.active_storage.queues.analysis = :active_storage
     config.active_storage.queues.purge = :active_storage
     config.active_storage.queues.mirror = :active_storage
+    config.active_storage.queues.transform = :active_storage
 
     config.active_job.queue_adapter = :solid_queue
     config.solid_queue.connects_to = { database: { writing: :queue } }
