@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module MalHeatmap
   class Application < Rails::Application
-    config.load_defaults 7.2
+    config.load_defaults 8.0
     config.time_zone = "UTC"
     config.autoload_paths << Rails.root.join("lib")
 
@@ -22,7 +22,6 @@ module MalHeatmap
     config.action_cable.mount_path = "/cable"
 
     config.action_dispatch.cookies_serializer = :json
-    config.filter_parameters += [:password]
 
     config.session_store :cookie_store, expire_after: 1.week, key: "_malheatmap_session_v1"
 
@@ -36,6 +35,9 @@ module MalHeatmap
     config.active_storage.queues.analysis = :active_storage
     config.active_storage.queues.purge = :active_storage
     config.active_storage.queues.mirror = :active_storage
+
+    config.active_job.queue_adapter = :solid_queue
+    config.solid_queue.connects_to = { database: { writing: :queue } }
 
     config.mission_control.jobs.base_controller_class = "AdminController"
 

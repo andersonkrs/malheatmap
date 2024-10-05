@@ -10,6 +10,10 @@ module UniqueJobs
       after_perform do |job|
         release_uniqueness_lock(job, key: key.call(*job.arguments))
       end
+
+      after_discard do |job, exception|
+        release_uniqueness_lock(job, key: key.call(*job.arguments))
+      end
     end
 
     def uniqueness_suppressor_registry

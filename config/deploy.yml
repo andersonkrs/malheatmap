@@ -96,7 +96,6 @@ accessories:
       ENABLE_DEBUGGER: false
     options:
       shm-size: "2gb"
-      # 500mb virtual mount
       log-driver: json-file
       log-opt: max-size=10m
       log-opt: max-file=5

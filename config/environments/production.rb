@@ -91,6 +91,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue } }
   config.solid_queue.silence_polling = true
 
   config.hosts = %w[malheatmap.com]

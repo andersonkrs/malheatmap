@@ -3,18 +3,17 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby file: ".ruby-version"
 
-gem "rails", "~> 7.2.0"
+gem "rails", "~> 8.0.0.beta1"
 
 gem "bootsnap", require: false
 
 gem "puma"
 
 # Drivers
-gem "sqlite3"
-gem "activerecord-enhancedsqlite3-adapter"
+gem "sqlite3", "~> 2.1.0"
 gem "redis", ">= 4.0.1"
 
-# SSL
+# SSL, HTTP2
 gem "thruster"
 
 # Deployment
@@ -52,9 +51,6 @@ gem "mechanize"
 
 # BI
 gem "blazer"
-
-# Backups
-gem "aws-sdk-s3", require: false
 
 # Misc
 gem "geocoder"

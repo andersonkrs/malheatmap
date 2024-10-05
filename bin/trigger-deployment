@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-
-echo "Triggering deployment"
-
-curl --verbose --request GET \
-  --url "${COOLIFY_WEBHOOK}" \
-  -H "Authorization: Bearer ${COOLIFY_TOKEN}"
-
