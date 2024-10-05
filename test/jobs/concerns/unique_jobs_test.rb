@@ -2,14 +2,21 @@ require "test_helper"
 
 class UniqueJobsTest < ActiveJob::TestCase
   class Bucket < ApplicationRecord
+    class InvalidElement < StandardError; end
+
+    def fill_with(liquid)
+      raise InvalidElement if liquid.blank?
+
+      Rails.logger.debug(liquid)
+    end
   end
 
   class BucketJob < ApplicationJob
-    uniqueness_control key: ->(record) { [record.id, record.updated_at&.to_fs(:number)] },
+    uniqueness_control key: ->(record, _) { [record.id, record.updated_at&.to_fs(:number)] },
                        expires_in: 30.minutes
 
-    def perform(record)
-      Rails.logger.debug(record)
+    def perform(bucket, liquid = :water)
+      bucket.fill_with(liquid)
     end
   end
 
@@ -57,6 +64,7 @@ class UniqueJobsTest < ActiveJob::TestCase
     BucketJob.perform_later(record_a)
 
     clear_enqueued_jobs
+
     BucketJob.perform_later(record_a)
 
     assert_no_enqueued_jobs
@@ -84,6 +92,21 @@ class UniqueJobsTest < ActiveJob::TestCase
     travel_to 15.minutes.from_now
     BucketJob.perform_later(record_a)
 
+    assert_enqueued_jobs 1, only: [BucketJob]
+  end
+
+  test "when an exception is raised the lock must be released" do
+    Bucket.any_instance.stubs(:fill_with).raises(StandardError, "panic!")
+
+    # Lock
+    record_a = Bucket.create(id: 1)
+    BucketJob.perform_later(record_a)
+
+    assert_raises StandardError do
+      perform_enqueued_jobs
+    end
+
+    BucketJob.perform_later(record_a)
     assert_enqueued_jobs 1, only: [BucketJob]
   end
 end
