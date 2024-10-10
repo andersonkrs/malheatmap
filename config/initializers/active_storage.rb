@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
-module TransformJobExtension
+module ActiveStorageJobAutoRetry
   extend ActiveSupport::Concern
 
   prepended do
-    discard_on ActiveRecord::InvalidForeignKey, ActiveStorage::FileNotFoundError
+    retry_on ActiveRecord::InvalidForeignKey, ActiveStorage::FileNotFoundError
   end
 end
 
 Rails.configuration.to_prepare do
-  ActiveStorage::TransformJob.prepend(TransformJobExtension)
+  ActiveStorage::TransformJob.prepend(ActiveStorageJobAutoRetry)
+  ActiveStorage::AnalyzeJob.prepend(ActiveStorageJobAutoRetry)
 end
