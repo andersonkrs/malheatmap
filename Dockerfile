@@ -58,6 +58,9 @@ RUN groupadd --system --gid 1000 rails && \
     chown -R rails:rails db log storage tmp
 USER 1000:1000
 
+HEALTHCHECK --interval=5m --timeout=5s \
+  CMD curl -f http://localhost/up || exit 1
+
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
