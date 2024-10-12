@@ -14,8 +14,6 @@ class User
     end
 
     class FetchGeolocationJob < ApplicationJob
-      queue_as :default
-
       def perform(user)
         user.geocode
         user.save!(validate: false)

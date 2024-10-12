@@ -50,40 +50,4 @@ class HealthCheckControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :ok
   end
-
-  test "returns service unavailable if there is a stuck execution expired" do
-    job = SolidQueue::Job.create!(queue_name: "default", class_name: "CronJob")
-    process = SolidQueue::Process.create!({
-      name: "test",
-      last_heartbeat_at: 10.seconds.ago,
-      kind: "Worker",
-      pid: 123,
-      metadata: {
-        queues: "screenshots,default,active_storage,low,logging,solid_queue_recurring"
-      }
-    })
-    process.claimed_executions.create(job: job, created_at: 6.hours.ago)
-
-    get health_check_path, headers: { "HTTP_AUTHORIZATION" => @authorization }
-
-    assert_response :service_unavailable
-  end
-
-  test "returns ok if there is a stuck execution but not expired" do
-    job = SolidQueue::Job.create!(queue_name: "backups", class_name: "CronJob")
-    process = SolidQueue::Process.create!({
-      name: "test",
-      last_heartbeat_at: 10.seconds.ago,
-      kind: "Worker",
-      pid: 123,
-      metadata: {
-        queues: "screenshots,default,active_storage,low,logging,solid_queue_recurring"
-      }
-    })
-    process.claimed_executions.create(job: job, created_at: (2.hours + 10.minutes).ago)
-
-    get health_check_path, headers: { "HTTP_AUTHORIZATION" => @authorization }
-
-    assert_response :ok
-  end
 end

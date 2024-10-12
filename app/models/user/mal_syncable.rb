@@ -33,7 +33,7 @@ class User
     end
 
     def enqueue_immediate_sync
-      User::PeriodicMALSyncJob.set(queue: :default).perform_later(self)
+      User::PeriodicMALSyncJob.set(queue: :within_30_seconds, priority: 0).perform_later(self)
     end
   end
 end

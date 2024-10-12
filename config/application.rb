@@ -30,15 +30,17 @@ module MalHeatmap
     config.geocoder = config_for(:geocoder)
     config.mal_api = config_for(:mal_api)
 
+    config.active_job.queue_adapter = :solid_queue
+    config.active_job.queue_name = :within_30_seconds
+    config.solid_queue.connects_to = { database: { writing: :queue } }
+
     config.active_storage.service = :local
     config.active_storage.variant_processor = :vips
-    config.active_storage.queues.analysis = :active_storage
-    config.active_storage.queues.purge = :active_storage
-    config.active_storage.queues.mirror = :active_storage
-    config.active_storage.queues.transform = :active_storage
 
-    config.active_job.queue_adapter = :solid_queue
-    config.solid_queue.connects_to = { database: { writing: :queue } }
+    config.active_storage.queues.analysis = :within_3_minutes
+    config.active_storage.queues.purge = :within_3_minutes
+    config.active_storage.queues.mirror = :within_3_minutes
+    config.active_storage.queues.transform = :within_3_minutes
 
     config.mission_control.jobs.base_controller_class = "AdminController"
 

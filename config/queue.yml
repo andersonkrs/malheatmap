@@ -3,14 +3,14 @@ default: &default
     - polling_interval: 1
       batch_size: 500
   workers:
-    - queues: [default, active_storage, logging, screenshots, solid_queue_recurring]
+    - queues: [within_30_seconds, within_3_minutes, solid_queue_recurring]
       threads: 5
       processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
       polling_interval: 0.5
-    - queues: [low]
+    - queues: [within_10_hours]
       threads: 1
       processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
-      polling_interval: 0.5
+      polling_interval: 2
 
 development:
   <<: *default

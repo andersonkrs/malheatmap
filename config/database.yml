@@ -3,9 +3,6 @@ sqlite_defaults: &sqlite_defaults
   # Solid queue takes two queries by default + number of queue threads
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
   timeout: 5000
-  default_transaction_mode: immediate
-  pragmas:
-    mmap_size: 64000000
 
 development:
   primary:
@@ -40,8 +37,6 @@ production:
     <<: *sqlite_defaults
     database: "storage/malheatmap_primary_production.sqlite3"
     migrations_paths: "db/migrate"
-    pragmas:
-      mmap_size: 256000000
   ops:
     <<: *sqlite_defaults
     database: "storage/malheatmap_ops_production.sqlite3"

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   match "/500" => "application#internal_error", :via => :all, :as => "internal_error"
   get "/health-check" => "health_check#index", :as => "health_check"
   get "/up" => "monitoring#show"
+  get "/latency-check/:queue" => "latency_check#show", as: "latency_check"
 
   mount MissionControl::Jobs::Engine, at: "/jobs"
   mount SolidErrors::Engine, at: "/errors"

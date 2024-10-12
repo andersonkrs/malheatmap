@@ -28,7 +28,7 @@ class User::CalendarImages
 
     limits_concurrency to: 2, key: :screenshots, duration: 2.hours
 
-    queue_as :screenshots
+    queue_as :within_3_minutes
 
     def perform(user)
       user.calendar_images.generate

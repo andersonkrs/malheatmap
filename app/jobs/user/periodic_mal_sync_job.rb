@@ -1,5 +1,5 @@
 class User::PeriodicMALSyncJob < ApplicationJob
-  queue_as :low
+  queue_as :within_10_hours
 
   uniqueness_control key: -> { _1.id }, expires_in: 48.hours
 
