@@ -202,12 +202,12 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    mechanize (2.12.0)
+    mechanize (2.12.2)
       addressable (~> 2.8)
       base64
       domain_name (~> 0.5, >= 0.5.20190701)
       http-cookie (~> 1.0, >= 1.0.3)
-      mime-types (~> 3.0)
+      mime-types (~> 3.3)
       net-http-digest_auth (~> 1.4, >= 1.4.1)
       net-http-persistent (>= 2.5.2, < 5.0.dev)
       nkf
@@ -216,9 +216,10 @@ GEM
       webrick (~> 1.7)
       webrobots (~> 0.1.2)
     method_source (1.1.0)
-    mime-types (3.5.2)
+    mime-types (3.6.0)
+      logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2024.0806)
+    mime-types-data (3.2024.1001)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
     mini_portile2 (2.8.7)
@@ -233,7 +234,7 @@ GEM
       ruby2_keywords (>= 0.0.5)
     msgpack (1.7.2)
     net-http-digest_auth (1.4.1)
-    net-http-persistent (4.0.2)
+    net-http-persistent (4.0.4)
       connection_pool (~> 2.2)
     net-imap (0.4.16)
       date
