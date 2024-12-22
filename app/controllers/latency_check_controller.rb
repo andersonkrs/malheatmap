@@ -6,7 +6,7 @@ class LatencyCheckController < ApplicationController
 
   def show
     queue = SolidQueue::Queue.find_by_name(params.require(:queue))
-    response = { queue: queue.name, latency: ActiveSupport::Duration.build(queue.latency.to_i).inspect }
+    response = { queue: queue.name, latency: queue.human_latency }
 
     if queue.latency > threshold
       render json: response, status: :service_unavailable

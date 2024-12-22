@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby file: ".ruby-version"
 
-gem "rails", "~> 8.0.0.beta1"
+gem "rails", "~> 8.0.1"
 
 gem "bootsnap", require: false
 
@@ -22,6 +22,8 @@ gem "kamal"
 # Solid gems
 gem "solid_queue"
 gem "solid_errors"
+
+gem "yabeda"
 
 # Queue management
 gem "mission_control-jobs"
