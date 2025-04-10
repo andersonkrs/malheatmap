@@ -2,7 +2,3 @@
 	path = vendor/assets/stylesheets/bulma
 	url = https://github.com/jgthms/bulma
 	revision = 99ffccd
-[submodule "vendor/assets/stylesheets/bulma-timeline"]
-	path = vendor/assets/stylesheets/bulma-timeline
-	url = https://github.com/Wikiki/bulma-timeline
-    revision = ga9545c7
