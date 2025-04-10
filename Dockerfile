@@ -20,7 +20,7 @@ FROM base AS build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git pkg-config unzip libvips && \
+    apt-get install --no-install-recommends -y build-essential git pkg-config unzip libvips libyaml-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
@@ -43,7 +43,7 @@ FROM base
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl wget libjemalloc2 libsqlite3-0 libvips redis && \
+    apt-get install --no-install-recommends -y curl wget libjemalloc2 libsqlite3-0 libvips libyaml-dev redis && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 ENV TMPDIR="/rails/tmp"

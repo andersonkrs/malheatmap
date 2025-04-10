@@ -15,6 +15,6 @@ production:
     schedule: "every 12 hours"
     command: "Blazer.send_failing_checks"
   clean_up_finished_jobs:
-    schedule: "every 24 hours"
+    schedule: "every hour"
     command: "SolidQueue::Job.clear_finished_in_batches"
 

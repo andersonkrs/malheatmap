@@ -49,6 +49,7 @@ config/credentials/production.key
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+!/vendor/assets/stylesheets/bulma-timeline
 
 /config/master.key
 
