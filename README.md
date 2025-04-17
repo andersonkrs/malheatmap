@@ -41,13 +41,13 @@
 
 Here are some real user profiles to give you an idea of how it looks like in case you don't have an MAL account:
 
-* [KanchiMoe](https://malheatmap.com/users/KanchiMoe)
-* [RudeRedis](https://malheatmap.com/users/RudeRedis)
-* [GDjkhp](https://malheatmap.com/users/GDjkhp)
+- [KanchiMoe](https://malheatmap.com/users/KanchiMoe)
+- [RudeRedis](https://malheatmap.com/users/RudeRedis)
+- [GDjkhp](https://malheatmap.com/users/GDjkhp)
 
 #### Motivation
 
-At first, I made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). 
+At first, I made this experiment to play around with some cool Rails features, like [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html) and [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html).
 Also, I want to take this opportunity to try web scrapping with Ruby and have a pretty much vanilla Rails experience, which is very different from the apps that I have been working on.
 
 Building an app from zero to deployment has been a great experience, and I feel all its pain standing up from the ground. It's taught me a lot about sysadmin tasks, servers, docker, deployment, etc.
@@ -68,31 +68,31 @@ The plan is to consume data solely from MAL's API and drop the web crawling. Tha
 
 #### Main Tools
 
-* Ruby on Rails
-* SQLite
-* SolidQueue
-* SolidCache
-* Hotwire
-* Bulma CSS
+- Ruby on Rails
+- SQLite
+- SolidQueue
+- SolidCache
+- Hotwire
+- Bulma CSS
 
 #### Dependencies:
 
-* SQLite
-* Redis for action cable 
-* Ruby
-* LibVips for ActiveStorage
+- SQLite
+- Redis for action cable
+- Ruby
+- LibVips for ActiveStorage
 
 Since this app is a classical Rails project, there is nothing special here to set up or run the project.
 
 ### Deployment
 
-This app is gloriously self-hosted with [Coolify](https://coolify.io/).
+This app is gloriously deployed using [Kamal](https://kamal-deploy.org/).
 
 Since I keep this app running from my pocket, I use some space to run it on my tiny VPS. To keep costs low, we use the VPS storage to host the ActiveStorage files.
 
 #### Other Inspirations
 
-* [MAL Signature](https://malsignature.com)
-* [anime.plus](https://anime.plus)
+- [MAL Signature](https://malsignature.com)
+- [anime.plus](https://anime.plus)
 
 <a href="https://www.buymeacoffee.com/andersonkrs" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
