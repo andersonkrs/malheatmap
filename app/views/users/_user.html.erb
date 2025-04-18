@@ -6,7 +6,7 @@
   <div class="columns is-multiline">
     <div class="column is-full p-0">
       <div class="is-flex is-flex-direction-column is-justify-content-center is-align-content-center is-flex-wrap-wrap">
-        <%= link_to(MAL::URLS.profile_url(user.username), target: "_blank", rel: "noopener noreferrer", class: "image has-text-centered", style: "max-width: 155px; max-height: 250px; color: inherit") do %>
+        <%= link_to(MAL::URLS.profile_url(user.username), target: "_blank", rel: "noopener noreferrer", class: "image has-text-centered", style: "max-width: 155px; max-height: 350px; color: inherit") do %>
           <% if user.avatar_url.present? %>
             <%= image_tag user.avatar_url, style: "object-fit: cover;" %>
           <% else %>

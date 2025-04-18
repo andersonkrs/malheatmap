@@ -27,4 +27,8 @@ class User < ApplicationRecord
   def to_s
     username
   end
+
+  def current?
+    self == Current.user
+  end
 end
