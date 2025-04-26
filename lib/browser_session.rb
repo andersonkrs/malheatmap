@@ -23,7 +23,7 @@ class BrowserSession
       browser.reset
       browser.quit
     end
- end
+  end
 
   def with_new_page
     spawn_new_browser
@@ -39,7 +39,10 @@ class BrowserSession
 
   def spawn_new_browser
     @browser = Ferrum::Browser
-      .new({ headless: true, url: ENV["FERRUM_BROWSER_URL"].presence })
+      .new({
+        headless: ENV.fetch("FERRUM_HEADLESS", "1").in?(["1", "true", "y"]),
+        url: ENV["FERRUM_BROWSER_URL"].presence
+      })
       .tap do |browser|
         Rails.logger.info "Browser instance created PID: #{browser.process.pid}"
       end
