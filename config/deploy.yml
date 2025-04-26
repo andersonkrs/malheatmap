@@ -38,8 +38,6 @@ registry:
 # Configure builder setup.
 builder:
   arch: amd64
-  args:
-    RUBY_VERSION: <%= File.read('.ruby-version').strip %>
 
 # Inject ENV variables into containers (secrets come from .kamal/secrets).
 #
