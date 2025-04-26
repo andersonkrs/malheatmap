@@ -46,9 +46,13 @@ class User::CalendarImages
   end
 
   def render_calendar_html
-    activities_amount_per_day = user.calendars.current_year.activities_amount_sum_per_day
+    calendar = user.calendars.current
 
-    ApplicationController.render("users/signature", locals: { activities_amount_per_day: }, layout: nil)
+    ApplicationController.render(
+      "users/signature",
+      locals: { activities_amount_per_day: calendar.activities_amount_sum_per_day },
+      layout: nil
+    )
   end
 
   def capture_html_screenshot(html_page)

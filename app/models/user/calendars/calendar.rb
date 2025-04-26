@@ -3,11 +3,10 @@ class User
     class Calendar
       attr_reader :user, :year, :dates
 
-      def initialize(user:, year:)
+      def initialize(user:, year:, current_date: Time.zone.today)
         super()
         @user = user
         @year = year
-        current_date = Time.zone.today
 
         @dates =
           if current_date.year == year
