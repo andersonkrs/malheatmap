@@ -31,9 +31,8 @@ class CalendarComponent < ViewComponent::Base
   # Receives a hash grouping the sum of activities for each date
   # @param [Hash{Date => Integer}] activities_amount_per_day
   def initialize(activities_amount_per_day:)
-    super()
-
     @activities_amount_per_day = activities_amount_per_day
+    super()
   end
 
   def months_css_grid

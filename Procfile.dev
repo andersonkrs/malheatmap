@@ -1,2 +1,2 @@
-web: env RUBY_DEBUG_OPEN=true bin/rails server
+web: env RUBY_DEBUG_OPEN=true SOLID_QUEUE_IN_PUMA=true bin/rails server
 css: bin/rails dartsass:watch

@@ -2,10 +2,10 @@ class YearsMenuComponent < ViewComponent::Base
   attr_reader :user, :years, :selected_year
 
   def initialize(user:, years:, selected_year:)
-    super()
     @user = user
     @years = years.sort.reverse
     @selected_year = selected_year
+    super()
   end
 
   def link_for_year(year)

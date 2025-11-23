@@ -6,7 +6,6 @@ class ActivityComponent < ViewComponent::Base
   delegate :mal_id, :name, :kind, :date, to: :activity
 
   def initialize(activity:)
-    super
     @activity = activity
 
     if @activity.item.anime?
@@ -18,5 +17,7 @@ class ActivityComponent < ViewComponent::Base
       @icon_class = "fas fa-book-reader"
       @amount = I18n.t("users.activity.chapters", count: @activity.amount)
     end
+
+    super()
   end
 end

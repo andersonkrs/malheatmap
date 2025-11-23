@@ -4,7 +4,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
-  config.cache_classes = true
+  config.enable_reloading = false
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -23,9 +23,7 @@ Rails.application.configure do
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = true
-  config.public_file_server.headers = {
-    "Cache-Control" => "public, max-age=#{1.year}, immutable"
-  }
+  config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.year.to_i}, immutable" }
 
   config.cache_store = :redis_cache_store, {
     url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/0" }
@@ -87,6 +85,9 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  # Prevent health checks from clogging up the logs.
+  config.silence_healthcheck_path = "/up"
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
@@ -112,4 +113,7 @@ Rails.application.configure do
     open_timeout:    5,
     read_timeout:    5
   }
+
+  # Only use :id for inspections in production.
+  config.active_record.attributes_for_inspect = [ :id ]
 end
