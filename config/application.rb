@@ -42,8 +42,6 @@ module MalHeatmap
     config.active_storage.queues.mirror = :within_3_minutes
     config.active_storage.queues.transform = :within_3_minutes
 
-    config.mission_control.jobs.base_controller_class = "AdminController"
-
     config.assets.compile = true
     config.assets.paths << Rails.root.join("vendor/assets")
 
