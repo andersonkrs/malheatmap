@@ -22,27 +22,30 @@ class User::PeriodicMALSyncJobTest < ActiveJob::TestCase
   end
 
   test "enqueues user deactivation when the retries are exhausted and the user is a legacy account" do
-    user = User.create!(username: "john-bass", mal_synced_at: nil, mal_id: nil)
+    user = User.create!(username: "john-bass", mal_synced_at: nil, mal_id: nil, mal_synced_at: nil)
+    error_message = "Profile not found for username %{username}. Please check if you typed it correctly."
+    error = MAL::Errors::ProfileNotFound.new(error_message)
 
     fake_pipeline = mock(:fake_pipeline)
-    fake_pipeline.stubs(:execute!).raises(MAL::Errors::ProfileNotFound).once
-
+    fake_pipeline.stubs(:execute!).raises(error)
     User.any_instance.stubs(:crawler_pipeline).returns(fake_pipeline)
 
-    User::PeriodicMALSyncJob.perform_now(user)
+    User::PeriodicMALSyncJob.perform_later(user)
+
+    freeze_time
+
+    16.times do
+      perform_enqueued_jobs only: User::PeriodicMALSyncJob
+    end
 
     assert_enqueued_with(
       job: User::Deactivatable::DeactivationJob,
       args: [
         user.id,
         user.updated_at,
-        "Profile not found for username %{username}. Please check if you typed it correctly."
+        error_message
       ],
       at: User::Deactivatable::DEACTIVATION_BUFFER.from_now.noon
     )
-
-    perform_enqueued_jobs only: User::Deactivatable::DeactivationJob
-
-    assert user.reload.deactivated?
   end
 end

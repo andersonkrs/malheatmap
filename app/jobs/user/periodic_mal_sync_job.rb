@@ -1,24 +1,15 @@
 class User::PeriodicMALSyncJob < ApplicationJob
   queue_as :within_20_hours
 
-  uniqueness_control key: -> { _1.id }, expires_in: 48.hours
+  limits_concurrency to: 1, key: ->(user) { user.id }, on_conflict: :discard, duration: 15.days
 
-  discard_on ActiveRecord::RecordNotFound do |_job, exception|
-    Rails.logger.error(exception)
-  end
-
-  discard_on MAL::Errors::ProfileNotFound, MAL::Errors::UnableToNavigateToHistoryPage do |job, error|
+  retry_on MAL::Errors::ProfileNotFound, MAL::Errors::UnableToNavigateToHistoryPage, attempts: 15, wait: :polynomially_longer do |job, error|
+    Rails.error.report(error)
     user, = job.arguments
 
     # When a profile is not found we assume it is an account that has no linkage anymore
     # So we deactivate this profile to avoid keep crawling it with no purpose
-    if user.legacy_account?
-      user.schedule_deactivation(reason: error.message)
-      Rails.logger.warn("Scheduled deactivation for user #{user.to_global_id}, reason: #{error}")
-    else
-      Rails.logger.error(error)
-      user.touch(:mal_synced_at)
-    end
+    user.schedule_deactivation(reason: error.message)
   end
 
   rescue_from MAL::Errors::CommunicationError do |exception|

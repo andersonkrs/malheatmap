@@ -4,7 +4,9 @@ class User
 
     DEACTIVATION_BUFFER = 3.days
 
-    included { scope :active, -> { where(deactivated_at: nil) } }
+    included do
+      scope :active, -> { where(deactivated_at: nil) }
+    end
 
     def deactivated?
       deactivated_at.present?
@@ -20,6 +22,10 @@ class User
       )
     end
 
+    def reactivate!
+      update!(deactivated_at: nil)
+    end
+
     def deactivate!
       touch(:deactivated_at)
     end
@@ -27,7 +33,7 @@ class User
     class DeactivationJob < ApplicationJob
       discard_on ActiveRecord::RecordNotFound
 
-      uniqueness_control key: ->(user_id, _, _) { [user_id] }, expires_in: DEACTIVATION_BUFFER
+      limits_concurrency to: 1, key: ->(user_id, _, _) { user_id }, on_conflict: :discard, duration: DEACTIVATION_BUFFER
 
       def perform(user_id, updated_at, reason)
         ::User.find_by!(id: user_id, updated_at:).deactivate!

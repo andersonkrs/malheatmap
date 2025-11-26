@@ -18,12 +18,31 @@
         <% end %>
       </div>
     </div>
+
+    <% if user.deactivated? %>
+      <div class="column is-full">
+        <article class="message is-alert">
+          <div class="message-header">
+            <p><%= _("Profile deactivated") %></p>
+          </div>
+          <div class="message-body">
+            <p>
+            <span><%= (_("This profile has been deactivated since %{date} and no longer is receiving updates. See the %{faq}") % { date: l(user.deactivated_at.to_date, format: :long), faq: link_to("FAQ", faq_path, data: { turbo: false}) }).html_safe %></span>
+            <br>
+            </p>
+          </div>
+        </article>
+      </div>
+    <% end %>
+    
     <div class="column is-half">
       <%= render partial: "users/bb_code", locals: { user: user, label: _("Large BB Code"), help: _("Ideal for profile page") } %>
     </div>
+
     <div class="column is-half">
       <%= render partial: "users/bb_code", locals: { user: user, label: _("Small BB Code"), help: _("Ideal for forum signature"), variant: :small } %>
     </div>
+
     <%= turbo_frame_tag dom_id(user, :activities), class: "column is-full" do %>
       <div class="columns is-multiline">
         <div class="column is-full">

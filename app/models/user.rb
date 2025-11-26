@@ -5,6 +5,7 @@ class User < ApplicationRecord
   include Calendars
   include CalendarImageable
   include Deactivatable
+  include Incinerable
   include Geolocatable
 
   after_update_commit -> { broadcast_replace_later(partial: "users/user", locals: { user: self }) }
@@ -18,6 +19,8 @@ class User < ApplicationRecord
 
   def with_time_zone(&)
     Time.use_zone(time_zone, &)
+  rescue ArgumentError
+    Time.use_zone("UTC", &)
   end
 
   def to_param
