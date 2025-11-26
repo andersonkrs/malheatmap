@@ -37,6 +37,14 @@
   </tr>  
 </table>
 
+## Important ‼
+
+MAL Heatmap is my [free gifit share](https://world.hey.com/dhh/free-gift-share-8ee43637) to the community.
+
+This app is a [finished software](https://world.hey.com/dhh/finished-software-8ee43637), meaning that we will not be taking any new features or improvements. In spite a few quirks here and there, this app has been running solid for many many years and we plan to keep it running until MAL completely blocks our Bot or the internet ends.
+
+Please, only open issues if the service is disrupted or a major bug is found.
+
 #### Profile examples
 
 Here are some real user profiles to give you an idea of how it looks like in case you don't have an MAL account:
@@ -61,10 +69,6 @@ The web app displays the processed data, and jobs do the hard and dirty work of 
 When users subscribe via OAuth, we capture some information based on the token and then start crawling their history. We periodically run the web crawler to keep the user's history current.
 
 The users get a calendar image that can be embedded on their MAL profile or forum signature. The image is generated in the background by taking a screenshot of their profiles using a headless Chrome controlled by [Ferrum](https://github.com/rubycdp/ferrum).
-
-### Future
-
-The plan is to consume data solely from MAL's API and drop the web crawling. That will require some deep reorganization of the code and how the activities are calculated since MAL does not have an API for history usage, and they don't seem to have that in their roadmap.
 
 #### Main Tools
 
