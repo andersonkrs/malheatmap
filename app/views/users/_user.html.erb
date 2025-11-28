@@ -27,7 +27,7 @@
           </div>
           <div class="message-body">
             <p>
-            <span><%= (_("This profile has been deactivated since %{date} and no longer is receiving updates. See the %{faq}") % { date: l(user.deactivated_at.to_date, format: :long), faq: link_to("FAQ", faq_path, data: { turbo: false}) }).html_safe %></span>
+            <span><%= sanitize(_("This profile has been deactivated since %{date} and no longer is receiving updates. See the %{faq}") % { date: l(user.deactivated_at.to_date, format: :long), faq: link_to("FAQ", faq_path, data: { turbo: false}) }) %></span>
             <br>
             </p>
           </div>
