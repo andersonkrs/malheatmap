@@ -22,6 +22,13 @@
     </tr>
 </table>
 
+>[!IMPORTANT]
+> MAL Heatmap is my [free gifit share](https://world.hey.com/dhh/free-gift-share-8ee43637) to the community.
+>
+>This app is a [finished software](https://world.hey.com/dhh/finished-software-8ee43637), meaning that we will not be taking any new features or improvements. In spite a few quirks here and there, this app has been running solid for many many years and we plan to keep it running until MAL completely blocks our Bot or the internet ends.
+>
+>**Please, only open issues if the service is disrupted or a major bug is found.**
+
 <table>
   <tr>
     <th>App</th>
@@ -36,14 +43,6 @@
     </td> 
   </tr>  
 </table>
-
-## Important ‼
-
-MAL Heatmap is my [free gifit share](https://world.hey.com/dhh/free-gift-share-8ee43637) to the community.
-
-This app is a [finished software](https://world.hey.com/dhh/finished-software-8ee43637), meaning that we will not be taking any new features or improvements. In spite a few quirks here and there, this app has been running solid for many many years and we plan to keep it running until MAL completely blocks our Bot or the internet ends.
-
-Please, only open issues if the service is disrupted or a major bug is found.
 
 #### Profile examples
 
