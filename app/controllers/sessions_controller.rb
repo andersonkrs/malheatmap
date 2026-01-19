@@ -64,6 +64,7 @@ class SessionsController < ApplicationController
     user.time_zone = user_data["time_zone"]
     user.avatar_url = user_data["picture"]
     user.profile_data_updated_at = Time.current
+    user.deactivated_at = nil
 
     user.run_callbacks(:authentication) do
       user.transaction do
