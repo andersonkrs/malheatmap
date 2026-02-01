@@ -92,7 +92,7 @@ GEM
       safely_block (>= 0.4)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
-    brakeman (7.1.1)
+    brakeman (8.0.1)
       racc
     builder (3.3.0)
     capybara (3.40.0)
