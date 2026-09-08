@@ -10,6 +10,8 @@ servers:
     hosts:
       - 45.92.8.146
     options:
+      cpus: 2
+      memory: 6g
       log-driver: json-file
       log-opt: max-size=100m
       log-opt: max-file=5
@@ -28,8 +30,8 @@ proxy:
 # Credentials for your image host.
 registry:
   # Specify the registry server, if you're not using Docker Hub
-  # server: registry.digitalocean.com / ghcr.io / ...
-  username: andersonskm
+  server: ghcr.io
+  username: andersonkrs
 
   # Always use an access token rather than real password (pulled from .kamal/secrets).
   password:
@@ -95,6 +97,9 @@ accessories:
       QUEUED: 10
       ENABLE_DEBUGGER: false
     options:
+      cpus: 2
+      memory: 3g
+      pids-limit: 400
       shm-size: "2gb"
       log-driver: json-file
       log-opt: max-size=10m
