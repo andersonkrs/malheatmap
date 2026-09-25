@@ -59,6 +59,8 @@ config/credentials/production.key
 .env
 .env.*
 
+/fnox.production.toml
+
 *.DS_Store
 
 /config/credentials/production.key

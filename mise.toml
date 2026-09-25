@@ -1,3 +1,4 @@
 [env]
+FNOX_PROFILE = "development"
 _.path = ["./bin"]
 _.file = ".env"
