@@ -39,6 +39,7 @@ registry:
 # Configure builder setup.
 builder:
   arch: amd64
+  remote: ssh://root@45.92.8.146
 
 # Inject ENV variables into containers (secrets come from .kamal/secrets).
 #
@@ -62,6 +63,10 @@ aliases:
 #
 ssh:
   user: root
+
+sshkit:
+  max_concurrent_starts: 8
+  pool_idle_timeout: 900
 
 # Use a persistent storage volume.
 #
