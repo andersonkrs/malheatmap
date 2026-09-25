@@ -94,13 +94,13 @@ accessories:
     port: "3000:3000"
     env:
       HOST: malheatmap-chrome
-      DATA_DIR: "/tmp/my-profile"
-      WORKSPACE_DELETE_EXPIRED: true
-      WORKSPACE_EXPIRE_DAYS: 1
+      WORKSPACE_DELETE_EXPIRED: false
       PREBOOT_CHROME: true
       CONCURRENT: 2
       QUEUED: 10
       ENABLE_DEBUGGER: false
+    volumes:
+      - "/storage/malheatmap-chrome-data:/tmp/my-profile"
     options:
       cpus: 1.5
       memory: 3g

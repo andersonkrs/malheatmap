@@ -17,4 +17,7 @@ production:
   clean_up_finished_jobs:
     schedule: "every hour"
     command: "SolidQueue::Job.clear_finished_in_batches"
+  incremental_vacuum:
+    class: "IncrementalVacuumJob"
+    schedule: "every day at 12am on UTC"
 
