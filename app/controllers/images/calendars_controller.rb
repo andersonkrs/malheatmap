@@ -20,6 +20,14 @@ class Images::CalendarsController < ApplicationController
   def check_deprecated_signature_image
     return if @user.calendar_image.attached?
 
-    redirect_to @user.signature
+    if @user.signature.attached?
+      redirect_to @user.signature
+    else
+      # Neither image exists yet (e.g. generation failed or is still pending).
+      # Redirecting to an unattached attachment raised a 500, so retry the
+      # generation and answer with a plain 404 instead.
+      @user.calendar_images.generate_later
+      head :not_found
+    end
   end
 end
